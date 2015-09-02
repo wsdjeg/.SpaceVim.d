@@ -1,0 +1,218 @@
+" Note: Skip initialization for vim-tiny or vim-small.
+if 0 | endif
+
+if has('vim_starting')
+  if &compatible
+    set nocompatible               " Be iMproved
+  endif
+
+  " Required:
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
+
+" Required:
+call neobundle#begin(expand('~/.vim/bundle/'))
+
+" Let NeoBundle manage NeoBundle
+" Required:
+NeoBundleFetch 'Shougo/neobundle.vim'
+NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'Shougo/unite.vim'
+let g:unite_source_history_yank_enable = 1
+NeoBundle 'Shougo/unite-outline'
+NeoBundle 'Shougo/vimproc.vim', {
+\ 'build' : {
+\     'windows' : 'tools\\update-dll-mingw',
+\     'cygwin' : 'make -f make_cygwin.mak',
+\     'mac' : 'make -f make_mac.mak',
+\     'linux' : 'make',
+\     'unix' : 'gmake',
+\    },
+\ }
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'artur-shaik/vim-javacomplete2'
+autocmd FileType java,jsp set omnifunc=javacomplete#Complete
+nmap <F4> :call javacomplete#AddImport()<cr>
+imap <F4> <Esc>:call javacomplete#AddImport()<cr>gi
+let g:JavaComplete_UseFQN = 1          "补全描述使用全类名 默认是0
+""++++++> app1 补全配置
+"let g:JavaComplete_LibsPath =
+"'/home/wsdjeg/wsdjeg.github.io/java/app1/WEB-INF/classes:/home/wsdjeg/wsdjeg.github.io/lib/'
+""++++++> Invoicing_System 补全配置
+let g:JavaComplete_LibsPath = 'classes/:lib/:/home/wsdjeg/tools/apache-tomcat-8.0.24/lib'
+let g:JavaComplete_ServerAutoShutdownTime = 300             "自动关闭javavi服务的等待时间间隔
+let g:JavaComplete_MavenRepositoryDisable = 1
+NeoBundle 'bling/vim-airline'
+let g:Powerline_sybols = 'unicode'
+let g:airline#extensions#tabline#enabled = 1
+NeoBundle 'scrooloose/nerdtree'
+let NERDTreeWinPos='right'
+let NERDTreeWinSize=31
+let NERDTreeChDirMode=1
+map <F3> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+NeoBundle 'mattn/emmet-vim'
+let g:user_emmet_install_global = 0
+autocmd FileType html,css,jsp EmmetInstall
+let g:user_emmet_leader_key='<C-e>'
+let g:user_emmet_mode='a'
+NeoBundle 'scrooloose/syntastic'
+let g:syntastic_java_javac_config_file_enabled = 1
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+NeoBundle 'scrooloose/nerdcommenter'
+NeoBundle 'MarcWeber/vim-addon-mw-utils'
+NeoBundle 'tomtom/tlib_vim'
+NeoBundle 'honza/vim-snippets'
+NeoBundle 'SirVer/ultisnips'
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+NeoBundle 'majutsushi/tagbar'
+nmap <F2> :TagbarToggle<CR>
+let g:tagbar_width=30
+let g:tagbar_left = 1
+NeoBundle 'airblade/vim-rooter'
+let g:rooter_patterns = ['Rakefile' , 'pom.xml' , 'web.xml' , '.git/']
+NeoBundle 'Yggdroot/indentLine'
+let g:indentLine_color_term = 239
+let g:indentLine_color_gui = '#09AA08'
+let g:indentLine_char = '│'
+NeoBundle 'godlygeek/tabular'
+NeoBundle 'benizi/vim-automkdir'
+NeoBundle 'airblade/vim-gitgutter'
+NeoBundle 'taglist.vim'
+let Tlist_Ctags_Cmd = '/usr/bin/ctags'  "设置ctags执行路径
+let Tlist_Auto_Update=1
+let Tlist_Auto_Open =0
+let Tlist_Use_Right_Window=1
+let Tlist_Show_One_File=0
+let Tlist_File_Fold_Auto_Close=1
+let Tlist_Exit_OnlyWindow=1
+let Tlist_Show_Menu=1
+map <F8> :TlistToggle<CR>
+NeoBundle 'java_getset.vim'
+NeoBundle 'L9'
+" My Bundles here:
+" Refer to |:NeoBundle-examples|.
+" Note: You don't set neobundle setting in .gvimrc!
+
+call neobundle#end()
+
+" Required:
+filetype plugin indent on
+
+" If there are uninstalled bundles found on startup,
+" this will conveniently prompt you to install them.
+NeoBundleCheck
+set nu							"显示行号
+set autoindent					"自动缩进
+set smartindent					"设置智能对齐方式
+set cindent
+set linebreak					"整词换行
+set tabstop=4					"Tab键的宽度
+set expandtab					"用空格来执行tab
+set softtabstop=4				" 统一缩进为4
+set shiftwidth=4
+syntax enable
+syntax on
+filetype on
+filetype indent on
+set nobackup
+set nowritebackup
+set ruler
+set showcmd						"命令行显示输入的命令
+set showmatch					"设置匹配模式,显示匹配的括号
+set showmode					"命令行显示当前vim的模式
+set encoding=utf-8
+set termencoding=utf-8
+set scrolloff=7
+set cursorline					"显示当前行
+"set cursorcolumn				"显示当前列
+set incsearch
+set hlsearch
+set laststatus=2
+set t_Co=256
+set encoding=utf8
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+nnoremap <C-S-Down> :m .+1<CR>==
+nnoremap <C-S-Up> :m .-2<CR>==
+inoremap <C-S-Down> <Esc>:m .+1<CR>==gi
+inoremap <C-S-Up> <Esc>:m .-2<CR>==gi
+vnoremap <C-S-Down> :m '>+1<CR>gv=gv
+vnoremap <C-S-Up> :m '<-2<CR>gv=gv>
+inoremap ( ()<Esc>i
+inoremap [ []<Esc>i
+inoremap { {}<Esc>i
+autocmd Syntax java inoremap { {<CR>}<Esc>O
+autocmd Syntax html,vim inoremap < <lt>><Esc>i| inoremap > <c-r>=ClosePair('>')<CR>
+inoremap ) <c-r>=ClosePair(')')<CR>
+inoremap ] <c-r>=ClosePair(']')<CR>
+inoremap } <c-r>=ClosePair('}')<CR>
+autocmd Syntax java inoremap } <c-r>=CloseBracket()<CR>
+inoremap " <c-r>=QuoteDelim('"')<CR>
+inoremap ' <c-r>=QuoteDelim("'")<CR>
+function ClosePair(char)
+    if getline('.')[col('.') - 1] == a:char
+        return "\<Right>"
+    else
+        return a:char
+    endif
+endf
+
+function CloseBracket()
+    if match(getline(line('.') + 1), '\s*}') < 0
+        return "\<CR>}"
+    else
+        return "\<Esc>j0f}a"
+    endif
+endf
+
+function QuoteDelim(char)
+    let line = getline('.')
+    let col = col('.')
+    if line[col - 2] == "\\"
+    "Inserting a quoted quotation mark into the string
+        return a:char
+    elseif line[col - 1] == a:char
+    "Escaping out of the string
+        return "\<Right>"
+    else
+        "Starting a string
+        return a:char.a:char."\<Esc>i"
+    endif
+endf
+
+autocmd Filetype java inoremap <buffer>  .  .<C-X><C-O><C-P>
+"autocmd Filetype java inoremap <buffer>  A  A<C-X><C-O><C-P>
+"autocmd Filetype java inoremap <buffer>  B  B<C-X><C-O><C-P>
+"autocmd Filetype java inoremap <buffer>  C  C<C-X><C-O><C-P>
+"autocmd Filetype java inoremap <buffer>  D  D<C-X><C-O><C-P>
+"autocmd Filetype java inoremap <buffer>  E  E<C-X><C-O><C-P>
+"autocmd Filetype java inoremap <buffer>  F  F<C-X><C-O><C-P>
+"autocmd Filetype java inoremap <buffer>  G  G<C-X><C-O><C-P>
+"autocmd Filetype java inoremap <buffer>  H  H<C-X><C-O><C-P>
+"autocmd Filetype java inoremap <buffer>  I  I<C-X><C-O><C-P>
+"autocmd Filetype java inoremap <buffer>  J  J<C-X><C-O><C-P>
+"autocmd Filetype java inoremap <buffer>  K  K<C-X><C-O><C-P>
+"autocmd Filetype java inoremap <buffer>  L  L<C-X><C-O><C-P>
+"autocmd Filetype java inoremap <buffer>  M  M<C-X><C-O><C-P>
+"autocmd Filetype java inoremap <buffer>  N  N<C-X><C-O><C-P>
+"autocmd Filetype java inoremap <buffer>  O  O<C-X><C-O><C-P>
+"autocmd Filetype java inoremap <buffer>  P  P<C-X><C-O><C-P>
+"autocmd Filetype java inoremap <buffer>  Q  Q<C-X><C-O><C-P>
+"autocmd Filetype java inoremap <buffer>  R  R<C-X><C-O><C-P>
+"autocmd Filetype java inoremap <buffer>  S  S<C-X><C-O><C-P>
+"autocmd Filetype java inoremap <buffer>  T  T<C-X><C-O><C-P>
+"autocmd Filetype java inoremap <buffer>  U  U<C-X><C-O><C-P>
+"autocmd Filetype java inoremap <buffer>  V  V<C-X><C-O><C-P>
+"autocmd Filetype java inoremap <buffer>  W  W<C-X><C-O><C-P>
+"autocmd Filetype java inoremap <buffer>  X  X<C-X><C-O><C-P>
+"autocmd Filetype java inoremap <buffer>  Y  Y<C-X><C-O><C-P>
+"autocmd Filetype java inoremap <buffer>  Z  Z<C-X><C-O><C-P>
