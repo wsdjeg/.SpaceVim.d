@@ -112,7 +112,7 @@ let g:indentLine_color_term = 239
 let g:indentLine_color_gui = '#09AA08'
 let g:indentLine_char = '│'
 "===============> vim-rooter 相关设置
-let g:rooter_patterns = ['Rakefile' , 'web.xml' , '.git/']
+let g:rooter_patterns = ['Rakefile' , 'pom.xml' , 'web.xml' , '.git/']
 
 "===============> tagbar 相关设置 映射<F2>
 nmap <F2> :TagbarToggle<CR>
@@ -140,6 +140,7 @@ imap <F4> <Esc>:call javacomplete#AddImport()<cr>
 "++++++> Invoicing_System 补全配置
 let g:JavaComplete_LibsPath = 'classes/:lib/:/home/wsdjeg/tools/apache-tomcat-8.0.24/lib'
 let g:JavaComplete_ServerAutoShutdownTime = 300				"自动关闭javavi服务的等待时间间隔
+let g:JavaComplete_MavenRepositoryDisable = 1
 
 "===============> syntastic 语法检查相关设置
 set statusline+=%#warningmsg#
