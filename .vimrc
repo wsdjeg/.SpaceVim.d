@@ -133,7 +133,7 @@ let g:user_emmet_mode='a'
 "===============> javaComplete2 相关设置 映射
 autocmd FileType java,jsp set omnifunc=javacomplete#Complete
 nmap <F4> :call javacomplete#AddImport()<cr>
-imap <F4> <Esc>:call javacomplete#AddImport()<cr>
+imap <F4> <Esc>:call javacomplete#AddImport()<cr>gi
 "let g:JavaComplete_UseFQN = 1			"补全描述使用全类名 默认是0
 "++++++> app1 补全配置
 "let g:JavaComplete_LibsPath = '/home/wsdjeg/wsdjeg.github.io/java/app1/WEB-INF/classes:/home/wsdjeg/wsdjeg.github.io/lib/'
