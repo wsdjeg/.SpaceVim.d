@@ -16,9 +16,15 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 " Let NeoBundle manage NeoBundle
 " Required:
 NeoBundleFetch 'Shougo/neobundle.vim'
-NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'Shougo/unite.vim'
 let g:unite_source_history_yank_enable = 1
+nnoremap <space>/ :Unite grep:.<cr>
+nnoremap <silent> <C-f> :<C-u>Unite -no-split -buffer-name=files -start-insert file_rec/async:!<cr>
+nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files -start-insert file<cr>
+nnoremap <leader>m :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
+nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
+nnoremap <silent> <C-b> :<C-u>Unite -start-insert -buffer-name=buffer buffer<cr>
+NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/unite-outline'
 NeoBundle 'Shougo/vimproc.vim', {
 \ 'build' : {
@@ -31,6 +37,8 @@ NeoBundle 'Shougo/vimproc.vim', {
 \ }
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-surround'
+NeoBundle 'terryma/vim-multiple-cursors'
+NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'artur-shaik/vim-javacomplete2'
 autocmd FileType java,jsp set omnifunc=javacomplete#Complete
 nmap <F4> :call javacomplete#AddImport()<cr>
@@ -64,6 +72,7 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 NeoBundle 'scrooloose/nerdcommenter'
+NeoBundle 'easymotion/vim-easymotion'
 NeoBundle 'MarcWeber/vim-addon-mw-utils'
 NeoBundle 'tomtom/tlib_vim'
 NeoBundle 'honza/vim-snippets'
@@ -95,6 +104,7 @@ let Tlist_Exit_OnlyWindow=1
 let Tlist_Show_Menu=1
 map <F8> :TlistToggle<CR>
 NeoBundle 'java_getset.vim'
+NeoBundle 'nerdtree-ack'
 NeoBundle 'L9'
 " My Bundles here:
 " Refer to |:NeoBundle-examples|.
