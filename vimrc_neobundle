@@ -189,6 +189,10 @@ let Tlist_File_Fold_Auto_Close=1
 let Tlist_Exit_OnlyWindow=1
 let Tlist_Show_Menu=1
 map <F8> :TlistToggle<CR>
+
+NeoBundle 'wsdjeg/MarkDown.pl'
+autocmd filetype markdown nmap md :!~/.vim/bundle/MarkDown.pl/markdown.pl % > %.html<cr><cr>
+autocmd filetype markdown nmap fi :!firefox %.html & <CR><CR>
 NeoBundle 'java_getset.vim'
 NeoBundle 'nerdtree-ack'
 NeoBundle 'L9'
