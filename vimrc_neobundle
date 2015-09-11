@@ -252,7 +252,10 @@ set statusline+=%*
 "colo molokai
 " Take care of forgetting to use sudo with :w!!
 cmap w!! %!sudo tee > /dev/null %
-
+nnoremap <C-Right> <C-W><Right>
+nnoremap <C-Left> <C-W><Left>
+nnoremap <C-Up> <C-W><Up>
+nnoremap <C-Down> <C-W><Down>
 nnoremap <C-S-Down> :m .+1<CR>==
 nnoremap <C-S-Up> :m .-2<CR>==
 inoremap <C-S-Down> <Esc>:m .+1<CR>==gi
