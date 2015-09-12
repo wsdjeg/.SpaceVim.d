@@ -130,8 +130,9 @@ let g:JavaComplete_UseFQN = 1          "补全描述使用全类名 默认是0
 let g:JavaComplete_LibsPath = 'classes/:lib/:/home/wsdjeg/tools/apache-tomcat-8.0.24/lib'
 let g:JavaComplete_ServerAutoShutdownTime = 300             "自动关闭javavi服务的等待时间间隔
 let g:JavaComplete_MavenRepositoryDisable = 1
-autocmd FileType java inoremap <F5> <esc>:w<CR>:!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR><CR>
-autocmd FileType java nnoremap <F5> :!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR><CR>
+autocmd FileType java inoremap <F5> <esc>:w<CR>:!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
+autocmd FileType java nnoremap <F5> :!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
+autocmd FileType java nnoremap <F6> :!java -cp classes/ -Djava.ext.dirs=lib/ com.wsdjeg.util.TestMethod
 "NeoBundle 'vim-scripts/Maven-Compiler'
 "autocmd Filetype java compiler mvn
 "autocmd Filetype pom compiler mvn
