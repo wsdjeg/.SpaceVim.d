@@ -97,7 +97,7 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'terryma/vim-multiple-cursors'
 
-NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'ctrlpvim/ctrlp.vim'
 NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'felixSchl/ctrlp-unity3d-docs'
 NeoBundle 'voronkovich/ctrlp-nerdtree.vim'
@@ -119,7 +119,6 @@ NeoBundle 'JazzCore/ctrlp-cmatcher'
 NeoBundle 'tpope/vim-scriptease'
 
 NeoBundle 'artur-shaik/vim-javacomplete2'
-", { 'rev' : '5db2dca' }
 autocmd FileType java,jsp set omnifunc=javacomplete#Complete
 nnoremap <F4> :JCimportAdd<cr>
 inoremap <F4> <esc>:JCimportAddI<cr>
@@ -201,7 +200,7 @@ NeoBundle 'wsdjeg/MarkDown.pl'
 autocmd filetype markdown nmap md :!~/.vim/bundle/MarkDown.pl/markdown.pl % > %.html<cr><cr>
 autocmd filetype markdown nmap fi :!firefox %.html & <CR><CR>
 autocmd filetype html nmap fi :!firefox % & 
-"NeoBundle 'VJDE/VJDE'
+NeoBundle 'VJDE/VJDE'
 NeoBundle 'tomasr/molokai'
 NeoBundle 'java_getset.vim'
 NeoBundle 'nerdtree-ack'
