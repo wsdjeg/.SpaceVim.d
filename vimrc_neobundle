@@ -253,18 +253,24 @@ set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 "设置molokai配色 但是颜色太丑
 "colo molokai
-" Take care of forgetting to use sudo with :w!!
+
+" 对于没有权限的文件使用 :w!!来保存
 cmap w!! %!sudo tee > /dev/null %
+
+" 映射Ctrl+上下左右来切换窗口
 nnoremap <C-Right> <C-W><Right>
 nnoremap <C-Left> <C-W><Left>
 nnoremap <C-Up> <C-W><Up>
 nnoremap <C-Down> <C-W><Down>
+
+"Ctrl+Shift+上下移动当前行
 nnoremap <C-S-Down> :m .+1<CR>==
 nnoremap <C-S-Up> :m .-2<CR>==
 inoremap <C-S-Down> <Esc>:m .+1<CR>==gi
 inoremap <C-S-Up> <Esc>:m .-2<CR>==gi
+"上下移动选中的行
 vnoremap <C-S-Down> :m '>+1<CR>gv=gv
-vnoremap <C-S-Up> :m '<-2<CR>gv=gv>
+vnoremap <C-S-Up> :m '<-2<CR>gv=gv
 inoremap ( ()<Esc>i
 inoremap [ []<Esc>i
 inoremap { {}<Esc>i
@@ -307,30 +313,37 @@ function QuoteDelim(char)
     endif
 endf
 
-autocmd Filetype java inoremap <buffer>  .  .<C-X><C-O><C-P>
-autocmd Filetype java inoremap <buffer>  A  A<C-X><C-O><C-P>
-autocmd Filetype java inoremap <buffer>  B  B<C-X><C-O><C-P>
-autocmd Filetype java inoremap <buffer>  C  C<C-X><C-O><C-P>
-autocmd Filetype java inoremap <buffer>  D  D<C-X><C-O><C-P>
-autocmd Filetype java inoremap <buffer>  E  E<C-X><C-O><C-P>
-autocmd Filetype java inoremap <buffer>  F  F<C-X><C-O><C-P>
-autocmd Filetype java inoremap <buffer>  G  G<C-X><C-O><C-P>
-autocmd Filetype java inoremap <buffer>  H  H<C-X><C-O><C-P>
-autocmd Filetype java inoremap <buffer>  I  I<C-X><C-O><C-P>
-autocmd Filetype java inoremap <buffer>  J  J<C-X><C-O><C-P>
-autocmd Filetype java inoremap <buffer>  K  K<C-X><C-O><C-P>
-autocmd Filetype java inoremap <buffer>  L  L<C-X><C-O><C-P>
-autocmd Filetype java inoremap <buffer>  M  M<C-X><C-O><C-P>
-autocmd Filetype java inoremap <buffer>  N  N<C-X><C-O><C-P>
-autocmd Filetype java inoremap <buffer>  O  O<C-X><C-O><C-P>
-autocmd Filetype java inoremap <buffer>  P  P<C-X><C-O><C-P>
-autocmd Filetype java inoremap <buffer>  Q  Q<C-X><C-O><C-P>
-autocmd Filetype java inoremap <buffer>  R  R<C-X><C-O><C-P>
-autocmd Filetype java inoremap <buffer>  S  S<C-X><C-O><C-P>
-autocmd Filetype java inoremap <buffer>  T  T<C-X><C-O><C-P>
-autocmd Filetype java inoremap <buffer>  U  U<C-X><C-O><C-P>
-autocmd Filetype java inoremap <buffer>  V  V<C-X><C-O><C-P>
-autocmd Filetype java inoremap <buffer>  W  W<C-X><C-O><C-P>
-autocmd Filetype java inoremap <buffer>  X  X<C-X><C-O><C-P>
-autocmd Filetype java inoremap <buffer>  Y  Y<C-X><C-O><C-P>
-autocmd Filetype java inoremap <buffer>  Z  Z<C-X><C-O><C-P>
+autocmd Filetype java inoremap <buffer>  .  <C-r>=MyFunc('.')<CR>
+autocmd Filetype java inoremap <buffer>  A  <C-r>=MyFunc('A')<CR>
+autocmd Filetype java inoremap <buffer>  B  <C-r>=MyFunc('B')<CR>
+autocmd Filetype java inoremap <buffer>  C  <C-r>=MyFunc('C')<CR>
+autocmd Filetype java inoremap <buffer>  D  <C-r>=MyFunc('D')<CR>
+autocmd Filetype java inoremap <buffer>  E  <C-r>=MyFunc('E')<CR>
+autocmd Filetype java inoremap <buffer>  F  <C-r>=MyFunc('F')<CR>
+autocmd Filetype java inoremap <buffer>  G  <C-r>=MyFunc('G')<CR>
+autocmd Filetype java inoremap <buffer>  H  <C-r>=MyFunc('H')<CR>
+autocmd Filetype java inoremap <buffer>  I  <C-r>=MyFunc('I')<CR>
+autocmd Filetype java inoremap <buffer>  J  <C-r>=MyFunc(JG')<CR>
+autocmd Filetype java inoremap <buffer>  K  <C-r>=MyFunc('K')<CR>
+autocmd Filetype java inoremap <buffer>  L  <C-r>=MyFunc('L')<CR>
+autocmd Filetype java inoremap <buffer>  M  <C-r>=MyFunc('M')<CR>
+autocmd Filetype java inoremap <buffer>  N  <C-r>=MyFunc('N')<CR>
+autocmd Filetype java inoremap <buffer>  O  <C-r>=MyFunc('O')<CR>
+autocmd Filetype java inoremap <buffer>  P  <C-r>=MyFunc('P')<CR>
+autocmd Filetype java inoremap <buffer>  Q  <C-r>=MyFunc('Q')<CR>
+autocmd Filetype java inoremap <buffer>  R  <C-r>=MyFunc('R')<CR>
+autocmd Filetype java inoremap <buffer>  S  <C-r>=MyFunc('S')<CR>
+autocmd Filetype java inoremap <buffer>  T  <C-r>=MyFunc('T')<CR>
+autocmd Filetype java inoremap <buffer>  U  <C-r>=MyFunc('U')<CR>
+autocmd Filetype java inoremap <buffer>  V  <C-r>=MyFunc('V')<CR>
+autocmd Filetype java inoremap <buffer>  W  <C-r>=MyFunc('W')<CR>
+autocmd Filetype java inoremap <buffer>  X  <C-r>=MyFunc('X')<CR>
+autocmd Filetype java inoremap <buffer>  Y  <C-r>=MyFunc('Y')<CR>
+autocmd Filetype java inoremap <buffer>  Z  <C-r>=MyFunc('Z')<CR>
+function! MyFunc(char)
+    if(getline(".")=~?'^\s*\/\/')==0
+        return a:char."\<c-x>\<c-o>\<c-p>"
+    else
+        return a:char
+    endif
+endf
