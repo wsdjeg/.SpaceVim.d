@@ -279,17 +279,18 @@ NeoBundleCheck
 augroup filetype_vim
     autocmd!
     autocmd FileType vim setlocal foldmethod=marker
+    "autocmd FileType vim no za :call Fold_This_Vim_File()
     function Fold_This_Vim_File()
-        if &foldenable
-            execute ""
-            return "za\<cr>"
-        else
+        if &foldenable==0
             setlocal foldmethod=marker
+            execute "foldclose"
+        else
             echo "1"
         endif
 
     endf
 augroup END
+"基础设置
 "{{{
 set relativenumber				"显示行号
 set nu
@@ -330,8 +331,8 @@ set completeopt=longest,menu
 "设置molokai配色 但是颜色太丑
 "colo molokai
 "}}}
-
-" 对于没有权限的文件使用 :w!!来保存
+"全局映射
+" {{{对于没有权限的文件使用 :w!!来保存
 cnoremap w!! %!sudo tee > /dev/null %
 
 " 映射Ctrl+上下左右来切换窗口
@@ -389,3 +390,4 @@ function QuoteDelim(char)
         return a:char.a:char."\<Esc>i"
     endif
 endf
+"}}}
