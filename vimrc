@@ -11,15 +11,38 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " }}}
 "YCM
 "{{{
-"NeoBundle 'Valloric/YouCompleteMe', {
-     "\ 'build'      : {
-        "\ 'mac'     : './install.py --clang-completer --system-libclang --omnisharp-completer',
-        "\ 'unix'    : './install.py --clang-completer --system-libclang --omnisharp-completer',
-        "\ 'windows' : './install.py --clang-completer --system-libclang --omnisharp-completer',
-        "\ 'cygwin'  : './install.py --clang-completer --system-libclang --omnisharp-completer'
-        "\ }
-     "\ }
-"let g:neobundle#install_process_timeout = 1500
+NeoBundle 'ervandew/supertab'
+NeoBundle 'Valloric/YouCompleteMe', {
+     \ 'build'      : {
+        \ 'mac'     : './install.py --clang-completer --system-libclang --omnisharp-completer',
+        \ 'unix'    : './install.py --clang-completer --system-libclang --omnisharp-completer',
+        \ 'windows' : './install.py --clang-completer --system-libclang --omnisharp-completer',
+        \ 'cygwin'  : './install.py --clang-completer --system-libclang --omnisharp-completer'
+        \ }
+     \ }
+let g:ycm_server_log_level = 'debug'
+let g:ycm_semantic_triggers =  {
+            \   'c' : ['->', '.'],
+            \   'objc' : ['->', '.'],
+            \   'ocaml' : ['.', '#'],
+            \   'cpp,objcpp' : ['->', '.', '::'],
+            \   'perl' : ['->'],
+            \   'php' : ['->', '::'],
+            \   'cs,javascript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+            \   'java' : ['.', '::'],
+            \   'vim' : ['re![_a-zA-Z]+[_\w]*\.'],
+            \   'ruby' : ['.', '::'],
+            \   'lua' : ['.', ':'],
+            \   'erlang' : [':'],
+            \ }
+
+"let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-S-TAB>','<Up>'] 
+let g:SuperTabDefaultCompletionType = '<C-Tab>'
+let g:neobundle#install_process_timeout = 1500
 "}}}
 NeoBundle 'vim-jp/vim-java'
 NeoBundle 'Shougo/vimproc.vim', {
@@ -101,7 +124,12 @@ NeoBundle 'tex/vim-unite-id'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'terryma/vim-multiple-cursors'
-
+"let g:multi_cursor_use_default_mapping=0
+"let g:multi_cursor_start_key='<C-h>'
+let g:multi_cursor_next_key='<C-j>'
+let g:multi_cursor_prev_key='<C-k>'
+let g:multi_cursor_skip_key='<C-x>'
+let g:multi_cursor_quit_key='<Esc>'
 NeoBundle 'ctrlpvim/ctrlp.vim'
 NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'felixSchl/ctrlp-unity3d-docs'
@@ -125,52 +153,58 @@ NeoBundle 'tpope/vim-scriptease'
 "Javacomplete and autocompile
 "{{{
 NeoBundle 'artur-shaik/vim-javacomplete2'
-autocmd FileType java,jsp set omnifunc=javacomplete#Complete
-nnoremap <F4> :JCimportAdd<cr>
-inoremap <F4> <esc>:JCimportAddI<cr>
+NeoBundle 'VJDE/VJDE'
+NeoBundle 'java_getset.vim'
+NeoBundle 'vim-scripts/Maven-Compiler'
+autocmd! Filetype pom compiler mvn
 let g:JavaComplete_UseFQN = 1          "补全描述使用全类名 默认是0
-""++++++> app1 补全配置
-"let g:JavaComplete_LibsPath =
-"'/home/wsdjeg/wsdjeg.github.io/java/app1/WEB-INF/classes:/home/wsdjeg/wsdjeg.github.io/lib/'
-""++++++> Invoicing_System 补全配置
-let g:JavaComplete_LibsPath = 'classes/:lib/:/home/wsdjeg/tools/apache-tomcat-8.0.24/lib'
+"let g:JavaComplete_LibsPath = 'classes/:lib/:/home/wsdjeg/tools/apache-tomcat-8.0.24/lib'
 let g:JavaComplete_ServerAutoShutdownTime = 300             "自动关闭javavi服务的等待时间间隔
 let g:JavaComplete_MavenRepositoryDisable = 1
-autocmd! FileType java call Autocompilejava()
-function! Autocompilejava()
+"{{{
+autocmd! FileType java call JavaFileTypeInit()
+function! JavaFileTypeInit()
+set omnifunc=javacomplete#Complete
+nnoremap <F4> :JCimportAdd<cr>
+inoremap <F4> <esc>:JCimportAddI<cr>
+"inoremap <silent> <buffer>  .  <C-r>=WSDAutoComplete('.')<CR>
+inoremap <silent> <buffer>  A  <C-r>=WSDAutoComplete('A')<CR>
+inoremap <silent> <buffer>  B  <C-r>=WSDAutoComplete('B')<CR>
+inoremap <silent> <buffer>  C  <C-r>=WSDAutoComplete('C')<CR>
+inoremap <silent> <buffer>  D  <C-r>=WSDAutoComplete('D')<CR>
+inoremap <silent> <buffer>  E  <C-r>=WSDAutoComplete('E')<CR>
+inoremap <silent> <buffer>  F  <C-r>=WSDAutoComplete('F')<CR>
+inoremap <silent> <buffer>  G  <C-r>=WSDAutoComplete('G')<CR>
+inoremap <silent> <buffer>  H  <C-r>=WSDAutoComplete('H')<CR>
+inoremap <silent> <buffer>  I  <C-r>=WSDAutoComplete('I')<CR>
+inoremap <silent> <buffer>  J  <C-r>=WSDAutoComplete('J')<CR>
+inoremap <silent> <buffer>  K  <C-r>=WSDAutoComplete('K')<CR>
+inoremap <silent> <buffer>  L  <C-r>=WSDAutoComplete('L')<CR>
+inoremap <silent> <buffer>  M  <C-r>=WSDAutoComplete('M')<CR>
+inoremap <silent> <buffer>  N  <C-r>=WSDAutoComplete('N')<CR>
+inoremap <silent> <buffer>  O  <C-r>=WSDAutoComplete('O')<CR>
+inoremap <silent> <buffer>  P  <C-r>=WSDAutoComplete('P')<CR>
+inoremap <silent> <buffer>  Q  <C-r>=WSDAutoComplete('Q')<CR>
+inoremap <silent> <buffer>  R  <C-r>=WSDAutoComplete('R')<CR>
+inoremap <silent> <buffer>  S  <C-r>=WSDAutoComplete('S')<CR>
+inoremap <silent> <buffer>  T  <C-r>=WSDAutoComplete('T')<CR>
+inoremap <silent> <buffer>  U  <C-r>=WSDAutoComplete('U')<CR>
+inoremap <silent> <buffer>  V  <C-r>=WSDAutoComplete('V')<CR>
+inoremap <silent> <buffer>  W  <C-r>=WSDAutoComplete('W')<CR>
+inoremap <silent> <buffer>  X  <C-r>=WSDAutoComplete('X')<CR>
+inoremap <silent> <buffer>  Y  <C-r>=WSDAutoComplete('Y')<CR>
+inoremap <silent> <buffer>  Z  <C-r>=WSDAutoComplete('Z')<CR>
+compiler mvn
     if !filereadable("pom.xml")
         inoremap <F5> <esc>:w<CR>:!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
         nnoremap <F5> :!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
         nnoremap <F6> :!java -cp classes/ -Djava.ext.dirs=lib/ com.wsdjeg.util.TestMethod
+    else
+        no <F9> :make clean<CR><CR>
+        no <F5> :wa<CR> :make compile<CR><CR>
+        no <F6> :make exec:exec<CR>
     endif
 endf
-autocmd Filetype java inoremap <silent> <buffer>  .  <C-r>=WSDAutoComplete('.')<CR>
-autocmd Filetype java inoremap <silent> <buffer>  A  <C-r>=WSDAutoComplete('A')<CR>
-autocmd Filetype java inoremap <silent> <buffer>  B  <C-r>=WSDAutoComplete('B')<CR>
-autocmd Filetype java inoremap <silent> <buffer>  C  <C-r>=WSDAutoComplete('C')<CR>
-autocmd Filetype java inoremap <silent> <buffer>  D  <C-r>=WSDAutoComplete('D')<CR>
-autocmd Filetype java inoremap <silent> <buffer>  E  <C-r>=WSDAutoComplete('E')<CR>
-autocmd Filetype java inoremap <silent> <buffer>  F  <C-r>=WSDAutoComplete('F')<CR>
-autocmd Filetype java inoremap <silent> <buffer>  G  <C-r>=WSDAutoComplete('G')<CR>
-autocmd Filetype java inoremap <silent> <buffer>  H  <C-r>=WSDAutoComplete('H')<CR>
-autocmd Filetype java inoremap <silent> <buffer>  I  <C-r>=WSDAutoComplete('I')<CR>
-autocmd Filetype java inoremap <silent> <buffer>  J  <C-r>=WSDAutoComplete('J')<CR>
-autocmd Filetype java inoremap <silent> <buffer>  K  <C-r>=WSDAutoComplete('K')<CR>
-autocmd Filetype java inoremap <silent> <buffer>  L  <C-r>=WSDAutoComplete('L')<CR>
-autocmd Filetype java inoremap <silent> <buffer>  M  <C-r>=WSDAutoComplete('M')<CR>
-autocmd Filetype java inoremap <silent> <buffer>  N  <C-r>=WSDAutoComplete('N')<CR>
-autocmd Filetype java inoremap <silent> <buffer>  O  <C-r>=WSDAutoComplete('O')<CR>
-autocmd Filetype java inoremap <silent> <buffer>  P  <C-r>=WSDAutoComplete('P')<CR>
-autocmd Filetype java inoremap <silent> <buffer>  Q  <C-r>=WSDAutoComplete('Q')<CR>
-autocmd Filetype java inoremap <silent> <buffer>  R  <C-r>=WSDAutoComplete('R')<CR>
-autocmd Filetype java inoremap <silent> <buffer>  S  <C-r>=WSDAutoComplete('S')<CR>
-autocmd Filetype java inoremap <silent> <buffer>  T  <C-r>=WSDAutoComplete('T')<CR>
-autocmd Filetype java inoremap <silent> <buffer>  U  <C-r>=WSDAutoComplete('U')<CR>
-autocmd Filetype java inoremap <silent> <buffer>  V  <C-r>=WSDAutoComplete('V')<CR>
-autocmd Filetype java inoremap <silent> <buffer>  W  <C-r>=WSDAutoComplete('W')<CR>
-autocmd Filetype java inoremap <silent> <buffer>  X  <C-r>=WSDAutoComplete('X')<CR>
-autocmd Filetype java inoremap <silent> <buffer>  Y  <C-r>=WSDAutoComplete('Y')<CR>
-autocmd Filetype java inoremap <silent> <buffer>  Z  <C-r>=WSDAutoComplete('Z')<CR>
 function! WSDAutoComplete(char)
     if(getline(".")=~?'^\s*.*\/\/')==0
         let line = getline('.')
@@ -186,12 +220,7 @@ function! WSDAutoComplete(char)
         return a:char
     endif
 endf
-NeoBundle 'vim-scripts/Maven-Compiler'
-autocmd Filetype java compiler mvn
-autocmd Filetype pom compiler mvn
-autocmd Filetype java no <F9> :make clean<CR>
-autocmd Filetype java no <F10> :wa<CR> :make compile<CR>
-autocmd Filetype java no <F12> :make exec:exec<CR>
+"}}}
 "}}}
 NeoBundle 'bling/vim-airline'
 let g:Powerline_sybols = 'unicode'
@@ -213,7 +242,7 @@ NeoBundle 'MarcWeber/vim-addon-mw-utils'
 NeoBundle 'tomtom/tlib_vim'
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'SirVer/ultisnips'
-let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 NeoBundle 'majutsushi/tagbar'
@@ -259,9 +288,7 @@ NeoBundle 'wsdjeg/MarkDown.pl'
 autocmd filetype markdown nmap md :!~/.vim/bundle/MarkDown.pl/markdown.pl % > %.html<cr><cr>
 autocmd filetype markdown nmap fi :!firefox %.html & <CR><CR>
 autocmd filetype html nmap fi :!firefox % & 
-NeoBundle 'VJDE/VJDE'
 NeoBundle 'tomasr/molokai'
-NeoBundle 'java_getset.vim'
 NeoBundle 'nerdtree-ack'
 NeoBundle 'L9'
 " My Bundles here:
@@ -327,7 +354,7 @@ set t_Co=256
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-set completeopt=longest,menu
+"set completeopt=longest,menu
 "设置molokai配色 但是颜色太丑
 "colo molokai
 "}}}
@@ -340,6 +367,7 @@ nnoremap <C-Right> <C-W><Right>
 nnoremap <C-Left> <C-W><Left>
 nnoremap <C-Up> <C-W><Up>
 nnoremap <C-Down> <C-W><Down>
+inoremap jk <esc>
 
 "Ctrl+Shift+上下移动当前行
 nnoremap <C-S-Down> :m .+1<CR>==
