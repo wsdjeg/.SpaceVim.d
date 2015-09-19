@@ -200,7 +200,7 @@ NeoBundle 'scrooloose/nerdtree'
 let NERDTreeWinPos='right'
 let NERDTreeWinSize=31
 let NERDTreeChDirMode=1
-map <F3> :NERDTreeToggle<CR>
+noremap <F3> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 NeoBundle 'Xuyuanp/nerdtree-git-plugin'
 NeoBundle 'mattn/emmet-vim'
@@ -224,7 +224,7 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 NeoBundle 'majutsushi/tagbar'
-nmap <F2> :TagbarToggle<CR>
+noremap <F2> :TagbarToggle<CR>
 let g:tagbar_width=30
 let g:tagbar_left = 1
 NeoBundle 'airblade/vim-rooter'
@@ -248,7 +248,7 @@ let Tlist_Show_One_File=0
 let Tlist_File_Fold_Auto_Close=1
 let Tlist_Exit_OnlyWindow=1
 let Tlist_Show_Menu=1
-map <F8> :TlistToggle<CR>
+noremap <F8> :TlistToggle<CR>
 
 NeoBundle 'wsdjeg/MarkDown.pl'
 autocmd filetype markdown nmap md :!~/.vim/bundle/MarkDown.pl/markdown.pl % > %.html<cr><cr>
@@ -316,7 +316,7 @@ set completeopt=longest,menu
 "}}}
 
 " 对于没有权限的文件使用 :w!!来保存
-cmap w!! %!sudo tee > /dev/null %
+cnoremap w!! %!sudo tee > /dev/null %
 
 " 映射Ctrl+上下左右来切换窗口
 nnoremap <C-Right> <C-W><Right>
