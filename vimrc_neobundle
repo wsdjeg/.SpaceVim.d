@@ -193,13 +193,13 @@ function! WSDAutoComplete(char)
         return a:char
     endif
 endf
+NeoBundle 'vim-scripts/Maven-Compiler'
+autocmd Filetype java compiler mvn
+autocmd Filetype pom compiler mvn
+autocmd Filetype java no <F9> :make clean<CR>
+autocmd Filetype java no <F10> :wa<CR> :make compile<CR>
+autocmd Filetype java no <F12> :make exec:exec<CR>
 "}}}
-"NeoBundle 'vim-scripts/Maven-Compiler'
-"autocmd Filetype java compiler mvn
-"autocmd Filetype pom compiler mvn
-"autocmd Filetype java no <F9> :make clean<CR>
-"autocmd Filetype java no <F10> :wa<CR> :make compile<CR>
-"autocmd Filetype java no <F12> :make exec:exec<CR>
 NeoBundle 'bling/vim-airline'
 let g:Powerline_sybols = 'unicode'
 let g:airline#extensions#tabline#enabled = 1
@@ -378,14 +378,5 @@ function QuoteDelim(char)
     else
         "Starting a string
         return a:char.a:char."\<Esc>i"
-    endif
-endf
-"autocmd Filetype java inoremap <silent> <buffer>  s  <C-r>=TestMyfunc('s')<CR>
-function! TestMyfunc(char)
-    let b:thiscol = search("^\/\/")
-    if 1 > 0
-        return b:thiscol
-    else
-        return "2"
     endif
 endf
