@@ -196,13 +196,6 @@ autocmd Filetype java no <F12> :make exec:exec<CR>
 NeoBundle 'bling/vim-airline'
 let g:Powerline_sybols = 'unicode'
 let g:airline#extensions#tabline#enabled = 1
-NeoBundle 'scrooloose/nerdtree'
-let NERDTreeWinPos='right'
-let NERDTreeWinSize=31
-let NERDTreeChDirMode=1
-noremap <F3> :NERDTreeToggle<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-NeoBundle 'Xuyuanp/nerdtree-git-plugin'
 NeoBundle 'mattn/emmet-vim'
 let g:user_emmet_install_global = 0
 autocmd FileType html,css,jsp EmmetInstall
@@ -239,7 +232,17 @@ NeoBundle 'airblade/vim-gitgutter'
 "配合fcitx输入框架,在离开插入模式时自动切换到英文,在同一个缓冲区再次进入插入模式时回复到原来的输入状态
 NeoBundle 'lilydjwg/fcitx.vim'
 "NeoBundle 'mileszs/ack.vim'
+
+
+"vim Wimdows config
+"{{{
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'Xuyuanp/nerdtree-git-plugin'
 NeoBundle 'taglist.vim'
+let NERDTreeWinPos='right'
+let NERDTreeWinSize=31
+let NERDTreeChDirMode=1
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 let Tlist_Ctags_Cmd = '/usr/bin/ctags'  "设置ctags执行路径
 let Tlist_Auto_Update=1
 let Tlist_Auto_Open =0
@@ -249,6 +252,8 @@ let Tlist_File_Fold_Auto_Close=1
 let Tlist_Exit_OnlyWindow=1
 let Tlist_Show_Menu=1
 noremap <F8> :TlistToggle<CR>
+noremap <F3> :NERDTreeToggle<CR>
+"}}}
 
 NeoBundle 'wsdjeg/MarkDown.pl'
 autocmd filetype markdown nmap md :!~/.vim/bundle/MarkDown.pl/markdown.pl % > %.html<cr><cr>
@@ -274,6 +279,16 @@ NeoBundleCheck
 augroup filetype_vim
     autocmd!
     autocmd FileType vim setlocal foldmethod=marker
+    function Fold_This_Vim_File()
+        if &foldenable
+            execute ""
+            return "za\<cr>"
+        else
+            setlocal foldmethod=marker
+            echo "1"
+        endif
+
+    endf
 augroup END
 "{{{
 set relativenumber				"显示行号
@@ -291,6 +306,7 @@ syntax on
 filetype on
 filetype indent on
 set nobackup
+set nofoldenable                "关闭自动折叠 折叠按键 'za'
 set nowritebackup
 set ruler
 set showcmd						"命令行显示输入的命令
