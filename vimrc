@@ -241,10 +241,6 @@ NeoBundle 'SirVer/ultisnips'
 "let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-NeoBundle 'majutsushi/tagbar'
-noremap <F2> :TagbarToggle<CR>
-let g:tagbar_width=30
-let g:tagbar_left = 1
 NeoBundle 'airblade/vim-rooter'
 let g:rooter_patterns = ['Rakefile' , 'pom.xml' , 'web.xml' , '.git/']
 NeoBundle 'Yggdroot/indentLine'
@@ -264,6 +260,9 @@ NeoBundle 'lilydjwg/fcitx.vim'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'Xuyuanp/nerdtree-git-plugin'
 NeoBundle 'taglist.vim'
+NeoBundle 'majutsushi/tagbar'
+let g:tagbar_width=30
+let g:tagbar_left = 1
 let NERDTreeWinPos='right'
 let NERDTreeWinSize=31
 let NERDTreeChDirMode=1
@@ -278,6 +277,7 @@ let Tlist_Exit_OnlyWindow=1
 let Tlist_Show_Menu=1
 noremap <F8> :TlistToggle<CR>
 noremap <F3> :NERDTreeToggle<CR>
+noremap <F2> :TagbarToggle<CR>
 "}}}
 
 NeoBundle 'wsdjeg/MarkDown.pl'
