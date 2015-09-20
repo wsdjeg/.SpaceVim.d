@@ -9,37 +9,6 @@ endif
 call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 " }}}
-"YCM
-"{{{
-NeoBundle 'ervandew/supertab'
-NeoBundle 'Valloric/YouCompleteMe'
-let g:ycm_server_log_level = 'debug'
-let g:ycm_semantic_triggers =  {
-            \   'c' : ['->', '.'],
-            \   'objc' : ['->', '.'],
-            \   'ocaml' : ['.', '#'],
-            \   'cpp,objcpp' : ['->', '.', '::'],
-            \   'perl' : ['->'],
-            \   'php' : ['->', '::'],
-            \   'cs,javascript,d,python,perl6,scala,vb,elixir,go' : ['.'],
-            \   'java' : ['.', '::'],
-            \   'vim' : ['re![_a-zA-Z]+[_\w]*\.'],
-            \   'ruby' : ['.', '::'],
-            \   'lua' : ['.', ':'],
-            \   'erlang' : [':'],
-            \ }
-
-"let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-let g:ycm_confirm_extra_conf = 0
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-S-TAB>','<Up>'] 
-let g:SuperTabDefaultCompletionType = '<C-n>'
-let g:SuperTabContextDefaultCompletionType = "<c-n>"
-let g:neobundle#install_process_timeout = 1500
-"}}}
-NeoBundle 'vim-jp/vim-java'
-NeoBundle 'Shougo/vimproc.vim'
 NeoBundle 'Shougo/vimproc.vim', {
             \ 'build' : {
             \     'windows' : 'tools\\update-dll-mingw',
@@ -152,6 +121,41 @@ NeoBundle 'artur-shaik/vim-javacomplete2'
 NeoBundle 'VJDE/VJDE'
 NeoBundle 'java_getset.vim'
 NeoBundle 'vim-scripts/Maven-Compiler'
+"YCM
+"{{{
+NeoBundle 'ervandew/supertab'
+NeoBundle 'Valloric/YouCompleteMe'
+NeoBundle 'honza/vim-snippets'
+NeoBundle 'SirVer/ultisnips'
+"let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:ycm_server_log_level = 'debug'
+let g:ycm_semantic_triggers =  {
+            \   'c' : ['->', '.'],
+            \   'objc' : ['->', '.'],
+            \   'ocaml' : ['.', '#'],
+            \   'cpp,objcpp' : ['->', '.', '::'],
+            \   'perl' : ['->'],
+            \   'php' : ['->', '::'],
+            \   'cs,javascript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+            \   'java' : ['.', '::'],
+            \   'vim' : ['re![_a-zA-Z]+[_\w]*\.'],
+            \   'ruby' : ['.', '::'],
+            \   'lua' : ['.', ':'],
+            \   'erlang' : [':'],
+            \ }
+
+"let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-S-TAB>','<Up>'] 
+let g:SuperTabDefaultCompletionType = '<C-n>'
+let g:SuperTabContextDefaultCompletionType = "<c-n>"
+let g:neobundle#install_process_timeout = 1500
+"}}}
+NeoBundle 'vim-jp/vim-java'
 autocmd! Filetype pom compiler mvn
 let g:JavaComplete_UseFQN = 1          "补全描述使用全类名 默认是0
 let g:JavaComplete_ServerAutoShutdownTime = 300             "自动关闭javavi服务的等待时间间隔
@@ -221,6 +225,7 @@ endf
 NeoBundle 'bling/vim-airline'
 let g:Powerline_sybols = 'unicode'
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tmuxline#enabled = 0
 NeoBundle 'mattn/emmet-vim'
 let g:user_emmet_install_global = 0
 autocmd FileType html,css,jsp EmmetInstall
@@ -236,11 +241,6 @@ NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'easymotion/vim-easymotion'
 NeoBundle 'MarcWeber/vim-addon-mw-utils'
 NeoBundle 'tomtom/tlib_vim'
-NeoBundle 'honza/vim-snippets'
-NeoBundle 'SirVer/ultisnips'
-"let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 NeoBundle 'airblade/vim-rooter'
 let g:rooter_patterns = ['Rakefile' , 'pom.xml' , 'web.xml' , '.git/']
 NeoBundle 'Yggdroot/indentLine'
@@ -414,3 +414,11 @@ function QuoteDelim(char)
     endif
 endf
 "}}}
+"##########
+"autocmd(s)
+"##########
+augroup no_cursor_line_in_insert_mode
+    autocmd!
+    autocmd BufEnter,WinEnter,InsertLeave * set cursorline
+    autocmd BufLeave,WinLeave,InsertEnter * set nocursorline
+augroup END
