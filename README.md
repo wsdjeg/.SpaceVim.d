@@ -1,4 +1,8 @@
-# 常用配置文件
+# My Config File
+##VIM
+[*] Java
+[] Jsp
+##ZSH
 
 
 
