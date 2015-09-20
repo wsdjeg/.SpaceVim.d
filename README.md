@@ -1,7 +1,7 @@
 # My Config File
 ##VIM
-[*] Java
-[] Jsp
+- [ ] Java
+- [ ] Jsp
 ##ZSH
 
 
