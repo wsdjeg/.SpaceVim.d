@@ -5,18 +5,14 @@ if has('vim_starting')
         set nocompatible
     endif
     set runtimepath+=~/.vim/bundle/neobundle.vim/
-    set rtp+=~/.vim/bundle/Vundle.vim
 endif
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'Shougo/neobundle.vim'
 call neobundle#begin(expand('~/.vim/bundle/'))
-"NeoBundleFetch 'Shougo/neobundle.vim'
+NeoBundleFetch 'Shougo/neobundle.vim'
 " }}}
 "YCM
 "{{{
-Plugin 'ervandew/supertab'
-Plugin 'Valloric/YouCompleteMe'
+NeoBundle 'ervandew/supertab'
+NeoBundle 'Valloric/YouCompleteMe'
 let g:ycm_server_log_level = 'debug'
 let g:ycm_semantic_triggers =  {
             \   'c' : ['->', '.'],
@@ -42,18 +38,18 @@ let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:SuperTabContextDefaultCompletionType = "<c-n>"
 let g:neobundle#install_process_timeout = 1500
 "}}}
-Plugin 'vim-jp/vim-java'
-Plugin 'Shougo/vimproc.vim'
-"NeoBundle 'Shougo/vimproc.vim', {
-            "\ 'build' : {
-            "\     'windows' : 'tools\\update-dll-mingw',
-            "\     'cygwin' : 'make -f make_cygwin.mak',
-            "\     'mac' : 'make -f make_mac.mak',
-            "\     'linux' : 'make',
-            "\     'unix' : 'gmake',
-            "\    },
-            "\ }
-Plugin 'Shougo/unite.vim'
+NeoBundle 'vim-jp/vim-java'
+NeoBundle 'Shougo/vimproc.vim'
+NeoBundle 'Shougo/vimproc.vim', {
+            \ 'build' : {
+            \     'windows' : 'tools\\update-dll-mingw',
+            \     'cygwin' : 'make -f make_cygwin.mak',
+            \     'mac' : 'make -f make_mac.mak',
+            \     'linux' : 'make',
+            \     'unix' : 'gmake',
+            \    },
+            \ }
+NeoBundle 'Shougo/unite.vim'
 let g:unite_source_file_mru_time_format = "%m/%d %T "
 let g:unite_source_directory_mru_limit = 80
 let g:unite_source_directory_mru_time_format = "%m/%d %T "
@@ -86,76 +82,76 @@ nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files -start-insert file<c
 nnoremap <leader>m :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
 nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
 nnoremap <silent> <C-b> :<C-u>Unite -start-insert -buffer-name=buffer buffer<cr>
-Plugin 'Shougo/neomru.vim'
-Plugin 'Shougo/unite-outline'
-Plugin 'hewes/unite-gtags'
-Plugin 'tsukkee/unite-tag'
-Plugin 'ujihisa/unite-launch'
-Plugin 'osyo-manga/unite-filetype'
-Plugin 'thinca/vim-unite-history'
-Plugin 'Shougo/neobundle-vim-recipes'
-Plugin 'Shougo/unite-help'
-Plugin 'ujihisa/unite-locate'
-Plugin 'kmnk/vim-unite-giti'
-Plugin 'ujihisa/unite-font'
-Plugin 't9md/vim-unite-ack'
-Plugin 'mileszs/ack.vim'
-Plugin 'dyng/ctrlsf.vim'
-Plugin 'daisuzu/unite-adb'
-Plugin 'osyo-manga/unite-airline_themes'
-Plugin 'mattn/unite-vim_advent-calendar'
-Plugin 'kannokanno/unite-dwm'
-Plugin 'raw1z/unite-projects'
-Plugin 'voi/unite-ctags'
-Plugin 'Shougo/unite-session'
-Plugin 'osyo-manga/unite-quickfix'
-Plugin 'Shougo/vimfiler.vim'
+NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'Shougo/unite-outline'
+NeoBundle 'hewes/unite-gtags'
+NeoBundle 'tsukkee/unite-tag'
+NeoBundle 'ujihisa/unite-launch'
+NeoBundle 'osyo-manga/unite-filetype'
+NeoBundle 'thinca/vim-unite-history'
+NeoBundle 'Shougo/neobundle-vim-recipes'
+NeoBundle 'Shougo/unite-help'
+NeoBundle 'ujihisa/unite-locate'
+NeoBundle 'kmnk/vim-unite-giti'
+NeoBundle 'ujihisa/unite-font'
+NeoBundle 't9md/vim-unite-ack'
+NeoBundle 'mileszs/ack.vim'
+NeoBundle 'dyng/ctrlsf.vim'
+NeoBundle 'daisuzu/unite-adb'
+NeoBundle 'osyo-manga/unite-airline_themes'
+NeoBundle 'mattn/unite-vim_advent-calendar'
+NeoBundle 'kannokanno/unite-dwm'
+NeoBundle 'raw1z/unite-projects'
+NeoBundle 'voi/unite-ctags'
+NeoBundle 'Shougo/unite-session'
+NeoBundle 'osyo-manga/unite-quickfix'
+NeoBundle 'Shougo/vimfiler.vim'
 "NeoBundle 'mattn/webapi-vim'
 "NeoBundle 'mattn/googlesuggest-complete-vim'
 "NeoBundle 'mopp/googlesuggest-source.vim'
-Plugin 'ujihisa/unite-colorscheme'
-Plugin 'tacroe/unite-mark'
-Plugin 'tacroe/unite-alias'
+NeoBundle 'ujihisa/unite-colorscheme'
+NeoBundle 'tacroe/unite-mark'
+NeoBundle 'tacroe/unite-alias'
 "NeoBundle 'ujihisa/quicklearn'
-Plugin 'tex/vim-unite-id'
+NeoBundle 'tex/vim-unite-id'
 
 
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-surround'
-Plugin 'terryma/vim-multiple-cursors'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'terryma/vim-multiple-cursors'
 "let g:multi_cursor_use_default_mapping=0
 "let g:multi_cursor_start_key='<C-h>'
 let g:multi_cursor_next_key='<C-j>'
 let g:multi_cursor_prev_key='<C-k>'
 let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'tyru/open-browser.vim'
-Plugin 'felixSchl/ctrlp-unity3d-docs'
-Plugin 'voronkovich/ctrlp-nerdtree.vim'
-Plugin 'elentok/ctrlp-objects.vim'
-Plugin 'h14i/vim-ctrlp-buftab'
-Plugin 'vim-scripts/ctrlp-cmdpalette'
-Plugin 'mattn/ctrlp-windowselector'
-Plugin 'the9ball/ctrlp-gtags'
-Plugin 'thiderman/ctrlp-project'
-Plugin 'mattn/ctrlp-google'
-Plugin 'ompugao/ctrlp-history'
-Plugin 'pielgrzym/ctrlp-sessions'
-Plugin 'tacahiroy/ctrlp-funky'
-Plugin 'brookhong/k.vim'
-Plugin 'mattn/ctrlp-launcher'
-Plugin 'sgur/ctrlp-extensions.vim'
-Plugin 'FelikZ/ctrlp-py-matcher'
-Plugin 'JazzCore/ctrlp-cmatcher'
-Plugin 'tpope/vim-scriptease'
+NeoBundle 'ctrlpvim/ctrlp.vim'
+NeoBundle 'tyru/open-browser.vim'
+NeoBundle 'felixSchl/ctrlp-unity3d-docs'
+NeoBundle 'voronkovich/ctrlp-nerdtree.vim'
+NeoBundle 'elentok/ctrlp-objects.vim'
+NeoBundle 'h14i/vim-ctrlp-buftab'
+NeoBundle 'vim-scripts/ctrlp-cmdpalette'
+NeoBundle 'mattn/ctrlp-windowselector'
+NeoBundle 'the9ball/ctrlp-gtags'
+NeoBundle 'thiderman/ctrlp-project'
+NeoBundle 'mattn/ctrlp-google'
+NeoBundle 'ompugao/ctrlp-history'
+NeoBundle 'pielgrzym/ctrlp-sessions'
+NeoBundle 'tacahiroy/ctrlp-funky'
+NeoBundle 'brookhong/k.vim'
+NeoBundle 'mattn/ctrlp-launcher'
+NeoBundle 'sgur/ctrlp-extensions.vim'
+NeoBundle 'FelikZ/ctrlp-py-matcher'
+NeoBundle 'JazzCore/ctrlp-cmatcher'
+NeoBundle 'tpope/vim-scriptease'
 "Javacomplete and autocompile
 "{{{
 "NeoBundle 'artur-shaik/vim-javacomplete2'
-Plugin 'artur-shaik/vim-javacomplete2'
-Plugin 'VJDE/VJDE'
-Plugin 'java_getset.vim'
-Plugin 'vim-scripts/Maven-Compiler'
+NeoBundle 'artur-shaik/vim-javacomplete2'
+NeoBundle 'VJDE/VJDE'
+NeoBundle 'java_getset.vim'
+NeoBundle 'vim-scripts/Maven-Compiler'
 autocmd! Filetype pom compiler mvn
 let g:JavaComplete_UseFQN = 1          "补全描述使用全类名 默认是0
 let g:JavaComplete_ServerAutoShutdownTime = 300             "自动关闭javavi服务的等待时间间隔
@@ -222,52 +218,52 @@ function! WSDAutoComplete(char)
 endf
 "}}}
 "}}}
-Plugin 'bling/vim-airline'
+NeoBundle 'bling/vim-airline'
 let g:Powerline_sybols = 'unicode'
 let g:airline#extensions#tabline#enabled = 1
-Plugin 'mattn/emmet-vim'
+NeoBundle 'mattn/emmet-vim'
 let g:user_emmet_install_global = 0
 autocmd FileType html,css,jsp EmmetInstall
 let g:user_emmet_leader_key='<C-e>'
 let g:user_emmet_mode='a'
-Plugin 'scrooloose/syntastic'
+NeoBundle 'scrooloose/syntastic'
 let g:syntastic_java_javac_config_file_enabled = 1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'easymotion/vim-easymotion'
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'honza/vim-snippets'
-Plugin 'SirVer/ultisnips'
+NeoBundle 'scrooloose/nerdcommenter'
+NeoBundle 'easymotion/vim-easymotion'
+NeoBundle 'MarcWeber/vim-addon-mw-utils'
+NeoBundle 'tomtom/tlib_vim'
+NeoBundle 'honza/vim-snippets'
+NeoBundle 'SirVer/ultisnips'
 "let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-Plugin 'majutsushi/tagbar'
+NeoBundle 'majutsushi/tagbar'
 noremap <F2> :TagbarToggle<CR>
 let g:tagbar_width=30
 let g:tagbar_left = 1
-Plugin 'airblade/vim-rooter'
+NeoBundle 'airblade/vim-rooter'
 let g:rooter_patterns = ['Rakefile' , 'pom.xml' , 'web.xml' , '.git/']
-Plugin 'Yggdroot/indentLine'
+NeoBundle 'Yggdroot/indentLine'
 let g:indentLine_color_term = 239
 let g:indentLine_color_gui = '#09AA08'
 let g:indentLine_char = '│'
-Plugin 'godlygeek/tabular'
-Plugin 'benizi/vim-automkdir'
-Plugin 'airblade/vim-gitgutter'
+NeoBundle 'godlygeek/tabular'
+NeoBundle 'benizi/vim-automkdir'
+NeoBundle 'airblade/vim-gitgutter'
 "配合fcitx输入框架,在离开插入模式时自动切换到英文,在同一个缓冲区再次进入插入模式时回复到原来的输入状态
-Plugin 'lilydjwg/fcitx.vim'
+NeoBundle 'lilydjwg/fcitx.vim'
 "NeoBundle 'mileszs/ack.vim'
 
 
 "vim Wimdows config
 "{{{
-Plugin 'scrooloose/nerdtree'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'taglist.vim'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'Xuyuanp/nerdtree-git-plugin'
+NeoBundle 'taglist.vim'
 let NERDTreeWinPos='right'
 let NERDTreeWinSize=31
 let NERDTreeChDirMode=1
@@ -284,21 +280,20 @@ noremap <F8> :TlistToggle<CR>
 noremap <F3> :NERDTreeToggle<CR>
 "}}}
 
-Plugin 'wsdjeg/MarkDown.pl'
+NeoBundle 'wsdjeg/MarkDown.pl'
 autocmd filetype markdown nmap md :!~/.vim/bundle/MarkDown.pl/markdown.pl % > %.html<cr><cr>
 autocmd filetype markdown nmap fi :!firefox %.html & <CR><CR>
 autocmd filetype html nmap fi :!firefox % & 
-Plugin 'tomasr/molokai'
-Plugin 'nerdtree-ack'
-Plugin 'L9'
+NeoBundle 'tomasr/molokai'
+NeoBundle 'nerdtree-ack'
+NeoBundle 'L9'
 " My Bundles here:
 " Refer to |:NeoBundle-examples|.
 " Note: You don't set neobundle setting in .gvimrc!
 
 call neobundle#end()
-call vundle#end()
-"NeoBundleCheck
-" Required:
+"call vundle#end()
+NeoBundleCheck
 filetype plugin indent on
 
 " If there are uninstalled bundles found on startup,
