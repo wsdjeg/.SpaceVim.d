@@ -5,7 +5,7 @@ set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'artur-shaik/vim-javacomplete2'
-Plugin 'VJDE/VJDE'
+""Plugin 'VJDE/VJDE'
 Plugin 'java_getset.vim'
 Plugin 'vim-scripts/Maven-Compiler'
 Plugin 'ervandew/supertab'
@@ -56,34 +56,48 @@ autocmd Syntax java inoremap } <c-r>=CloseBracket()<CR>
 inoremap " <c-r>=QuoteDelim('"')<CR>
 inoremap ' <c-r>=QuoteDelim("'")<CR>
 function ClosePair(char)
-    if getline('.')[col('.') - 1] == a:char
-        return "\<Right>"
-    else
-        return a:char
-    endif
+	if getline('.')[col('.') - 1] == a:char
+		return "\<Right>"
+	else
+		return a:char
+	endif
 endf
 
 function CloseBracket()
-    if match(getline(line('.') + 1), '\s*}') < 0
-        return "\<CR>}"
-    else
-        return "\<Esc>j0f}a"
-    endif
+	if match(getline(line('.') + 1), '\s*}') < 0
+		return "\<CR>}"
+	else
+		return "\<Esc>j0f}a"
+	endif
 endf
 
 function QuoteDelim(char)
-    let line = getline('.')
-    let col = col('.')
-    if line[col - 2] == "\\"
-        "Inserting a quoted quotation mark into the string
-        return a:char
-    elseif line[col - 1] == a:char
-        "Escaping out of the string
-        return "\<Right>"
-    else
-        "Starting a string
-        return a:char.a:char."\<Esc>i"
-    endif
+	let line = getline('.')
+	let col = col('.')
+	if line[col - 2] == "\\"
+		"Inserting a quoted quotation mark into the string
+		return a:char
+	elseif line[col - 1] == a:char
+		"Escaping out of the string
+		return "\<Right>"
+	else
+		"Starting a string
+		return a:char.a:char."\<Esc>i"
+	endif
 endf
 call vundle#end()
 filetype plugin indent on
+func! Vjde_surround_try() range "{{{2
+	call append(a:firstline-1,'try {')
+	call append(a:lastline+1,'}')
+	call append(a:lastline+2,'catch(Exception ex) {')
+	call append(a:lastline+3,'//TODO: Add Exception handler here')
+	call append(a:lastline+4,'}')
+	call cursor(a:firstline-1,0)
+	exec 'normal '.(a:lastline-a:firstline+7).'=='
+	"exec (a:firstline-1).','.(a:lastline+4).'=='
+endf
+func! Java_get_type(str,v_v) "{{{2
+        let str1 = matchstr(a:str,'\<[^ \t]\+\s\+\<'.a:v_v.'\>')
+        return substitute(str1,'\<\([^ \t]\+\)\s\+\<'.a:v_v.'\>','\1','')
+endf
