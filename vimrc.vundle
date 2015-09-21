@@ -4,5 +4,86 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
+Plugin 'artur-shaik/vim-javacomplete2'
+Plugin 'VJDE/VJDE'
+Plugin 'java_getset.vim'
+Plugin 'vim-scripts/Maven-Compiler'
+Plugin 'ervandew/supertab'
+Plugin 'honza/vim-snippets'
+Plugin 'SirVer/ultisnips'
+Plugin 'airblade/vim-rooter'
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:SuperTabDefaultCompletionType = '<C-n>'
+let g:SuperTabContextDefaultCompletionType = "<c-n>"
+Plugin 'vim-jp/vim-java'
+autocmd! Filetype pom compiler mvn
+let g:JavaComplete_UseFQN = 1          "补全描述使用全类名 默认是0
+let g:JavaComplete_ServerAutoShutdownTime = 300             "自动关闭javavi服务的等待时间间隔
+let g:JavaComplete_MavenRepositoryDisable = 1
+let g:auto_javacomplete2_wsd=1
+
+"{{{
+"全局映射
+" {{{对于没有权限的文件使用 :w!!来保存
+cnoremap w!! %!sudo tee > /dev/null %
+
+" 映射Ctrl+上下左右来切换窗口
+nnoremap <C-Right> <C-W><Right>
+nnoremap <C-Left> <C-W><Left>
+nnoremap <C-Up> <C-W><Up>
+nnoremap <C-Down> <C-W><Down>
+inoremap jk <esc>
+
+"Ctrl+Shift+上下移动当前行
+nnoremap <C-S-Down> :m .+1<CR>==
+nnoremap <C-S-Up> :m .-2<CR>==
+inoremap <C-S-Down> <Esc>:m .+1<CR>==gi
+inoremap <C-S-Up> <Esc>:m .-2<CR>==gi
+"上下移动选中的行
+vnoremap <C-S-Down> :m '>+1<CR>gv=gv
+vnoremap <C-S-Up> :m '<-2<CR>gv=gv
+inoremap ( ()<Esc>i
+inoremap [ []<Esc>i
+inoremap { {}<Esc>i
+autocmd Syntax java inoremap { {<CR>}<Esc>O
+autocmd Syntax html,vim inoremap < <lt>><Esc>i| inoremap > <c-r>=ClosePair('>')<CR>
+inoremap ) <c-r>=ClosePair(')')<CR>
+inoremap ] <c-r>=ClosePair(']')<CR>
+inoremap } <c-r>=ClosePair('}')<CR>
+autocmd Syntax java inoremap } <c-r>=CloseBracket()<CR>
+inoremap " <c-r>=QuoteDelim('"')<CR>
+inoremap ' <c-r>=QuoteDelim("'")<CR>
+function ClosePair(char)
+    if getline('.')[col('.') - 1] == a:char
+        return "\<Right>"
+    else
+        return a:char
+    endif
+endf
+
+function CloseBracket()
+    if match(getline(line('.') + 1), '\s*}') < 0
+        return "\<CR>}"
+    else
+        return "\<Esc>j0f}a"
+    endif
+endf
+
+function QuoteDelim(char)
+    let line = getline('.')
+    let col = col('.')
+    if line[col - 2] == "\\"
+        "Inserting a quoted quotation mark into the string
+        return a:char
+    elseif line[col - 1] == a:char
+        "Escaping out of the string
+        return "\<Right>"
+    else
+        "Starting a string
+        return a:char.a:char."\<Esc>i"
+    endif
+endf
 call vundle#end()
 filetype plugin indent on
