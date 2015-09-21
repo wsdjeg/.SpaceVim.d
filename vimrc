@@ -246,9 +246,10 @@ let g:rooter_patterns = ['Rakefile' , 'pom.xml' , 'web.xml' , '.git/']
 NeoBundle 'Yggdroot/indentLine'
 let g:indentLine_color_term = 239
 let g:indentLine_color_gui = '#09AA08'
-let g:indentLine_char = '│'
+let g:indentLine_char = '¦'
 NeoBundle 'godlygeek/tabular'
 NeoBundle 'benizi/vim-automkdir'
+"[c  ]c  jump between prev or next hunk
 NeoBundle 'airblade/vim-gitgutter'
 "配合fcitx输入框架,在离开插入模式时自动切换到英文,在同一个缓冲区再次进入插入模式时回复到原来的输入状态
 NeoBundle 'lilydjwg/fcitx.vim'
@@ -285,6 +286,7 @@ autocmd filetype markdown nmap md :!~/.vim/bundle/MarkDown.pl/markdown.pl % > %.
 autocmd filetype markdown nmap fi :!firefox %.html & <CR><CR>
 autocmd filetype html nmap fi :!firefox % & 
 NeoBundle 'tomasr/molokai'
+NeoBundle "vimchina/vimcdoc"
 NeoBundle 'nerdtree-ack'
 NeoBundle 'L9'
 " My Bundles here:
@@ -422,3 +424,19 @@ augroup no_cursor_line_in_insert_mode
     autocmd BufEnter,WinEnter,InsertLeave * set cursorline
     autocmd BufLeave,WinLeave,InsertEnter * set nocursorline
 augroup END
+if has("autocmd")
+    autocmd BufReadPost *
+                \ if line("'\"") > 0 && line ("'\"") <= line("$") |
+                \   exe "normal! g'\"" |
+                \ endif
+endif
+function! ToggleBG()
+    let s:tbg = &background
+    " Inversion
+    if s:tbg == "dark"
+        set background=light
+    else
+        set background=dark
+    endif
+endfunction
+noremap <leader>bg :call ToggleBG()<CR>
