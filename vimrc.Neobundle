@@ -166,7 +166,7 @@ function! JavaFileTypeInit()
     set omnifunc=javacomplete#Complete
     nnoremap <F4> :JCimportAdd<cr>
     inoremap <F4> <esc>:JCimportAddI<cr>
-    "inoremap <silent> <buffer>  .  <C-r>=WSDAutoComplete('.')<CR>
+    inoremap <silent> <buffer>  .  <C-r>=WSDAutoComplete('.')<CR>
     inoremap <silent> <buffer>  A  <C-r>=WSDAutoComplete('A')<CR>
     inoremap <silent> <buffer>  B  <C-r>=WSDAutoComplete('B')<CR>
     inoremap <silent> <buffer>  C  <C-r>=WSDAutoComplete('C')<CR>
@@ -217,7 +217,14 @@ function! WSDAutoComplete(char)
             return a:char
         endif
     else
-        return a:char
+        let line = getline('.')
+        let col = col('.')
+        let [commentline,commentcol] = searchpos('//','nc','W')
+        if line == getline(commentline)
+            return a:char."\<c-x>\<c-o>\<c-p>"
+        else
+            return a:char
+        endif
     endif
 endf
 "}}}
