@@ -126,8 +126,17 @@ NeoBundle 'ervandew/supertab'
 NeoBundle 'Valloric/YouCompleteMe'
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'SirVer/ultisnips'
-"let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
+"inoremap <Enter> <c-r>=MyEnterfunc()<cr>
+"function MyEnterfunc()
+"if pumvisible()
+    "if pumvisible()
+        "return "\<c-r>=UltiSnips#ExpandSnippetOrJump()\<cr>"
+    "else
+        "return "\<Enter>"
+    "endif
+"endif
+"endf
+"let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 let g:ycm_server_log_level = 'debug'
 let g:ycm_semantic_triggers =  {
@@ -151,7 +160,7 @@ let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-S-TAB>','<Up>'] 
 let g:SuperTabDefaultCompletionType = '<C-n>'
-let g:SuperTabContextDefaultCompletionType = "<c-n>"
+"let g:SuperTabContextDefaultCompletionType = "<c-n>"
 let g:neobundle#install_process_timeout = 1500
 "}}}
 NeoBundle 'vim-jp/vim-java'
@@ -165,7 +174,7 @@ function! JavaFileTypeInit()
     set omnifunc=javacomplete#Complete
     nnoremap <F4> :JCimportAdd<cr>
     inoremap <F4> <esc>:JCimportAddI<cr>
-    "inoremap <silent> <buffer>  .  <C-r>=WSDAutoComplete('.')<CR>
+    inoremap <silent> <buffer>  .  <C-r>=WSDAutoComplete('.')<CR>
     inoremap <silent> <buffer>  A  <C-r>=WSDAutoComplete('A')<CR>
     inoremap <silent> <buffer>  B  <C-r>=WSDAutoComplete('B')<CR>
     inoremap <silent> <buffer>  C  <C-r>=WSDAutoComplete('C')<CR>
