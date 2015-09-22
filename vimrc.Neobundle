@@ -500,3 +500,5 @@ noremap <leader>bg :call ToggleBG()<CR>
 function! ToggleNumber()
 
 endf
+"也可以通过'za'打开或者关闭折叠
+nnoremap <silent><leader><space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
