@@ -160,8 +160,16 @@ let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-S-TAB>','<Up>'] 
 let g:SuperTabDefaultCompletionType = '<C-n>'
+let g:ycm_seed_identifiers_with_syntax=1
 "let g:SuperTabContextDefaultCompletionType = "<c-n>"
+inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
+inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
+inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
+inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
 let g:neobundle#install_process_timeout = 1500
+
 "}}}
 NeoBundle 'vim-jp/vim-java'
 autocmd! Filetype pom compiler mvn
@@ -253,6 +261,9 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_warning_symbol = '⚠'
+
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'easymotion/vim-easymotion'
 NeoBundle 'MarcWeber/vim-addon-mw-utils'
@@ -277,6 +288,32 @@ NeoBundle 'lilydjwg/fcitx.vim'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'Xuyuanp/nerdtree-git-plugin'
 NeoBundle 'taglist.vim'
+NeoBundle 'bronson/vim-trailing-whitespace'
+NeoBundle 'kien/rainbow_parentheses.vim'
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['black',       'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
+let g:rbpt_max = 16
+let g:rbpt_loadcmd_toggle = 0
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
 NeoBundle 'majutsushi/tagbar'
 let g:tagbar_width=30
 let g:tagbar_left = 1
@@ -292,19 +329,23 @@ let Tlist_Show_One_File=0
 let Tlist_File_Fold_Auto_Close=1
 let Tlist_Exit_OnlyWindow=1
 let Tlist_Show_Menu=1
-noremap <F8> :TlistToggle<CR>
-noremap <F3> :NERDTreeToggle<CR>
-noremap <F2> :TagbarToggle<CR>
+noremap <silent> <F8> :TlistToggle<CR>
+noremap <silent> <F3> :NERDTreeToggle<CR>
+noremap <silent> <F2> :TagbarToggle<CR>
 "}}}
 
 NeoBundle 'wsdjeg/MarkDown.pl'
 autocmd filetype markdown nmap md :!~/.vim/bundle/MarkDown.pl/markdown.pl % > %.html<cr><cr>
 autocmd filetype markdown nmap fi :!firefox %.html & <CR><CR>
-autocmd filetype html nmap fi :!firefox % & 
+autocmd filetype html nmap fi :!firefox % &
 NeoBundle 'tomasr/molokai'
-NeoBundle "vimchina/vimcdoc"
+NeoBundle 'vimchina/vimcdoc'
+NeoBundle 'sjl/gundo.vim'
+nnoremap <silent> <F7> :GundoToggle<CR>
 NeoBundle 'nerdtree-ack'
 NeoBundle 'L9'
+NeoBundle 'TaskList.vim'
+map <unique> <Leader>td <Plug>TaskList
 " My Bundles here:
 " Refer to |:NeoBundle-examples|.
 " Note: You don't set neobundle setting in .gvimrc!
@@ -456,3 +497,6 @@ function! ToggleBG()
     endif
 endfunction
 noremap <leader>bg :call ToggleBG()<CR>
+function! ToggleNumber()
+
+endf
