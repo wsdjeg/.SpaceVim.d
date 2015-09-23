@@ -136,8 +136,10 @@ NeoBundle 'SirVer/ultisnips'
     "endif
 "endif
 "endf
-"let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
+
 let g:ycm_server_log_level = 'debug'
 let g:ycm_semantic_triggers =  {
             \   'c' : ['->', '.'],
@@ -161,7 +163,7 @@ let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-S-TAB>','<Up>'] 
 let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:ycm_seed_identifiers_with_syntax=1
-"let g:SuperTabContextDefaultCompletionType = "<c-n>"
+let g:SuperTabContextDefaultCompletionType = "<c-n>"
 inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
 inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
 inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
@@ -387,9 +389,34 @@ syntax enable
 syntax on
 filetype on
 filetype indent on
-set nobackup
+"set nobackup
+set backup
+let data_dir = $HOME.'/.data/'
+let backup_dir = data_dir . 'backup'
+let swap_dir = data_dir . 'swap'
+if finddir(data_dir) == ''
+    silent call mkdir(data_dir)
+endif
+if finddir(backup_dir) == ''
+    silent call mkdir(backup_dir)
+endif
+if finddir(swap_dir) == ''
+    silent call mkdir(swap_dir)
+endif
+unlet backup_dir
+unlet swap_dir
+unlet data_dir
+set backupdir=$HOME/.data/backup
+set directory=$HOME/.data/swap
 set nofoldenable                "关闭自动折叠 折叠按键 'za'
 set nowritebackup
+try
+    set undodir=~/.vim/undodir
+    set undofile
+    set undolevels=1000
+catch
+endtry
+set matchtime=0
 set ruler
 set showcmd						"命令行显示输入的命令
 set showmatch					"设置匹配模式,显示匹配的括号
@@ -397,7 +424,7 @@ set showmode					"命令行显示当前vim的模式
 set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 set termencoding=utf-8
 set encoding=utf-8
-set scrolloff=7
+set scrolloff=0               "最低显示行数
 set cursorline					"显示当前行
 "set cursorcolumn				"显示当前列
 set incsearch
@@ -481,12 +508,6 @@ augroup no_cursor_line_in_insert_mode
     autocmd BufEnter,WinEnter,InsertLeave * set cursorline
     autocmd BufLeave,WinLeave,InsertEnter * set nocursorline
 augroup END
-if has("autocmd")
-    autocmd BufReadPost *
-                \ if line("'\"") > 0 && line ("'\"") <= line("$") |
-                \   exe "normal! g'\"" |
-                \ endif
-endif
 function! ToggleBG()
     let s:tbg = &background
     " Inversion
@@ -502,3 +523,86 @@ function! ToggleNumber()
 endf
 "也可以通过'za'打开或者关闭折叠
 nnoremap <silent><leader><space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
+if has('autocmd')
+
+    augroup ex
+        au!
+
+        " ------------------------------------------------------------------
+        " Desc: Buffer
+        " ------------------------------------------------------------------
+
+        " when editing a file, always jump to the last known cursor position.
+        " don't do it when the position is invalid or when inside an event handler
+        " (happens when dropping a file on gvim).
+        au BufReadPost *
+                    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+                    \   exe "normal g`\"" |
+                    \ endif
+        au BufNewFile,BufEnter * set cpoptions+=d " NOTE: ctags find the tags file from the current path instead of the path of currect file
+        au BufEnter * :syntax sync fromstart " ensure every file does syntax highlighting (full)
+        au BufNewFile,BufRead *.avs set syntax=avs " for avs syntax file.
+
+        " DISABLE {
+        " NOTE: will have problem with exvim, because exvim use exES_CWD as working directory for tag and other thing
+        " Change current directory to the file of the buffer ( from Script#65"CD.vim"
+        " au   BufEnter *   execute ":lcd " . expand("%:p:h")
+        " } DISABLE end
+
+        " ------------------------------------------------------------------
+        " Desc: file types
+        " ------------------------------------------------------------------
+
+        au FileType text setlocal textwidth=78 " for all text files set 'textwidth' to 78 characters.
+        au FileType c,cpp,cs,swig set nomodeline " this will avoid bug in my project with namespace ex, the vim will tree ex:: as modeline.
+
+        " disable auto-comment for c/cpp, lua, javascript, c# and vim-script
+        au FileType c,cpp,java,javascript set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,f://
+        au FileType cs set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,f:///,f://
+        au FileType vim set comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",f:\"
+        au FileType lua set comments=f:--
+
+        " if edit python scripts, check if have \t. ( python said: the programme can only use \t or not, but can't use them together )
+        au FileType python,coffee call s:check_if_expand_tab()
+    augroup END
+
+    function! s:check_if_expand_tab()
+        let has_noexpandtab = search('^\t','wn')
+        let has_expandtab = search('^    ','wn')
+
+        "
+        if has_noexpandtab && has_expandtab
+            let idx = inputlist ( ['ERROR: current file exists both expand and noexpand TAB, python can only use one of these two mode in one file.\nSelect Tab Expand Type:',
+                        \ '1. expand (tab=space, recommended)',
+                        \ '2. noexpand (tab=\t, currently have risk)',
+                        \ '3. do nothing (I will handle it by myself)'])
+            let tab_space = printf('%*s',&tabstop,'')
+            if idx == 1
+                let has_noexpandtab = 0
+                let has_expandtab = 1
+                silent exec '%s/\t/' . tab_space . '/g'
+            elseif idx == 2
+                let has_noexpandtab = 1
+                let has_expandtab = 0
+                silent exec '%s/' . tab_space . '/\t/g'
+            else
+                return
+            endif
+        endif
+
+        "
+        if has_noexpandtab == 1 && has_expandtab == 0
+            echomsg 'substitute space to TAB...'
+            set noexpandtab
+            echomsg 'done!'
+        elseif has_noexpandtab == 0 && has_expandtab == 1
+            echomsg 'substitute TAB to space...'
+            set expandtab
+            echomsg 'done!'
+        else
+            " it may be a new file
+            " we use original vim setting
+        endif
+    endfunction
+endif
+
