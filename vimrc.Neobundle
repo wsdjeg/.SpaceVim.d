@@ -131,7 +131,7 @@ NeoBundle 'SirVer/ultisnips'
 "inoremap <expr><CR> 11
 "<c-r>=MyEnterfunc()<cr>
 function MyEnterfunc()
-    if 1
+    if '1'
         return '1'
     else
         return "\<Enter>"
@@ -176,8 +176,10 @@ let g:neobundle#install_process_timeout = 1500
 "}}}
 NeoBundle 'vim-jp/vim-java'
 autocmd! Filetype pom compiler mvn
-let g:JavaComplete_UseFQN = 1          "补全描述使用全类名 默认是0
-let g:JavaComplete_ServerAutoShutdownTime = 300             "自动关闭javavi服务的等待时间间隔
+"do not use fall class name
+let g:JavaComplete_UseFQN = 1
+"set the server autoshutdown time
+let g:JavaComplete_ServerAutoShutdownTime = 300
 let g:JavaComplete_MavenRepositoryDisable = 1
 "{{{
 autocmd! FileType java call JavaFileTypeInit()
@@ -236,7 +238,7 @@ function! WSDAutoComplete(char)
             return a:char
         endif
     else
-        "还未解决只有一行时候的bug
+        "bug exists
         let line = getline('.')
         let col = col('.')
         let [commentline,commentcol] = searchpos('//','nc','W')
@@ -259,13 +261,14 @@ autocmd FileType html,css,jsp EmmetInstall
 let g:user_emmet_leader_key='<C-e>'
 let g:user_emmet_mode='a'
 NeoBundle 'scrooloose/syntastic'
+let g:syntastic_java_javac_delete_output=0
 let g:syntastic_java_javac_config_file_enabled = 1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
-let g:syntastic_error_symbol = '✗'
-let g:syntastic_warning_symbol = '⚠'
+let g:syntastic_error_symbol = '1'
+let g:syntastic_warning_symbol = '2'
 NeoBundle 'syngan/vim-vimlint', {
     \ 'depends' : 'ynkdir/vim-vimlparser'}
 NeoBundle 'ynkdir/vim-vimlparser'
@@ -328,18 +331,18 @@ au Syntax * RainbowParenthesesLoadBraces
 NeoBundle 'majutsushi/tagbar'
 let g:tagbar_width=30
 let g:tagbar_left = 1
-let NERDTreeWinPos='right'
-let NERDTreeWinSize=31
-let NERDTreeChDirMode=1
+let g:NERDTreeWinPos='right'
+let g:NERDTreeWinSize=31
+let g:NERDTreeChDirMode=1
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-let Tlist_Ctags_Cmd = '/usr/bin/ctags'  "设置ctags执行路径
-let Tlist_Auto_Update=1
-let Tlist_Auto_Open =0
-let Tlist_Use_Right_Window=1
-let Tlist_Show_One_File=0
-let Tlist_File_Fold_Auto_Close=1
-let Tlist_Exit_OnlyWindow=1
-let Tlist_Show_Menu=1
+let g:Tlist_Ctags_Cmd = '/usr/bin/ctags'  "设置ctags执行路径
+let g:Tlist_Auto_Update=1
+let g:Tlist_Auto_Open =0
+let g:Tlist_Use_Right_Window=1
+let g:Tlist_Show_One_File=0
+let g:Tlist_File_Fold_Auto_Close=1
+let g:Tlist_Exit_OnlyWindow=1
+let g:Tlist_Show_Menu=1
 noremap <silent> <F8> :TlistToggle<CR>
 noremap <silent> <F3> :NERDTreeToggle<CR>
 noremap <silent> <F2> :TagbarToggle<CR>
@@ -402,26 +405,26 @@ filetype indent on
 set backup
 set undofile
 set undolevels=1000
-let data_dir = $HOME.'/.data/'
-let backup_dir = data_dir . 'backup'
-let swap_dir = data_dir . 'swap'
-let undo_dir = data_dir . 'undofile'
-if finddir(data_dir) == ''
-    silent call mkdir(data_dir)
+let g:data_dir = $HOME.'/.data/'
+let g:backup_dir = g:data_dir . 'backup'
+let g:swap_dir = g:data_dir . 'swap'
+let g:undo_dir = g:data_dir . 'undofile'
+if finddir(g:data_dir) == ''
+    silent call mkdir(g:data_dir)
 endif
-if finddir(backup_dir) == ''
-    silent call mkdir(backup_dir)
+if finddir(g:backup_dir) == ''
+    silent call mkdir(g:backup_dir)
 endif
-if finddir(swap_dir) == ''
-    silent call mkdir(swap_dir)
+if finddir(g:swap_dir) == ''
+    silent call mkdir(g:swap_dir)
 endif
-if finddir(undo_dir) == ''
-    silent call mkdir(undo_dir)
+if finddir(g:undo_dir) == ''
+    silent call mkdir(g:undo_dir)
 endif
-unlet backup_dir
-unlet swap_dir
-unlet data_dir
-unlet undo_dir
+unlet g:backup_dir
+unlet g:swap_dir
+unlet g:data_dir
+unlet g:undo_dir
 set undodir=$HOME/.data/undofile
 set backupdir=$HOME/.data/backup
 set directory=$HOME/.data/swap
