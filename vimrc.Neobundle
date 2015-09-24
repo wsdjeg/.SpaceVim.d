@@ -180,7 +180,7 @@ autocmd! Filetype pom compiler mvn
 let g:JavaComplete_UseFQN = 1
 "set the server autoshutdown time
 let g:JavaComplete_ServerAutoShutdownTime = 300
-let g:JavaComplete_MavenRepositoryDisable = 1
+let g:JavaComplete_MavenRepositoryDisable = 0
 "{{{
 autocmd! FileType java call JavaFileTypeInit()
 function! JavaFileTypeInit()
