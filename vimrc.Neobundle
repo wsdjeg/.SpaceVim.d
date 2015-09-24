@@ -128,13 +128,14 @@ NeoBundle 'honza/vim-snippets'
 NeoBundle 'SirVer/ultisnips'
 "i want to add a function that manage the <enter>
 "if ultisnips pumvisible exists, call the ultisnips func
-"inoremap <Enter> 111
+"inoremap <expr><CR> 11
+"<c-r>=MyEnterfunc()<cr>
 function MyEnterfunc()
-    "if 1
+    if 1
         return '1'
-    "else
-        "return "\<Enter>"
-    "endif
+    else
+        return "\<Enter>"
+    endif
 endf
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
@@ -265,6 +266,13 @@ let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '⚠'
+NeoBundle 'syngan/vim-vimlint', {
+    \ 'depends' : 'ynkdir/vim-vimlparser'}
+NeoBundle 'ynkdir/vim-vimlparser'
+NeoBundle 'gcmt/wildfire.vim'
+map <SPACE> <Plug>(wildfire-fuel)
+vmap <C-SPACE> <Plug>(wildfire-water)
+let g:wildfire_objects = ["i'", 'i"', "i)", "i]", "i}", "ip", "it"]
 
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'easymotion/vim-easymotion'
@@ -280,6 +288,7 @@ NeoBundle 'godlygeek/tabular'
 NeoBundle 'benizi/vim-automkdir'
 "[c  ]c  jump between prev or next hunk
 NeoBundle 'airblade/vim-gitgutter'
+NeoBundle 'itchyny/calendar.vim'
 "配合fcitx输入框架,在离开插入模式时自动切换到英文,在同一个缓冲区再次进入插入模式时回复到原来的输入状态
 NeoBundle 'lilydjwg/fcitx.vim'
 "NeoBundle 'mileszs/ack.vim'
@@ -442,6 +451,8 @@ set statusline+=%*
 "colo molokai
 "}}}
 "全局映射
+"Super paste it does not work
+"ino <C-v> <esc>:set paste<cr>mui<C-R>+<esc>mv'uV'v=:set nopaste<cr>
 " {{{对于没有权限的文件使用 :w!!来保存
 cnoremap w!! %!sudo tee > /dev/null %
 
