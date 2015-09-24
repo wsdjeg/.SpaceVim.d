@@ -271,6 +271,11 @@ let g:syntastic_error_symbol = '1'
 let g:syntastic_warning_symbol = '2'
 NeoBundle 'syngan/vim-vimlint', {
     \ 'depends' : 'ynkdir/vim-vimlparser'}
+let g:syntastic_vimlint_options = { 
+            \'EVL102': 1 ,
+            \'EVL103': 1 ,
+            \'EVL205': 1 ,
+            \}
 NeoBundle 'ynkdir/vim-vimlparser'
 NeoBundle 'gcmt/wildfire.vim'
 map <SPACE> <Plug>(wildfire-fuel)
@@ -435,6 +440,7 @@ set ruler
 set showcmd						"命令行显示输入的命令
 set showmatch					"设置匹配模式,显示匹配的括号
 set showmode					"命令行显示当前vim的模式
+scriptencoding utf-8
 set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 set termencoding=utf-8
 set encoding=utf-8
