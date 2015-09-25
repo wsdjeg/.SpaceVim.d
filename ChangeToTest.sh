@@ -1,3 +1,9 @@
-mv /home/wsdjeg/.vimrc /home/wsdjeg/.vimrc.temp
-ln -s /home/wsdjeg/DotFiles/vimrc.test /home/wsdjeg/.vimrc
+a=$1
+if a=""
+then
+    echo "null"
+else
+    echo $a
+fi
+
 

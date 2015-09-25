@@ -365,6 +365,10 @@ NeoBundle 'nerdtree-ack'
 NeoBundle 'L9'
 NeoBundle 'TaskList.vim'
 map <unique> <Leader>td <Plug>TaskList
+NeoBundle 'ianva/vim-youdao-translater'
+vnoremap <silent> <C-T> <Esc>:Ydv<CR>
+nnoremap <silent> <C-T> <Esc>:Ydc<CR>
+noremap <leader>yd :Yde<CR>
 " My Bundles here:
 " Refer to |:NeoBundle-examples|.
 " Note: You don't set neobundle setting in .gvimrc!
