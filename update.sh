@@ -3,7 +3,8 @@ a=$1
 num=$#
 echo $a
 git add .
-if $num=0
+if 
+    $num=0
 then
     git commit -m "new"
 else
