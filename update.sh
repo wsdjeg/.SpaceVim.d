@@ -1,10 +1,10 @@
 #!/usr/bin/zsh
 a=$1
-num=$#
+n=$#
 echo $a
 git add .
-if 
-    $num=0
+if
+    $a=""
 then
     git commit -m "new"
 else
