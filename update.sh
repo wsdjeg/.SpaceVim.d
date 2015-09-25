@@ -1,13 +1,10 @@
 #!/usr/bin/zsh
-a=$1
-n=$#
-echo $a
-git add .
-if
-    $a=""
-then
-    git commit -m "new"
-else
-    git commit -m $a
+Main(){
+    git add .
+    git commit -m $1
+    git push
+}
+
+if [ $# -eq 1];then
+    Main
 fi
-git push
