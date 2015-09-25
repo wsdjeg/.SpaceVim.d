@@ -1,8 +1,9 @@
 #!/usr/bin/zsh
 a=$1
+num=$#
 echo $a
 git add .
-if $a=""
+if $num=0
 then
     git commit -m "new"
 else
