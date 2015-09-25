@@ -1,10 +1,11 @@
-a=$1
+#!/usr/bin/zsh
 git add .
-if a=""
+if $#=0
 then
     git commit -m "new"
 else
-    git commit -m $a
+    git commit -m $0
+    echo $0
 fi
 
 git push
