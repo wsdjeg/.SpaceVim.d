@@ -709,7 +709,11 @@ let g:unite_source_grep_default_opts = "-iRHn"
 \ . " --exclude-dir='.git'"
 \ . " --exclude-dir='node_modules'"
 
-
+let g:unite_launch_apps = [
+      \ 'rake',
+      \ 'make',
+      \ 'git pull',
+      \ 'git push']
 
 if executable('jvgrep')
     " For jvgrep.
