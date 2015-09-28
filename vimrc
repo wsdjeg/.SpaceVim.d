@@ -131,8 +131,8 @@ NeoBundle 'SirVer/ultisnips'
 "inoremap <expr><CR> 11
 "<c-r>=MyEnterfunc()<cr>
 function MyEnterfunc()
-    if '1'
-        return '1'
+    if pumvisible()
+        return "\<esc>a"
     else
         return "\<Enter>"
     endif
@@ -170,7 +170,7 @@ inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
 inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
+inoremap <silent> <buffer> <CR> <C-r>=MyEnterfunc()<Cr>
 let g:neobundle#install_process_timeout = 1500
 
 "}}}
