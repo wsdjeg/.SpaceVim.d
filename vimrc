@@ -7,6 +7,7 @@ if has('vim_starting')
     set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
 call neobundle#begin(expand('~/.vim/bundle/'))
+scriptencoding utf-8
 NeoBundleFetch 'Shougo/neobundle.vim'
 " }}}
 NeoBundle 'Shougo/vimproc.vim', {
@@ -315,7 +316,7 @@ function! s:goyo_leave()
   set showmode
   set showcmd
   set scrolloff=5
-  Limelight!
+  "Limelight!
   " ...
 endfunction
 
@@ -465,7 +466,6 @@ set ruler
 set showcmd						"命令行显示输入的命令
 set showmatch					"设置匹配模式,显示匹配的括号
 set showmode					"命令行显示当前vim的模式
-scriptencoding utf-8
 set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 set termencoding=utf-8
 set encoding=utf-8
