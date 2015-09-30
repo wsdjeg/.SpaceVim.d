@@ -183,6 +183,7 @@ let g:JavaComplete_UseFQN = 1
 let g:JavaComplete_ServerAutoShutdownTime = 300
 let g:JavaComplete_MavenRepositoryDisable = 0
 "{{{
+autocmd! FileType jsp set omnifunc=javacomplete#Complete
 autocmd! FileType java call JavaFileTypeInit()
 function! JavaFileTypeInit()
     set omnifunc=javacomplete#Complete
