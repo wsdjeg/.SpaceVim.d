@@ -8,6 +8,7 @@ if has('vim_starting')
 endif
 call neobundle#begin(expand('~/.vim/bundle/'))
 scriptencoding utf-8
+filetype plugin indent on
 NeoBundleFetch 'Shougo/neobundle.vim'
 " }}}
 NeoBundle 'Shougo/vimproc.vim', {
@@ -118,6 +119,7 @@ NeoBundle 'tpope/vim-scriptease'
 "Javacomplete and autocompile
 "{{{
 NeoBundle 'artur-shaik/vim-javacomplete2'
+"NeoBundle 'artur-shaik/vim-javacomplete2' , { 'rev' : '7aaba87' }
 NeoBundle 'VJDE/VJDE'
 NeoBundle 'java_getset.vim'
 NeoBundle 'vim-scripts/Maven-Compiler'
@@ -151,7 +153,7 @@ let g:ycm_semantic_triggers =  {
             \   'perl' : ['->'],
             \   'php' : ['->', '::'],
             \   'cs,javascript,d,python,perl6,scala,vb,elixir,go' : ['.'],
-            \   'java' : ['.', '::'],
+            \   'java,jsp' : ['.', '::'],
             \   'vim' : ['re![_a-zA-Z]+[_\w]*\.'],
             \   'ruby' : ['.', '::'],
             \   'lua' : ['.', ':'],
@@ -183,8 +185,7 @@ let g:JavaComplete_UseFQN = 1
 let g:JavaComplete_ServerAutoShutdownTime = 300
 let g:JavaComplete_MavenRepositoryDisable = 0
 "{{{
-autocmd! FileType jsp set omnifunc=javacomplete#Complete
-autocmd! FileType java call JavaFileTypeInit()
+autocmd! FileType java,jsp call JavaFileTypeInit()
 function! JavaFileTypeInit()
     set omnifunc=javacomplete#Complete
     nnoremap <F4> :JCimportAdd<cr>
@@ -259,11 +260,11 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tmuxline#enabled = 0
 NeoBundle 'mattn/emmet-vim'
 let g:user_emmet_install_global = 0
-autocmd FileType html,css,jsp EmmetInstall
+autocmd FileType html,css EmmetInstall
 let g:user_emmet_leader_key='<C-e>'
 let g:user_emmet_mode='a'
 NeoBundle 'scrooloose/syntastic'
-let g:syntastic_java_javac_delete_output=0
+let g:syntastic_java_javac_delete_output = 1
 let g:syntastic_java_javac_config_file_enabled = 1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -399,7 +400,6 @@ noremap <leader>yd :Yde<CR>
 call neobundle#end()
 "call vundle#end()
 NeoBundleCheck
-filetype plugin indent on
 
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
