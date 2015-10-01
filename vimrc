@@ -1,5 +1,3 @@
-" Let NeoBundle manage NeoBundle
-" {{{
 if has('vim_starting')
     if &compatible
         set nocompatible
@@ -8,9 +6,7 @@ if has('vim_starting')
 endif
 call neobundle#begin(expand('~/.vim/bundle/'))
 scriptencoding utf-8
-filetype plugin indent on
 NeoBundleFetch 'Shougo/neobundle.vim'
-" }}}
 NeoBundle 'Shougo/vimproc.vim', {
             \ 'build' : {
             \     'windows' : 'tools\\update-dll-mingw',
@@ -45,8 +41,6 @@ let g:unite_source_grep_default_opts = "-iRHn"
             \ . " --exclude-dir='.svn'"
             \ . " --exclude-dir='.git'"
             \ . " --exclude-dir='node_modules'"
-
-
 nnoremap <space>/ :Unite grep:.<cr>
 nnoremap <silent> <C-f> :<C-u>Unite -no-split -buffer-name=files -start-insert file_rec/async:!<cr>
 nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files -start-insert file<cr>
@@ -129,17 +123,6 @@ NeoBundle 'ervandew/supertab'
 NeoBundle 'Valloric/YouCompleteMe'
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'SirVer/ultisnips'
-"i want to add a function that manage the <enter>
-"if ultisnips pumvisible exists, call the ultisnips func
-"inoremap <expr><CR> 11
-"<c-r>=MyEnterfunc()<cr>
-function MyEnterfunc()
-    if pumvisible()
-        return "\<esc>a"
-    else
-        return "\<Enter>"
-    endif
-endf
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
@@ -174,6 +157,13 @@ inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDow
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 inoremap <silent> <buffer> <CR> <C-r>=MyEnterfunc()<Cr>
+function MyEnterfunc()
+    if pumvisible()
+        return "\<esc>a"
+    else
+        return "\<Enter>"
+    endif
+endf
 let g:neobundle#install_process_timeout = 1500
 
 "}}}
@@ -185,73 +175,6 @@ let g:JavaComplete_UseFQN = 1
 let g:JavaComplete_ServerAutoShutdownTime = 300
 let g:JavaComplete_MavenRepositoryDisable = 0
 "{{{
-autocmd! FileType java,jsp call JavaFileTypeInit()
-function! JavaFileTypeInit()
-    set omnifunc=javacomplete#Complete
-    nnoremap <F4> :JCimportAdd<cr>
-    inoremap <F4> <esc>:JCimportAddI<cr>
-    inoremap <silent> <buffer>  .  <C-r>=WSDAutoComplete('.')<CR>
-    inoremap <silent> <buffer>  A  <C-r>=WSDAutoComplete('A')<CR>
-    inoremap <silent> <buffer>  B  <C-r>=WSDAutoComplete('B')<CR>
-    inoremap <silent> <buffer>  C  <C-r>=WSDAutoComplete('C')<CR>
-    inoremap <silent> <buffer>  D  <C-r>=WSDAutoComplete('D')<CR>
-    inoremap <silent> <buffer>  E  <C-r>=WSDAutoComplete('E')<CR>
-    inoremap <silent> <buffer>  F  <C-r>=WSDAutoComplete('F')<CR>
-    inoremap <silent> <buffer>  G  <C-r>=WSDAutoComplete('G')<CR>
-    inoremap <silent> <buffer>  H  <C-r>=WSDAutoComplete('H')<CR>
-    inoremap <silent> <buffer>  I  <C-r>=WSDAutoComplete('I')<CR>
-    inoremap <silent> <buffer>  J  <C-r>=WSDAutoComplete('J')<CR>
-    inoremap <silent> <buffer>  K  <C-r>=WSDAutoComplete('K')<CR>
-    inoremap <silent> <buffer>  L  <C-r>=WSDAutoComplete('L')<CR>
-    inoremap <silent> <buffer>  M  <C-r>=WSDAutoComplete('M')<CR>
-    inoremap <silent> <buffer>  N  <C-r>=WSDAutoComplete('N')<CR>
-    inoremap <silent> <buffer>  O  <C-r>=WSDAutoComplete('O')<CR>
-    inoremap <silent> <buffer>  P  <C-r>=WSDAutoComplete('P')<CR>
-    inoremap <silent> <buffer>  Q  <C-r>=WSDAutoComplete('Q')<CR>
-    inoremap <silent> <buffer>  R  <C-r>=WSDAutoComplete('R')<CR>
-    inoremap <silent> <buffer>  S  <C-r>=WSDAutoComplete('S')<CR>
-    inoremap <silent> <buffer>  T  <C-r>=WSDAutoComplete('T')<CR>
-    inoremap <silent> <buffer>  U  <C-r>=WSDAutoComplete('U')<CR>
-    inoremap <silent> <buffer>  V  <C-r>=WSDAutoComplete('V')<CR>
-    inoremap <silent> <buffer>  W  <C-r>=WSDAutoComplete('W')<CR>
-    inoremap <silent> <buffer>  X  <C-r>=WSDAutoComplete('X')<CR>
-    inoremap <silent> <buffer>  Y  <C-r>=WSDAutoComplete('Y')<CR>
-    inoremap <silent> <buffer>  Z  <C-r>=WSDAutoComplete('Z')<CR>
-    compiler mvn
-    if !filereadable("pom.xml")
-        inoremap <F5> <esc>:w<CR>:!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
-        nnoremap <F5> :!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
-        nnoremap <F6> :!java -cp classes/ -Djava.ext.dirs=lib/ com.wsdjeg.util.TestMethod
-        let g:JavaComplete_LibsPath = 'classes/:lib/:/home/wsdjeg/tools/apache-tomcat-8.0.24/lib'
-    else
-        no <F9> :make clean<CR><CR>
-        no <F5> <up>:wa<CR> :make compile<CR><CR>
-        no <F6> :make exec:exec<CR>
-    endif
-endf
-function! WSDAutoComplete(char)
-    if(getline(".")=~?'^\s*.*\/\/')==0
-        let line = getline('.')
-        let col = col('.')
-        if a:char == "."
-            return a:char."\<c-x>\<c-o>\<c-p>"
-        elseif line[col - 2] == " "||line[col -2] == "("
-            return a:char."\<c-x>\<c-o>\<c-p>"
-        else
-            return a:char
-        endif
-    else
-        "bug exists
-        let line = getline('.')
-        let col = col('.')
-        let [commentline,commentcol] = searchpos('//','nc','W')
-        if line == getline(commentline)
-            return a:char."\<c-x>\<c-o>\<c-p>"
-        else
-            return a:char
-        endif
-    endif
-endf
 "}}}
 "}}}
 NeoBundle 'bling/vim-airline'
@@ -404,6 +327,7 @@ noremap <leader>yd :Yde<CR>
 call neobundle#end()
 "call vundle#end()
 NeoBundleCheck
+filetype plugin indent on
 
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
@@ -521,6 +445,73 @@ inoremap } <c-r>=ClosePair('}')<CR>
 autocmd Syntax java inoremap } <c-r>=CloseBracket()<CR>
 inoremap " <c-r>=QuoteDelim('"')<CR>
 inoremap ' <c-r>=QuoteDelim("'")<CR>
+autocmd! FileType java,jsp call JavaFileTypeInit()
+function! JavaFileTypeInit()
+    set omnifunc=javacomplete#Complete
+    nnoremap <F4> :JCimportAdd<cr>
+    inoremap <F4> <esc>:JCimportAddI<cr>
+    inoremap <silent> <buffer>  .  <C-r>=WSDAutoComplete('.')<CR>
+    inoremap <silent> <buffer>  A  <C-r>=WSDAutoComplete('A')<CR>
+    inoremap <silent> <buffer>  B  <C-r>=WSDAutoComplete('B')<CR>
+    inoremap <silent> <buffer>  C  <C-r>=WSDAutoComplete('C')<CR>
+    inoremap <silent> <buffer>  D  <C-r>=WSDAutoComplete('D')<CR>
+    inoremap <silent> <buffer>  E  <C-r>=WSDAutoComplete('E')<CR>
+    inoremap <silent> <buffer>  F  <C-r>=WSDAutoComplete('F')<CR>
+    inoremap <silent> <buffer>  G  <C-r>=WSDAutoComplete('G')<CR>
+    inoremap <silent> <buffer>  H  <C-r>=WSDAutoComplete('H')<CR>
+    inoremap <silent> <buffer>  I  <C-r>=WSDAutoComplete('I')<CR>
+    inoremap <silent> <buffer>  J  <C-r>=WSDAutoComplete('J')<CR>
+    inoremap <silent> <buffer>  K  <C-r>=WSDAutoComplete('K')<CR>
+    inoremap <silent> <buffer>  L  <C-r>=WSDAutoComplete('L')<CR>
+    inoremap <silent> <buffer>  M  <C-r>=WSDAutoComplete('M')<CR>
+    inoremap <silent> <buffer>  N  <C-r>=WSDAutoComplete('N')<CR>
+    inoremap <silent> <buffer>  O  <C-r>=WSDAutoComplete('O')<CR>
+    inoremap <silent> <buffer>  P  <C-r>=WSDAutoComplete('P')<CR>
+    inoremap <silent> <buffer>  Q  <C-r>=WSDAutoComplete('Q')<CR>
+    inoremap <silent> <buffer>  R  <C-r>=WSDAutoComplete('R')<CR>
+    inoremap <silent> <buffer>  S  <C-r>=WSDAutoComplete('S')<CR>
+    inoremap <silent> <buffer>  T  <C-r>=WSDAutoComplete('T')<CR>
+    inoremap <silent> <buffer>  U  <C-r>=WSDAutoComplete('U')<CR>
+    inoremap <silent> <buffer>  V  <C-r>=WSDAutoComplete('V')<CR>
+    inoremap <silent> <buffer>  W  <C-r>=WSDAutoComplete('W')<CR>
+    inoremap <silent> <buffer>  X  <C-r>=WSDAutoComplete('X')<CR>
+    inoremap <silent> <buffer>  Y  <C-r>=WSDAutoComplete('Y')<CR>
+    inoremap <silent> <buffer>  Z  <C-r>=WSDAutoComplete('Z')<CR>
+    compiler mvn
+    if !filereadable("pom.xml")
+        inoremap <F5> <esc>:w<CR>:!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
+        nnoremap <F5> :!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
+        nnoremap <F6> :!java -cp classes/ -Djava.ext.dirs=lib/ com.wsdjeg.util.TestMethod
+        let g:JavaComplete_LibsPath = 'classes/:lib/:/home/wsdjeg/tools/apache-tomcat-8.0.24/lib'
+    else
+        no <F9> :make clean<CR><CR>
+        no <F5> <up>:wa<CR> :make compile<CR><CR>
+        no <F6> :make exec:exec<CR>
+    endif
+endf
+function! WSDAutoComplete(char)
+    if(getline(".")=~?'^\s*.*\/\/')==0
+        let line = getline('.')
+        let col = col('.')
+        if a:char == "."
+            return a:char."\<c-x>\<c-o>\<c-p>"
+        elseif line[col - 2] == " "||line[col -2] == "("
+            return a:char."\<c-x>\<c-o>\<c-p>"
+        else
+            return a:char
+        endif
+    else
+        "bug exists
+        let line = getline('.')
+        let col = col('.')
+        let [commentline,commentcol] = searchpos('//','nc','W')
+        if line == getline(commentline)
+            return a:char."\<c-x>\<c-o>\<c-p>"
+        else
+            return a:char
+        endif
+    endif
+endf
 function ClosePair(char)
     if getline('.')[col('.') - 1] == a:char
         return "\<Right>"
