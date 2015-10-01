@@ -183,7 +183,6 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tmuxline#enabled = 0
 NeoBundle 'mattn/emmet-vim'
 let g:user_emmet_install_global = 0
-autocmd FileType html,css EmmetInstall
 let g:user_emmet_leader_key='<C-e>'
 let g:user_emmet_mode='a'
 NeoBundle 'scrooloose/syntastic'
@@ -445,7 +444,25 @@ inoremap } <c-r>=ClosePair('}')<CR>
 autocmd Syntax java inoremap } <c-r>=CloseBracket()<CR>
 inoremap " <c-r>=QuoteDelim('"')<CR>
 inoremap ' <c-r>=QuoteDelim("'")<CR>
-autocmd! FileType java,jsp call JavaFileTypeInit()
+autocmd! FileType jsp call JspFileTypeInit()
+autocmd FileType html,css,jsp EmmetInstall
+autocmd! FileType java call JavaFileTypeInit()
+function! JspFileTypeInit()
+    set omnifunc=javacomplete#Complete
+    nnoremap <F4> :JCimportAdd<cr>
+    inoremap <F4> <esc>:JCimportAddI<cr>
+    compiler mvn
+    if !filereadable("pom.xml")
+        inoremap <F5> <esc>:w<CR>:!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
+        nnoremap <F5> :!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
+        nnoremap <F6> :!java -cp classes/ -Djava.ext.dirs=lib/ com.wsdjeg.util.TestMethod
+        let g:JavaComplete_LibsPath = 'classes/:lib/:/home/wsdjeg/tools/apache-tomcat-8.0.24/lib'
+    else
+        no <F9> :make clean<CR><CR>
+        no <F5> <up>:wa<CR> :make clean compile<CR><CR>
+        no <F6> :make exec:exec<CR>
+    endif
+endfunction
 function! JavaFileTypeInit()
     set omnifunc=javacomplete#Complete
     nnoremap <F4> :JCimportAdd<cr>
