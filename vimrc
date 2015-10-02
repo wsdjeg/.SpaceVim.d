@@ -169,7 +169,7 @@ let g:neobundle#install_process_timeout = 1500
 NeoBundle 'vim-jp/vim-java'
 autocmd! Filetype pom compiler mvn
 "do not use fall class name
-let g:JavaComplete_UseFQN = 1
+let g:JavaComplete_UseFQN = 0
 "set the server autoshutdown time
 let g:JavaComplete_ServerAutoShutdownTime = 300
 let g:JavaComplete_MavenRepositoryDisable = 0
@@ -184,9 +184,12 @@ NeoBundle 'mattn/emmet-vim'
 let g:user_emmet_install_global = 0
 let g:user_emmet_leader_key='<C-e>'
 let g:user_emmet_mode='a'
+" use this two command to find how long the plugin take!
+"profile start syntastic.log
+"profile! file */syntastic/*
 NeoBundle 'scrooloose/syntastic'
-let g:syntastic_java_javac_delete_output = 1
-let g:syntastic_java_javac_config_file_enabled = 1
+let g:syntastic_java_javac_delete_output = 0
+let g:syntastic_java_javac_config_file_enabled = 0
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
@@ -568,9 +571,18 @@ function! ToggleBG()
         set background=dark
     endif
 endfunction
-noremap <leader>bg :call ToggleBG()<CR>
+noremap <silent><leader>bg :call ToggleBG()<CR>
+noremap <silent><leader>nu :call ToggleNumber()<CR>
 function! ToggleNumber()
-
+    let s:isThereNumber = &nu
+    let s:isThereRelativeNumber = &relativenumber
+    if s:isThereNumber && s:isThereRelativeNumber
+        set nonumber
+        set norelativenumber
+    else
+        set number
+        set relativenumber
+    endif
 endf
 "也可以通过'za'打开或者关闭折叠
 nnoremap <silent><leader><space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
