@@ -184,9 +184,12 @@ NeoBundle 'mattn/emmet-vim'
 let g:user_emmet_install_global = 0
 let g:user_emmet_leader_key='<C-e>'
 let g:user_emmet_mode='a'
+" use this two command to find how long the plugin take!
+"profile start syntastic.log
+"profile! file */syntastic/*
 NeoBundle 'scrooloose/syntastic'
 let g:syntastic_java_javac_delete_output = 0
-let g:syntastic_java_javac_config_file_enabled = 1
+let g:syntastic_java_javac_config_file_enabled = 0
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
