@@ -570,7 +570,17 @@ function! ToggleBG()
 endfunction
 noremap <leader>bg :call ToggleBG()<CR>
 function! ToggleNumber()
-
+    let s:isThereNumber = 1
+    let s:isThereRelativeNumber = &relativenumber
+    if s:isThereNumber == 1
+        echo 1
+        set nonumber
+        set norelativenumber
+    else
+        echo 2
+        set number
+        set relativenumber
+    endif
 endf
 "也可以通过'za'打开或者关闭折叠
 nnoremap <silent><leader><space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
