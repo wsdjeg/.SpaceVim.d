@@ -568,16 +568,15 @@ function! ToggleBG()
         set background=dark
     endif
 endfunction
-noremap <leader>bg :call ToggleBG()<CR>
+noremap <silent><leader>bg :call ToggleBG()<CR>
+noremap <silent><leader>nu :call ToggleNumber()<CR>
 function! ToggleNumber()
-    let s:isThereNumber = 1
+    let s:isThereNumber = &nu
     let s:isThereRelativeNumber = &relativenumber
-    if s:isThereNumber == 1
-        echo 1
+    if s:isThereNumber && s:isThereRelativeNumber
         set nonumber
         set norelativenumber
     else
-        echo 2
         set number
         set relativenumber
     endif
