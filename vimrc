@@ -169,7 +169,7 @@ let g:neobundle#install_process_timeout = 1500
 NeoBundle 'vim-jp/vim-java'
 autocmd! Filetype pom compiler mvn
 "do not use fall class name
-let g:JavaComplete_UseFQN = 1
+let g:JavaComplete_UseFQN = 0
 "set the server autoshutdown time
 let g:JavaComplete_ServerAutoShutdownTime = 300
 let g:JavaComplete_MavenRepositoryDisable = 0
