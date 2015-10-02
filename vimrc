@@ -17,36 +17,6 @@ NeoBundle 'Shougo/vimproc.vim', {
             \    },
             \ }
 NeoBundle 'Shougo/unite.vim'
-let g:unite_source_file_mru_time_format = "%m/%d %T "
-let g:unite_source_directory_mru_limit = 80
-let g:unite_source_directory_mru_time_format = "%m/%d %T "
-let g:unite_source_file_rec_max_depth = 6
-
-let g:unite_enable_ignore_case = 1
-let g:unite_enable_smart_case = 1
-let g:unite_data_directory='~/.cache/unite'
-let g:unite_enable_start_insert=1
-let g:unite_source_history_yank_enable=1
-let g:unite_prompt='>> '
-let g:unite_split_rule = 'botright'
-let g:unite_winheight=25
-let g:unite_source_grep_default_opts = "-iRHn"
-            \ . " --exclude='tags'"
-            \ . " --exclude='cscope*'"
-            \ . " --exclude='*.svn*'"
-            \ . " --exclude='*.log*'"
-            \ . " --exclude='*tmp*'"
-            \ . " --exclude-dir='**/tmp'"
-            \ . " --exclude-dir='CVS'"
-            \ . " --exclude-dir='.svn'"
-            \ . " --exclude-dir='.git'"
-            \ . " --exclude-dir='node_modules'"
-nnoremap <space>/ :Unite grep:.<cr>
-nnoremap <silent> <C-f> :<C-u>Unite -no-split -buffer-name=files -start-insert file_rec/async:!<cr>
-nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files -start-insert file<cr>
-nnoremap <leader>m :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
-nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
-nnoremap <silent> <C-b> :<C-u>Unite -start-insert -buffer-name=buffer buffer<cr>
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/unite-outline'
 NeoBundle 'hewes/unite-gtags'
@@ -79,17 +49,37 @@ NeoBundle 'tacroe/unite-mark'
 NeoBundle 'tacroe/unite-alias'
 "NeoBundle 'ujihisa/quicklearn'
 NeoBundle 'tex/vim-unite-id'
+let g:unite_source_file_mru_time_format = "%m/%d %T "
+let g:unite_source_directory_mru_limit = 80
+let g:unite_source_directory_mru_time_format = "%m/%d %T "
+let g:unite_source_file_rec_max_depth = 6
 
+let g:unite_enable_ignore_case = 1
+let g:unite_enable_smart_case = 1
+let g:unite_data_directory='~/.cache/unite'
+let g:unite_enable_start_insert=1
+let g:unite_source_history_yank_enable=1
+let g:unite_prompt='>> '
+let g:unite_split_rule = 'botright'
+let g:unite_winheight=25
+let g:unite_source_grep_default_opts = "-iRHn"
+            \ . " --exclude='tags'"
+            \ . " --exclude='cscope*'"
+            \ . " --exclude='*.svn*'"
+            \ . " --exclude='*.log*'"
+            \ . " --exclude='*tmp*'"
+            \ . " --exclude-dir='**/tmp'"
+            \ . " --exclude-dir='CVS'"
+            \ . " --exclude-dir='.svn'"
+            \ . " --exclude-dir='.git'"
+            \ . " --exclude-dir='node_modules'"
+nnoremap <space>/ :Unite grep:.<cr>
+nnoremap <silent> <C-f> :<C-u>Unite -no-split -buffer-name=files -start-insert file_rec/async:!<cr>
+nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files -start-insert file<cr>
+nnoremap <leader>m :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
+nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
+nnoremap <silent> <C-b> :<C-u>Unite -start-insert -buffer-name=buffer buffer<cr>
 
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'terryma/vim-multiple-cursors'
-"let g:multi_cursor_use_default_mapping=0
-"let g:multi_cursor_start_key='<C-h>'
-let g:multi_cursor_next_key='<C-j>'
-let g:multi_cursor_prev_key='<C-k>'
-let g:multi_cursor_skip_key='<C-x>'
-let g:multi_cursor_quit_key='<Esc>'
 NeoBundle 'ctrlpvim/ctrlp.vim'
 NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'felixSchl/ctrlp-unity3d-docs'
@@ -110,6 +100,15 @@ NeoBundle 'sgur/ctrlp-extensions.vim'
 NeoBundle 'FelikZ/ctrlp-py-matcher'
 NeoBundle 'JazzCore/ctrlp-cmatcher'
 NeoBundle 'tpope/vim-scriptease'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'terryma/vim-multiple-cursors'
+"let g:multi_cursor_use_default_mapping=0
+"let g:multi_cursor_start_key='<C-h>'
+let g:multi_cursor_next_key='<C-j>'
+let g:multi_cursor_prev_key='<C-k>'
+let g:multi_cursor_skip_key='<C-x>'
+let g:multi_cursor_quit_key='<Esc>'
 "Javacomplete and autocompile
 "{{{
 NeoBundle 'artur-shaik/vim-javacomplete2'
@@ -330,25 +329,17 @@ filetype plugin indent on
 
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
-augroup filetype_vim
-    autocmd!
-    autocmd FileType vim setlocal foldmethod=marker
-    "autocmd FileType vim no za :call Fold_This_Vim_File()
-    function Fold_This_Vim_File()
-        if &foldenable==0
-            setlocal foldmethod=marker
-            execute "foldclose"
-        else
-            echo "1"
-        endif
-
-    endf
-augroup END
-"基础设置
+" ###################################################################################
+" basic vim setting                 基础设置                                        #
+" ###################################################################################
 "{{{
-set relativenumber				"显示行号
-set nu
+"显示相对行号
+set relativenumber
+" 显示行号
+set number
+" 自动缩进
 set autoindent					"自动缩进
+" 自动智能对齐
 set smartindent					"设置智能对齐方式
 set cindent
 set linebreak					"整词换行
@@ -397,7 +388,7 @@ set showmode					"命令行显示当前vim的模式
 set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 set termencoding=utf-8
 set encoding=utf-8
-set scrolloff=0               "最低显示行数
+set scrolloff=7               "最低显示行数
 set cursorline					"显示当前行
 "set cursorcolumn				"显示当前列
 set incsearch
@@ -437,7 +428,7 @@ inoremap ( ()<Esc>i
 inoremap [ []<Esc>i
 inoremap { {}<Esc>i
 autocmd Syntax java inoremap { {<CR>}<Esc>O
-autocmd Syntax html,vim inoremap < <lt>><Esc>i| inoremap > <c-r>=ClosePair('>')<CR>
+autocmd Syntax html,vim inoremap < <lt>><Esc>i| inoremap > <c-r>=ClosePair('>')<CR> |inoremap " "
 inoremap ) <c-r>=ClosePair(')')<CR>
 inoremap ] <c-r>=ClosePair(']')<CR>
 inoremap } <c-r>=ClosePair('}')<CR>
@@ -821,7 +812,7 @@ nnoremap <silent> [unite]w
 
 " Custom mappings for the unite buffer
 autocmd FileType unite call s:unite_my_settings()
-function! s:unite_my_settings()"{{{
+function! s:unite_my_settings()
     " Overwrite settings.
 
     " Play nice with supertab
@@ -1315,3 +1306,17 @@ let g:ctrlp_extensions = ['Z', 'F']
 nnoremap sz :CtrlPZ<Cr>
 nnoremap sf :CtrlPF<Cr>
 "}}}
+augroup filetype_vim
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+    "autocmd FileType vim no za :call Fold_This_Vim_File()
+    function Fold_This_Vim_File()
+        if &foldenable==0
+            setlocal foldmethod=marker
+            execute "foldclose"
+        else
+            echo "1"
+        endif
+
+    endf
+augroup END
