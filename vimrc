@@ -49,36 +49,6 @@ NeoBundle 'tacroe/unite-mark'
 NeoBundle 'tacroe/unite-alias'
 "NeoBundle 'ujihisa/quicklearn'
 NeoBundle 'tex/vim-unite-id'
-let g:unite_source_file_mru_time_format = "%m/%d %T "
-let g:unite_source_directory_mru_limit = 80
-let g:unite_source_directory_mru_time_format = "%m/%d %T "
-let g:unite_source_file_rec_max_depth = 6
-
-let g:unite_enable_ignore_case = 1
-let g:unite_enable_smart_case = 1
-let g:unite_data_directory='~/.cache/unite'
-let g:unite_enable_start_insert=1
-let g:unite_source_history_yank_enable=1
-let g:unite_prompt='>> '
-let g:unite_split_rule = 'botright'
-let g:unite_winheight=25
-let g:unite_source_grep_default_opts = "-iRHn"
-            \ . " --exclude='tags'"
-            \ . " --exclude='cscope*'"
-            \ . " --exclude='*.svn*'"
-            \ . " --exclude='*.log*'"
-            \ . " --exclude='*tmp*'"
-            \ . " --exclude-dir='**/tmp'"
-            \ . " --exclude-dir='CVS'"
-            \ . " --exclude-dir='.svn'"
-            \ . " --exclude-dir='.git'"
-            \ . " --exclude-dir='node_modules'"
-nnoremap <space>/ :Unite grep:.<cr>
-nnoremap <silent> <C-f> :<C-u>Unite -no-split -buffer-name=files -start-insert file_rec/async:!<cr>
-nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files -start-insert file<cr>
-nnoremap <leader>m :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
-nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
-nnoremap <silent> <C-b> :<C-u>Unite -start-insert -buffer-name=buffer buffer<cr>
 
 NeoBundle 'ctrlpvim/ctrlp.vim'
 NeoBundle 'tyru/open-browser.vim'
@@ -700,11 +670,11 @@ call unite#custom#profile('default', 'context', {'no_split':1, 'resize':0})
 "call unite#custom#source('file_rec/async','sorters','sorter_rank', )
 " replacing unite with ctrl-p
 "let g:unite_enable_split_vertically = 1
+
 let g:unite_source_file_mru_time_format = "%m/%d %T "
 let g:unite_source_directory_mru_limit = 80
 let g:unite_source_directory_mru_time_format = "%m/%d %T "
 let g:unite_source_file_rec_max_depth = 6
-
 let g:unite_enable_ignore_case = 1
 let g:unite_enable_smart_case = 1
 let g:unite_data_directory='~/.cache/unite'
@@ -714,16 +684,17 @@ let g:unite_prompt='>> '
 let g:unite_split_rule = 'botright'
 let g:unite_winheight=25
 let g:unite_source_grep_default_opts = "-iRHn"
-\ . " --exclude='tags'"
-\ . " --exclude='cscope*'"
-\ . " --exclude='*.svn*'"
-\ . " --exclude='*.log*'"
-\ . " --exclude='*tmp*'"
-\ . " --exclude-dir='**/tmp'"
-\ . " --exclude-dir='CVS'"
-\ . " --exclude-dir='.svn'"
-\ . " --exclude-dir='.git'"
-\ . " --exclude-dir='node_modules'"
+            \ . " --exclude='tags'"
+            \ . " --exclude='cscope*'"
+            \ . " --exclude='*.svn*'"
+            \ . " --exclude='*.log*'"
+            \ . " --exclude='*tmp*'"
+            \ . " --exclude-dir='**/tmp'"
+            \ . " --exclude-dir='CVS'"
+            \ . " --exclude-dir='.svn'"
+            \ . " --exclude-dir='.git'"
+            \ . " --exclude-dir='node_modules'"
+
 
 let g:unite_launch_apps = [
       \ 'rake',
@@ -777,6 +748,12 @@ endif
 " The prefix key.
 nnoremap    [unite]   <Nop>
 nmap    f [unite]
+nnoremap <space>/ :Unite grep:.<cr>
+nnoremap <silent> <C-f> :<C-u>Unite -no-split -buffer-name=files -start-insert file_rec/async:!<cr>
+nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files -start-insert file<cr>
+nnoremap <leader>m :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
+nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
+nnoremap <silent> <C-b> :<C-u>Unite -start-insert -buffer-name=buffer buffer<cr>
 
 nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir
             \ -buffer-name=files buffer bookmark file<CR>
@@ -834,7 +811,6 @@ function! s:unite_my_settings()
     nmap <buffer> <C-n>   <Plug>(unite_select_next_line)
     imap <buffer> <C-p>   <Plug>(unite_select_previous_line)
     nmap <buffer> <C-p>   <Plug>(unite_select_previous_line)
-    
 
 
     imap <buffer> jj      <Plug>(unite_insert_leave)
