@@ -81,8 +81,8 @@ let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
 "Javacomplete and autocompile
 "{{{
-NeoBundle 'artur-shaik/vim-javacomplete2'
-"NeoBundle 'artur-shaik/vim-javacomplete2' , { 'rev' : '7aaba87' }
+"NeoBundle 'artur-shaik/vim-javacomplete2'
+NeoBundle 'artur-shaik/vim-javacomplete2' , { 'rev' : '7aaba87' }
 NeoBundle 'VJDE/VJDE'
 NeoBundle 'java_getset.vim'
 NeoBundle 'vim-scripts/Maven-Compiler'
@@ -432,6 +432,8 @@ endfunction
 function! JavaFileTypeInit()
     set tags+=/home/wsdjeg/others/openjdk-8-src/tags
     set omnifunc=javacomplete#Complete
+    "nnoremap <leader>] :tag <c-r>=expand("<cword>")<cr><cr>
+    "nnoremap <leader>[ :tp
     nnoremap <F4> :JCimportAdd<cr>
     inoremap <F4> <esc>:JCimportAddI<cr>
     inoremap <silent> <buffer>  .  <C-r>=WSDAutoComplete('.')<CR>
