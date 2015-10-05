@@ -105,7 +105,7 @@ let g:ycm_semantic_triggers =  {
             \   'perl' : ['->'],
             \   'php' : ['->', '::'],
             \   'cs,javascript,d,python,perl6,scala,vb,elixir,go' : ['.'],
-            \   'java,jsp' : ['.', '::'],
+            \   'java,jsp' : ['re!\s[A-Z]\w','.'],
             \   'vim' : ['re![_a-zA-Z]+[_\w]*\.'],
             \   'ruby' : ['.', '::'],
             \   'lua' : ['.', ':'],
@@ -120,7 +120,10 @@ let g:ycm_key_list_previous_completion = ['<C-S-TAB>','<Up>']
 let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_add_preview_to_completeopt = 1
+let g:ycm_min_num_of_chars_for_completion = 2
 let g:SuperTabContextDefaultCompletionType = "<c-n>"
+let g:ycm_max_diagnostics_to_display = 30
+"let g:ycm_key_invoke_completion = '<C-Space>'
 inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
 inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
 inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
@@ -429,6 +432,13 @@ function! JspFileTypeInit()
         no <F6> :make exec:exec<CR>
     endif
 endfunction
+"function MyDotfunc()
+    "if pumvisible()
+        "return "\exe JCimportAddI."
+    "else
+        "return "."
+    "endif
+"endf
 function! JavaFileTypeInit()
     set tags+=/home/wsdjeg/others/openjdk-8-src/tags
     set omnifunc=javacomplete#Complete
@@ -436,7 +446,8 @@ function! JavaFileTypeInit()
     "nnoremap <leader>[ :tp
     nnoremap <F4> :JCimportAdd<cr>
     inoremap <F4> <esc>:JCimportAddI<cr>
-    inoremap <silent> <buffer>  .  <C-r>=WSDAutoComplete('.')<CR>
+    "inoremap <silent> <buffer> . <C-r>=MyDotfunc()<Cr>
+    "inoremap <silent> <buffer>  .  <C-r>=WSDAutoComplete('.')<CR>
     inoremap <silent> <buffer>  A  <C-r>=WSDAutoComplete('A')<CR>
     inoremap <silent> <buffer>  B  <C-r>=WSDAutoComplete('B')<CR>
     inoremap <silent> <buffer>  C  <C-r>=WSDAutoComplete('C')<CR>
@@ -455,7 +466,7 @@ function! JavaFileTypeInit()
     inoremap <silent> <buffer>  P  <C-r>=WSDAutoComplete('P')<CR>
     inoremap <silent> <buffer>  Q  <C-r>=WSDAutoComplete('Q')<CR>
     inoremap <silent> <buffer>  R  <C-r>=WSDAutoComplete('R')<CR>
-    inoremap <silent> <buffer>  S  <C-r>=WSDAutoComplete('S')<CR>
+    "inoremap <silent> <buffer>  S  <C-r>=WSDAutoComplete('S')<CR>
     inoremap <silent> <buffer>  T  <C-r>=WSDAutoComplete('T')<CR>
     inoremap <silent> <buffer>  U  <C-r>=WSDAutoComplete('U')<CR>
     inoremap <silent> <buffer>  V  <C-r>=WSDAutoComplete('V')<CR>
