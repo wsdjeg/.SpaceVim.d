@@ -413,6 +413,7 @@ autocmd! FileType jsp call JspFileTypeInit()
 autocmd FileType html,css,jsp EmmetInstall
 autocmd! FileType java call JavaFileTypeInit()
 function! JspFileTypeInit()
+    set tags+=/home/wsdjeg/others/openjdk-8-src/tags
     set omnifunc=javacomplete#Complete
     nnoremap <F4> :JCimportAdd<cr>
     inoremap <F4> <esc>:JCimportAddI<cr>
@@ -429,6 +430,7 @@ function! JspFileTypeInit()
     endif
 endfunction
 function! JavaFileTypeInit()
+    set tags+=/home/wsdjeg/others/openjdk-8-src/tags
     set omnifunc=javacomplete#Complete
     nnoremap <F4> :JCimportAdd<cr>
     inoremap <F4> <esc>:JCimportAddI<cr>
