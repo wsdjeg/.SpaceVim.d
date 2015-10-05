@@ -292,8 +292,8 @@ NeoBundle 'L9'
 NeoBundle 'TaskList.vim'
 map <unique> <Leader>td <Plug>TaskList
 NeoBundle 'ianva/vim-youdao-translater'
-vnoremap <silent> <C-i> <Esc>:Ydv<CR>
-nnoremap <silent> <C-i> <Esc>:Ydc<CR>
+vnoremap <silent> <C-l> <Esc>:Ydv<CR>
+nnoremap <silent> <C-l> <Esc>:Ydc<CR>
 noremap <leader>yd :Yde<CR>
 " My Bundles here:
 " Refer to |:NeoBundle-examples|.
@@ -404,7 +404,6 @@ vnoremap <C-S-Up> :m '<-2<CR>gv=gv
 inoremap ( ()<Esc>i
 inoremap [ []<Esc>i
 inoremap { {}<Esc>i
-autocmd Syntax java inoremap { {<CR>}<Esc>O
 autocmd Syntax html,vim inoremap < <lt>><Esc>i| inoremap > <c-r>=ClosePair('>')<CR> |inoremap " "
 inoremap ) <c-r>=ClosePair(')')<CR>
 inoremap ] <c-r>=ClosePair(']')<CR>
@@ -439,41 +438,54 @@ endfunction
         "return "."
     "endif
 "endf
+"autocmd Syntax java inoremap { {<CR>}<Esc>O
+function! BracketsFunc()
+    let line = getline('.')
+    let col = col('.')
+    if line[col - 2] == "]"
+        return "{}\<esc>i"
+    else
+        return "{\<cr>}\<esc>O"
+    endif
+endf
 function! JavaFileTypeInit()
     set tags+=/home/wsdjeg/others/openjdk-8-src/tags
     set omnifunc=javacomplete#Complete
     "nnoremap <leader>] :tag <c-r>=expand("<cword>")<cr><cr>
     "nnoremap <leader>[ :tp
+    inoremap <silent> <buffer> { <C-r>=BracketsFunc()<cr>
+    inoremap <silent> <buffer> } <C-r>=JavaCloseBracket()<cr>
+    inoremap <silent> <buffer> <CR> <C-r>=MyEnterfunc()<Cr>
     nnoremap <F4> :JCimportAdd<cr>
     inoremap <F4> <esc>:JCimportAddI<cr>
     "inoremap <silent> <buffer> . <C-r>=MyDotfunc()<Cr>
     "inoremap <silent> <buffer>  .  <C-r>=WSDAutoComplete('.')<CR>
-    inoremap <silent> <buffer>  A  <C-r>=WSDAutoComplete('A')<CR>
-    inoremap <silent> <buffer>  B  <C-r>=WSDAutoComplete('B')<CR>
-    inoremap <silent> <buffer>  C  <C-r>=WSDAutoComplete('C')<CR>
-    inoremap <silent> <buffer>  D  <C-r>=WSDAutoComplete('D')<CR>
-    inoremap <silent> <buffer>  E  <C-r>=WSDAutoComplete('E')<CR>
-    inoremap <silent> <buffer>  F  <C-r>=WSDAutoComplete('F')<CR>
-    inoremap <silent> <buffer>  G  <C-r>=WSDAutoComplete('G')<CR>
-    inoremap <silent> <buffer>  H  <C-r>=WSDAutoComplete('H')<CR>
-    inoremap <silent> <buffer>  I  <C-r>=WSDAutoComplete('I')<CR>
-    inoremap <silent> <buffer>  J  <C-r>=WSDAutoComplete('J')<CR>
-    inoremap <silent> <buffer>  K  <C-r>=WSDAutoComplete('K')<CR>
-    inoremap <silent> <buffer>  L  <C-r>=WSDAutoComplete('L')<CR>
-    inoremap <silent> <buffer>  M  <C-r>=WSDAutoComplete('M')<CR>
-    inoremap <silent> <buffer>  N  <C-r>=WSDAutoComplete('N')<CR>
-    inoremap <silent> <buffer>  O  <C-r>=WSDAutoComplete('O')<CR>
-    inoremap <silent> <buffer>  P  <C-r>=WSDAutoComplete('P')<CR>
-    inoremap <silent> <buffer>  Q  <C-r>=WSDAutoComplete('Q')<CR>
-    inoremap <silent> <buffer>  R  <C-r>=WSDAutoComplete('R')<CR>
+    "inoremap <silent> <buffer>  A  <C-r>=WSDAutoComplete('A')<CR>
+    "inoremap <silent> <buffer>  B  <C-r>=WSDAutoComplete('B')<CR>
+    "inoremap <silent> <buffer>  C  <C-r>=WSDAutoComplete('C')<CR>
+    "inoremap <silent> <buffer>  D  <C-r>=WSDAutoComplete('D')<CR>
+    "inoremap <silent> <buffer>  E  <C-r>=WSDAutoComplete('E')<CR>
+    "inoremap <silent> <buffer>  F  <C-r>=WSDAutoComplete('F')<CR>
+    "inoremap <silent> <buffer>  G  <C-r>=WSDAutoComplete('G')<CR>
+    "inoremap <silent> <buffer>  H  <C-r>=WSDAutoComplete('H')<CR>
+    "inoremap <silent> <buffer>  I  <C-r>=WSDAutoComplete('I')<CR>
+    "inoremap <silent> <buffer>  J  <C-r>=WSDAutoComplete('J')<CR>
+    "inoremap <silent> <buffer>  K  <C-r>=WSDAutoComplete('K')<CR>
+    "inoremap <silent> <buffer>  L  <C-r>=WSDAutoComplete('L')<CR>
+    "inoremap <silent> <buffer>  M  <C-r>=WSDAutoComplete('M')<CR>
+    "inoremap <silent> <buffer>  N  <C-r>=WSDAutoComplete('N')<CR>
+    "inoremap <silent> <buffer>  O  <C-r>=WSDAutoComplete('O')<CR>
+    "inoremap <silent> <buffer>  P  <C-r>=WSDAutoComplete('P')<CR>
+    "inoremap <silent> <buffer>  Q  <C-r>=WSDAutoComplete('Q')<CR>
+    "inoremap <silent> <buffer>  R  <C-r>=WSDAutoComplete('R')<CR>
     "inoremap <silent> <buffer>  S  <C-r>=WSDAutoComplete('S')<CR>
-    inoremap <silent> <buffer>  T  <C-r>=WSDAutoComplete('T')<CR>
-    inoremap <silent> <buffer>  U  <C-r>=WSDAutoComplete('U')<CR>
-    inoremap <silent> <buffer>  V  <C-r>=WSDAutoComplete('V')<CR>
-    inoremap <silent> <buffer>  W  <C-r>=WSDAutoComplete('W')<CR>
-    inoremap <silent> <buffer>  X  <C-r>=WSDAutoComplete('X')<CR>
-    inoremap <silent> <buffer>  Y  <C-r>=WSDAutoComplete('Y')<CR>
-    inoremap <silent> <buffer>  Z  <C-r>=WSDAutoComplete('Z')<CR>
+    "inoremap <silent> <buffer>  T  <C-r>=WSDAutoComplete('T')<CR>
+    "inoremap <silent> <buffer>  U  <C-r>=WSDAutoComplete('U')<CR>
+    "inoremap <silent> <buffer>  V  <C-r>=WSDAutoComplete('V')<CR>
+    "inoremap <silent> <buffer>  W  <C-r>=WSDAutoComplete('W')<CR>
+    "inoremap <silent> <buffer>  X  <C-r>=WSDAutoComplete('X')<CR>
+    "inoremap <silent> <buffer>  Y  <C-r>=WSDAutoComplete('Y')<CR>
+    "inoremap <silent> <buffer>  Z  <C-r>=WSDAutoComplete('Z')<CR>
     compiler mvn
     if !filereadable("pom.xml")
         inoremap <F5> <esc>:w<CR>:!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
@@ -521,6 +533,21 @@ endf
 
 function CloseBracket()
     if match(getline(line('.') + 1), '\s*}') < 0
+        return "\<CR>}"
+    else
+        return "\<Esc>j0f}a"
+    endif
+endf
+function JavaCloseBracket()
+    let line = getline('.')
+    let col = col('.')
+    if line[col - 2] == "\\"
+        "Inserting a quoted quotation mark into the string
+        return "}"
+    elseif line[col - 1] == "}"
+        "Escaping out of the string
+        return "\<Right>"
+    elseif match(getline(line('.') + 1), '\s*}') < 0
         return "\<CR>}"
     else
         return "\<Esc>j0f}a"
