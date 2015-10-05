@@ -81,8 +81,8 @@ let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
 "Javacomplete and autocompile
 "{{{
-"NeoBundle 'artur-shaik/vim-javacomplete2'
-NeoBundle 'artur-shaik/vim-javacomplete2' , { 'rev' : '7aaba87' }
+NeoBundle 'artur-shaik/vim-javacomplete2'
+"NeoBundle 'artur-shaik/vim-javacomplete2' , { 'rev' : '7aaba87' }
 NeoBundle 'VJDE/VJDE'
 NeoBundle 'java_getset.vim'
 NeoBundle 'vim-scripts/Maven-Compiler'
