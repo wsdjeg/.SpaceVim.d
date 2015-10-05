@@ -483,6 +483,8 @@ function! WSDAutoComplete(char)
             return a:char."\<c-x>\<c-o>\<c-p>"
         elseif line[col - 2] == " "||line[col -2] == "("||line[col - 2] == ","
             return a:char."\<c-x>\<c-o>\<c-p>"
+        elseif line[col - 3] == " "&&line[col - 2] =="@"
+            return a:char."\<c-x>\<c-o>\<c-p>"
         else
             return a:char
         endif
