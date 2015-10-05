@@ -118,7 +118,8 @@ let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-S-TAB>','<Up>']
 let g:SuperTabDefaultCompletionType = '<C-n>'
-let g:ycm_seed_identifiers_with_syntax=1
+let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_add_preview_to_completeopt = 1
 let g:SuperTabContextDefaultCompletionType = "<c-n>"
 inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
 inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
@@ -288,8 +289,8 @@ NeoBundle 'L9'
 NeoBundle 'TaskList.vim'
 map <unique> <Leader>td <Plug>TaskList
 NeoBundle 'ianva/vim-youdao-translater'
-vnoremap <silent> <C-T> <Esc>:Ydv<CR>
-nnoremap <silent> <C-T> <Esc>:Ydc<CR>
+vnoremap <silent> <C-i> <Esc>:Ydv<CR>
+nnoremap <silent> <C-i> <Esc>:Ydc<CR>
 noremap <leader>yd :Yde<CR>
 " My Bundles here:
 " Refer to |:NeoBundle-examples|.
@@ -476,7 +477,7 @@ function! WSDAutoComplete(char)
         let col = col('.')
         if a:char == "."
             return a:char."\<c-x>\<c-o>\<c-p>"
-        elseif line[col - 2] == " "||line[col -2] == "("
+        elseif line[col - 2] == " "||line[col -2] == "("||line[col - 2] == ","
             return a:char."\<c-x>\<c-o>\<c-p>"
         else
             return a:char
@@ -1308,3 +1309,8 @@ augroup filetype_vim
 
     endf
 augroup END
+let g:user_emmet_settings = {
+            \  'jsp' : {
+            \      'extends' : 'html',
+            \  },
+            \}
