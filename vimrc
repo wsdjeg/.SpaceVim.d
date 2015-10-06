@@ -496,6 +496,8 @@ function! JavaFileTypeInit()
         nnoremap <F6> :!java -cp classes/ -Djava.ext.dirs=lib/ com.wsdjeg.util.TestMethod
         let g:JavaComplete_LibsPath = 'classes/:lib/:/home/wsdjeg/tools/apache-tomcat-8.0.24/lib'
     else
+        set tags+=/home/wsdjeg/others/struts/core/tags
+        set tags+=/home/wsdjeg/others/tomcat70/tags
         no <F9> :make clean<CR><CR>
         no <F5> <up>:wa<CR> :make compile<CR><CR>
         no <F6> :make exec:exec<CR>
