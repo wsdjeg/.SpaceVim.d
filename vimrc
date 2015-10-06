@@ -141,7 +141,7 @@ let g:neobundle#install_process_timeout = 1500
 
 "}}}
 NeoBundle 'vim-jp/vim-java'
-autocmd! Filetype pom compiler mvn
+autocmd Filetype pom compiler mvn
 "do not use fall class name
 let g:JavaComplete_UseFQN = 0
 "set the server autoshutdown time
@@ -283,6 +283,7 @@ NeoBundle 'wsdjeg/MarkDown.pl'
 autocmd filetype markdown nmap md :!~/.vim/bundle/MarkDown.pl/markdown.pl % > %.html<cr><cr>
 autocmd filetype markdown nmap fi :!firefox %.html & <CR><CR>
 autocmd filetype html nmap fi :!firefox % &
+NeoBundle 'wsdjeg/matchit.zip'
 NeoBundle 'tomasr/molokai'
 NeoBundle 'vimchina/vimcdoc'
 NeoBundle 'sjl/gundo.vim'
@@ -637,6 +638,8 @@ if has('autocmd')
         " disable auto-comment for c/cpp, lua, javascript, c# and vim-script
         au FileType c,cpp,java,javascript set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,f://
         au FileType cs set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,f:///,f://
+        au FileType xml set comments=s:<!--,m:\ \ \ \ \ ,e:-->
+        "au FileType pom set comments=s:<!--,m:\ \ \ \ \ ,e:-->
         au FileType vim set comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",f:\"
         au FileType lua set comments=f:--
 
