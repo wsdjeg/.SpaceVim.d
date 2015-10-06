@@ -1,3 +1,66 @@
+"detect OS {{{
+function! OSX()
+    return has('macunix')
+endfunction
+function! LINUX()
+    return has('unix') && !has('macunix') && !has('win32unix')
+endfunction
+function! WINDOWS()
+    return (has('win16') || has('win32') || has('win64'))
+endfunction
+"}}}
+
+"vim settings {{{
+"initialize default settings
+let s:settings = {}
+let s:settings.default_indent = 2
+let s:settings.max_column = 120
+let s:settings.autocomplete_method = 'neocomplcache'
+let s:settings.enable_cursorcolumn = 0
+let s:settings.colorscheme = 'jellybeans'
+if has('lua')
+    let s:settings.autocomplete_method = 'neocomplete'
+elseif filereadable(expand("~/.vim/bundle/YouCompleteMe/python/ycm_core.*"))
+    let s:settings.autocomplete_method = 'ycm'
+endif
+let s:settings.plugin_groups = []
+call add(s:settings.plugin_groups, 'core')
+call add(s:settings.plugin_groups, 'web')
+call add(s:settings.plugin_groups, 'javascript')
+call add(s:settings.plugin_groups, 'ruby')
+call add(s:settings.plugin_groups, 'python')
+call add(s:settings.plugin_groups, 'scala')
+call add(s:settings.plugin_groups, 'go')
+call add(s:settings.plugin_groups, 'scm')
+call add(s:settings.plugin_groups, 'editing')
+call add(s:settings.plugin_groups, 'indents')
+call add(s:settings.plugin_groups, 'navigation')
+call add(s:settings.plugin_groups, 'unite')
+call add(s:settings.plugin_groups, 'autocomplete')
+" call add(s:settings.plugin_groups, 'textobj')
+call add(s:settings.plugin_groups, 'misc')
+if OSX()
+    call add(s:settings.plugin_groups, 'osx')
+endif
+if WINDOWS()
+    call add(s:settings.plugin_groups, 'windows')
+endif
+if LINUX()
+    call add(s:settings.plugin_groups, 'linux')
+endif
+
+let s:settings.plugin_groups_exclude = ['web','javascript','ruby','python','go','scala']
+
+for s:group in s:settings.plugin_groups_exclude
+    let s:i = index(s:settings.plugin_groups, s:group)
+    if s:i != -1
+        call remove(s:settings.plugin_groups, s:i)
+    endif
+endfor
+
+"}}}
+
+"setup & neobundle {{{
 if has('vim_starting')
     if &compatible
         set nocompatible
@@ -7,6 +70,10 @@ endif
 call neobundle#begin(expand('~/.vim/bundle/'))
 scriptencoding utf-8
 NeoBundleFetch 'Shougo/neobundle.vim'
+"}}}
+
+" plugin/mapping configuration {{{
+if count(s:settings.plugin_groups, 'core') "{{{
 NeoBundle 'Shougo/vimproc.vim', {
             \ 'build' : {
             \     'windows' : 'tools\\update-dll-mingw',
@@ -16,6 +83,7 @@ NeoBundle 'Shougo/vimproc.vim', {
             \     'unix' : 'gmake',
             \    },
             \ }
+endif "}}}
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/unite-outline'
@@ -176,6 +244,7 @@ let g:syntastic_vimlint_options = {
             \'EVL102': 1 ,
             \'EVL103': 1 ,
             \'EVL205': 1 ,
+            \'EVL105': 1 ,
             \}
 NeoBundle 'ynkdir/vim-vimlparser'
 NeoBundle 'gcmt/wildfire.vim'
@@ -301,15 +370,11 @@ noremap <leader>yd :Yde<CR>
 " Note: You don't set neobundle setting in .gvimrc!
 
 call neobundle#end()
-"call vundle#end()
 NeoBundleCheck
 filetype plugin indent on
+syntax on
 
-" If there are uninstalled bundles found on startup,
-" this will conveniently prompt you to install them.
-" ###################################################################################
-" basic vim setting                 基础设置                                        #
-" ###################################################################################
+" basic vim settiing
 "{{{
 "显示相对行号
 set relativenumber
@@ -325,10 +390,6 @@ set tabstop=4					"Tab键的宽度
 set expandtab					"用空格来执行tab
 set softtabstop=4				" 统一缩进为4
 set shiftwidth=4
-syntax enable
-syntax on
-filetype on
-filetype indent on
 "set nobackup
 set backup
 set undofile
