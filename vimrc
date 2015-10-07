@@ -513,6 +513,7 @@ function! BracketsFunc()
     endif
 endf
 function! JavaFileTypeInit()
+    "add openjdk-8-src tags
     set tags+=/home/wsdjeg/others/openjdk-8-src/tags
     set omnifunc=javacomplete#Complete
     "nnoremap <leader>] :tag <c-r>=expand("<cword>")<cr><cr>
@@ -559,8 +560,12 @@ function! JavaFileTypeInit()
         nnoremap <F6> :!java -cp classes/ -Djava.ext.dirs=lib/ com.wsdjeg.util.TestMethod
         let g:JavaComplete_LibsPath = 'classes/:lib/:/home/wsdjeg/tools/apache-tomcat-8.0.24/lib'
     else
+        "add struts2-core tags
         set tags+=/home/wsdjeg/others/struts/core/tags
+        "add tomcat70 tags
         set tags+=/home/wsdjeg/others/tomcat70/tags
+        "add hibernate-core tags
+        set tags+=/home/wsdjeg/others/hibernate-orm/hibernate-core/src/main/java/tags
         no <F9> :make clean<CR><CR>
         no <F5> <up>:wa<CR> :make compile<CR><CR>
         no <F6> :make exec:exec<CR>
