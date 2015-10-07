@@ -152,7 +152,7 @@ let g:multi_cursor_quit_key='<Esc>'
 NeoBundle 'artur-shaik/vim-javacomplete2'
 "NeoBundle 'artur-shaik/vim-javacomplete2' , { 'rev' : '7aaba87' }
 NeoBundle 'VJDE/VJDE'
-NeoBundle 'java_getset.vim'
+NeoBundle 'wsdjeg/java_getset.vim'
 NeoBundle 'JalaiAmitahl/maven-compiler.vim'
 "YCM
 "{{{
@@ -513,6 +513,7 @@ function! BracketsFunc()
     endif
 endf
 function! JavaFileTypeInit()
+    execute "source ~/.vim/bundle/java_getset.vim/java_getset.vim"
     "add openjdk-8-src tags
     set tags+=/home/wsdjeg/others/openjdk-8-src/tags
     set omnifunc=javacomplete#Complete
