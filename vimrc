@@ -513,6 +513,24 @@ function! BracketsFunc()
     endif
 endf
 function! JavaFileTypeInit()
+    let b:javagetset_setterTemplate =
+                \ "/**\n" .
+                \ " * Set %varname%.\n" .
+                \ " *\n" .
+                \ " * @param %varname% the value to set.\n" .
+                \ " */\n" .
+                \ "%modifiers% void %funcname%(%type% %varname%){\n" .
+                \ "    this.%varname% = %varname%;\n" .
+                \ "}"
+    let b:javagetset_getterTemplate =
+                \ "/**\n" .
+                \ " * Get %varname%.\n" .
+                \ " *\n" .
+                \ " * @return %varname% as %type%.\n" .
+                \ " */\n" .
+                \ "%modifiers% %type% %funcname%(){\n" .
+                \ "    return %varname%;\n" .
+                \ "}"
     execute "source ~/.vim/bundle/java_getset.vim/java_getset.vim"
     "add openjdk-8-src tags
     set tags+=/home/wsdjeg/others/openjdk-8-src/tags
