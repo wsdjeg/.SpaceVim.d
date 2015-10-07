@@ -298,6 +298,8 @@ autocmd! User GoyoLeave nested call <SID>goyo_leave()
 "vim Wimdows config
 "{{{
 NeoBundle 'scrooloose/nerdtree'
+" Alternate Files quickly use :A change between main and test files
+NeoBundle 'tpope/vim-projectionist'
 NeoBundle 'Xuyuanp/nerdtree-git-plugin'
 NeoBundle 'taglist.vim'
 NeoBundle 'bronson/vim-trailing-whitespace'
@@ -367,9 +369,9 @@ NeoBundle 'ianva/vim-youdao-translater'
 vnoremap <silent> <C-l> <Esc>:Ydv<CR>
 nnoremap <silent> <C-l> <Esc>:Ydc<CR>
 noremap <leader>yd :Yde<CR>
-" My Bundles here:
-" Refer to |:NeoBundle-examples|.
-" Note: You don't set neobundle setting in .gvimrc!
+
+"colorscheme
+NeoBundle 'morhetz/gruvbox'
 
 call neobundle#end()
 NeoBundleCheck
