@@ -10,6 +10,22 @@ function! WINDOWS()
 endfunction
 "}}}
 
+"use English for anything in vim
+if WINDOWS()
+    silent exec 'language english'
+elseif OSX()
+    silent exec 'language en_US'
+else
+    let s:uname = system("uname -s")
+    if s:uname == "Darwin\n"
+        " in mac-terminal
+        silent exec 'language en_US'
+    else
+        " in linux-terminal
+        silent exec 'language en_US.utf8'
+    endif
+endif
+
 "vim settings {{{
 "initialize default settings
 let s:settings = {}
@@ -546,34 +562,34 @@ function! JavaFileTypeInit()
     inoremap <silent> <buffer> <leader>uu <esc>bgUwea
     nnoremap <F4> :JCimportAdd<cr>
     inoremap <F4> <esc>:JCimportAddI<cr>
-    "inoremap <silent> <buffer> . <C-r>=MyDotfunc()<Cr>
-    "inoremap <silent> <buffer>  .  <C-r>=WSDAutoComplete('.')<CR>
-    "inoremap <silent> <buffer>  A  <C-r>=WSDAutoComplete('A')<CR>
-    "inoremap <silent> <buffer>  B  <C-r>=WSDAutoComplete('B')<CR>
-    "inoremap <silent> <buffer>  C  <C-r>=WSDAutoComplete('C')<CR>
-    "inoremap <silent> <buffer>  D  <C-r>=WSDAutoComplete('D')<CR>
-    "inoremap <silent> <buffer>  E  <C-r>=WSDAutoComplete('E')<CR>
-    "inoremap <silent> <buffer>  F  <C-r>=WSDAutoComplete('F')<CR>
-    "inoremap <silent> <buffer>  G  <C-r>=WSDAutoComplete('G')<CR>
-    "inoremap <silent> <buffer>  H  <C-r>=WSDAutoComplete('H')<CR>
-    "inoremap <silent> <buffer>  I  <C-r>=WSDAutoComplete('I')<CR>
-    "inoremap <silent> <buffer>  J  <C-r>=WSDAutoComplete('J')<CR>
-    "inoremap <silent> <buffer>  K  <C-r>=WSDAutoComplete('K')<CR>
-    "inoremap <silent> <buffer>  L  <C-r>=WSDAutoComplete('L')<CR>
-    "inoremap <silent> <buffer>  M  <C-r>=WSDAutoComplete('M')<CR>
-    "inoremap <silent> <buffer>  N  <C-r>=WSDAutoComplete('N')<CR>
-    "inoremap <silent> <buffer>  O  <C-r>=WSDAutoComplete('O')<CR>
-    "inoremap <silent> <buffer>  P  <C-r>=WSDAutoComplete('P')<CR>
-    "inoremap <silent> <buffer>  Q  <C-r>=WSDAutoComplete('Q')<CR>
-    "inoremap <silent> <buffer>  R  <C-r>=WSDAutoComplete('R')<CR>
-    "inoremap <silent> <buffer>  S  <C-r>=WSDAutoComplete('S')<CR>
-    "inoremap <silent> <buffer>  T  <C-r>=WSDAutoComplete('T')<CR>
-    "inoremap <silent> <buffer>  U  <C-r>=WSDAutoComplete('U')<CR>
-    "inoremap <silent> <buffer>  V  <C-r>=WSDAutoComplete('V')<CR>
-    "inoremap <silent> <buffer>  W  <C-r>=WSDAutoComplete('W')<CR>
-    "inoremap <silent> <buffer>  X  <C-r>=WSDAutoComplete('X')<CR>
-    "inoremap <silent> <buffer>  Y  <C-r>=WSDAutoComplete('Y')<CR>
-    "inoremap <silent> <buffer>  Z  <C-r>=WSDAutoComplete('Z')<CR>
+    inoremap <silent> <buffer> . <C-r>=MyDotfunc()<Cr>
+    inoremap <silent> <buffer>  .  <C-r>=WSDAutoComplete('.')<CR>
+    inoremap <silent> <buffer>  A  <C-r>=WSDAutoComplete('A')<CR>
+    inoremap <silent> <buffer>  B  <C-r>=WSDAutoComplete('B')<CR>
+    inoremap <silent> <buffer>  C  <C-r>=WSDAutoComplete('C')<CR>
+    inoremap <silent> <buffer>  D  <C-r>=WSDAutoComplete('D')<CR>
+    inoremap <silent> <buffer>  E  <C-r>=WSDAutoComplete('E')<CR>
+    inoremap <silent> <buffer>  F  <C-r>=WSDAutoComplete('F')<CR>
+    inoremap <silent> <buffer>  G  <C-r>=WSDAutoComplete('G')<CR>
+    inoremap <silent> <buffer>  H  <C-r>=WSDAutoComplete('H')<CR>
+    inoremap <silent> <buffer>  I  <C-r>=WSDAutoComplete('I')<CR>
+    inoremap <silent> <buffer>  J  <C-r>=WSDAutoComplete('J')<CR>
+    inoremap <silent> <buffer>  K  <C-r>=WSDAutoComplete('K')<CR>
+    inoremap <silent> <buffer>  L  <C-r>=WSDAutoComplete('L')<CR>
+    inoremap <silent> <buffer>  M  <C-r>=WSDAutoComplete('M')<CR>
+    inoremap <silent> <buffer>  N  <C-r>=WSDAutoComplete('N')<CR>
+    inoremap <silent> <buffer>  O  <C-r>=WSDAutoComplete('O')<CR>
+    inoremap <silent> <buffer>  P  <C-r>=WSDAutoComplete('P')<CR>
+    inoremap <silent> <buffer>  Q  <C-r>=WSDAutoComplete('Q')<CR>
+    inoremap <silent> <buffer>  R  <C-r>=WSDAutoComplete('R')<CR>
+    inoremap <silent> <buffer>  S  <C-r>=WSDAutoComplete('S')<CR>
+    inoremap <silent> <buffer>  T  <C-r>=WSDAutoComplete('T')<CR>
+    inoremap <silent> <buffer>  U  <C-r>=WSDAutoComplete('U')<CR>
+    inoremap <silent> <buffer>  V  <C-r>=WSDAutoComplete('V')<CR>
+    inoremap <silent> <buffer>  W  <C-r>=WSDAutoComplete('W')<CR>
+    inoremap <silent> <buffer>  X  <C-r>=WSDAutoComplete('X')<CR>
+    inoremap <silent> <buffer>  Y  <C-r>=WSDAutoComplete('Y')<CR>
+    inoremap <silent> <buffer>  Z  <C-r>=WSDAutoComplete('Z')<CR>
     compiler mvn
     if !filereadable("pom.xml")
         inoremap <F5> <esc>:w<CR>:!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
@@ -587,9 +603,9 @@ function! JavaFileTypeInit()
         set tags+=/home/wsdjeg/others/tomcat70/tags
         "add hibernate-core tags
         set tags+=/home/wsdjeg/others/hibernate-orm/hibernate-core/src/main/java/tags
-        no <F9> :make clean<CR><CR>
-        no <F5> <up>:wa<CR> :make compile<CR><CR>
-        no <F6> :make exec:exec<CR>
+        no <F9> :echo system("mvn clean")<CR>
+        no <F5> <up>:wa<CR> :echo system("mvn clean compile")<CR>
+        no <silent><F6> :echo system("mvn test")<CR>
     endif
 endf
 function! WSDAutoComplete(char)
@@ -607,13 +623,14 @@ function! WSDAutoComplete(char)
         endif
     else
         "bug exists
-        let line = getline('.')
         let col = col('.')
-        let [commentline,commentcol] = searchpos('//','nc','W')
-        if line == getline(commentline)
+        normal ma
+        let [commentline,commentcol] = searchpos('//','b',line('.'))
+        normal `a
+        if commentcol == 0
             return a:char."\<c-x>\<c-o>\<c-p>"
         else
-            return a:char
+            return "\<Right>".a:char
         endif
     endif
 endf
@@ -686,9 +703,11 @@ function! ToggleNumber()
     let s:isThereNumber = &nu
     let s:isThereRelativeNumber = &relativenumber
     if s:isThereNumber && s:isThereRelativeNumber
+        set paste!
         set nonumber
         set norelativenumber
     else
+        set paste!
         set number
         set relativenumber
     endif
