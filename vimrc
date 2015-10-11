@@ -403,8 +403,6 @@ function! OpenOrCloseNERDTree()
 endfunction
 "}}}
 
-"plugins for markdown
-NeoBundle 'ywatase/mdt.vim'
 NeoBundle 'wsdjeg/MarkDown.pl'
 autocmd filetype markdown nmap md :!~/.vim/bundle/MarkDown.pl/markdown.pl % > %.html<cr><cr>
 autocmd filetype markdown nmap fi :!firefox %.html & <CR><CR>
@@ -536,6 +534,7 @@ autocmd! FileType java call JavaFileTypeInit()
 function! JspFileTypeInit()
     set tags+=/home/wsdjeg/others/openjdk-8-src/tags
     set omnifunc=javacomplete#Complete
+    inoremap . <c-r>=OnmiConfigForJsp()<cr>
     nnoremap <F4> :JCimportAdd<cr>
     inoremap <F4> <esc>:JCimportAddI<cr>
     compiler mvn
@@ -1510,3 +1509,24 @@ let g:user_emmet_settings = {
             \      'extends' : 'html',
             \  },
             \}
+
+
+"ominifunc setting {{{
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd Filetype html setlocal omnifunc=htmlcomplete#CompleteTags
+
+"}}}
+function! OnmiConfigForJsp()
+    let pos1 = search("</script>","nb",line("w0"))
+    let pos2 = search("<script>","nb",line("w0"))
+    let pos3 = search("</script>","n",line("w$"))
+    let pos4 = search("<script>","n",line("w$"))
+    let pos0 = line('.')
+    if pos1 < pos2 && pos2 < pos0 && pos0 < pos3
+        set omnifunc=javascriptcomplete#CompleteJS
+        return "\<esc>a."
+    else
+        set omnifunc=javacomplete#Complete
+        return "\<esc>a."
+    endif
+endf
