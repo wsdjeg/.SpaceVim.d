@@ -163,6 +163,41 @@ let g:multi_cursor_next_key='<C-j>'
 let g:multi_cursor_prev_key='<C-k>'
 let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
+
+"web plugins
+
+NeoBundleLazy 'groenewege/vim-less', {'autoload':{'filetypes':['less']}}
+NeoBundleLazy 'cakebaker/scss-syntax.vim', {'autoload':{'filetypes':['scss','sass']}}
+NeoBundleLazy 'hail2u/vim-css3-syntax', {'autoload':{'filetypes':['css','scss','sass']}}
+NeoBundleLazy 'ap/vim-css-color', {'autoload':{'filetypes':['css','scss','sass','less','styl']}}
+NeoBundleLazy 'othree/html5.vim', {'autoload':{'filetypes':['html']}}
+NeoBundleLazy 'wavded/vim-stylus', {'autoload':{'filetypes':['styl']}}
+NeoBundleLazy 'digitaltoad/vim-jade', {'autoload':{'filetypes':['jade']}}
+NeoBundleLazy 'juvenn/mustache.vim', {'autoload':{'filetypes':['mustache']}}
+NeoBundleLazy 'gregsexton/MatchTag', {'autoload':{'filetypes':['html','xml']}}
+
+"javascript plugins
+
+"NeoBundleLazy 'marijnh/tern_for_vim', {
+            "\ 'autoload': { 'filetypes': ['javascript'] },
+            "\ 'build': {
+            "\ 'mac': 'npm install',
+            "\ 'unix': 'npm install',
+            "\ 'cygwin': 'npm install',
+            "\ 'windows': 'npm install',
+            "\ },
+            "\ }
+NeoBundleLazy 'pangloss/vim-javascript', {'autoload':{'filetypes':['javascript']}}
+NeoBundleLazy 'maksimr/vim-jsbeautify', {'autoload':{'filetypes':['javascript']}} "{{{
+nnoremap <leader>fjs :call JsBeautify()<cr>
+"}}}
+NeoBundleLazy 'leafgarland/typescript-vim', {'autoload':{'filetypes':['typescript']}}
+NeoBundleLazy 'kchmck/vim-coffee-script', {'autoload':{'filetypes':['coffee']}}
+NeoBundleLazy 'mmalecki/vim-node.js', {'autoload':{'filetypes':['javascript']}}
+NeoBundleLazy 'leshill/vim-json', {'autoload':{'filetypes':['javascript','json']}}
+NeoBundleLazy 'othree/javascript-libraries-syntax.vim', {'autoload':{'filetypes':['javascript','coffee','ls','typescript']}}
+
+
 "Javacomplete and autocompile
 "{{{
 NeoBundle 'artur-shaik/vim-javacomplete2'
@@ -368,6 +403,8 @@ function! OpenOrCloseNERDTree()
 endfunction
 "}}}
 
+"plugins for markdown
+NeoBundle 'ywatase/mdt.vim'
 NeoBundle 'wsdjeg/MarkDown.pl'
 autocmd filetype markdown nmap md :!~/.vim/bundle/MarkDown.pl/markdown.pl % > %.html<cr><cr>
 autocmd filetype markdown nmap fi :!firefox %.html & <CR><CR>
