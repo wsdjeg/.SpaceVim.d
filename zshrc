@@ -56,7 +56,8 @@ plugins=(git mvn z sudo)
 
 # User configuration
 
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export ANDROID_HOME="/home/wsdjeg/others/android-sdk-linux"
+export PATH="$HOME/bin:/usr/local/bin:$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
