@@ -114,7 +114,7 @@ NeoBundle 'ujihisa/unite-locate'
 NeoBundle 'kmnk/vim-unite-giti'
 NeoBundle 'ujihisa/unite-font'
 NeoBundle 't9md/vim-unite-ack'
-NeoBundle 'mileszs/ack.vim'
+"NeoBundle 'mileszs/ack.vim'
 NeoBundle 'dyng/ctrlsf.vim'
 NeoBundle 'daisuzu/unite-adb'
 NeoBundle 'osyo-manga/unite-airline_themes'
@@ -153,6 +153,7 @@ NeoBundle 'mattn/ctrlp-launcher'
 NeoBundle 'sgur/ctrlp-extensions.vim'
 NeoBundle 'FelikZ/ctrlp-py-matcher'
 NeoBundle 'JazzCore/ctrlp-cmatcher'
+NeoBundle 'rking/ag.vim'
 NeoBundle 'tpope/vim-scriptease'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-surround'
@@ -1476,41 +1477,7 @@ let g:ctrlp_custom_ignore = {
   \ 'link': 'some_bad_symbolic_links',
   \ }
 
-"let g:ctrlp_user_command = 'find %s -type f'        " MacOSX/Linux
-"let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'  " Windows
-
-"let g:ctrlp_user_command = {
-    "\ 'types': {
-        "\ 1: ['.git', 'cd %s && git ls-files'],
-        "\ 2: ['.hg', 'hg --cwd %s locate -I .'],
-        "\ },
-    "\ 'fallback': 'find %s -type f'
-    "\ }
-
-"let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
-      "\ --ignore out
-      "\ --ignore .git
-      "\ --ignore .svn
-      "\ --ignore .hg
-      "\ --ignore .DS_Store
-      "\ --ignore "**/*.pyc"
-      "\ -g ""'
-      
-
-let g:ctrlp_user_command = {
-    \ 'types': {
-            \ 1: ['.git', 'cd %s && git ls-files'],
-            \ 2: ['.hg', 'hg --cwd %s locate -I .'],
-            \ },
-    \ 'fallback': 'ag %s -i --nocolor --nogroup --hidden
-                    \ --ignore out
-                    \ --ignore .git
-                    \ --ignore .svn
-                    \ --ignore .hg
-                    \ --ignore .DS_Store
-                    \ --ignore "**/*.pyc"
-                    \ -g ""'
-    \ }
+let g:ctrlp_user_command = 'find %s -type f'        " MacOSX/Linux
 
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch'  }
 

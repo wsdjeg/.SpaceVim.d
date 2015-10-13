@@ -55,9 +55,9 @@ plugins=(git mvn z sudo)
 #autoload -U compinit && compinit
 
 # User configuration
-
-export ANDROID_HOME="/home/wsdjeg/others/android-sdk-linux"
-export PATH="$HOME/bin:/usr/local/bin:$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
+export ANDROID_HOME="$HOME/others/android-sdk-linux"
+export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
+export JAVA_CMD="/usr/bin/java"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
