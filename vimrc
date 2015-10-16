@@ -114,7 +114,7 @@ NeoBundle 'ujihisa/unite-locate'
 NeoBundle 'kmnk/vim-unite-giti'
 NeoBundle 'ujihisa/unite-font'
 NeoBundle 't9md/vim-unite-ack'
-"NeoBundle 'mileszs/ack.vim'
+NeoBundle 'mileszs/ack.vim'
 NeoBundle 'dyng/ctrlsf.vim'
 NeoBundle 'daisuzu/unite-adb'
 NeoBundle 'osyo-manga/unite-airline_themes'
@@ -133,6 +133,9 @@ NeoBundle 'tacroe/unite-mark'
 NeoBundle 'tacroe/unite-alias'
 "NeoBundle 'ujihisa/quicklearn'
 NeoBundle 'tex/vim-unite-id'
+
+
+"{{{ctrlpvim settings
 
 NeoBundle 'ctrlpvim/ctrlp.vim'
 NeoBundle 'tyru/open-browser.vim'
@@ -153,7 +156,112 @@ NeoBundle 'mattn/ctrlp-launcher'
 NeoBundle 'sgur/ctrlp-extensions.vim'
 NeoBundle 'FelikZ/ctrlp-py-matcher'
 NeoBundle 'JazzCore/ctrlp-cmatcher'
+" comment for ctrlp {{{
+let g:ctrlp_working_path_mode = 'ra'
+
+let g:ctrlp_root_markers = 'pom.xml'
+
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:25,results:25'
+"let g:ctrlp_show_hidden = 1
+"for caching
+let g:ctrlp_use_caching = 1
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
+
+"set runtimepath^=~/.vim/bundle/ctrlp.vim 
+"let g:ctrlp_map = ',,'
+"let g:ctrlp_open_multiple_files = 'v'
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class
+
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll|png|jpg)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
+
+"let g:ctrlp_user_command = 'find %s -type f'        " MacOSX/Linux
+"let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'  " Windows
+
+"let g:ctrlp_user_command = {
+    "\ 'types': {
+        "\ 1: ['.git', 'cd %s && git ls-files'],
+        "\ 2: ['.hg', 'hg --cwd %s locate -I .'],
+        "\ },
+    "\ 'fallback': 'find %s -type f'
+    "\ }
+
+"let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
+      "\ --ignore out
+      "\ --ignore .git
+      "\ --ignore .svn
+      "\ --ignore .hg
+      "\ --ignore .DS_Store
+      "\ --ignore "**/*.pyc"
+      "\ -g ""'
+      
+
+let g:ctrlp_user_command = {
+    \ 'types': {
+            \ 1: ['.git', 'cd %s && git ls-files'],
+            \ 2: ['.hg', 'hg --cwd %s locate -I .'],
+            \ },
+    \ 'fallback': 'ag %s -i --nocolor --nogroup --hidden
+                    \ --ignore out
+                    \ --ignore .git
+                    \ --ignore .svn
+                    \ --ignore .hg
+                    \ --ignore .DS_Store
+                    \ --ignore "**/*.pyc"
+                    \ -g ""'
+    \ }
+
+let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch'  }
+
+
+nnoremap <Leader>kk :CtrlPMixed<Cr>
+
+"}}}
+
+" comment for ctrlp-funky {{{
+nnoremap <Leader>fu :CtrlPFunky<Cr>
+" narrow the list down with a word under cursor
+nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+let g:ctrlp_funky_syntax_highlight = 1
+" }}}
+
+"for ctrlp_nerdtree {{{
+let g:ctrlp_nerdtree_show_hidden = 1
+"}}}
+
+"for ctrlp_sessions{{{
+let g:ctrlp_extensions = ['funky', 'sessions' , 'k' , 'tag', 'mixed', 'quickfix', 'undo', 'line', 'changes', 'cmdline', 'menu']
+"}}}
+
+
+"for k.vim {{{
+nnoremap <silent> <leader>qe :CtrlPK<CR>
+"}}}
+
+" for ctrlp-launcher {{{
+nnoremap <Leader>pl :<c-u>CtrlPLauncher<cr>
+"}}}
+
+"for ctrlp-cmatcher {{{
+
+"let g:ctrlp_max_files = 0
+"let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
+
+"}}}
+
+
+"}}}
 NeoBundle 'rking/ag.vim'
+let g:agprg="ag  --vimgrep"
+let g:ag_working_path_mode="r"
+
+
+
 NeoBundle 'tpope/vim-scriptease'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-surround'
@@ -665,6 +773,10 @@ function! JavaFileTypeInit()
     "add openjdk-8-src tags
     set tags+=/home/wsdjeg/others/openjdk-8-src/tags
     set omnifunc=javacomplete#Complete
+    "add android16 tags
+    if filereadable("src/main/AndroidManifest.xml")
+        set tags+=/home/wsdjeg/others/android-sdk-linux/sources/android-16/tags
+    endif
     "nnoremap <leader>] :tag <c-r>=expand("<cword>")<cr><cr>
     "nnoremap <leader>[ :tp
     inoremap <silent> <buffer> { <C-r>=BracketsFunc()<cr>
@@ -675,33 +787,33 @@ function! JavaFileTypeInit()
     nnoremap <F4> :JCimportAdd<cr>
     inoremap <F4> <esc>:JCimportAddI<cr>
     "inoremap <silent> <buffer> . <C-r>=MyDotfunc()<Cr>
-    inoremap <silent> <buffer>  .  <C-r>=WSDAutoComplete('.')<CR>
-    inoremap <silent> <buffer>  A  <C-r>=WSDAutoComplete('A')<CR>
-    inoremap <silent> <buffer>  B  <C-r>=WSDAutoComplete('B')<CR>
-    inoremap <silent> <buffer>  C  <C-r>=WSDAutoComplete('C')<CR>
-    inoremap <silent> <buffer>  D  <C-r>=WSDAutoComplete('D')<CR>
-    inoremap <silent> <buffer>  E  <C-r>=WSDAutoComplete('E')<CR>
-    inoremap <silent> <buffer>  F  <C-r>=WSDAutoComplete('F')<CR>
-    inoremap <silent> <buffer>  G  <C-r>=WSDAutoComplete('G')<CR>
-    inoremap <silent> <buffer>  H  <C-r>=WSDAutoComplete('H')<CR>
-    inoremap <silent> <buffer>  I  <C-r>=WSDAutoComplete('I')<CR>
-    inoremap <silent> <buffer>  J  <C-r>=WSDAutoComplete('J')<CR>
-    inoremap <silent> <buffer>  K  <C-r>=WSDAutoComplete('K')<CR>
-    inoremap <silent> <buffer>  L  <C-r>=WSDAutoComplete('L')<CR>
-    inoremap <silent> <buffer>  M  <C-r>=WSDAutoComplete('M')<CR>
-    inoremap <silent> <buffer>  N  <C-r>=WSDAutoComplete('N')<CR>
-    inoremap <silent> <buffer>  O  <C-r>=WSDAutoComplete('O')<CR>
-    inoremap <silent> <buffer>  P  <C-r>=WSDAutoComplete('P')<CR>
-    inoremap <silent> <buffer>  Q  <C-r>=WSDAutoComplete('Q')<CR>
-    inoremap <silent> <buffer>  R  <C-r>=WSDAutoComplete('R')<CR>
-    inoremap <silent> <buffer>  S  <C-r>=WSDAutoComplete('S')<CR>
-    inoremap <silent> <buffer>  T  <C-r>=WSDAutoComplete('T')<CR>
-    inoremap <silent> <buffer>  U  <C-r>=WSDAutoComplete('U')<CR>
-    inoremap <silent> <buffer>  V  <C-r>=WSDAutoComplete('V')<CR>
-    inoremap <silent> <buffer>  W  <C-r>=WSDAutoComplete('W')<CR>
-    inoremap <silent> <buffer>  X  <C-r>=WSDAutoComplete('X')<CR>
-    inoremap <silent> <buffer>  Y  <C-r>=WSDAutoComplete('Y')<CR>
-    inoremap <silent> <buffer>  Z  <C-r>=WSDAutoComplete('Z')<CR>
+    "inoremap <silent> <buffer>  .  <C-r>=WSDAutoComplete('.')<CR>
+    "inoremap <silent> <buffer>  A  <C-r>=WSDAutoComplete('A')<CR>
+    "inoremap <silent> <buffer>  B  <C-r>=WSDAutoComplete('B')<CR>
+    "inoremap <silent> <buffer>  C  <C-r>=WSDAutoComplete('C')<CR>
+    "inoremap <silent> <buffer>  D  <C-r>=WSDAutoComplete('D')<CR>
+    "inoremap <silent> <buffer>  E  <C-r>=WSDAutoComplete('E')<CR>
+    "inoremap <silent> <buffer>  F  <C-r>=WSDAutoComplete('F')<CR>
+    "inoremap <silent> <buffer>  G  <C-r>=WSDAutoComplete('G')<CR>
+    "inoremap <silent> <buffer>  H  <C-r>=WSDAutoComplete('H')<CR>
+    "inoremap <silent> <buffer>  I  <C-r>=WSDAutoComplete('I')<CR>
+    "inoremap <silent> <buffer>  J  <C-r>=WSDAutoComplete('J')<CR>
+    "inoremap <silent> <buffer>  K  <C-r>=WSDAutoComplete('K')<CR>
+    "inoremap <silent> <buffer>  L  <C-r>=WSDAutoComplete('L')<CR>
+    "inoremap <silent> <buffer>  M  <C-r>=WSDAutoComplete('M')<CR>
+    "inoremap <silent> <buffer>  N  <C-r>=WSDAutoComplete('N')<CR>
+    "inoremap <silent> <buffer>  O  <C-r>=WSDAutoComplete('O')<CR>
+    "inoremap <silent> <buffer>  P  <C-r>=WSDAutoComplete('P')<CR>
+    "inoremap <silent> <buffer>  Q  <C-r>=WSDAutoComplete('Q')<CR>
+    "inoremap <silent> <buffer>  R  <C-r>=WSDAutoComplete('R')<CR>
+    "inoremap <silent> <buffer>  S  <C-r>=WSDAutoComplete('S')<CR>
+    "inoremap <silent> <buffer>  T  <C-r>=WSDAutoComplete('T')<CR>
+    "inoremap <silent> <buffer>  U  <C-r>=WSDAutoComplete('U')<CR>
+    "inoremap <silent> <buffer>  V  <C-r>=WSDAutoComplete('V')<CR>
+    "inoremap <silent> <buffer>  W  <C-r>=WSDAutoComplete('W')<CR>
+    "inoremap <silent> <buffer>  X  <C-r>=WSDAutoComplete('X')<CR>
+    "inoremap <silent> <buffer>  Y  <C-r>=WSDAutoComplete('Y')<CR>
+    "inoremap <silent> <buffer>  Z  <C-r>=WSDAutoComplete('Z')<CR>
     compiler mvn
     if !filereadable("pom.xml")
         inoremap <F5> <esc>:w<CR>:!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
@@ -913,11 +1025,11 @@ endif
 
 
 
-" Unite: {{{
+"" Unite: {{{
 
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-call unite#filters#sorter_default#use(['sorter_rank'])
-call unite#custom#profile('default', 'context', {'no_split':1, 'resize':0})
+"call unite#filters#matcher_default#use(['matcher_fuzzy'])
+"call unite#filters#sorter_default#use(['sorter_rank'])
+"call unite#custom#profile('default', 'context', {'no_split':1, 'resize':0})
 
 
 "" ------------  define custom action -------------------------------------------
@@ -1128,7 +1240,7 @@ endfunction"}}}
 
 
 
-""" end for my custom unite config
+"" end for my custom unite config
 
 
 "" File search
@@ -1452,69 +1564,6 @@ nnoremap goi :OpenBrowserSmartSearch http://www.iciba.com/<C-R>=expand("<cword>"
 ":OpenBrowserSearch ggrks 
 ":OpenBrowserSmartSearch http://google.com/ 
 ":OpenBrowserSmartSearch ggrks 
-"}}}
-" comment for ctrlp {{{
-let g:ctrlp_working_path_mode = 'ra'
-
-let g:ctrlp_root_markers = '.projectile'
-
-let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:25,results:25'
-let g:ctrlp_show_hidden = 1
-"for caching
-let g:ctrlp_use_caching = 1
-let g:ctrlp_clear_cache_on_exit = 0
-let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
-
-"set runtimepath^=~/.vim/bundle/ctrlp.vim 
-"let g:ctrlp_map = ',,'
-"let g:ctrlp_open_multiple_files = 'v'
-
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class
-
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-  \ 'file': '\v\.(exe|so|dll|png|jpg)$',
-  \ 'link': 'some_bad_symbolic_links',
-  \ }
-
-let g:ctrlp_user_command = 'find %s -type f'        " MacOSX/Linux
-
-let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch'  }
-
-
-nnoremap <Leader>kk :CtrlPMixed<Cr>
-
-"}}}
-
-" comment for ctrlp-funky {{{
-nnoremap <Leader>fu :CtrlPFunky<Cr>
-" narrow the list down with a word under cursor
-nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
-let g:ctrlp_funky_syntax_highlight = 1
-" }}}
-
-"for ctrlp_nerdtree {{{
-let g:ctrlp_nerdtree_show_hidden = 1
-"}}}
-
-"for ctrlp_sessions{{{
-let g:ctrlp_extensions = ['funky', 'sessions' , 'k' , 'tag', 'mixed', 'quickfix', 'undo', 'line', 'changes', 'cmdline', 'menu']
-"}}}
-
-
-"for k.vim {{{
-nnoremap <silent> <leader>qe :CtrlPK<CR>
-"}}}
-
-" for ctrlp-launcher {{{
-nnoremap <Leader>pl :<c-u>CtrlPLauncher<cr>
-"}}}
-
-"for ctrlp-cmatcher {{{
-
-"let g:ctrlp_max_files = 0
-"let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
-
 "}}}
 
 "for fzf {{{
