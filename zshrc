@@ -50,13 +50,14 @@ ZSH_THEME="wedisagree"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git mvn z sudo)
+plugins=(git mvn z sudo adb)
 #plugins+=(zsh-completions)
 #autoload -U compinit && compinit
 
 # User configuration
-
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export ANDROID_HOME="$HOME/others/android-sdk-linux"
+export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
+export JAVA_CMD="/usr/bin/java"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -87,3 +88,4 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 unset JAVA_TOOL_OPTIONS
+setopt nonomatch
