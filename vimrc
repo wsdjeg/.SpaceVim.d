@@ -52,8 +52,9 @@ call add(s:settings.plugin_groups, 'editing')
 call add(s:settings.plugin_groups, 'indents')
 call add(s:settings.plugin_groups, 'navigation')
 call add(s:settings.plugin_groups, 'unite')
+call add(s:settings.plugin_groups, 'ctrlp')
 call add(s:settings.plugin_groups, 'autocomplete')
-" call add(s:settings.plugin_groups, 'textobj')
+call add(s:settings.plugin_groups, 'textobj')
 call add(s:settings.plugin_groups, 'misc')
 if OSX()
     call add(s:settings.plugin_groups, 'osx')
@@ -65,7 +66,7 @@ if LINUX()
     call add(s:settings.plugin_groups, 'linux')
 endif
 
-let s:settings.plugin_groups_exclude = ['web','javascript','ruby','python','go','scala']
+let s:settings.plugin_groups_exclude = []
 
 for s:group in s:settings.plugin_groups_exclude
     let s:i = index(s:settings.plugin_groups, s:group)
@@ -90,172 +91,150 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 " plugin/mapping configuration {{{
 if count(s:settings.plugin_groups, 'core') "{{{
-NeoBundle 'Shougo/vimproc.vim', {
-            \ 'build' : {
-            \     'windows' : 'tools\\update-dll-mingw',
-            \     'cygwin' : 'make -f make_cygwin.mak',
-            \     'mac' : 'make -f make_mac.mak',
-            \     'linux' : 'make',
-            \     'unix' : 'gmake',
-            \    },
-            \ }
+    NeoBundle 'Shougo/vimproc.vim', {
+                \ 'build' : {
+                \     'windows' : 'tools\\update-dll-mingw',
+                \     'cygwin' : 'make -f make_cygwin.mak',
+                \     'mac' : 'make -f make_mac.mak',
+                \     'linux' : 'make',
+                \     'unix' : 'gmake',
+                \    },
+                \ }
 endif "}}}
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/neomru.vim'
-NeoBundle 'Shougo/unite-outline'
-NeoBundle 'hewes/unite-gtags'
-NeoBundle 'tsukkee/unite-tag'
-NeoBundle 'ujihisa/unite-launch'
-NeoBundle 'osyo-manga/unite-filetype'
-NeoBundle 'thinca/vim-unite-history'
-NeoBundle 'Shougo/neobundle-vim-recipes'
-NeoBundle 'Shougo/unite-help'
-NeoBundle 'ujihisa/unite-locate'
-NeoBundle 'kmnk/vim-unite-giti'
-NeoBundle 'ujihisa/unite-font'
-NeoBundle 't9md/vim-unite-ack'
-NeoBundle 'mileszs/ack.vim'
-NeoBundle 'dyng/ctrlsf.vim'
-NeoBundle 'daisuzu/unite-adb'
-NeoBundle 'osyo-manga/unite-airline_themes'
-NeoBundle 'mattn/unite-vim_advent-calendar'
-NeoBundle 'kannokanno/unite-dwm'
-NeoBundle 'raw1z/unite-projects'
-NeoBundle 'voi/unite-ctags'
-NeoBundle 'Shougo/unite-session'
-NeoBundle 'osyo-manga/unite-quickfix'
-NeoBundle 'Shougo/vimfiler.vim'
-"NeoBundle 'mattn/webapi-vim'
-"NeoBundle 'mattn/googlesuggest-complete-vim'
-"NeoBundle 'mopp/googlesuggest-source.vim'
-NeoBundle 'ujihisa/unite-colorscheme'
-NeoBundle 'tacroe/unite-mark'
-NeoBundle 'tacroe/unite-alias'
-"NeoBundle 'ujihisa/quicklearn'
-NeoBundle 'tex/vim-unite-id'
+
+if count(s:settings.plugin_groups, 'unite') "{{{
+    NeoBundle 'Shougo/unite.vim'
+    NeoBundle 'Shougo/neomru.vim'
+    NeoBundle 'Shougo/unite-outline'
+    NeoBundle 'hewes/unite-gtags'
+    NeoBundle 'tsukkee/unite-tag'
+    NeoBundle 'ujihisa/unite-launch'
+    NeoBundle 'osyo-manga/unite-filetype'
+    NeoBundle 'thinca/vim-unite-history'
+    NeoBundle 'Shougo/neobundle-vim-recipes'
+    NeoBundle 'Shougo/unite-help'
+    NeoBundle 'ujihisa/unite-locate'
+    NeoBundle 'kmnk/vim-unite-giti'
+    NeoBundle 'ujihisa/unite-font'
+    NeoBundle 't9md/vim-unite-ack'
+    NeoBundle 'mileszs/ack.vim'
+    NeoBundle 'dyng/ctrlsf.vim'
+    NeoBundle 'daisuzu/unite-adb'
+    NeoBundle 'osyo-manga/unite-airline_themes'
+    NeoBundle 'mattn/unite-vim_advent-calendar'
+    NeoBundle 'kannokanno/unite-dwm'
+    NeoBundle 'raw1z/unite-projects'
+    NeoBundle 'voi/unite-ctags'
+    NeoBundle 'Shougo/unite-session'
+    NeoBundle 'osyo-manga/unite-quickfix'
+    NeoBundle 'Shougo/vimfiler.vim'
+    "NeoBundle 'mattn/webapi-vim'
+    "NeoBundle 'mattn/googlesuggest-complete-vim'
+    "NeoBundle 'mopp/googlesuggest-source.vim'
+    NeoBundle 'ujihisa/unite-colorscheme'
+    NeoBundle 'tacroe/unite-mark'
+    NeoBundle 'tacroe/unite-alias'
+    "NeoBundle 'ujihisa/quicklearn'
+    NeoBundle 'tex/vim-unite-id'
+endif "}}}
 
 
 "{{{ctrlpvim settings
+if count(s:settings.plugin_groups, 'ctrlp') "{{{
 
-NeoBundle 'ctrlpvim/ctrlp.vim'
-NeoBundle 'tyru/open-browser.vim'
-NeoBundle 'felixSchl/ctrlp-unity3d-docs'
-NeoBundle 'voronkovich/ctrlp-nerdtree.vim'
-NeoBundle 'elentok/ctrlp-objects.vim'
-NeoBundle 'h14i/vim-ctrlp-buftab'
-NeoBundle 'vim-scripts/ctrlp-cmdpalette'
-NeoBundle 'mattn/ctrlp-windowselector'
-NeoBundle 'the9ball/ctrlp-gtags'
-NeoBundle 'thiderman/ctrlp-project'
-NeoBundle 'mattn/ctrlp-google'
-NeoBundle 'ompugao/ctrlp-history'
-NeoBundle 'pielgrzym/ctrlp-sessions'
-NeoBundle 'tacahiroy/ctrlp-funky'
-NeoBundle 'brookhong/k.vim'
-NeoBundle 'mattn/ctrlp-launcher'
-NeoBundle 'sgur/ctrlp-extensions.vim'
-NeoBundle 'FelikZ/ctrlp-py-matcher'
-NeoBundle 'JazzCore/ctrlp-cmatcher'
-" comment for ctrlp {{{
-let g:ctrlp_working_path_mode = 'ra'
+    NeoBundle 'ctrlpvim/ctrlp.vim'
+    NeoBundle 'tyru/open-browser.vim'
+    NeoBundle 'felixSchl/ctrlp-unity3d-docs'
+    NeoBundle 'voronkovich/ctrlp-nerdtree.vim'
+    NeoBundle 'elentok/ctrlp-objects.vim'
+    NeoBundle 'h14i/vim-ctrlp-buftab'
+    NeoBundle 'vim-scripts/ctrlp-cmdpalette'
+    NeoBundle 'mattn/ctrlp-windowselector'
+    NeoBundle 'the9ball/ctrlp-gtags'
+    NeoBundle 'thiderman/ctrlp-project'
+    NeoBundle 'mattn/ctrlp-google'
+    NeoBundle 'ompugao/ctrlp-history'
+    NeoBundle 'pielgrzym/ctrlp-sessions'
+    NeoBundle 'tacahiroy/ctrlp-funky'
+    NeoBundle 'brookhong/k.vim'
+    NeoBundle 'mattn/ctrlp-launcher'
+    NeoBundle 'sgur/ctrlp-extensions.vim'
+    NeoBundle 'FelikZ/ctrlp-py-matcher'
+    NeoBundle 'JazzCore/ctrlp-cmatcher'
+    let g:ctrlp_working_path_mode = 'ra'
 
-let g:ctrlp_root_markers = 'pom.xml'
+    let g:ctrlp_root_markers = 'pom.xml'
 
-let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:25,results:25'
-"let g:ctrlp_show_hidden = 1
-"for caching
-let g:ctrlp_use_caching = 1
-let g:ctrlp_clear_cache_on_exit = 0
-let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
+    let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:25,results:25'
+    "let g:ctrlp_show_hidden = 1
+    "for caching
+    let g:ctrlp_use_caching = 1
+    let g:ctrlp_clear_cache_on_exit = 0
+    let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
 
-"set runtimepath^=~/.vim/bundle/ctrlp.vim 
-"let g:ctrlp_map = ',,'
-"let g:ctrlp_open_multiple_files = 'v'
+    "let g:ctrlp_map = ',,'
+    "let g:ctrlp_open_multiple_files = 'v'
 
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class
+    set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class
 
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-  \ 'file': '\v\.(exe|so|dll|png|jpg)$',
-  \ 'link': 'some_bad_symbolic_links',
-  \ }
+    let g:ctrlp_custom_ignore = {
+                \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+                \ 'file': '\v\.(exe|so|dll|png|jpg)$',
+                \ 'link': 'some_bad_symbolic_links',
+                \ }
+    let g:ctrlp_user_command = {
+                \ 'types': {
+                \ 1: ['.git', 'cd %s && git ls-files'],
+                \ 2: ['.hg', 'hg --cwd %s locate -I .'],
+                \ },
+                \ 'fallback': 'ag %s -i --nocolor --nogroup --hidden
+                \ --ignore out
+                \ --ignore .git
+                \ --ignore .svn
+                \ --ignore .hg
+                \ --ignore .DS_Store
+                \ --ignore "**/*.pyc"
+                \ -g ""'
+                \ }
 
-"let g:ctrlp_user_command = 'find %s -type f'        " MacOSX/Linux
-"let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'  " Windows
-
-"let g:ctrlp_user_command = {
-    "\ 'types': {
-        "\ 1: ['.git', 'cd %s && git ls-files'],
-        "\ 2: ['.hg', 'hg --cwd %s locate -I .'],
-        "\ },
-    "\ 'fallback': 'find %s -type f'
-    "\ }
-
-"let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
-      "\ --ignore out
-      "\ --ignore .git
-      "\ --ignore .svn
-      "\ --ignore .hg
-      "\ --ignore .DS_Store
-      "\ --ignore "**/*.pyc"
-      "\ -g ""'
-      
-
-let g:ctrlp_user_command = {
-    \ 'types': {
-            \ 1: ['.git', 'cd %s && git ls-files'],
-            \ 2: ['.hg', 'hg --cwd %s locate -I .'],
-            \ },
-    \ 'fallback': 'ag %s -i --nocolor --nogroup --hidden
-                    \ --ignore out
-                    \ --ignore .git
-                    \ --ignore .svn
-                    \ --ignore .hg
-                    \ --ignore .DS_Store
-                    \ --ignore "**/*.pyc"
-                    \ -g ""'
-    \ }
-
-let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch'  }
+    let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch'  }
 
 
-nnoremap <Leader>kk :CtrlPMixed<Cr>
-
-"}}}
-
-" comment for ctrlp-funky {{{
-nnoremap <Leader>fu :CtrlPFunky<Cr>
-" narrow the list down with a word under cursor
-nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
-let g:ctrlp_funky_syntax_highlight = 1
-" }}}
-
-"for ctrlp_nerdtree {{{
-let g:ctrlp_nerdtree_show_hidden = 1
-"}}}
-
-"for ctrlp_sessions{{{
-let g:ctrlp_extensions = ['funky', 'sessions' , 'k' , 'tag', 'mixed', 'quickfix', 'undo', 'line', 'changes', 'cmdline', 'menu']
-"}}}
+    nnoremap <Leader>kk :CtrlPMixed<Cr>
 
 
-"for k.vim {{{
-nnoremap <silent> <leader>qe :CtrlPK<CR>
-"}}}
+    " comment for ctrlp-funky {{{
+    nnoremap <Leader>fu :CtrlPFunky<Cr>
+    " narrow the list down with a word under cursor
+    nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+    let g:ctrlp_funky_syntax_highlight = 1
+    " }}}
 
-" for ctrlp-launcher {{{
-nnoremap <Leader>pl :<c-u>CtrlPLauncher<cr>
-"}}}
+    "for ctrlp_nerdtree {{{
+    let g:ctrlp_nerdtree_show_hidden = 1
+    "}}}
 
-"for ctrlp-cmatcher {{{
-
-"let g:ctrlp_max_files = 0
-"let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
-
-"}}}
+    "for ctrlp_sessions{{{
+    let g:ctrlp_extensions = ['funky', 'sessions' , 'k' , 'tag', 'mixed', 'quickfix', 'undo', 'line', 'changes', 'cmdline', 'menu']
+    "}}}
 
 
-"}}}
+    "for k.vim {{{
+    nnoremap <silent> <leader>qe :CtrlPK<CR>
+    "}}}
+
+    " for ctrlp-launcher {{{
+    nnoremap <Leader>pl :<c-u>CtrlPLauncher<cr>
+    "}}}
+
+    "for ctrlp-cmatcher {{{
+
+    let g:ctrlp_max_files = 0
+    let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
+
+    "}}}
+
+endif "}}}
 NeoBundle 'rking/ag.vim'
 let g:agprg="ag  --vimgrep"
 let g:ag_working_path_mode="r"
@@ -288,14 +267,14 @@ NeoBundleLazy 'gregsexton/MatchTag', {'autoload':{'filetypes':['html','xml']}}
 "javascript plugins
 
 "NeoBundleLazy 'marijnh/tern_for_vim', {
-            "\ 'autoload': { 'filetypes': ['javascript'] },
-            "\ 'build': {
-            "\ 'mac': 'npm install',
-            "\ 'unix': 'npm install',
-            "\ 'cygwin': 'npm install',
-            "\ 'windows': 'npm install',
-            "\ },
-            "\ }
+"\ 'autoload': { 'filetypes': ['javascript'] },
+"\ 'build': {
+"\ 'mac': 'npm install',
+"\ 'unix': 'npm install',
+"\ 'cygwin': 'npm install',
+"\ 'windows': 'npm install',
+"\ },
+"\ }
 NeoBundleLazy 'pangloss/vim-javascript', {'autoload':{'filetypes':['javascript']}}
 NeoBundleLazy 'maksimr/vim-jsbeautify', {'autoload':{'filetypes':['javascript']}} "{{{
 nnoremap <leader>fjs :call JsBeautify()<cr>
@@ -323,14 +302,14 @@ NeoBundleLazy 'othree/javascript-libraries-syntax.vim', {'autoload':{'filetypes'
 
 "" Define dictionary.
 "let g:neocomplete#sources#dictionary#dictionaries = {
-    "\ 'default' : '',
-    "\ 'vimshell' : $HOME.'/.vimshell_hist',
-    "\ 'scheme' : $HOME.'/.gosh_completions'
-        "\ }
+"\ 'default' : '',
+"\ 'vimshell' : $HOME.'/.vimshell_hist',
+"\ 'scheme' : $HOME.'/.gosh_completions'
+"\ }
 
 "" Define keyword.
 "if !exists('g:neocomplete#keyword_patterns')
-    "let g:neocomplete#keyword_patterns = {}
+"let g:neocomplete#keyword_patterns = {}
 "endif
 "let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
@@ -342,9 +321,9 @@ NeoBundleLazy 'othree/javascript-libraries-syntax.vim', {'autoload':{'filetypes'
 "" <CR>: close popup and save indent.
 "inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 "function! s:my_cr_function()
-  "return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-  "" For no inserting <CR> key.
-  ""return pumvisible() ? "\<C-y>" : "\<CR>"
+"return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+"" For no inserting <CR> key.
+""return pumvisible() ? "\<C-y>" : "\<CR>"
 "endfunction
 "" <TAB>: completion.
 "inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -372,7 +351,7 @@ NeoBundleLazy 'othree/javascript-libraries-syntax.vim', {'autoload':{'filetypes'
 
 "" Enable heavy omni completion.
 "if !exists('g:neocomplete#sources#omni#input_patterns')
-  "let g:neocomplete#sources#omni#input_patterns = {}
+"let g:neocomplete#sources#omni#input_patterns = {}
 "endif
 ""let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 ""let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
@@ -476,7 +455,7 @@ let g:syntastic_style_error_symbol = '✠'
 let g:syntastic_warning_symbol = '∆'
 let g:syntastic_style_warning_symbol = '≈'
 NeoBundle 'syngan/vim-vimlint', {
-    \ 'depends' : 'ynkdir/vim-vimlparser'}
+            \ 'depends' : 'ynkdir/vim-vimlparser'}
 let g:syntastic_vimlint_options = { 
             \'EVL102': 1 ,
             \'EVL103': 1 ,
@@ -509,21 +488,21 @@ NeoBundle 'lilydjwg/fcitx.vim'
 "NeoBundle 'mileszs/ack.vim'
 NeoBundle 'junegunn/goyo.vim'
 function! s:goyo_enter()
-  silent !tmux set status off
-  set noshowmode
-  set noshowcmd
-  set scrolloff=999
-  Limelight
-  " ...
+    silent !tmux set status off
+    set noshowmode
+    set noshowcmd
+    set scrolloff=999
+    Limelight
+    " ...
 endfunction
 
 function! s:goyo_leave()
-  silent !tmux set status on
-  set showmode
-  set showcmd
-  set scrolloff=5
-  "Limelight!
-  " ...
+    silent !tmux set status on
+    set showmode
+    set showcmd
+    set scrolloff=5
+    "Limelight!
+    " ...
 endfunction
 
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
@@ -540,23 +519,23 @@ NeoBundle 'taglist.vim'
 NeoBundle 'bronson/vim-trailing-whitespace'
 NeoBundle 'kien/rainbow_parentheses.vim'
 let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
-    \ ['darkgray',    'DarkOrchid3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkred',     'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['brown',       'firebrick3'],
-    \ ['gray',        'RoyalBlue3'],
-    \ ['black',       'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
-    \ ['darkgreen',   'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ['red',         'firebrick3'],
-    \ ]
+            \ ['brown',       'RoyalBlue3'],
+            \ ['Darkblue',    'SeaGreen3'],
+            \ ['darkgray',    'DarkOrchid3'],
+            \ ['darkgreen',   'firebrick3'],
+            \ ['darkcyan',    'RoyalBlue3'],
+            \ ['darkred',     'SeaGreen3'],
+            \ ['darkmagenta', 'DarkOrchid3'],
+            \ ['brown',       'firebrick3'],
+            \ ['gray',        'RoyalBlue3'],
+            \ ['black',       'SeaGreen3'],
+            \ ['darkmagenta', 'DarkOrchid3'],
+            \ ['Darkblue',    'firebrick3'],
+            \ ['darkgreen',   'RoyalBlue3'],
+            \ ['darkcyan',    'SeaGreen3'],
+            \ ['darkred',     'DarkOrchid3'],
+            \ ['red',         'firebrick3'],
+            \ ]
 let g:rbpt_max = 16
 let g:rbpt_loadcmd_toggle = 0
 au VimEnter * RainbowParenthesesToggle
@@ -734,11 +713,11 @@ function! JspFileTypeInit()
     endif
 endfunction
 "function MyDotfunc()
-    "if pumvisible()
-        "return "\exe JCimportAddI."
-    "else
-        "return "."
-    "endif
+"if pumvisible()
+"return "\exe JCimportAddI."
+"else
+"return "."
+"endif
 "endf
 "autocmd Syntax java inoremap { {<CR>}<Esc>O
 function! BracketsFunc()
@@ -1040,10 +1019,10 @@ endif
 "\    }
 
 "function! s:file_association.func(candidates)
-    "for l:candidate in a:candidates
-        "" .vimrcに関数の定義有り
-        "call OpenFileAssociation(l:candidate.action__path)
-    "endfor
+"for l:candidate in a:candidates
+"" .vimrcに関数の定義有り
+"call OpenFileAssociation(l:candidate.action__path)
+"endfor
 "endfunction
 
 "call unite#custom_action('openable', 'file_association', s:file_association)
@@ -1081,10 +1060,10 @@ let g:unite_source_grep_default_opts = "-iRHn"
 
 
 let g:unite_launch_apps = [
-      \ 'rake',
-      \ 'make',
-      \ 'git pull',
-      \ 'git push']
+            \ 'rake',
+            \ 'make',
+            \ 'git pull',
+            \ 'git push']
 
 if executable('jvgrep')
     " For jvgrep.
@@ -1095,9 +1074,9 @@ endif
 
 
 if executable('ag')
-let g:unite_source_grep_command='ag'
-let g:unite_source_grep_default_opts='--nocolor --nogroup -S'
-let g:unite_source_grep_recursive_opt=''
+    let g:unite_source_grep_command='ag'
+    let g:unite_source_grep_default_opts='--nocolor --nogroup -S'
+    let g:unite_source_grep_recursive_opt=''
 endif
 let g:unite_source_grep_max_candidates = 200
 
@@ -1309,39 +1288,39 @@ nnoremap <space>s :Unite -quick-match -auto-preview buffer<cr>
 
 let g:unite_source_menu_menus = {}
 let g:unite_source_menu_menus.git = {
-    \ 'description' : '            gestionar repositorios git
-        \                            ⌘ [espacio]g',
-    \}
+            \ 'description' : '            gestionar repositorios git
+            \                            ⌘ [espacio]g',
+            \}
 let g:unite_source_menu_menus.git.command_candidates = [
-    \['▷ tig                                                        ⌘ ,gt',
-        \'normal ,gt'],
-    \['▷ git status       (Fugitive)                                ⌘ ,gs',
-        \'Gstatus'],
-    \['▷ git diff         (Fugitive)                                ⌘ ,gd',
-        \'Gdiff'],
-    \['▷ git commit       (Fugitive)                                ⌘ ,gc',
-        \'Gcommit'],
-    \['▷ git log          (Fugitive)                                ⌘ ,gl',
-        \'exe "silent Glog | Unite quickfix"'],
-    \['▷ git blame        (Fugitive)                                ⌘ ,gb',
-        \'Gblame'],
-    \['▷ git stage        (Fugitive)                                ⌘ ,gw',
-        \'Gwrite'],
-    \['▷ git checkout     (Fugitive)                                ⌘ ,go',
-        \'Gread'],
-    \['▷ git rm           (Fugitive)                                ⌘ ,gr',
-        \'Gremove'],
-    \['▷ git mv           (Fugitive)                                ⌘ ,gm',
-        \'exe "Gmove " input("destino: ")'],
-    \['▷ git push         (Fugitive, salida por buffer)             ⌘ ,gp',
-        \'Git! push'],
-    \['▷ git pull         (Fugitive, salida por buffer)             ⌘ ,gP',
-        \'Git! pull'],
-    \['▷ git prompt       (Fugitive, salida por buffer)             ⌘ ,gi',
-        \'exe "Git! " input("comando git: ")'],
-    \['▷ git cd           (Fugitive)',
-        \'Gcd'],
-    \]
+            \['▷ tig                                                        ⌘ ,gt',
+            \'normal ,gt'],
+            \['▷ git status       (Fugitive)                                ⌘ ,gs',
+            \'Gstatus'],
+            \['▷ git diff         (Fugitive)                                ⌘ ,gd',
+            \'Gdiff'],
+            \['▷ git commit       (Fugitive)                                ⌘ ,gc',
+            \'Gcommit'],
+            \['▷ git log          (Fugitive)                                ⌘ ,gl',
+            \'exe "silent Glog | Unite quickfix"'],
+            \['▷ git blame        (Fugitive)                                ⌘ ,gb',
+            \'Gblame'],
+            \['▷ git stage        (Fugitive)                                ⌘ ,gw',
+            \'Gwrite'],
+            \['▷ git checkout     (Fugitive)                                ⌘ ,go',
+            \'Gread'],
+            \['▷ git rm           (Fugitive)                                ⌘ ,gr',
+            \'Gremove'],
+            \['▷ git mv           (Fugitive)                                ⌘ ,gm',
+            \'exe "Gmove " input("destino: ")'],
+            \['▷ git push         (Fugitive, salida por buffer)             ⌘ ,gp',
+            \'Git! push'],
+            \['▷ git pull         (Fugitive, salida por buffer)             ⌘ ,gP',
+            \'Git! pull'],
+            \['▷ git prompt       (Fugitive, salida por buffer)             ⌘ ,gi',
+            \'exe "Git! " input("comando git: ")'],
+            \['▷ git cd           (Fugitive)',
+            \'Gcd'],
+            \]
 nnoremap <silent>[menu]g :Unite -silent -start-insert menu:git<CR>
 
 "}
@@ -1370,52 +1349,52 @@ nnoremap <silent>[menu]g :Unite -silent -start-insert menu:git<CR>
 "au VimEnter * call VimEnterCallback()
 "au BufAdd *.[ch] call FindGtags(expand('<afile>'))
 "au BufWritePost *.[ch] call UpdateGtags(expand('<afile>'))
-  
+
 "function! FindFiles(pat, ...)
-     "let path = ''
-     "for str in a:000
-         "let path .= str . ','
-     "endfor
-  
-     "if path == ''
-         "let path = &path
-     "endif
-  
-     "echo 'finding...'
-     "redraw
-     "call append(line('$'), split(globpath(path, a:pat), '\n'))
-     "echo 'finding...done!'
-     "redraw
- "endfunc
-  
+"let path = ''
+"for str in a:000
+"let path .= str . ','
+"endfor
+
+"if path == ''
+"let path = &path
+"endif
+
+"echo 'finding...'
+"redraw
+"call append(line('$'), split(globpath(path, a:pat), '\n'))
+"echo 'finding...done!'
+"redraw
+"endfunc
+
 "function! VimEnterCallback()
-     "for f in argv()
-         "if fnamemodify(f, ':e') != 'c' && fnamemodify(f, ':e') != 'h'
-             "continue
-         "endif
-  
-         "call FindGtags(f)
-     "endfor
+"for f in argv()
+"if fnamemodify(f, ':e') != 'c' && fnamemodify(f, ':e') != 'h'
+"continue
+"endif
+
+"call FindGtags(f)
+"endfor
 "endfunc
-  
+
 "function! FindGtags(f)
-     "let dir = fnamemodify(a:f, ':p:h')
-     "while 1
-         "let tmp = dir . '/GTAGS'
-         "if filereadable(tmp)
-             "exe 'cs add ' . tmp . ' ' . dir
-             "break
-         "elseif dir == '/'
-             "break
-         "endif
-  
-         "let dir = fnamemodify(dir, ":h")
-     "endwhile
+"let dir = fnamemodify(a:f, ':p:h')
+"while 1
+"let tmp = dir . '/GTAGS'
+"if filereadable(tmp)
+"exe 'cs add ' . tmp . ' ' . dir
+"break
+"elseif dir == '/'
+"break
+"endif
+
+"let dir = fnamemodify(dir, ":h")
+"endwhile
 "endfunc
-  
+
 "function! UpdateGtags(f)
-     "let dir = fnamemodify(a:f, ':p:h')
-     "exe 'silent !cd ' . dir . ' && global -u &> /dev/null &'
+"let dir = fnamemodify(a:f, ':p:h')
+"exe 'silent !cd ' . dir . ' && global -u &> /dev/null &'
 "endfunction
 "}}}
 
@@ -1429,8 +1408,8 @@ nnoremap <leader>gp :execute 'Unite  -auto-preview -start-insert -no-split gtags
 vnoremap <leader>gd <ESC>:execute 'Unite -auto-preview -start-insert -no-split gtags/def:'.GetVisualSelection()<CR>
 
 let g:unite_source_gtags_project_config = {
-  \ '_':                   { 'treelize': 0 }
-  \ }
+            \ '_':                   { 'treelize': 0 }
+            \ }
 " specify your project path as key.
 " '_' in key means default configuration.
 " }}}
@@ -1483,21 +1462,21 @@ call unite#custom#source('codesearch', 'max_candidates', 30)
 
 "webdictサイトの設定
 let g:ref_source_webdict_sites = {
-\   'je': {
-\     'url': 'http://dictionary.infoseek.ne.jp/jeword/%s',
-\   },
-\   'ej': {
-\     'url': 'http://dictionary.infoseek.ne.jp/ejword/%s',
-\   },
-\   'wiki': {
-\     'url': 'http://ja.wikipedia.org/wiki/%s',
-\   },
-\   'cn': {
-\     'url': 'http://www.iciba.com/%s',
-\   },
-\   'wikipedia:en':{'url': 'http://en.wikipedia.org/wiki/%s',  },
-\   'bing':{'url': 'http://cn.bing.com/search?q=%s', },
-\ }
+            \   'je': {
+            \     'url': 'http://dictionary.infoseek.ne.jp/jeword/%s',
+            \   },
+            \   'ej': {
+            \     'url': 'http://dictionary.infoseek.ne.jp/ejword/%s',
+            \   },
+            \   'wiki': {
+            \     'url': 'http://ja.wikipedia.org/wiki/%s',
+            \   },
+            \   'cn': {
+            \     'url': 'http://www.iciba.com/%s',
+            \   },
+            \   'wikipedia:en':{'url': 'http://en.wikipedia.org/wiki/%s',  },
+            \   'bing':{'url': 'http://cn.bing.com/search?q=%s', },
+            \ }
 
 
 "デフォルトサイト
@@ -1506,13 +1485,13 @@ let g:ref_source_webdict_sites.default = 'cn'
 "let g:ref_source_webdict_cmd='w3m -dump %s'
 "出力に対するフィルタ。最初の数行を削除
 function! g:ref_source_webdict_sites.je.filter(output)
-  return join(split(a:output, "\n")[15 :], "\n")
+    return join(split(a:output, "\n")[15 :], "\n")
 endfunction
 function! g:ref_source_webdict_sites.ej.filter(output)
-  return join(split(a:output, "\n")[15 :], "\n")
+    return join(split(a:output, "\n")[15 :], "\n")
 endfunction
 function! g:ref_source_webdict_sites.wiki.filter(output)
-  return join(split(a:output, "\n")[17 :], "\n")
+    return join(split(a:output, "\n")[17 :], "\n")
 endfunction
 
 nmap <Leader>rj :<C-u>Ref webdict je<Space>
@@ -1582,7 +1561,7 @@ nnoremap sz :CtrlPZ<Cr>
 nnoremap sf :CtrlPF<Cr>
 "}}}
 augroup filetype_vim
-    autocmd!
+    "autocmd!
     autocmd FileType vim setlocal foldmethod=marker
     "autocmd FileType vim no za :call Fold_This_Vim_File()
     function Fold_This_Vim_File()
