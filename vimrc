@@ -783,8 +783,8 @@ function! JavaFileTypeInit()
     set tags+=/home/wsdjeg/others/openjdk-8-src/tags
     set omnifunc=javacomplete#Complete
     "add android16 tags
-    if filereadable("src/main/AndroidManifest.xml")
-        set tags+=/home/wsdjeg/others/android-sdk-linux/sources/android-16/tags
+    if filereadable("AndroidManifest.xml")
+        set tags+=/home/wsdjeg/others/android-sources-6.0r1/tags
     endif
     "nnoremap <leader>] :tag <c-r>=expand("<cword>")<cr><cr>
     "nnoremap <leader>[ :tp
