@@ -185,27 +185,24 @@ if count(s:settings.plugin_groups, 'ctrlp') "{{{
     NeoBundle 'sgur/ctrlp-extensions.vim'
     NeoBundle 'FelikZ/ctrlp-py-matcher'
     NeoBundle 'JazzCore/ctrlp-cmatcher'
+    let g:ctrlp_map = '<c-p>'
+    let g:ctrlp_cmd = 'CtrlP'
     let g:ctrlp_working_path_mode = 'ra'
-
     let g:ctrlp_root_markers = 'pom.xml'
-
     let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:25,results:25'
-    "let g:ctrlp_show_hidden = 1
+    let g:ctrlp_show_hidden = 1
     "for caching
     let g:ctrlp_use_caching = 1
     let g:ctrlp_clear_cache_on_exit = 0
     let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
-
     "let g:ctrlp_map = ',,'
     "let g:ctrlp_open_multiple_files = 'v'
-
     set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class
-
     let g:ctrlp_custom_ignore = {
-                \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-                \ 'file': '\v\.(exe|so|dll|png|jpg)$',
-                \ 'link': 'some_bad_symbolic_links',
-                \ }
+      \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+      \ 'file': '\v\.(exe|so|dll)$',
+      \ 'link': 'some_bad_symbolic_links',
+      \ }
     let g:ctrlp_user_command = {
                 \ 'types': {
                 \ 1: ['.git', 'cd %s && git ls-files'],
@@ -224,7 +221,7 @@ if count(s:settings.plugin_groups, 'ctrlp') "{{{
     let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch'  }
 
 
-    nnoremap <Leader>kk :CtrlPMixed<Cr>
+    "nnoremap <Leader>kk :CtrlPMixed<Cr>
 
 
     " comment for ctrlp-funky {{{
@@ -251,12 +248,12 @@ if count(s:settings.plugin_groups, 'ctrlp') "{{{
     nnoremap <Leader>pl :<c-u>CtrlPLauncher<cr>
     "}}}
 
-    "for ctrlp-cmatcher {{{
+    ""for ctrlp-cmatcher {{{
 
-    let g:ctrlp_max_files = 0
-    let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
+    "let g:ctrlp_max_files = 0
+    "let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
 
-    "}}}
+    ""}}}
 
 endif "}}}
 
@@ -488,6 +485,11 @@ NeoBundle 'mattn/emmet-vim'
 let g:user_emmet_install_global = 0
 let g:user_emmet_leader_key='<C-e>'
 let g:user_emmet_mode='a'
+let g:user_emmet_settings = {
+            \  'jsp' : {
+            \      'extends' : 'html',
+            \  },
+            \}
 " use this two command to find how long the plugin take!
 "profile start syntastic.log
 "profile! file */syntastic/*
@@ -1213,58 +1215,6 @@ nnoremap <silent> [unite]w
 
 " Custom mappings for the unite buffer
 autocmd FileType unite call s:unite_my_settings()
-function! s:unite_my_settings()
-    " Overwrite settings.
-
-    " Play nice with supertab
-    let b:SuperTabDisabled=1
-    " Enable navigation with control-j and control-k in insert mode
-    imap <buffer> <C-n>   <Plug>(unite_select_next_line)
-    nmap <buffer> <C-n>   <Plug>(unite_select_next_line)
-    imap <buffer> <C-p>   <Plug>(unite_select_previous_line)
-    nmap <buffer> <C-p>   <Plug>(unite_select_previous_line)
-
-
-    imap <buffer> jj      <Plug>(unite_insert_leave)
-    "imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
-
-    imap <buffer><expr> j unite#smart_map('j', '')
-    imap <buffer> <TAB>   <Plug>(unite_select_next_line)
-    imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
-    imap <buffer> '     <Plug>(unite_quick_match_default_action)
-    nmap <buffer> '     <Plug>(unite_quick_match_default_action)
-    imap <buffer><expr> x
-                \ unite#smart_map('x', "\<Plug>(unite_quick_match_choose_action)")
-    nmap <buffer> x     <Plug>(unite_quick_match_choose_action)
-    nmap <buffer> <C-z>     <Plug>(unite_toggle_transpose_window)
-    imap <buffer> <C-z>     <Plug>(unite_toggle_transpose_window)
-    imap <buffer> <C-y>     <Plug>(unite_narrowing_path)
-    nmap <buffer> <C-y>     <Plug>(unite_narrowing_path)
-    nmap <buffer> <C-e>     <Plug>(unite_toggle_auto_preview)
-    imap <buffer> <C-e>     <Plug>(unite_toggle_auto_preview)
-    nmap <buffer> <C-r>     <Plug>(unite_narrowing_input_history)
-    imap <buffer> <C-r>     <Plug>(unite_narrowing_input_history)
-    nnoremap <silent><buffer><expr> l
-                \ unite#smart_map('l', unite#do_action('default'))
-
-    let unite = unite#get_current_unite()
-    if unite.profile_name ==# 'search'
-        nnoremap <silent><buffer><expr> r     unite#do_action('replace')
-    else
-        nnoremap <silent><buffer><expr> r     unite#do_action('rename')
-    endif
-
-    nnoremap <silent><buffer><expr> cd     unite#do_action('lcd')
-    nnoremap <buffer><expr> S      unite#mappings#set_current_filters(
-                \ empty(unite#mappings#get_current_filters()) ?
-                \ ['sorter_reverse'] : [])
-
-    " Runs "split" action by <C-s>.
-    imap <silent><buffer><expr> <C-s>     unite#do_action('split')
-
-
-
-endfunction"}}}
 
 
 
@@ -1594,6 +1544,23 @@ nnoremap goi :OpenBrowserSmartSearch http://www.iciba.com/<C-R>=expand("<cword>"
 ":OpenBrowserSmartSearch ggrks 
 "}}}
 
+augroup filetype_vim
+    "autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+    "autocmd FileType vim no za :call Fold_This_Vim_File()
+    function Fold_This_Vim_File()
+        if &foldenable==0
+            setlocal foldmethod=marker
+            execute "foldclose"
+        else
+            echo "1"
+        endif
+
+    endf
+augroup END
+
+"mapping
+"{{{
 "for fzf {{{
 set rtp+=~/.fzf
 nnoremap <Leader>fz :FZF<CR>
@@ -1609,32 +1576,17 @@ let g:ctrlp_extensions = ['Z', 'F']
 nnoremap sz :CtrlPZ<Cr>
 nnoremap sf :CtrlPF<Cr>
 "}}}
-augroup filetype_vim
-    "autocmd!
-    autocmd FileType vim setlocal foldmethod=marker
-    "autocmd FileType vim no za :call Fold_This_Vim_File()
-    function Fold_This_Vim_File()
-        if &foldenable==0
-            setlocal foldmethod=marker
-            execute "foldclose"
-        else
-            echo "1"
-        endif
-
-    endf
-augroup END
-let g:user_emmet_settings = {
-            \  'jsp' : {
-            \      'extends' : 'html',
-            \  },
-            \}
+"}}}
 
 
-"ominifunc setting {{{
+"autocmds
+"{{{
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd Filetype html setlocal omnifunc=htmlcomplete#CompleteTags
-
 "}}}
+
+"functions
+"{{{
 function! OnmiConfigForJsp()
     let pos1 = search("</script>","nb",line("w0"))
     let pos2 = search("<script","nb",line("w0"))
@@ -1649,3 +1601,53 @@ function! OnmiConfigForJsp()
         return "\<esc>a."
     endif
 endf
+function! s:unite_my_settings()
+    " Overwrite settings.
+
+    " Play nice with supertab
+    let b:SuperTabDisabled=1
+    " Enable navigation with control-j and control-k in insert mode
+    imap <buffer> <C-n>   <Plug>(unite_select_next_line)
+    nmap <buffer> <C-n>   <Plug>(unite_select_next_line)
+    imap <buffer> <C-p>   <Plug>(unite_select_previous_line)
+    nmap <buffer> <C-p>   <Plug>(unite_select_previous_line)
+
+
+    imap <buffer> jj      <Plug>(unite_insert_leave)
+    "imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
+
+    imap <buffer><expr> j unite#smart_map('j', '')
+    imap <buffer> <TAB>   <Plug>(unite_select_next_line)
+    imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
+    imap <buffer> '     <Plug>(unite_quick_match_default_action)
+    nmap <buffer> '     <Plug>(unite_quick_match_default_action)
+    imap <buffer><expr> x
+                \ unite#smart_map('x', "\<Plug>(unite_quick_match_choose_action)")
+    nmap <buffer> x     <Plug>(unite_quick_match_choose_action)
+    nmap <buffer> <C-z>     <Plug>(unite_toggle_transpose_window)
+    imap <buffer> <C-z>     <Plug>(unite_toggle_transpose_window)
+    imap <buffer> <C-y>     <Plug>(unite_narrowing_path)
+    nmap <buffer> <C-y>     <Plug>(unite_narrowing_path)
+    nmap <buffer> <C-e>     <Plug>(unite_toggle_auto_preview)
+    imap <buffer> <C-e>     <Plug>(unite_toggle_auto_preview)
+    nmap <buffer> <C-r>     <Plug>(unite_narrowing_input_history)
+    imap <buffer> <C-r>     <Plug>(unite_narrowing_input_history)
+    nnoremap <silent><buffer><expr> l
+                \ unite#smart_map('l', unite#do_action('default'))
+
+    let unite = unite#get_current_unite()
+    if unite.profile_name ==# 'search'
+        nnoremap <silent><buffer><expr> r     unite#do_action('replace')
+    else
+        nnoremap <silent><buffer><expr> r     unite#do_action('rename')
+    endif
+
+    nnoremap <silent><buffer><expr> cd     unite#do_action('lcd')
+    nnoremap <buffer><expr> S      unite#mappings#set_current_filters(
+                \ empty(unite#mappings#get_current_filters()) ?
+                \ ['sorter_reverse'] : [])
+
+    " Runs "split" action by <C-s>.
+    imap <silent><buffer><expr> <C-s>     unite#do_action('split')
+endfunction
+"}}}
