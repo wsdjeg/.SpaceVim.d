@@ -56,7 +56,8 @@ plugins=(git mvn z sudo adb)
 
 # User configuration
 export ANDROID_HOME="$HOME/others/android-sdk-linux"
-export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
+export GRADLE_HOME="$HOME/others/gradle-2.8"
+export PATH="$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$GRADLE_HOME/bin:$PATH"
 export JAVA_CMD="/usr/bin/java"
 # export MANPATH="/usr/local/man:$MANPATH"
 

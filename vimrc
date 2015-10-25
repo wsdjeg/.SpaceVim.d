@@ -467,8 +467,8 @@ NeoBundleLazy 'othree/javascript-libraries-syntax.vim', {'autoload':{'filetypes'
 
 
 
-NeoBundle 'artur-shaik/vim-javacomplete2'
-let g:JavaComplete_UseFQN = 0
+NeoBundle 'wsdjeg/vim-javacomplete2'
+let g:JavaComplete_UseFQN = 1
 let g:JavaComplete_ServerAutoShutdownTime = 300
 let g:JavaComplete_MavenRepositoryDisable = 0
 NeoBundle 'VJDE/VJDE'
