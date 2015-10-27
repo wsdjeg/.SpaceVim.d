@@ -651,9 +651,11 @@ set relativenumber
 " 显示行号
 set number
 " 自动缩进
-set autoindent					"自动缩进
+set autoindent
 " 自动智能对齐
-set smartindent					"设置智能对齐方式
+set smartindent
+" 状态栏预览命令
+set wildmenu
 set cindent
 set linebreak					"整词换行
 set tabstop=4					"Tab键的宽度
@@ -1583,8 +1585,10 @@ nnoremap sf :CtrlPF<Cr>
 
 "autocmds
 "{{{
+"omnifunc
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd Filetype html setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 "}}}
 
 "functions
