@@ -77,17 +77,17 @@ for s:group in s:settings.plugin_groups_exclude
 endfor
 
 "}}}
-let g:python_host_prog ='/usr/bin/python'
-let g:python3_host_prog ='/usr/bin/python3'
+let g:python_host_prog = '/usr/bin/python'
+let g:python3_host_prog = '/usr/bin/python3'
 
 "setup & neobundle {{{
 if has('vim_starting')
     if &compatible
         set nocompatible
     endif
-    set runtimepath+=~/.config/nvim/bundle/neobundle.vim/
+    set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
-call neobundle#begin(expand('~/.config/nvim/bundle/'))
+call neobundle#begin(expand('~/.vim/bundle/'))
 scriptencoding utf-8
 NeoBundleFetch 'Shougo/neobundle.vim'
 "}}}
@@ -800,7 +800,7 @@ function! JavaFileTypeInit()
                 \ "%modifiers% %type% %funcname%(){\n" .
                 \ "    return %varname%;\n" .
                 \ "}"
-    execute "source ~/.config/nvim/bundle/java_getset.vim/java_getset.vim"
+    execute "source ~/.vim/bundle/java_getset.vim/java_getset.vim"
     "add openjdk-8-src tags
     set tags+=/home/wsdjeg/others/openjdk-8-src/tags
     set omnifunc=javacomplete#Complete
