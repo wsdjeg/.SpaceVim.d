@@ -77,6 +77,8 @@ for s:group in s:settings.plugin_groups_exclude
 endfor
 
 "}}}
+let g:python_host_prog = '/usr/bin/python'
+let g:python3_host_prog = '/usr/bin/python3'
 
 "setup & neobundle {{{
 if has('vim_starting')
@@ -617,7 +619,7 @@ endfunction
 "}}}
 
 NeoBundle 'wsdjeg/MarkDown.pl'
-autocmd filetype markdown nmap md :!~/.vim/bundle/MarkDown.pl/markdown.pl % > %.html<cr><cr>
+autocmd filetype markdown nmap md :!~/.config/nvim/bundle/MarkDown.pl/markdown.pl % > %.html<cr><cr>
 autocmd filetype markdown nmap fi :!firefox %.html & <CR><CR>
 autocmd filetype html nmap fi :!firefox % &
 NeoBundle 'wsdjeg/matchit.zip'
@@ -649,9 +651,11 @@ set relativenumber
 " 显示行号
 set number
 " 自动缩进
-set autoindent					"自动缩进
+set autoindent
 " 自动智能对齐
-set smartindent					"设置智能对齐方式
+set smartindent
+" 状态栏预览命令
+set wildmenu
 set cindent
 set linebreak					"整词换行
 set tabstop=4					"Tab键的宽度
@@ -1581,8 +1585,10 @@ nnoremap sf :CtrlPF<Cr>
 
 "autocmds
 "{{{
+"omnifunc
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd Filetype html setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 "}}}
 
 "functions
