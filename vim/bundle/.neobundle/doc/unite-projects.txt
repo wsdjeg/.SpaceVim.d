@@ -1,0 +1,20 @@
+*unite-projects.txt*	A Unite plugin for listing your projects.
+
+==============================================================================
+INTRODUCTION				*unite-projects-introduction*
+
+*unite-projects* is a Unite.vim plugin for listing your projects and open them
+directly from vim. It works by listing the folders inside a given list of
+workspaces (which are themselves folders).
+
+Requirement:
+- unite.vim
+
+==============================================================================
+VARIABLES  				*unite-projects-variables*
+
+g:unite_projects_workspaces
+	Specifies the list of folders which contains projects.
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl

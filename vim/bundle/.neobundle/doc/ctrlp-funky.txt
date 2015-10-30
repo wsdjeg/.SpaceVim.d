@@ -1,0 +1,665 @@
+*ctrlp-funky.txt* *ctrlp-funky*
+A ctrlp.vim extension - super simple function navigator
+Version: 0.10.1
+Author:  Takahiro Yoshihara <https://github.com/tacahiroy>
+
+
+==============================================================================
+CONTENTS					*ctrlp-funky-contents*
+
+Introduction			|ctrlp-funky-intro|
+Commands			|ctrlp-funky-commands|
+Settings			|ctrlp-funky-settings|
+  Filetype Settings		|ctrlp-funky-filetype-settings|
+Filter Implementation Guide	|ctrlp-funky-filter-guide|
+Thanks				|ctrlp-funky-thanks|
+changelog			|ctrlp-funky-changelog|
+License				|ctrlp-funky-license|
+About				|ctrlp-funky-about|
+
+
+==============================================================================
+INTRODUCTION					*ctrlp-funky-intro*
+
+|ctrlp-funky| is an extension of ctrlp.vim. Please make sure you have
+installed ctrlp.vim plugin.
+Currently, |ctrlp-funky| supports following file types:
+
+* c / cpp (C++) / cs (C#)
+* cmm (TRACE32)
+* coffee-script
+* css (css, scss)
+* dart
+* elixir
+* go (golang)
+* html/xhtml
+* java
+* javascript
+* jinja (template engine for Python)
+* lua
+* make (Makefile)
+* markdown
+* moon (MoonScript)
+* nerdtree
+* objc (Objective-C)
+* perl
+* php
+* python
+* ruby (ruby, rake, rspec and chef recipe)
+* scala
+* sh (bash, dash and zsh)
+* tex (LaTeX)
+* typescript
+* yaml
+* vb (Visual Basic)
+* vim
+
+
+==============================================================================
+COMMANDS					*ctrlp-funky-commands*
+
+The basic command of |ctrlp-funky| is |:CtrlPFunky|. What you need to do is
+just run this command in most of cases.
+
+						*ctrlp-funky-:CtrlPFunky*
+:CtrlPFunky [WORD]
+	Extract lines from the currently edited file.
+	You can provide an argument to the command. If it's provided, you 
+	get lines that match the 'WORD': the argument will be entered into
+	the CtrlP buffer by default.
+
+It's useful to define mappings for this command. >
+
+	nnoremap <Leader>f :CtrlPFunky<Cr>
+	" Initialise list by a word under cursor
+	nnoremap <Leader>u :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+<
+
+						*ctrlp-funky-:CtrlPFunkyClearCache*
+:CtrlPFunkyClearCache
+	This command deletes cache file for the current buffer.
+	Note that this does nothing if |g:ctrlp_funky_use_cache| is set to 0.
+
+						*ctrlp-funky-:CtrlPFunkyClearCacheAll*
+:CtrlPFunkyClearCacheAll
+	This command behaves the same as |:CtrlPFunkyClearCache|, but deletes
+	all cache files.
+
+
+==============================================================================
+SETTINGS					*ctrlp-funky-settings*
+You can customise the behaviour of |ctrlp-funky| using these variables.
+
+					*'g:ctrlp_funky_after_jump'*
+After the cursor has jumped to your wanted function line, what do you usually
+tap before getting into real work? '|zo|', '|zx|', '|zx||zt|', or '|zv||zz|'
+etc.  A valid action string consists of two parts:
+    The first part can be one of  '|zx|', '|zv|', '|zo|' or '|zO|' for
+    setting the fold view. If |foldenable| if off, then this part has no
+    effect.  The second part can be one of '|zt|', '|zz|' for scrolling the
+    screen.
+Both of them can be '', which means nothing will be done.
+The |g:ctrlp_funky_after_jump| can be a single string:
+(default: 'zxzz')
+>
+       let g:ctrlp_funky_after_jump = 'zxzt'
+<
+which affects all filetypes, or it can be a |Dictionary| as follows:
+>
+       let g:ctrlp_funky_after_jump = {
+            \ 'default' : 'zxzz',
+            \ 'python'  : 'zO',
+            \ 'cpp'     : 'zxzt',
+            \ 'go'      : 'zz',
+            \ 'vim'     : '',
+       \ }
+<
+If you want to leave some 'margin' after 'z[tb]', see |scrolloff|.
+
+
+					*'g:ctrlp_funky_multi_buffers'*
+If this is enabled (=1), Funky searches function defs from all buffers.
+So you can go back and forth in buffers using this functionality.
+Note that this makes disabled |'g:ctrlp_funky_sort_by_mru'| as at 0.10.0.
+(default: 0)
+(value: 0 or 1)
+>
+	let g:ctrlp_funky_multi_buffers = 1
+<
+
+					*'g:ctrlp_funky_sort_by_mru'*
+If this is enabled (=1), the list is sorted by MRU (most recently used).
+In short, the most recently used function definition appears at the top of
+the list.
+Note that the MRU feature doesn't work persistently: If you delete
+the buffer or once you quit Vim, the order of the list is reset to default.
+(default: 0)
+(value: 0 or 1)
+>
+	let g:ctrlp_funky_sort_by_mru = 1
+<
+
+
+					*'g:ctrlp_funky_syntax_highlight'*
+If this is enabled (=1), the |syntax-highlighting| feature is enabled for the
+CtrlP-buffer. It just sets |filetype| of the CtrlP-buffer to the same as the
+current buffer.
+(default: 0)
+>
+	let g:ctrlp_funky_syntax_highlight = 1
+<
+
+
+					*'g:ctrlp_funky_use_cache'*
+If this is enabled (=1), the cache feature is enabled for the
+CtrlP-buffer. In this case, if the file wasn't changed, funky loads function
+definitions from cache, which is quicker.
+Note that funky detects file changed by timestamp and file size.
+(default: 0)
+(value: 0 or 1)
+>
+	let g:ctrlp_funky_use_cache = 1
+<
+
+
+					*'g:ctrlp_funky_cache_dir'*
+This may be set to specify a cache dir for |g:ctrlp_funky_use_cache|.
+If not set, funky defaults to ~/.cache/ctrlp-funky (created if needed).
+
+
+					*'g:ctrlp_funky_matchtype'*
+This changes the matching algorithm used by |ctrlp|.vim. If you want 
+matched chars to be highlighted, you may set this option to 'path'.
+Note that this option changes the matching algorithm, so the filtered
+result may be affected. 
+Other possible values are 'tabs' and 'tabe', however, I don't think it's
+useful setting these values.
+(default: 'line')
+(value: 'line', 'path', 'tabs', 'tabe')
+>
+	let g:ctrlp_funky_matchtype = 'line'
+<
+
+					*'g:ctrlp_funky_nolim'*
+This allows you to switch to no-limit mode. By default, the funky buffer is
+not scrollable = limit mode.
+(default: 0)
+(value: 0 or 1)
+>
+	let g:ctrlp_funky_nolim = 1
+>
+
+==============================================================================
+FILETYPE SETTINGS			*ctrlp-funky-filetype-settings*
+This section describes |ctrlp-funky| configuration for each filetype.
+
+
+[chef]					*ctrlp-funky-chef*
+					*'g:ctrlp_funky_chef_lwrp'*
+Set this to 1 (enabled) for the results to include LWRP.
+http://docs.opscode.com/lwrp.html#opscode-maintained
+(default: 1)
+(value: 0 or 1)
+>
+	let g:ctrlp_funky_chef_lwrp = 0
+<
+
+					*'g:ctrlp_funky_chef_custom_resources'*
+You can set Chef resources that you defined to this variable.
+The resources which are set to this variable will be picked up by |ctrlp-funky|.
+http://docs.opscode.com/resource.html#common-functionality
+(default: [])
+>
+	let g:ctrlp_funky_chef_custom_resources = ['rabbitmq', 'nodejs']
+<
+
+[go]					*ctrlp-funky-go*
+					*'g:ctrlp_funky_go_types'*
+Set this to 1 (enabled) and the results will include type declarations.
+(default: 1)
+(value: 0 or 1)
+>
+	let g:ctrlp_funky_go_types = 0
+<
+
+[nerdtree]				*ctrlp-funky-nerdtree*
+					*'g:ctrlp_funky_nerdtree_include_files'*
+Set this to 1 (enabled) and the results will include files.
+(default: 0)
+(value: 0 or 1)
+>
+	let g:ctrlp_funky_nerdtree_include_files = 1
+<
+
+[php]					*ctrlp-funky-php*
+					*'g:ctrlp_funky_php_requires'*
+Set this to 1 (enabled) and the results will include 'require' and
+'require_once' lines.
+(default: 0)
+(value: 0 or 1)
+>
+	let g:ctrlp_funky_php_requires = 1
+<
+
+					*'g:ctrlp_funky_php_includes'*
+Set this to 1 (enabled) and the results will include 'include' and
+'include_once' lines.
+(default: 0)
+>
+	let g:ctrlp_funky_php_include = 1
+<
+
+[ruby]					*ctrlp-funky-ruby*
+					*'g:ctrlp_funky_ruby_requires'*
+Set this to 1 (enabled) and the results will include 'require' and
+'require_relative' lines.
+(default: 0)
+(value: 0 or 1)
+>
+	let g:ctrlp_funky_ruby_requires = 1
+<
+
+					*'g:ctrlp_funky_ruby_classes'*
+Set this to 1 (enabled) and the results will include class definitions.
+(default: 1)
+(value: 0 or 1)
+>
+	let g:ctrlp_funky_ruby_classes = 0
+<
+
+					*'g:ctrlp_funky_ruby_modules'*
+Set this to 1 (enabled) and the results will include module definitions.
+(default: 1)
+(value: 0 or 1)
+>
+	let g:ctrlp_funky_ruby_modules = 0
+<
+
+					*'g:ctrlp_funky_ruby_contains_rake'*
+This option is no longer available. Use |g:ctrlp_funky_ruby_rake_words|
+instead. [OBSOLETE]
+
+					*'g:ctrlp_funky_ruby_rake_words*
+Set this to 1 (enabled) and the 'rake' filter will be absorbed.
+(default: 0)
+(value: 0 or 1)
+>
+	let g:ctrlp_funky_ruby_rake_words = 1
+<
+
+					*'g:ctrlp_funky_ruby_chef_words'*
+Set this to 1 (enabled) and the 'chef' filter will be absorbed.
+(default: 0)
+(value: 0 or 1)
+>
+	let g:ctrlp_funky_ruby_chef_words = 1
+<
+
+					*'g:ctrlp_funky_ruby_access'*
+Set this to 1 (enabled) and the result will include access modifiers such as
+'private', 'protected' and 'public'.
+(default: 1)
+(value: 0 or 1)
+>
+	let g:ctrlp_funky_ruby_access = 1
+<
+
+					*'g:ctrlp_funky_ruby_rspec'*
+Set this to 1 (enabled) and the result will include rspec definitions like
+'context', 'scenario', 'feature', 'describe' and 'it'.
+(default: 1)
+(value: 0 or 1)
+>
+	let g:ctrlp_funky_ruby_rspec = 1
+<
+
+[sh]					*ctrlp-funky-sh*
+					*'g:ctrlp_funky_sh_type*
+Nowadays, '/bin/sh' is usually an alias (symlink) of another shell such as
+bash, ksh, etc. You can specify Funky's internal filetype for 'sh'.
+If this is set to 'dash', Funky treats 'sh' as 'dash'.
+(default: 'bash')
+>
+	let g:ctrlp_funky_sh_type = 'ksh'
+<
+
+FILTER IMPLEMENTATION GUIDE			*ctrlp-funky-filter-guide*
+This section describes how to implement your own filter.
+The internal API has been changed since |ctrlp-funky| version 0.6.0.
+Therefore, if the filter uses the old API you may get an error.
+
+						*ctrlp-funky-api-v0.6.0*
+						*ctrlp-funky-create-own-filter*
+The filetype filter must have an |autoload| function named 'filters'.
+This 'filters' function must return a |List| which contains |Dictionaries|.
+And each |Dictionary| must have 'pattern' and 'formatter' as keys.
+NOTE: directory structure has been changed since v0.9.1.
+
+This example is for 'vim'.
+>
+  function! ctrlp#funky#ft#vim#filters()
+    let filters = [
+          \ { 'pattern': '\m\C^[\t ]*function!\?[\t ]\+\S\+',
+          \   'formatter': ['\m\C^[\t ]*', '', ''] }
+    \ ]
+
+    " You can highlight whatever in the |ctrlp|.vim window if you want
+    call ctrlp#funky#highlight('^[\t ]*function[\t ]',
+                             \ 'CtrlPFunkyVimFunc', 'Function')
+
+    return filters
+  endfunction
+<
+[Meaning of the filter's keys]
+String	pattern~
+  This is a regexp to extract function definitions.
+
+List	formatter~
+  |ctrlp-funky| formats each line that is extracted from the current buffer
+  using the values of this item. Actually, these items are simply passed as
+  arguments to the |substitute()| function.
+  The sample function above removes leading whitespace.
+
+
+==============================================================================
+THANKS						*ctrlp-funky-thanks*
+
+  * *kien* <https://github.com/kien> - the author of ctrlp.vim
+
+  * *pydave*          <https://github.com/pydave>
+  * *curist*          <https://github.com/curist>
+  * *Benoit*          <https://github.com/saalaa>
+  * *tokorom*         <https://github.com/tokorom>
+  * *robmiller*       <https://github.com/robmiller>
+  * *unc0*            <https://github.com/unc0>
+  * *hlissner*        <https://github.com/hlissner>
+  * *mephux*          <https://github.com/mephux>
+  * *dusans*          <https://github.com/dusans>
+  * *kirstein*        <https://github.com/kirstein>
+  * *mmazer*          <https://github.com/mmazer>
+  * *vitalk*          <https://github.com/vitalk>
+  * *dingmingxin*     <https://github.com/dingmingxin>
+  * *dictav*          <https://github.com/dictav>
+  * *axehead*         <https://github.com/axehead>
+  * *walkingsparrow*  <https://github.com/walkingsparrow>
+  * *huaihuaiVV*      <https://github.com/huaihuaiVV>
+  * *rendon*          <https://github.com/rendon>
+  * *kshenoy*         <https://github.com/kshenoy>
+  * *mattiaslundberg* <https://github.com/mattiaslundberg>
+  * *prabirshrestha*  <https://github.com/prabirshrestha>
+  * *siadat*          <https://github.com/siadat>
+  * *jean*            <https://github.com/jean>
+  * *Komnomnomnom*    <https://github.com/Komnomnomnom>
+  * *timfeirg*        <https://github.com/timfeirg>
+  * *h14i*            <https://github.com/h14i>
+  * *ggVGc*           <https://github.com/ggVGc>
+  * *senft*           <https://github.com/senft>
+  * *bmenant*         <https://github.com/bmenant>
+  * *fufler*          <https://github.com/fufler>
+  * *metainfa*        <https://github.com/metainfa>
+  * *svenwin*         <https://github.com/svenwin>
+  * *anstosa*         <https://github.com/anstosa>
+  * *imran-uk*        <https://github.com/imran-uk>
+
+
+==============================================================================
+CHANGELOG 					*ctrlp-funky-changelog*
+
+20 Oct 2015~
+  + Remove custom highlight option
+
+25 July 2015~
+  + Add support for Perl Moose and Method::Signatures (#73) 
+    requested by |imran-uk|
+
+30 May 2015~
+  + Add very basic css support (#69)
+  + Improve css support (#72) by |anstosa|
+  + Add scss support (#69) by |anstosa|
+  + Add support for rspec definitions (#71) by |svenwin|
+
+27 May 2015~
+  + Add generator function support for javascript by |metainfa| (#68)
+
+7 May 2015~
+  + Add basic C# (cs) support (#66)
+
+16 Apr 2015~
+  + Fix E688 problem with non English locales (#38)
+    reported by |bmenant| / fixed by |fufler|
+
+12 Apr 2015~
+  + Add basic LaTeX support by |senft|
+
+9 Apr 2015~
+  + Add basic Dart support
+
+31 Mar 2015~
+  + Improve TypeScript support by |prabirshrestha| (#64)
+
+6 Mar 2015~
+  + Add MoonScript (moon) support by |ggVGc| (#62)
+
+9 Feb 2015~
+  + Fix function name for typescript by |h14i| (#60)
+
+8 Feb 2015~
+  + Fix error on accept() if sort_by_mru is enabled (#59)
+    reported by |timfeirg|
+  + Add multiple buffer support (minimum impl)
+
+1 Jan 2015~
+  + Fix duplicate tag in the doc by |Komnomnomnom| (#58) 
+
+27 Dec 2014~
+  + Fix doc entry for cache dir by |jean| (#57) 
+
+15 Oct 2014~
+  + Add type declarations support for golang by |siadat| (#53) 
+
+14 Oct 2014~
+  + Add clear cache functionality
+
+10 Oct 2014~
+  + Add basic TypeScript support by |prabirshrestha| (#52) 
+
+4 Oct 2014~
+  + Fix error when selecting a function in split window
+    reported by |mattiaslundberg| (#49)
+
+3 Oct 2014~
+  + Fix regexp for C++ to support scope resolution operator
+    reported by |kshenoy| (#51)
+
+30 Sep 2014~
+  + Add 'g:ctrlp_funky_matchtype' (#13 / #50)
+
+27 Aug 2014~
+  + Improve java support by |rendon| (#48)
+
+14 Aug 2014~
+  + Improve cmm and make support (#46)
+  + Fix multi-lined function support for C and Java by |huaihuaiVV| (#47)
+
+13 Aug 2014~
+  + Add TRACE32 (cmm) and Makefile (make) support by |huaihuaiVV| (#44)
+
+12 Aug 2014~
+  + Add basic Elixir support
+
+27 July 2014~
+  + Improve Scala support reported by |walkingsparrow| (#40)
+
+12 July 2014~
+  + Add very basic Scala support
+
+24 June 2014~
+  + 0.9.0: Add cache feature ideated by |dusans| (#27)
+
+30 May 2014~
+  + 0.8.5: php - Add support for extra keywords, final, static etc.
+    by |axehead| (#35)
+
+28 May 2014~
+  + Fix error a markdown file contains YAML Front matter
+    reported by |dictav| (#36)
+  + markdown: Add h4 to h6 support
+
+22 Apr 2014~
+  + Add support for returning by reference function for PHP by |dingmingxin| (#31)
+
+20 Apr 2014~
+  + 0.8.4: Fix performance issue for python by |dusans| (#30)
+
+10 Mar 2014~
+  + 0.8.3: Add Jinja template support by |vitalk| (#29)
+
+22 Feb 2014~
+  + 0.8.2: Add html and xhtml support by |mmazer| (#28)
+
+26 Jan 2014~
+  + 0.8.1: Add syntax highlight option: |g:ctrlp_funky_syntax_highlight|
+           An idea from issue #25.
+
+22 Jan 2014~
+  + 0.8.0: Add ability to custom highlight
+
+27 Nov 2013~
+  + 0.7.1: Remove the old API
+
+9 Nov 2013~
+  + 0.7.0: Add coffee-script support by |kirstein| (#23)
+
+16 Oct 2013~
+  + Add post_extract_hook support
+  + Fix java: remove 'else if' from the list
+
+15 Oct 2013~
+  + Fix javascript: 1 character function name isn't detected problem
+
+8 Oct 2013~
+  + Add Go support
+  + Add Perl support
+
+4 Oct 2013~
+  + Change internal API, though the old API still supported.
+
+7 Sept 2013~
+  + Add MRU feature: |g:ctrlp_funky_sort_by_mru|
+  + Add YAML support by |dusans| (#20)
+
+30 Aug 2013~
+  + Add javascript object function support by |mephux| (#17)
+
+27 Aug 2013~
+  + Fix "Pattern not found" line appears in the list
+
+15 Aug 2013~
+  + Add support for Lua by |hlissner|
+
+9 Aug 2013~
+  + New option: |g:ctrlp_funky_sh_type|
+
+25 Jun 2013~
+  + Fix behaviour when buffer being opened in multiple (split) windows (#11)
+  + Add multi-lined function def support in Python (#12)
+
+17 Jun 2013~
+  + Fix behaviour when buffer being opened in multiple (split) windows (#11)
+  + Add multi-lined function def support in Python (#12)
+
+17 Jun 2013~
+  + Add C support, improved C++ pattern by |unc0|
+
+23 May 2013~
+  + Fix regex pattern for sh. No parentheses case can be detected.
+
+20 May 2013~
+  + New options: |g:ctrlp_funky_php_requires|,
+                 |g:ctrlp_funky_php_includes|,
+
+2 May 2013~
+  + Add support for php by |robmiller|
+
+25 Apr 2013~
+  + New options: |g:ctrlp_funky_chef_custom_resources|
+                 |g:ctrlp_funky_chef_lwrp|
+
+20 Apr 2013~
+  + Add support for Chef recipe
+
+11 Apr 2013~
+  + Fix regexp pattern for sh
+
+3 Apr 2013~
+  + Add support for Visual Basic (vb)
+
+22 Mar 2013~
+  + Add the command can take an argument for initialisation
+
+12 Feb 2013~
+  + Add 'get_filter' method in each filter to disclose own filter
+  + Add support for Objective-C (objc) by |tokorom|
+
+27 Jan 2013~
+  + Add support for Shell Script (bash)
+  + Add support for Z shell (zsh)
+  - Delete all buffer mode
+
+21 Jan 2013~
+
+  + New options: |g:ctrlp_funky_ruby_requires|,
+                 |g:ctrlp_funky_ruby_classes|,
+                 |g:ctrlp_funky_ruby_modules|,
+                 |g:ctrlp_funky_ruby_contains_rake|
+
+20 Jan 2013~
+  + Add class filter for python by |Benoit|
+
+14 Jan 2013~
+  + Add support for javascript by |curist|
+
+06 Jun 2012~
+  + Add support for python
+  + Add support for C++ (cpp)
+  + Add support for java
+    by |pydave|
+
+Initial release: 25 Feb 2012~
+
+
+==============================================================================
+LICENSE						*ctrlp-funky-license*
+
+|ctrlp-funky| is distributed under the MIT License.
+
+Copyright (c) 2012-2015 Takahiro Yoshihara
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+==============================================================================
+ABOUT                                           *ctrlp-funky-about*
+
+The latest version is available on GitHub:
+
+https://github.com/tacahiroy/ctrlp-funky
+
+
+vim:fen:tw=78:et:ts=8:ft=help:norl:

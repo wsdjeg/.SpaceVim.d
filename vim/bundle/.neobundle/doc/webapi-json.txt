@@ -1,0 +1,29 @@
+*webapi-json.txt*			JSON parser written in pure vimscript.
+
+Maintainer: mattn <mattn.jp@gmail.com>
+
+==============================================================================
+CONTENTS				*webapi-json-contents*
+
+INTRODUCTION				|webapi-json-introduction|
+INTERFACE				|webapi-json-interface|
+  Functions				|webapi-json-functions|
+
+==============================================================================
+INTRODUCTION				*webapi-json-introduction*
+
+*webapi-json* is JSON parser Library.
+
+==============================================================================
+INTERFACE				*webapi-json-interface*
+------------------------------------------------------------------------------
+FUNCTIONS				*webapi-json-functions*
+
+encode(object)				*webapi-json.encode()*
+	Encode object into JSON string.
+
+decode(json)				*webapi-json.decode()*
+	Decode JSON string into variable that vim can treat.
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl

@@ -1,0 +1,150 @@
+*scriptease.txt*  Write Vim scripts with ease
+
+Author:  Tim Pope <http://tpo.pe/>
+License: Same terms as Vim itself (see |license|)
+
+This plugin is only available if 'compatible' is not set.
+
+INTRODUCTION                                    *scriptease*
+
+It's dangerous to Vimscript alone!  Take this.
+
+                                                *scriptease-zS*
+zS                      Show the names of all syntax highlighting groups for
+                        the character under the cursor.
+
+{count}zS               Show the |:syn-list| for the {count}th syntax group
+                        under the cursor.  1zS shows the innermost group.
+
+                                                *scriptease-K*
+K                       Like setting 'keywordprg' to :help, but slightly
+                        smarter.  Only mapped in Vim files.
+
+                                                *scriptease-g!*
+g!{motion}              Call |eval()| on the text the motion moves over and
+                        replace it with the result.  If you press g!! on a
+                        line containing "2+2", the line will be changed to
+                        "4".
+
+{Visual}g!              Call |eval()| on the selection and replace it with the
+                        result.
+
+                                                *scriptease-:Breakadd*
+:Breakadd ..            Like |:breakadd|, but accepts s: functions, and if you
+                        give it an argument of "here" inside a function, it
+                        sets a breakpoint inside the function as you would
+                        expect.  Only available in Vim files.
+
+                                                *scriptease-:Breakdel*
+:Breakdel ..            Like |:breakdel|, but with the same enhancements as
+                        |:Breakadd|.  Only available in Vim files.
+
+                                                *scriptease-:Disable*
+:Disarm {file} ..       Attempt to disable a runtime file by removing its
+                        |:map|s, |:command|s, and |:autocmd|s.  Accepts either
+                        an absolute (~/.vim/plugin/scriptease.vim) or
+                        runtime-relative (plugin/scriptease.vim) path.
+
+                                                *scriptease-:PP*
+:PP {expr}              Pretty print the value of {expr}.
+
+:PP! {expr}             Pretty print the value of {expr} without wrapping.
+
+:{range}PP[!] {expr}    Pretty print the value of {expr} into the buffer after
+                        {range}.
+
+:PP                     With no {expr}, input, evaluate, and pretty print a
+                        series of expressions.  Quit on a blank line.  This is
+                        essentially a REPL.
+
+                                                *scriptease-:PPmsg*
+:PPmsg {expr}           Pretty print the value of {expr} using |:echomsg|.
+
+:PPmsg! {expr}          Pretty print the value of {expr} using |:echomsg|
+                        without wrapping.
+
+:{count}PPmsg[!] {expr} Pretty print the value of {expr} using |:echomsg| if
+                        and only if the value of 'verbose' is greater than or
+                        equal to {count}.
+
+:PPmsg                  With no {expr}, |:echomsg| the current |<sfile>| and
+                        |<slnum>|.
+                                                *scriptease-:Runtime*
+:Runtime {file} ..      Invokes |:runtime|! on the given files, after
+                        |:unlet|ting any include guards found within them.
+                        Invokes |:filetype| detect afterwards.
+
+:Runtime                In a Vim script, |:Runtime| on the current file.
+                        Otherwise, re-perform filetype detection after
+                        |:unlet|ting any include guards in the relevant
+                        syntax, indent, and ftplugin files.
+
+                                                *scriptease-:Scriptnames*
+:Scriptnames            Load |:scriptnames| into the quickfix list and
+                        |:copen|.
+
+                                                *scriptease-:Time*
+:[count]Time {command}  Run the given command [count] times (default: 1) and
+                        report how long it takes.
+
+                                                *scriptease-:Verbose*
+:[count]Verbose {command}
+                        Like |:verbose|, but capture the results to a file
+                        with 'verbosefile' and load it in the preview window.
+                        This is particularly useful for higher, noisier values
+                        of [count].
+
+                                        *scriptease-:Vedit* *scriptease-:Ve*
+:[count]Vedit {file}    Scan for [file] through the 'runtimepath', load all
+                        matching files into the |location-list|, and jump to
+                        the first (or [count]th) one.
+
+                                        *scriptease-:Vedit!* *scriptease-:Ve!*
+:[count]Vedit! {file}   Like |:Vedit|, but forcefully discard all changes.
+
+                                                *scriptease-:Vopen*
+:[count]Vopen {file}    Open the first (or [count]th) matching file in
+                        'runtimepath', and |:lchdir| to the directory it was
+                        found in.  This is a handy command to use when you
+                        want to start working on a plugin in a fresh instance
+                        of Vim.
+
+                                                *scriptease-:Vopen!*
+:[count]Vopen! {file}   Like |:Vopen|, but forcefully discard all changes.
+
+                                                *scriptease-:Vread*
+:[count]Vread {file}    Read the first (or [count]th) matching file in
+                        'runtimepath' into the current buffer.
+
+                                                *scriptease-:Vsplit*
+:Vsplit {file}          |:Vedit| meets |:split|.
+
+                                                *scriptease-:Vvsplit*
+:Vvsplit {file}         |:Vedit| meets |:vsplit|.
+
+                                                *scriptease-:Vtabedit*
+:Vtabedit {file}        |:Vedit| meets |:tabedit|.
+
+                                                *scriptease-:Vpedit*
+:Vpedit {file}          |:Vedit| meets |:pedit|.
+
+                                                *scriptease-:Vsplit!*
+:Vsplit! {file}         |:Vopen| meets |:split|.
+
+                                                *scriptease-:Vvsplit!*
+:Vvsplit! {file}        |:Vopen| meets |:vsplit|.
+
+                                                *scriptease-:Vtabedit!*
+:Vtabedit! {file}       |:Vopen| meets |:tabedit|.
+
+                                                *scriptease-:Vpedit!*
+:Vpedit! {file}         |:Vedit| meets |:pedit|.
+
+
+ABOUT                                           *scriptease-about*
+
+Grab the latest version or report a bug on GitHub:
+
+http://github.com/tpope/vim-scriptease
+
+ vim:tw=78:et:ft=help:norl:

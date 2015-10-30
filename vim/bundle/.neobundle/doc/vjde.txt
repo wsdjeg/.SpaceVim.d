@@ -1,0 +1,877 @@
+*vjde.txt* Plugging for Java/? language 
+                 For Vim version 7.0
+								  *vjde* 
+
+	Comments:
+		
+		Description                          |vjde-desc|
+		Install				     |vjde-install|
+		VJDE    project                      |vjde-project|
+		search auto-completion	             |vjde-auto-comp|
+                    java 			     |vjde-java|
+		    cpp				     |vcde|
+		    ruby			     |vjde-ruby|
+                    java 			     |vjde-java-pkg|
+		    jsp                              |vjde-jsp|
+		    taglib                           |vjde-taglib|
+		    xslt                             |vjde-xsl|
+		    html                             |vjde-html|
+		    xml                              |vjde-xml|
+		    xdoclet			     |vjde-xdoclet|
+	 	    javadoc			     |vjde-javadoc|
+		    iabbr			     |vjde-iabbr|
+                document viewer                      |vjde-doc|
+		Preview window			     |vjde-preview|
+		Re factor tools			     |vjde-refactor|
+		    extract local variable           |vjde-rft-local|
+		    extract member variable          |vjde-rft-field|
+		    extract argument                 |vjde-rft-arg|
+		    extract constance                |vjde-rft-const|
+		quick fix tools                      |vjde-fix-tools|
+		    surround by try/catch	     |vjde-fix-ex|
+		    add throws			     |vjde-fix-th|
+		    Add import			     |vjde-fix-im|
+		Code tools			     |vjde-code|
+		    override methods	 	     |vjde-override|
+		    implements methods	 	     |vjde-implements|
+		    implements inner iterface 	     |vjde-impl-inner|
+		    sort imports		     |vjde-import-sort|
+		    extract imports		     |vjde-import-extract|
+		    wizard			     |vjde-wizard|
+		    template define		     |vjde-template|
+		search definition		     |vjde-define|
+		goto 	definition		     |vjde-goto|
+		to-do list view			     |vjde-tasklist|
+		VJDE    usefull command	list         |vjde-command|
+		VJDE    variable		     |vjde-variable|
+                VJDE to-do list   		     |vjde-todolist|
+                VJDE Q&A			     |vjde-qa|
+
+								   *vjde-desc*
+Desc~
+Now , C++ supported with ruby and ctags. See |vcde| for detail.
+Now , Csharp supported .
+
+This tools wich is named "Vim Java Development Environment".
+Current version, has two tools : Project and Auto Completion
+Auto completion is available to :java ,jsp, taglib , html
+
+Show Auto Completion in Preview window , and select or input in the 
+Preview window, <M-d> is map to show doc of current In Preview window.
+See |vjde_javadoc_path| for how to setup a java document path to be shown in
+the preview window.
+
+Require : ruby , rexml for ruby
+
+the future list is:
+
+Some plug-in is already used for Vim JDE~
+a. Project File Plug-in           already 
+b. match it
+c. auto import                    ok
+d. getter setter                  ok  
+e. compiler
+
+I will do:~
+
+1. Project management	    ok 
+2. Auto completion	    ok
+3. Template		    ok
+4. Extend tool
+5. Implementing tool       ok
+6. Getter/Setter            ok
+7. To-do List                 ok, but don't committed
+
+
+								*vjde-install*
+Install~
+    For Windows , for the document viewer , must copy plugin/vjde/wspawn.exe
+to you path, such as JAVA_HOME/bin ...
+								*vjde-project*
+Project~
+Project tools is used to save the VJDE variables, while you
+change your variable,some command is useful to save and restore
+the current settings.
+
+Of course, you can add variable settings on the vimrc or anywhere 
+the vim can be found.
+
+Load project
+ >
+	:Vjdeload filename 
+<Save project as  a new project >
+        :Vjdeas filename 
+<Save the current project >
+        :Vjdesave 
+<
+
+Auto completion ~
+							      *vjde-auto-comp*
+For c++ or other ctags supported language , see |vcde|
+Setup custom completion function  >
+	:set cfu=VjdeCompletionFun
+<
+Setup classpath variable: >
+	:let g:vjde_lib_path="lib/j2ee.jar:lib/struts.jar:build/classes"
+<
+								   *vjde-java*
+Once you input something like : >
+	String str;
+	str.to<CTRL>-X<CTRL>-U
+	System.out.println(str.to<CTR>-X<CTR>-U
+        System.out.println(str.toUpperCase().<CTR>-X<CTR>-U
+        return str.to<CTRL>-X<CTRL>-U
+        new str.to<CTRL>-X<CTRL>-U
+        ... [operator] str.to<CTRL>-X<CTRL>-U
+        ... = str.to<CTRL>-X<CTRL>-U
+< 
+Package completion~
+							       *vjde-java-pkg*
+Completion for package and classes: >
+	import java.<CTRL>-X<CTRL>-U
+                    applet awt...
+	import java.util.<CTRL>-X<CTRL>-U
+                         Abstract...
+<
+In source Code : >
+	java.util.<CTR>-x<CTRL>-u
+                  Abstract..
+<
+
+Jsp file completion~
+								    *vjde-jsp*	
+the same as for jsp files >
+        <%! 
+	    str.to<CTRL>-x<CTRL>-u
+        %>
+        <%
+	    str.to<CTRL>-x<CTRL>-u
+        %>
+        <%= session.get<CTRL>-x<CTRL>-u %>
+<
+        
+Taglib completion ~
+								 *vjde-taglib*
+I add the taglib completion for jsp developer. 
+Just now, completion with tld use xml-completion of |ft-xml-omni|.
+
+For Example ,  I want to use completion for the following: >
+        <c:<CTR>-X<CTR>-U
+           out forEach...
+        <c:o<CTR>-X<CTR>-U
+           out
+        <c:out <CTR>-X<CTR>-U
+               value default ....
+        <jsp:<CTR>-x<CTR>-u
+             include useBean ....
+           
+<
+
+At first , I had use this command : >
+    :XMLns stl_c c
+< See |XMLns| for detail of this command.
+I had generate xmldata for STL taglib, use the following name: >
+    stl_c 
+    stl_sql
+    stl_fn
+    stl_fmt
+    stl_x
+<
+You had to use you own prefix , For example , your coding is: >
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+< You should use following command: >
+    :XMLns stl_sql sql
+<
+To generate your own taglib from the tld file , You can use the following
+command. >
+    :VjdeTld2Data <a TLD file> <name>
+< TLD file is your own TLD file. Name is used to identify your xmldata. See
+|xml-omni-datafile| for Detail. I will generate the file at 
+$VJDE/autoload/xml/<name>.vim . 
+NOTE: This function is |ruby| required.
+								   *vjde-html*
+Html auto completion :~
+use it like: >
+         <<CTR>-x<CTR>-u
+           % %= ....
+         <body <CTR>-x<CTR>-u
+               bgcolor fgcolor....
+         <body bgcolor=<CTR>-x<CTR>-u
+                       aqua antiquewhit ....
+         <body bgcolor="<CTR>-x<CTR>-u
+                       aqua" antiquewhit" ....
+<
+
+Xml auto completion:~
+						     *vjde-xmldata* *vjde-xml*
+Use the system xml completion for xml . See |ft-xml-omni| .
+Vjde Has a tool to generate the data file. >
+	:VjdeDtd2Data <a dtd file> <name>
+<
+See |vjde-xmldata| for detail.
+Note: This function is |ruby| required.
+Xdoclet completion~
+						 *vjde-xdoclet* *vjde-javadoc*
+Xdoclet completion is used for xdoclet.
+While coding comment ,use : >
+	/**
+	 * @<CTR>-x<CTR>-u
+            author param return ... hibernate.class hibernate.subclass...
+         * @hibernate.class <CTR>-x<CTR>-u
+ 	                    lazy ...  
+	 * @hibernate.class lazy="<CTR>-x<CTR>-u
+                                  true" false"
+<
+Default , xdoclet support javadoc only.
+Add you own part , such as ejb.* ,hibernate.* to >
+	~/.vim/vjde/xdoclet.def
+<
+while the xdoclet is enabled , automatically load the define from >
+	~/.vim/vjde/xdoclet.def
+<
+
+file format is simple , line which is started / or * is treated as comment. >
+	[private|public] enum BOOLEAN {
+		value1,value2
+	}
+	public tag tagname < tagparent1,parent2 {
+		attr [ATTRTYPE] attr1;
+		attr attr2 {
+			value1,value2
+		}
+		attr BOOLEAN attr3;
+		....
+	} 
+<
+
+	Note: once you change the xdoclet.def , backup is need for next time .
+Update VJDE will recover it.
+
+								    *vjde-doc*
+Document viewer~
+	When you preview your code completion in a gui window, for some
+delays, the document of this function or member will be shown.
+	It's depends on :
+	g:vjde_javadoc_path   	'/javadocs/api/'
+	g:vjde_doc_gui_height	 height of the window
+	g:vjde_doc_gui_width	width of the window
+	g:vjde_doc_delay	once a item selected ,delay how long.
+				(1/1000 seconds) default 2000
+	See |vjde-variable|
+								  *vjde-iabbr*
+Iabbr~
+	Iabbr is some codelet,just something like :
+		a while block, a for block ...
+	use <c-j> to invoke this tools on gui running
+
+	For example ,to use ruby with Iabbr
+
+	Install your own iabbr as ~/.vim/vjde/ruby.iab
+	setup g:vjde_iab_exts='rb'
+
+	so , for your ruby file which is used '.rb' as the extend 
+	
+	Iabbr define file is |vjde-template|, and use the first '|' as the
+cursor position.
+
+Refactor~
+	Note:Use g:vjde_utils_setup=0 to avoid command definition
+
+								*vjde-preview*
+Vjde Preview window~
+	VJDE Preview window is a tool for preview in a gui tools for
+selection.
+	I had Use this window to preview the VJDE completion and code template
+.
+	In Java , html , It's use the completion cfu |cfu| to generate lines
+to use. It's used like:  
+NOTE:
+	Preview.name ~
+		name of the previewer , must equals the variable name;
+	Preview.preview_buffer ~
+ The buffer to be shown, It's the first line is
+a description of content , like >
+	java.lang.System:
+<
+or >
+	java.lang.System:c 
+	element->:
+	body->attributes:
+	bgground->values:
+<
+	Each line of the preview_buffer, the first word ( It's separated by a
+space) is the type of the tag, the second word ( It's separated by ';' or '(')
+it the tag name. All the other is trusted as comment. For example >
+	java.io.PrintStream in;
+	boolean equals(java.lang.Object);
+	...
+	element body;
+	element html;
+	....
+<
+	previewer.onSelect ~
+		is called when use select a word in preview window. 
+		Both GUI or Console preview are. It's has a parameter 
+			which is the user selected word. 
+	previewer.previewLinesFun ~
+		It's be called with a parameter
+	which is previewer self.  like >
+	call previewer.PreviewLinesFun(self)
+<
+	previewer.docLineFun ~
+		This function it's called to get the document preview window
+line.  It's would return a String , which is comma separated. like >
+		400;300;2000;java -cp vjde.jar vjde.completion.Document
+	/mnt/win_e/downloads/docs/api/ src 
+<
+	It's used as :
+	doc width ; doc height ; delay mills;command line to get document
+	I will add preview.preview_buffer[0] and the
+user selected tag name at the end of command line , and call it , trust the
+stdout as the document which to be shown.
+
+	previewer.CFU ~
+		At first , It's call the |cfu| function to complete code
+complation.
+		Then , call previewer.previewLinesFun to get buffer would be
+shown.
+		Third , call preview.docLineFun get the docment define line 
+		Third, call the previewer.Preview to preview.
+
+		Four , call preview.onSelect to handle the user input.
+
+	NOTE:See vjde_preview.vim for detail.
+>
+	
+	let java_previewer = VjdePreviewWindow_New()
+	let java_previewer.name = 'java_previewer'
+	let java_previewer.onSelect='VjdeInsertWord'
+	let java_previewer.previewLinesFun='GetJavaCompletionLines'
+	let java_previewer.docLineFun='VjdeGetDocWindowLine'
+
+	
+	   au BufNewFile,BufRead,BufEnter *.java imap <buffer> <C-space> <Esc>:call java_previewer.CFU('<C-space>',1)<CR>a
+<
+	NOTE:you can put you preview content to preview buffer >
+	call add(previewer.preview_buffer,'line1');
+<
+	
+
+	Used for the code template: >
+
+	let g:iab_previewer = VjdePreviewWindow_New()
+	let g:iab_previewer.name='iab_previewer'
+	let g:iab_previewer.onSelect='VjdePreviewIabSelect'
+	let g:iab_previewer.previewLinesFun=''
+	...
+       	...
+	call g:iab_previewer.Preview(0)
+<
+	See vjde_java_iab.vim for detail.
+							       *vjde-refactor*
+Variable refactoring~
+normal mode:
+	put your cursor on the variable , use the following command 
+							      *vjde-rft-field*
+>
+	<Leader>rf
+< 		change  current variable to member field. 
+							      *vjde-rft-local*
+>
+	<Leader>rl
+<		change  current variable as local variable.
+								*vjde-rft-arg*
+>
+	<Leader>rp 
+<		Add current variable as argument of method.
+
+							      *vjde-rft-const*
+Visula mode , a variable is selected ,only support 
+String , char ,int ,long,double 
+	select a number or a quoited String , >
+	<Leader>rc
+Make the current symbol as a private final static variable.
+							      *vjde-fix-tools*
+Vjde fix tools~
+Fix tools is used for fix some minimal compile bugs. Now ,
+unreported exception is supported
+								 *vjde-fix-ex*
+Vjde Exception fix is used for fix uncatched exception compile error 
+For example  >
+	java.net.URLConnection con= new java.net.URL("").openConnection();
+<
+Once compile the code of above, two exception is not catched. >
+	:cc " move the cusor to current error line
+	<leader>ff
+<
+	this line is change to : >
+	try {
+		java.net.URLConnection con ...
+	}
+	catch(UN... e1) {
+	}
+	catch(IOExce.. e5) {
+	}
+<
+It's a simple and useful tools.
+
+								 *vjde-fix-th*
+This tools is fix unreported exception to function declaration,use throws on
+function  to generate code .
+
+								 *vjde-fix-im*
+Automatically add import for Word under cursor. >
+	<leader>ai
+<
+
+
+See |quickfix| for more compile support.
+
+
+								   *vjde-code*
+Code tools~
+This tools for code generation .
+							       *vjde-override*
+Override the parents method. 
+I the class  , execute : >
+	:call Vjde_override(0)
+<
+list the class method , select the index of method, separated by comma or
+space , then ,the code will generated on the end of class definition.
+
+							     *vjde-implements*
+Implements the methods of implements . >
+	:call Vjde_override(1)
+	<leader>oe
+<
+							     *vjde-impl-inner*
+Implements interface with Anonymous class  . >
+	:call VjdeImplementInner()
+	<leader>ii
+<
+list the class method , select the index of method, separated by comma or
+space , then ,the code will generated on the end of class definition.
+
+							    *vjde-import-sort*
+to sort the file imports lines , select the lines of import statement. >
+	:call Vjde_sort_import()
+	<leader>js
+<
+or >
+	:[range]call Vjde_sort_import()
+<
+the lines : >
+	import java.awt.*;
+	import com.abc.*;
+	import javax.applet.*;
+	import java.io.*;
+	import org.apache.*;
+<
+change to : >
+	import java.awt.*;
+	import java.io.*;
+
+	import javax.applet.*;
+
+	import org.apache.*;
+
+	import com.abc.*
+<
+
+Extract import~
+							 *vjde-import-extract*
+This is a simple import tool. It's used to extract a import to define.
+For example , a line: >
+	javax.servlet.http.HttpSession session = reqeust.....
+<
+put the cursor on the work "HttpSession" , use a key >
+        <Leader>je
+<
+the javax.servlet.http.HttpSession would be imported,  >
+	import javax.servlet.http.HttpSession;
+<
+and this line become: >
+
+	HttpSession session = request....
+<
+
+								 *vjde-wizard*
+Wizard ~
+Wizard is a tool template tools.
+It's generated from a definition file and used by any language.
+Default template file: 
+Note:$VIM/vimfiles/plugin/vjde/tlds/java.vjde
+Everyone can define a new template and use it.
+Wizard engines generate any lines from the template. >
+< Generate a class >
+    :VjdeNclass
+< Generate a class with a main >
+    :VjdeNmain
+< Generate a interface >
+    :VjdeNinte
+< Generate a property >
+    :VjdeNprop
+<
+							       *vjde-template*
+Template file~
+    Template can be defined by you self. 
+this is a simple description for template file.
+a template is started by the following commands 
+Define a template~
+Definition a template started(^:the line of started): >
+    template {templatename} [;template desc]
+< 
+Definition a parameter used by template( in a template , would zero or more  >
+    parameter {parametername} [;parameter desc]
+<
+Definition a body of template ( followed by any text : >
+    body
+<
+End of a template >
+    endtemplate
+<
+Note:All of these worlds (template|temp , parameter|para , body, endtemplate|endt)
+must at the beginning of a line.
+Note: [;template desc] [;parameter desc] must started with a ';'
+
+Template comment ~
+the line is started with a '/' is comment : >
+    //this is a comment 
+    /this is a comment too
+<
+Would be ignored
+And , the line which is started with '\' will be handled:
+    remove the '\', leave all the following : >
+    \//abc
+< treated as '//abc' , is not a comment ; >
+    \body
+<treated as word 'body', not the body definition of above .
+
+
+Template reference ~
+Now , we say another two import element.
+the  line is math following , treated as a template reference : >
+    %AnthorTemplateName%
+< Just like the entity of xml.
+Well find the Template which named by "AnthorTemplateName" , and
+insert the text of that template here.
+
+Template Variable ~
+    Template variable once defined , can be used in template body. >
+    %{variablename}
+<this pattern would be replaced by the value of variable which named "variable name"
+or : >
+    %{Time.now}
+< Can be a ruby command can be resolved by ruby eval() function.
+Once you have to have the String like : >
+    %{notbetreatedasabove}
+<
+Can be writed as the following : >
+    %{"%"}{notbetreatedasabove}
+<
+
+Note See $VIM/vimfiles/plugin/vjde/tlds/java.vjde , template JUnitCase for 
+     a powerfull ussage.
+						      *Vjdeinfo* *vjde-define*
+Search Definition~
+This tool is used to find a variable info or function define.
+For example (both java and jsp file is available):
+Show class information >
+        System.out.println(....
+           ^ place sursor here ,then execute:
+        :Vjdei 
+           the constructor,fields,methods, and inner class will be echoed.
+<
+Show  information of fields >
+        System.out.println(....
+                ^ place cursor here, then execute:
+         :Vjdei 
+        the field which is called "out" would be echoed. like:
+               class : java.lang.System
+               java.io.PrintWriter out;
+<
+Show information of methods >
+         System.out.println(....
+                       ^  cursor here
+         the method which name is started with "println" will be echoed.
+         like:
+         class : java.io.PrintWriter
+            public void print(bool);
+            public void print(int);
+            .....
+         would be printed 
+<
+Show information of taglibs
+for a tag definition >
+          <c:out
+              ^ place cursor here, then execute:
+          :Vjdei
+          the defination of tag out is printed as:
+          <tag>\n<name>out</name>\n.....</tag>
+<
+For a tag attribute definition >
+          <c:out value
+                   ^ place cursor here, then execute:
+          :Vjdei
+          the defination of tag out is printed as:
+          <attribute>\n<name>value</name>\n.....</attribute>
+
+<
+
+							  *Vjdegd* *vjde-goto*
+Goto Declaration ~
+	Goto the declaration of current works under cursor. It's search the
+path for all source and goto the method or fields declaration. >
+	:Vjdegd
+<
+
+							       *vjde-tasklist*
+We can find something like "//TODO Add something here" is a task list;
+This tool is used to search task in a file quickly.
+Just a command: >
+	:TDlist
+<
+
+
+							       *vjde-command*
+command for normal mode:
+<leader>\ai
+	Add import under cursor
+<leader>\oe
+	extend some methods of class
+<leader>\oi
+	implements some interface of current class
+<leader>\fr
+	fix compiler errors with throws statement.
+<leader>\ft
+	fix compiler errors with try-catch statement
+<leader>\jc
+	generate constructor of class with all members.
+<leader>\jt
+	surround line with try-catch statement
+<leader>\jd
+	read the document of symbol that under cursor.
+<leader>\jg
+	generate getter-setter of current member.
+<leader>\je
+	add import for current line,it used for this line >
+	java.io.PrintWriter
+>
+would add import statement and change this line to >
+	PrintWriter 
+<
+
+<leader>\ep
+	change current variable to function parameters.
+<leader>\em
+	chnage current variable to member of class.
+
+command for visul mode:
+<leader>\js
+	sort the selected import statement.
+<leader>\jt
+	surround the selected lines with try-catch statement.
+<leader>\en
+	change the selected to a static const defination.
+
+							       *vjde-variable*
+Note:the define like : >
+	g:vjde_show_paras [0|1]
+<
+is indicate: the global variable g:vjde_show_paras accept two values , 0 or 1.
+the first is the default value.
+							     *vjde_use_window*
+g:vjde_use_window [1|0]
+sometimes , you want to show some infomation , for example, the document of
+a method. your can use normal command >
+	\jd
+<
+to show the document the symbol under cursor. Just support for java
+method,member. this function is dependented on g:vjde_javadoc_path
+							     *vjde_show_paras*
+g:vjde_show_paras [0|1]
+        while the auto completion is called, the parameter info display or
+not.
+							       *vjde_lib_path*
+g:vjde_lib_path
+        the class search path form auto completion.
+							       *vjde_out_path*
+g:vjde_out_path
+	the output path for compile
+							       *vjde_src_path*
+g:vjde_src_path
+	the src path for code template
+
+								*vjde_web_app*
+g:vjde_web_app
+        not used , 
+							   *vjde_autoload_stl*
+g:vjde_autoload_stl  [1|0]
+	load the Standard Tag libray on startup
+							*vjde_autoload_taglib*
+g:vjde_autoload_taglib  [1|0]
+	load the Tag libray on startup
+							   *g:vjde_taglib_uri*
+g:vjde_taglib_uri
+	a dictory for relation-ship of xml-datafile and taglib uri. >
+	g:vjde_taglib_uri={'http://java.sun.com/jsp/jstl/core' : 'stl_c' ,
+	    'http://java.sun.com/jsp/jstl/sql' : 'stl_sql' }
+<
+	when this relation is exists, once you used taglib in your file : >
+	<%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%>
+<
+	when your input like : >
+	<c:<c-x><c-u>
+<
+	I whill call >
+    :XMLns stl_c c
+<
+	so , autocompletion will do for you.
+    
+							      *vjde_auto_mark*
+g:vjde_auto_mark [1|0]
+	Once Goto the declaration, see |Vjdegd|,mark current as J
+
+							    *vjde_xml_advance*
+g:vjde_xml_advance [1|0]
+	While completion for xml, search the dtd exactly for the children
+elements or all elements.
+
+							   *vjde_show_preview*
+g:vjde_show_preview[1|0]
+	While Completion for java , split a preview window to show the full
+information or not.
+
+							   *vjde_cfu_java_dot*
+g:vjde_cfu_java_dot [1|0]
+	setup auto command for "."(dot) or not . if ture while . is typed , show  all of the completion in a preview window.
+
+							  *vjde_cfu_java_para*
+g:vjde_cfu_java_para [0|1]
+	setup auto command for "(" or not . if true, while ( is typed, show all
+override function and parameter types and throws in a preview window.
+
+							   *vjde_javadoc_path*
+g:vjde_javadoc_path
+	setup the javadoc path, must be 'd:\javadocs\api\' , end with a
+splash, and reference to the api document path.
+							 *vjde_doc_gui_height*
+g:vjde_doc_gui_height
+	document viewer height
+
+							  *vjde_doc_gui_width*
+g:vjde_doc_gui_width 
+	document viewer width
+
+g:vjde_doc_delay
+	timemillis to delay.
+
+g:vjde_preview_gui [0|1]
+	setup the preview for gui. 
+	Note:gtk+2.0 runtime is required.
+
+g:vjde_preview_gui_width [350]
+	preview width for the gui window
+
+g:vjde_preview_gui_height [170]
+	preview height for the gui window
+
+g:vjde_use_project [0|1]
+	use project.vim as the project file manager. >
+	if g:vjde_use_project && !exist(':Project')
+		runtime plugin/vjde/project.vim
+	endif
+<
+While a vjde project is loaded , the project file manager is enabled >
+	if filereadable('.prj') && exists(':Project')
+		exec 'Project .prj'
+	endif
+
+<
+g:vjde_completion_key
+	Completion key for user completion. >
+	if has('gui_running')
+		let g:vjde_completion_key='<c-space>'
+	else
+		let g:vjde_completion_key='<c-l>'
+	endif
+<
+g:vjde_iab_exts
+	This variable is used for iab tools. All the extension is add can use
+<c-j> to completion for code template. >
+    let g:vjde_iab_exts='cpp;h;c;hpp'
+<
+g:vjde_java_symbol
+	For fix tool to find a message.You can change it to your own local:  >
+	if !exists('g:vjde_java_symbol')
+		let g:vjde_java_symbol= 'cannot find symbol\nsymbol\s*: class \([^ \t;\s]*\)\n'
+	endif
+<
+g:vjde_java_exception 
+	For fix tool to find a exception message : >
+	if !exists('g:vjde_java_exception')
+		let g:vjde_java_exception = '\(unreported exception \)\([^ \t;]*\);'
+	endif
+<
+g:vjde_cs_libs
+	For completion with csharp, use this parameter, looks like >
+	let g:vjde_cs_libs='d:/mono-1.1.13.4/lib/mono/2.0/mscorlib.dll;..'
+<
+g:vjde_cs_cmd
+	For command line of csharp , looks like: >
+	let g:vjde_cs_cmd='mono.exe d:/vim/vimfiles/plugin/vjde/CSParser.exe'
+<
+	Default value is : >
+	let g:vjde_cs_cmd='mono.exe '.g:vjde_install_path.'/vjde/CSParser.exe'
+<
+ruby 
+    $java_command     
+         the java command line, linux, is tested for "java",
+         for MS windows , "javaw" is recommend
+    $vjde_java_cfu 
+       $vjde_java_cfu.found_class
+         the java completion function implements. It's contain 
+the last class which is be searched.
+
+
+							       *vjde-todolist*
+1. template   
+       such as , new class , new interface,new ejb.... OK.
+2. extends and implements
+       select a class and extend or implement it. OK.
+3. some other tools
+       getter/setter generator OK.
+       auto import OK.
+       auto documention
+
+								     *vjde-qa*
+Note: Most of setting is auto command enabled .
+see vjde.vim for detail.
+
+    Q1. I had install this plugin, but , when I use <CTR>-x<CTR>-u, it said, not
+found, why?
+    A1. Check your |cfu| settings. "VjdeCompletionFun" is expected.
+
+    Q2. I had used this tool for a java code completion, but I can't use it for jsp,
+why?
+    A2. Check your g:vjde_lib_path settings.The j2ee.jar or another is
+include. like: >
+    let g:vjde_lib_path="/home/me/lib/j2ee.jar:build/classes"
+<
+    Q3. I am MS Windows user, while I use <CTR>-x<CTR>-u, a command window is
+occurred, how to avoid it?
+    A3. You must use "javaw" instead of "java", use this command: >
+    ruby $java_command="javaw"
+<
+    Q4. I am MS Windows user, I can't see the document , although the
+g:vjde_javadoc_path is correctly.
+    A3. Confirm the wspawn.exe is run enable from you command window.
+
+   for 2.00.01 later version. use this command: >
+    let g:vjde_java_command='javaw'
+<
+
+
+
+===============================================================
+ vim:ts=8 sw=8 noexpandtab tw=78 ft=help:

@@ -1,0 +1,40 @@
+*ctrlp-launcher.txt* ctrlp-launcher
+
+	   -------------------------------------------------------
+			   CtrlP Launcher Extension
+	   -------------------------------------------------------
+
+Author: Yasuhiro Matsumoto <mattn.jp@gmail.com>
+WebSite: http://mattn.kaoriya.net/
+Repository: http://github.com/mattn/ctrlp-launcher
+License: BSD style license
+==============================================================================
+INTRODUCTION                                    *ctrlp-launcher-introdunction*
+
+This is extension plugin for CtrlP. This provide launcher to kick something
+like commands, external commands, etc.
+
+==============================================================================
+USAGE                                                   *ctrlp-launcher-usage*
+
+For example, add following to your vimrc: >
+  nnoremap <c-e> :<c-u>CtrlPLauncher<cr>
+<
+When type <c-e> first, you can see just only '--edit-menu--'. Then type <cr>.
+You'll see that Vim opens a buffer to ~/.ctrlp-launcher.
+You can add title and commands to the file as follows:
+>
+ # few tab characters to separate title and command.
+ # leading sharp mean comment. empty line is ignored.
+
+ Command Prompt		!start cmd
+ System Property	!start c:/windows/system32/control.exe system.cpl
+ Task Manager		!start taskmgr
+ Service Manager	!c:/windows/system32/services.msc
+ Internet Explorer	!start iexplore
+
+ # vim:set ts=4
+
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:fdl=0:

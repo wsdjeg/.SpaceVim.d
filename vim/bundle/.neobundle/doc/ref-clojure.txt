@@ -1,0 +1,87 @@
+*ref-clojure.txt*	A ref source for clojure.
+
+Version: 0.1.1
+Author : thinca <thinca+vim@gmail.com>
+License: Creative Commons Attribution 2.1 Japan License
+         <http://creativecommons.org/licenses/by/2.1/jp/deed.en>
+
+==============================================================================
+CONTENTS					*ref-clojure-contents*
+
+INTRODUCTION			|ref-clojure-introduction|
+CUSTOMIZING			|ref-clojure-customizing|
+CHANGELOG			|ref-clojure-changelog|
+
+
+==============================================================================
+INTRODUCTION					*ref-clojure-introduction*
+
+*ref-clojure* is a source for |ref.vim| to clojure.
+
+Requirements:
+- |ref.vim| 0.4.1 or later
+- clojure
+
+
+
+==============================================================================
+ARGUMENTS					*ref-clojure-arguments*
+
+This source accepts the argument of the following forms.
+
+function name		function-name
+			A usual string is searched as a function name.  It
+			treats as a search pattern when not found.
+
+search pattern		#"pattern"
+			Search with (find-doc).
+
+
+
+==============================================================================
+CUSTOMIZING					*ref-clojure-customizing*
+
+g:ref_clojure_cmd				*g:ref_clojure_cmd*
+			Specifies the clojure command.  This allows a |List|
+			that includes command and arguments.
+			The default value is the executable one of the
+			following.  If no executable one, it is "".
+			- 'clj'
+			- 'clojure-1.5'
+			Example: >
+			['java', '-cp', 'clojure.jar' 'clojure.main']
+
+g:ref_clojure_classpath				*g:ref_clojure_classpath*
+b:ref_clojure_classpath				*b:ref_clojure_classpath*
+			Specifies the $CLASSPATH by string or |List|.
+			|b:ref_clojure_classpath| is added ahead of the
+			|g:ref_clojure_classpath|.
+
+g:ref_clojure_precode				*g:ref_clojure_precode*
+b:ref_clojure_precode				*b:ref_clojure_precode*
+			Specifies the code executed before searching.
+			It is assumed that "use" and "require" are specified.
+			|b:ref_clojure_precode| is added after the value of
+			the |g:ref_clojure_precode|.
+			When none of them are given ref-clojure automatically
+			adds the following line in order to enable using
+			doc and find-doc. >
+			(ns vim-ref (:use [clojure.repl :only (doc find-doc)]))
+
+g:ref_clojure_overview				*g:ref_clojure_overview*
+			If true, each function of the search result is
+			displayed by one line.
+
+
+
+==============================================================================
+CHANGELOG					*ref-clojure-changelog*
+
+0.1.1	2013-06-09
+	- Support clojure-1.5.
+0.1.0	2010-06-24
+	- Initial version.
+
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl

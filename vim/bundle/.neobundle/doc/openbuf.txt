@@ -1,0 +1,335 @@
+*openbuf.txt*	Open and manage buffers.
+
+Version: 0.2.1
+Author : thinca <thinca+vim@gmail.com>
+License: Creative Commons Attribution 2.1 Japan License
+         <http://creativecommons.org/licenses/by/2.1/jp/deed.en>
+
+==============================================================================
+CONTENTS					*openbuf-contents*
+
+INTRODUCTION			|openbuf-introduction|
+INTERFACE			|openbuf-interface|
+  CONSTANTS			  |openbuf-constants|
+  FUNCTIONS			  |openbuf-functions|
+OPENBUF OBJECT			|openbuf-object|
+  OBJECT NAME			  |openbuf-object-name|
+  OBJECT FUNCTIONS		  |openbuf-object-functions|
+  OBJECT FUNCTIONS WRAPPER	  |openbuf-object-functions-wrapper|
+CONFIG				|openbuf-config|
+  FUNCTION			  |openbuf-config-function|
+  PRIORITY			  |openbuf-config-priority|
+CUSTOMIZING			|openbuf-customizing|
+EXAMPLES			|openbuf-examples|
+CHANGELOG			|openbuf-changelog|
+
+
+==============================================================================
+INTRODUCTION					*openbuf-introduction*
+
+*openbuf* is a Vim script library to open and manage buffers.
+
+Sometimes want to open a temporary buffer by plugin to show information or
+want to write something.  And, you might want to reuse the window if the
+opened buffer already exists.  However, a very troublesome and fixed
+processing is necessary for this.
+Moreover, there are a lot of methods for opening the buffer.  A work that
+offers the user the ways of customizing this is bother.
+
+This library provides the easy way for doing these.
+
+
+Requirements:
+- Vim 7.3 or later
+
+Latest version:
+https://github.com/thinca/vim-openbuf
+
+
+
+==============================================================================
+INTERFACE					*openbuf-interface*
+
+------------------------------------------------------------------------------
+CONSTANTS					*openbuf-constants*
+
+g:openbuf#version				*g:openbuf#version*
+	Version number of openbuf.  This is comparable.
+	The version number is converted as follows: >
+	0.2.0  =>   2000
+	2.1.34 => 201034
+
+------------------------------------------------------------------------------
+FUNCTIONS					*openbuf-functions*
+
+openbuf#new([{name_or_config} ...])		*openbuf#new()*
+	Create a new |openbuf-object|.
+
+	{name_or_config} is either {name} or {config}.
+
+	{name} is String of the name of this openbuf.  If this is supplied,
+	the created object is registered to the inner of library, and it can
+	use by name.  See also |openbuf-object-name|.
+	The config name is used by customizing.  See |openbuf-customizing|.
+	This is usually the plugin name.
+	If an object with {name} is already registered, update the config.
+	This is completely replaced.
+
+	{config} is a |Dictionary|.  See |openbuf-config| for detail.
+
+openbuf#register({name}, {openbuf})		*openbuf#register()*
+	Register {openbuf} that has already existed and return it.
+
+openbuf#get([{name} [, {default}]])		*openbuf#get()*
+	Return the openbuf object made by |openbuf#new()| beforehand.  Return
+	{default} when an openbuf of the specified {name} was not defined.
+	If {default} was omitted, return 0.
+	When the argument is not given, return a dictionary that include all
+	registered openbuf.
+
+openbuf#execute_with({config}, {excmd})		*openbuf#execute_with()*
+	Execute a {excmd} with {config}.  If the {excmd} uses openbuf
+	internally, {config} is used.  See also |openbuf-config-priority|.
+
+
+
+==============================================================================
+OPENBUF OBJECT					*openbuf-object*
+
+An openbuf object manage a group of buffers with buffer number.
+There are two kinds of openbuf object.  It is unnamed object and registered
+object.
+
+------------------------------------------------------------------------------
+OBJECT NAME					*openbuf-object-name*
+
+The name of openbuf is important.  Because, this is used for customizing.
+If you use this library with a plugin, it should write the object name in the
+document.
+The special name "_" is reserved for default of customizing.
+See also |g:openbuf#config|.
+
+------------------------------------------------------------------------------
+OBJECT FUNCTIONS				*openbuf-object-functions*
+
+openbuf.name()					*openbuf-object-name()*
+	Get the name of this openbuf.  If this is an unnamed object, empty
+	string is returned.
+
+openbuf.open([{bufname_or_config} ...])		*openbuf-object-open()*
+	Open a buffer.  If a reusable window exists, use it.
+	If a buffer is newly created, 1 is returned.  Otherwise 0 is returned.
+	The opened buffer is added to this openbuf for managing.
+	See |openbuf-config-openres| about return value.
+
+	{bufname_or_config} is either {bufname} or {config}.
+	{bufname} is the buffer name.
+	{config} is a |Dictionary| (|openbuf-config|).
+
+openbuf.add({bufnr})				*openbuf-object-add()*
+	Add a buffer to this for managing.  The buffer should exist.
+
+openbuf.remove({bufnr})				*openbuf-object-remove()*
+	Remove managed buffers from this.
+
+openbuf.is_managed({bufnr})			*openbuf-object-is_managed()*
+	If the specified {bufnr} is managed by this openbuf, return 1.
+
+openbuf.list()					*openbuf-object-list()*
+	Get the list of the buffer numbers that managed by this openbuf.
+
+openbuf.config([{config}])			*openbuf-object-config()*
+	Get the config of this openbuf.  If {config} argument is present, the
+	config of this openbuf is replaced by it.  Update the acquired config
+	directly when you want to update the config.
+
+openbuf.gc()					*openbuf-object-gc()*
+	Remove bufnrs that already doesn't exist from the management list.
+
+openbuf.nearest([{tabpage}])			*openbuf-object-nearest()*
+	Search the nearest managed buffer.  Return the position and buffer
+	number by the form like [{tabpagenr}, {winnr}, {bufnr}].  If the
+	{tabpage} argument is present and not zero, search current tabpage
+	only.  If the buffer is not found, return empty list.
+
+openbuf.do({cmd})				*openbuf-object-do()*
+	Do ":execute {cmd} bufnr" for all managed buffers.  If {cmd} includes
+	"%s", it is replaced by bufnr.
+	Example: >
+	call openbuf.do('bwipeout')
+
+openbuf.is_registered()			*openbuf-object-is_registered()*
+	If this openbuf is registered object, return 1.
+
+openbuf.unregister()				*openbuf-object-unregister()*
+	Switch to unnamed object.  Return myself for openbuf#unregister().
+
+
+------------------------------------------------------------------------------
+OBJECT FUNCTIONS WRAPPER		*openbuf-object-functions-wrapper*
+
+The wrappers like openbuf#open() can be used for all functions of object.
+All wrapper takes the {name} in the first argument.
+The wrapper is performed like "openbuf#get({name}).open([{args}])".
+If an openbuf of the specified {name} was not registered, a wrapper creates a
+new one.
+
+
+
+==============================================================================
+CONFIG						*openbuf-config*
+
+Each openbuf object has a config for itself.  A config is a |Dictionary|, It
+has the following attributes.
+
+bufname:					*openbuf-config-bufname*
+	The name of opening buffer.
+	This name is memorized in openbuf, and when the buffer of the same
+	name is opened, the same buffer is opened.
+	Therefore, it doesn't work well when the buffer name is changed.
+
+reuse:						*openbuf-config-reuse*
+	The rule of reuse of window.
+	The buffer is opened there when there is a window where the buffer
+	that has already been managed with this openbuf is opened.
+	The rule is one of the following.
+	"never":	Never reuse.
+	"tabpage":	Reuse the window that is in the tab.
+	"always":	Always reuse.
+	The default value is "tabpage".
+
+opener:						*openbuf-config-opener*
+	The command(s) to open a new buffer.  If this value starts with "=",
+	the value is treated as |expr|, and the result becomes the command(s).
+	If the evaluation failed, the default value is used.
+	Examples of commands:
+	|:vertical|, |:leftabove|, |:rightbelow|, |:topleft|, |:botright|,
+	|:edit|, |:split|, |:vsplit|, |:tabedit|
+	The default value is "split".
+
+openres:					*openbuf-config-openres*
+	Specifies the result of |openbuf-object-open()|.
+	"loaded":	Loaded the opened buffer this time?
+	"newbuf":	Was the opened buffer newly created?
+	"newwin":	Was the window newly opened?
+	otherwise:	A dictionary with above all in member.
+	The default value is "newwin".
+	This can not be used by |g:openbuf#config|.
+
+silent:						*openbuf-config-silent*
+	When this is true, open the buffer with |:silent|.
+	The default value is 0.
+
+nomanage:					*openbuf-config-nomanage*
+	Do not manage the buffers.  Use only opener.
+	The default value is 0.
+
+force:						*openbuf-config-force*
+	A config is specified for this.  This is given to priority more than
+	the user's customizing.
+	This can not be used by |g:openbuf#config|.
+
+
+------------------------------------------------------------------------------
+FUNCTION					*openbuf-config-function*
+
+A function that has no argument can specify for any attributes.  In this case,
+the return value of the function becomes the value of the attribute.  The
+function can use "self" to refer to Openbuf.
+This function is called every time the config is used.
+Currently, the following functions use config.
+
+- |openbuf-object-open()|
+
+Note: The function doesn't have the argument in current version.  However,
+this might be changed in future version.  Therefore, it might be good to make
+the argument expandable by |...|.
+
+
+------------------------------------------------------------------------------
+PRIORITY					*openbuf-config-priority*
+
+The priority of config is as follows:
+
+1. The openbuf object's "force" config.
+2. The arguments of |openbuf#execute_with()|.
+3. The arguments of |openbuf-object-open()|.
+4. |g:openbuf#config|.
+  a. {config-name}/{string}
+  b. {config-name}
+  c. "_"
+5. The openbuf object's config.
+6. The default config.
+
+
+
+==============================================================================
+CUSTOMIZING					*openbuf-customizing*
+
+|openbuf| can be customized by user.
+
+g:openbuf#config				*g:openbuf#config*
+	This ia a dictionary.  The key is basically a |openbuf-object-name|.
+	The value is a |openbuf-config|.
+	The key named "_" is used by all registered openbuf.
+	The first part of the name delimited by "/" can be also specified for
+	the key.
+	For example, the config of key "plugname" is applied to all objects
+	that start by "plugname/" and "plugname".
+	In other words, the openbuf named "plugname/foo/bar" uses configs
+	"plugname/foo/bar", "plugname/foo", "plugname", and "_"  by this
+	order.
+
+
+
+==============================================================================
+EXAMPLES					*openbuf-examples*
+
+>
+	" Simple usage.
+	call openbuf#open('myplugin')
+
+	" With option.
+	call openbuf#open('myplugin', {
+	\    'bufname': '[myplugin buffer]',
+	\    'reuse': 'always',
+	\ })
+
+	" OO Interface.
+	let buf = openbuf#new('myplugin', {
+	\    'bufname': '[myplugin buffer]',
+	\    'reuse': 'always',
+	\ })
+	call buf.open()
+
+	" Use unnamed object.
+	let buf = openbuf#new()
+	call buf.open('[myplugin buffer]')
+<
+
+
+
+==============================================================================
+CHANGELOG					*openbuf-changelog*
+
+0.2.1	2011-03-06
+	- |openbuf#get()| returns all registered openbuf with no argument.
+	- Can not change |openbuf-config-openres| by user.
+	- |openbuf#register()| returns registered one.
+	- Fixed some bugs around config.
+
+0.2.0	2011-01-11
+	- Added |openbuf-config-openres|.
+	  - Changed the default behavior of |openbuf-object-open()|.
+	- Do nothing when the opening buffer has been already opened.
+	- Removed some characters that cannot be used for the buffer name by
+	  MS Windows.
+	- |openbuf-object-list()| return a list of number.
+	- Added safety for expr of |openbuf-config-opener|.
+
+0.1.0	2010-12-06
+	- Initial version.
+
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl

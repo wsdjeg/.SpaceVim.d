@@ -1,0 +1,16 @@
+*webapi.txt*				Interface to Web API 
+
+Author: Yasuhiro Matsumoto <mattn.jp@gmail.com>
+WebSite: http://mattn.kaoriya.net/
+Repository: http://github.com/mattn/webapi-vim
+License: Public Domain
+
+==============================================================================
+CONTENTS				*webapi-contents* *webapi* *web-api*
+
+XML Parser				|webapi-xml|
+HTML Parser				|webapi-html|
+JSON Parser				|json-html|
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl

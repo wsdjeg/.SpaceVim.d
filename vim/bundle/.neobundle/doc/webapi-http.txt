@@ -1,0 +1,53 @@
+*webapi-http.txt*				simple HTTP client library.
+
+Maintainer: mattn <mattn.jp@gmail.com>
+
+==============================================================================
+CONTENTS				*webapi-http-contents*
+
+INTRODUCTION				|webapi-http-introduction|
+INTERFACE				|webapi-http-interface|
+  Functions				|webapi-http-functions|
+  Response				|webapi-http-response|
+
+==============================================================================
+INTRODUCTION				*webapi-http-introduction*
+
+*webapi-http* is HTTP Utilities Library. It provides simple HTTP client.
+
+==============================================================================
+INTERFACE				*webapi-http-interface*
+------------------------------------------------------------------------------
+FUNCTIONS				*webapi-http-functions*
+
+get(url, param, header)			*webapi-http.get()*
+	Send GET request to url.
+
+post(url, param, header)		*webapi-http.post()*
+	Send POST request to url.
+
+encodeURI(param)			*webapi-http.encodeURI()*
+	Encode params as URI query.
+
+decodeURI(str)				*webapi-http.decodeURI()*
+	Decode string as URI params.
+
+encodeURIComponent(str)			*webapi-http.encodeURIComponent()*
+	Encode param as URI components.
+
+------------------------------------------------------------------------------
+RESPONSE				*webapi-http-response*
+
+|webapi-http.get| and |webapi-http.post| return data structure as
+|Directory| like following.
+>
+	{
+	  "header": [
+	    "Content-Type: text/html",
+	    "Content-Length: 310"
+	  ],
+	  "content": "<html> ....."
+	}
+<
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl

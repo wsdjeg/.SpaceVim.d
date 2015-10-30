@@ -1,0 +1,46 @@
+*unite-sf2*   unite.vim plugin for Symfony2
+
+Author : Shinya Ohyanagi <sohyanagi@gmail.com>
+License: MIT license  {{{
+    Permission is hereby granted, free of charge, to any person obtaining
+    a copy of this software and associated documentation files (the
+    "Software"), to deal in the Software without restriction, including
+    without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Software, and to
+    permit persons to whom the Software is furnished to do so, subject to
+    the following conditions:
+    The above copyright notice and this permission notice shall be included
+    in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+    OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+}}}
+
+CONTENTS					*unite-sf2-contents*
+
+Interface			|unite-sf2-interface|
+  Variables			|unite-sf2-variables|
+
+==============================================================================
+INTERFACE							*unite-sf2-interface* {{{
+------------------------------------------------------------------------------
+VARIABLES					*unite-sf2-variables* {{{
+
+g:unite_source_sf2_root_dir			*g:unite_source_sf2_root_dir*
+								(default: "")
+	Define the Symfony2 root directory.
+	For example:
+>
+    let g:unite_source_sf2_root_dir = $HOME . '/sandbox/symfony2'
+<
+
+}}}
+------------------------------------------------------------------------------
+}}}
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=4:ft=help:norl:noet:fdm=marker:fen

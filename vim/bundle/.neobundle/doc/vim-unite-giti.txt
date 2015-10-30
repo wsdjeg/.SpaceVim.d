@@ -1,0 +1,319 @@
+*vim-unite-giti.txt*	
+
+Author: kmnk <kmnknmk+vim@gmail.com>
+Repository: https://github.com/kmnk/vim-unite-giti
+
+==========================================================================
+CONTENTS					*vim-unite-giti-contents*
+
+Introduction		|vim-unite-giti-introduction|
+Install			|vim-unite-giti-install|
+Sources			|vim-unite-giti-sources|
+Kinds			|vim-unite-giti-kinds|
+Commands		|vim-unite-giti-commands|
+Samples			|vim-unite-giti-samples|
+Tests			|vim-unite-giti-tests|
+
+
+==========================================================================
+INTRODUCTION					*vim-unite-giti-introduction*
+
+|vim-unite-giti| is unite source for using git.
+And provide some simple commands.
+
+
+==========================================================================
+INSTALL						*vim-unite-giti-install*
+
+If you use NeoBundle (or Vundle) plugin, add following line to your .vimrc.
+And execute :NeoBundleInstall command.
+Example: >
+  NeoBundle 'git://github.com/kmnk/vim-unite-giti.git'
+<
+
+==========================================================================
+SOURCES						*vim-unite-giti-sources*
+
+This plugin provides following unite sources.
+
+giti						*vim-unite-giti-sources-giti*
+
+	List source names of giti.
+
+
+giti/branch					*vim-unite-giti-sources-giti/branch*
+
+	List results of "git branch".
+
+
+giti/branch_all					*vim-unite-giti-sources-giti/branch_all*
+
+	List results of "git branch -a".
+
+
+giti/config					*vim-unite-giti-sources-giti/config*
+
+	List git configs.
+
+
+giti/log					*vim-unite-giti-sources-giti/log*
+
+	List formated reuslts of "git log".
+
+
+giti/remote					*vim-unite-giti-sources-giti/remote*
+
+	List remotes.
+
+
+giti/status					*vim-unite-giti-sources-giti/status*
+
+	List formated results of "git status".
+	Every line has two statuses, IndexStatus and WorkStatus.
+	IndexStatus is status of index, and WorkStatus is of work tree.
+
+giti/grep					*vim-unite-giti-sources-giti/grep*
+
+	Input pattern and list results of "git grep $PATTERN$".
+
+==========================================================================
+KINDS						*vim-unite-giti-kinds*
+
+This plugin provides following unite kinds.
+
+giti/branch					*vim-unite-giti-kinds-giti/branch*
+
+
+
+	run switch sw new
+		Checkout selected branch, and switch it.
+		This action execute "git checkout".
+
+	delete rm
+		Delete selected branch.
+		And can delete remote branch too if you want.
+		This action execute "git branch -d $BRANCH_NAME".
+		and "git push $REPOSITORY :$BRANCH_NAME" on your shell.
+
+	delete_force
+		Force delete selected branch.
+		And can delete remote branch too if you want.
+		This action execute "git branch -D $BRANCH_NAME".
+		and "git push $REPOSITORY :$BRANCH_NAME" on your shell.
+
+	merge
+		Merge selected branch into current branch.
+		This action execute "git merge $BRANCH_NAME".
+
+
+giti/branch/new					*vim-unite-giti-kinds-giti/branch/new*
+
+	run create new
+		Create new branch from selected (or inputed) branch.
+		This action execute "git checkout -b $NEW_BRANCH_NAME $SELECTED_BRANCH_NAME".
+
+
+giti/config					*vim-unite-giti-kinds-giti/config*
+
+	run yank_value
+		Yank value of selected setting.
+
+	write
+		Rewrite selected setting.
+
+	remove
+		Remove selected setting.
+
+
+giti/log					*vim-unite-giti-kinds-giti/log*
+
+	view
+		View detail of selected commit.
+
+	diff di
+		View diff of selected commit, or diff between selected commits.
+
+	revert
+		Revert selected commit.
+
+	vimdiff vdi
+		View diff by vimdiff of selected commit.
+		This action run correctly with logs specified a file.
+
+	reset_hard reset
+		Execute hard reset to selected commit.
+
+
+giti/remote					*vim-unite-giti-kinds-giti/remote*
+
+	fetch
+		Fetch selected remote.
+		Can add new remote by this action, if you input some word,
+		and select "[add new remote]" line.
+
+	rename
+		Rename selected remote.
+
+	rm
+		Delete selected remote.
+
+
+giti/status					*vim-unite-giti-kinds-giti/status*
+
+	add stage
+		Add selected files to staged.
+
+	add_patch
+		Add selected files each hunks of patch to staged.
+
+	reset_head reset undo unstage
+		Reset this files status to unstage.
+
+	commit ci
+		Commit selected files.
+
+	amend
+		Amend previous commit.
+
+	checkout
+		Checkout selected files.
+
+	diff di
+		View differences between selected unstaged files from staged them.
+
+	diff_cached dic
+		View differences between selected staged files from HEAD.
+
+	diff_head dih
+		View differences between selected unstaged files from HEAD.
+
+	vimdiff_head vdih vdi
+		View differences between selected unstaged files from HEAD by vimdiff.
+
+	rm_cached rmc
+		Remove new selected files from stage.
+
+	ignore
+		Ignore selected files.
+		Open new buffer of ".gitignore".
+
+
+
+==========================================================================
+COMMANDS					*vim-unite-giti-commands*
+
+This plugin provides following commands.
+
+Giti						*vim-unite-giti-commands-giti*
+	Execute specified git command by giti.
+
+GitiWithConfirm					*vim-unite-giti-commands-giti-with-confirm*
+	Execute specified git command by giti.
+	And view executing command as confirm.
+
+GitiFetch					*vim-unite-giti-commands-giti-fetch*
+	Fetch from specified repository with refspec by giti.
+
+GitiPush					*vim-unite-giti-commands-giti-push*
+	Push to specified repository with refspec by giti.
+
+GitiPushWithSettingUpstream			*vim-unite-giti-commands-giti-push-with-setting-upstream*
+	Push to specified repository with refspec
+	and add upstream reference by giti.
+
+GitiPushExpressly				*vim-unite-giti-commands-giti-push-expressly*
+	Push to specified repository with refspec interactively.
+
+GitiPull					*vim-unite-giti-commands-giti-pull*
+	Pull from specified repository with refspec.
+
+GitiPullSquash					*vim-unite-giti-commands-giti-pull-squash*
+	Squash pull from specified repository with refspec.
+
+GitiPullRebase					*vim-unite-giti-commands-giti-pull-rebase*
+	Rebase pull from specified repository with refspec.
+
+GitiPullExpressly				*vim-unite-giti-commands-giti-pull-expressly*
+	Pull from specified repository with refspec interactively.
+
+GitiDiff					*vim-unite-giti-commands-giti-diff*
+	View differences between specified unstaged files from staged them.
+
+GitiDiffCached					*vim-unite-giti-commands-giti-diff-cached*
+	View differences between specified staged files from HEAD.
+
+GitiLog						*vim-unite-giti-commands-giti-log*
+	View logs with specified parameters.
+
+GitiLogLine					*vim-unite-giti-commands-giti-log-line*
+	View one-line logs with specified parameters.
+
+
+==========================================================================
+SAMPLES						*vim-unite-giti-samples*
+
+>
+    " giti
+    nmap <Space>gd <SID>(git-diff-cached)
+    nmap <Space>gD <SID>(git-diff)
+    nmap <Space>gf <SID>(git-fetch-now)
+    nmap <Space>gF <SID>(git-fetch)
+    nmap <Space>gp <SID>(git-push-now)
+    nmap <Space>gP <SID>(git-pull-now)
+    nmap <Space>gl <SID>(git-log-line)
+    nmap <Space>gL <SID>(git-log)
+
+    " unite prefix key
+    nnoremap [unite] <Nop>
+    nmap <Leader>. [unite]
+
+    nmap [unite]gg    <SID>(giti-sources)
+    nmap [unite]gst   <SID>(git-status)
+    nmap [unite]gb    <SID>(git-branch)
+    nmap [unite]gB    <SID>(git-branch_all)
+    nmap [unite]gc    <SID>(git-config)
+    nmap [unite]gl    <SID>(git-log)
+    nmap [unite]gL    <SID>(git-log-this-file)
+
+    " giti {{{
+    if globpath(&rtp, 'plugin/giti.vim') != ''
+      let g:giti_log_default_line_count = 100
+      nnoremap <expr><silent> <SID>(git-diff)        ':<C-u>GitiDiff ' . expand('%:p') . '<CR>'
+      nnoremap <expr><silent> <SID>(git-diff-cached) ':<C-u>GitiDiffCached ' . expand('%:p') .  '<CR>'
+      nnoremap       <silent> <SID>(git-fetch-now)    :<C-u>GitiFetch<CR>
+      nnoremap       <silent> <SID>(git-fetch)        :<C-u>GitiFetch 
+      nnoremap <expr><silent> <SID>(git-push-now)    ':<C-u>GitiPushWithSettingUpstream origin ' . giti#branch#current_name() . '<CR>'
+      nnoremap       <silent> <SID>(git-push)         :<C-u>GitiPush 
+      nnoremap       <silent> <SID>(git-pull-now)     :<C-u>GitiPull<CR>
+      nnoremap       <silent> <SID>(git-pull)         :<C-u>GitiPull 
+      nnoremap       <silent> <SID>(git-log-line)     :<C-u>GitiLogLine ' . expand('%:p') . '<CR>'
+      nnoremap       <silent> <SID>(git-log)          :<C-u>GitiLog ' . expand('%:p') . '<CR>'
+
+      nnoremap <silent> <SID>(giti-sources)   :<C-u>Unite giti<CR>
+      nnoremap <silent> <SID>(git-status)     :<C-u>Unite giti/status<CR>
+      nnoremap <silent> <SID>(git-branch)     :<C-u>Unite giti/branch<CR>
+      nnoremap <silent> <SID>(git-branch_all) :<C-u>Unite giti/branch_all<CR>
+      nnoremap <silent> <SID>(git-config)     :<C-u>Unite giti/config<CR>
+      nnoremap <silent> <SID>(git-log)        :<C-u>Unite giti/log<CR>
+
+      nnoremap <silent><expr> <SID>(git-log-this-file) ':<C-u>Unite giti/log:' . expand('%:p') . '<CR>'
+    endif
+    " }}}
+<
+
+==========================================================================
+TESTS					*vim-unite-giti-tests*
+
+This plugin is covered by some tests.
+
+Execute make command on your shell to test all.
+
+>
+    $ make test_all
+<
+
+All tests are under test directory.
+
+
+==========================================================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:fdl=0:

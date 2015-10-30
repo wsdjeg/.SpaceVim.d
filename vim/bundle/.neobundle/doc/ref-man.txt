@@ -1,0 +1,123 @@
+*ref-man.txt*	A ref source for manpage.
+
+Version: 0.4.3
+Author : thinca <thinca+vim@gmail.com>
+License: Creative Commons Attribution 2.1 Japan License
+         <http://creativecommons.org/licenses/by/2.1/jp/deed.en>
+
+==============================================================================
+CONTENTS					*ref-man-contents*
+
+INTRODUCTION			|ref-man-introduction|
+CUSTOMIZING			|ref-man-customizing|
+CHANGELOG			|ref-man-changelog|
+
+
+==============================================================================
+INTRODUCTION					*ref-man-introduction*
+
+*ref-man* is a source for |ref.vim| to man command.  man is a command to view
+manual pages on UNIX-like operating systems.
+
+You can use [count] when you use |<Plug>(ref-keyword)|.
+For example, when you type "3K" on the text "printf", the manpage of printf
+function will be opened.
+
+
+Requirements:
+- |ref.vim| 0.4.0 or later
+- man
+
+
+
+==============================================================================
+CUSTOMIZING					*ref-man-customizing*
+
+g:ref_man_cmd					*g:ref_man_cmd*
+			Specifies the man command.  This allows a |List| that
+			includes command and arguments.
+			The default value is "man -Tutf8" if it is executable.
+			Otherwise, it is "".  "-Tutf8" option is workaround
+			for multi-byte environment.  The option might be
+			unnecessary someday.
+			Note: If you are a MacVim user, you may want to
+			specify a dummy pager of man command with the
+			following line in your ~/.vimrc. >
+			let g:ref_man_cmd = "man -P cat"
+
+g:ref_man_lang					*g:ref_man_lang*
+			It is used for the value of $LANG when it is not empty
+			string.
+
+g:ref_man_manpath				*g:ref_man_manpath*
+			Specifies the list of directories to search for man
+			pages.  Separate directories with colons.
+
+
+
+==============================================================================
+CHANGELOG					*ref-man-changelog*
+
+0.4.3	2015-03-22
+	- Fix [count] behavior.
+
+0.4.2	2010-10-26
+	- Fixed the bug not completed the item with ".".
+
+0.4.1	2010-06-04
+	- Changed the timing in which the escape sequence is removed.
+	- C language uses ref-man by default.
+
+0.4.0	2010-05-31
+	- Updated for |ref.vim| 0.4.0.
+	- Don't use |vimproc|.
+	  - As for man command, setuid might be applied, but vimproc doesn't
+	    correspond setuid.
+	- Fixed the bug that the last item of manpath is ignored.
+
+0.3.2	2010-05-16
+	- Abolished the highlight with escape sequence.
+	- Improved the matching of keyword.
+	- Some multi byte signs were replaced with ASCII character.
+
+0.3.1	2010-05-07
+	- Updated for |ref.vim| 0.3.2.
+
+0.3.0	2010-04-15
+	- Updated for |ref.vim| 0.3.0.
+	- Added |g:ref_man_lang| option.
+
+0.2.0	2010-01-28
+	- Updated for |ref.vim| 0.2.0.
+	- Fixed a bug that doesn't work when |g:ref_man_cmd| is a |List|.
+
+0.1.3	2010-01-18
+	- Using |ref#system()|.
+	- Improved the removing of escape sequences.
+	- The encoding of manpage is converted from 'termencoding' to
+	  'encoding'.
+
+0.1.2	2009-12-22
+	- Using |ref#cache()|.
+	- Improved the matching of keyword.
+
+0.1.1	2009-12-16
+	- Improved the matching of keyword.
+
+0.1.0	2009-09-01
+	- Improved the matching of keyword.
+	- Fixed a bug that an error might occur when a page is moved.
+	- Added |g:ref_man_use_escape_sequence| option.
+
+0.0.2	2009-08-19
+	- Added |g:ref_man_highlight_limit| option.
+	- Improved the completion function.
+	  - For performance.
+	  - Removed duplication items.
+
+0.0.1	2009-08-12
+	- Initial version.
+
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl

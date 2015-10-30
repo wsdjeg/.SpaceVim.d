@@ -1,0 +1,81 @@
+*ku-ref.txt*	ku source: ref
+
+Version: 0.2.1
+Author : thinca <thinca+vim@gmail.com>
+License: Creative Commons Attribution 2.1 Japan License
+         <http://creativecommons.org/licenses/by/2.1/jp/deed.en>
+
+==============================================================================
+CONTENTS					*ku-ref-contents*
+
+INTRODUCTION			|ku-ref-introduction|
+ACTION TABLE			|ku-ref-action-table|
+KEY TABLE			|ku-ref-key-table|
+FOR REF SOURCES			|ku-ref-for-ref-sources|
+CHANGELOG			|ku-ref-changelog|
+
+
+==============================================================================
+INTRODUCTION					*ku-ref-introduction*
+
+*ku-ref* is a source for |ku| to treat the completion list of |ref.vim|.
+
+- There is a heavy possibility according to |ref-sources|.
+
+
+Requirements:
+- Vim 7.2 or later
+- |ku| 0.2.0 or later (vimscript#2337)
+- |ref.vim| 0.3.3 or later
+
+
+==============================================================================
+ACTION TABLE					*ku-ref-action-table*
+
+default						*ku-ref-action-default*
+			Same as |ku-ref-action-open|.
+
+open						*ku-ref-action-open*
+			Open the |ref-viewer|.  At this time, |g:ref_open|
+			assumes it is empty and is treated.
+
+
+==============================================================================
+KEY TABLE					*ku-ref-key-table*
+
+Key		Action ~
+--------	--------
+o		open		|ku-ref-action-open|
+<C-o>		open		|ku-ref-action-open|
+
+
+==============================================================================
+FOR REF SOURCES					*ku-ref-for-ref-sources*
+
+The following functions are called like a wrapper if defined in source.
+However, {ext} is omitted.
+
+function				ku function  ~
+--------------				-----------------
+acc_valid_p({item}, {sep})		|ku#{source}#acc_valid_p()|
+special_char_p({char})			|ku#{source}#special_char_p()|
+on_before_action({item})		|ku#{source}#on_before_action()|
+on_source_enter()			|ku#{source}#on_source_enter()|
+on_source_leave()			|ku#{source}#on_source_leave()|
+
+
+==============================================================================
+CHANGELOG					*ku-ref-changelog*
+
+0.2.1	2010-05-18
+	- Updated for |ref.vim| 0.3.3.
+
+0.2.0	2010-04-07
+	- Updated for |ref.vim| 0.3.0.
+
+0.1.0	2009-08-20
+	- Initial version.
+
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl

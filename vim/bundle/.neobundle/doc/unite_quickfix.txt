@@ -1,0 +1,156 @@
+*unite-quickfix.txt*	Source for unite.vim that shows outputs from quickfix
+
+
+==============================================================================
+Index						*unite_quickfix-contents*
+
+INTRODUCTION			|unite_quickfix-introduction|
+USAGE				|unite-quickfix-usage|
+SETTINGS			|unite-quickfix-setting|
+  VARIABLES			  |unite-quickfix-variables|
+EXAMPLES			|unite-quickfix-example|
+
+
+==============================================================================
+INTRODUCTION					*unite_quickfix-introduction*
+
+
+|unite_quickfix| is a |unite-source| for outputting |quickfix|
+(|location-list|) data to |unite.vim|, a plugin written by Shougo.
+
+unite.vim - github : https://github.com/Shougo/unite.vim
+
+
+|unite-qf|, written by sgur, is similar to this plugin.
+
+unite-qf - github : https://github.com/sgur/unite-qf
+
+
+There are several differences between |unite-quickfix| and |unite-qf| including:
+
+- Support for is_multiline
+ - Lines that do not fit in one line can be wrapped and shown in following
+   lines.
+ - |g:unite_quickfix_is_multiline|
+
+- Use previous quickfix outputs with |:colder| and |:cnewer|
+ - |unite-quickfix-usage|
+
+- Show shortened file paths using |pathshorten()|
+ - |g:unite_quickfix_filename_is_pathshorten|
+
+- Outputs from location_list
+ - :Unite location_list
+
+- Highlighting
+ - see: http://d.hatena.ne.jp/osyo-manga/20130326/1364298157
+
+- Character code conversion is not supported
+
+
+==============================================================================
+USAGE						*unite-quickfix-usage*
+
+Start |unite.vim| after sending outputs to |quickfix|.
+
+>
+	" Use output to quickfix as source
+	:Unite quickfix
+	
+	" Use output to location-list as source
+	:Unite location_list
+	
+	" Use quickfix output prior to the current as source.
+	" Only the output to unite.vim is modified.
+	" Note that :colder is not actually executed.
+	:Unite quickfix:2
+	
+	" Behaviour similar to quickfix
+	" Open unite.vim at the bottom (-direction=botright),
+	" and don't quit unite.vim (-no-quit) after selecting candidate.
+	:Unite -no-quit -direction=botright quickfix
+<
+
+
+==============================================================================
+SETTINGS						*unite-quickfix-setting*
+
+
+------------------------------------------------------------------------------
+VARIABLES					*unite-quickfix-variables*
+
+g:unite_quickfix_filename_is_pathshorten	*g:unite_quickfix_filename_is_pathshorten*
+	Choose whether or not to show shortened file name.
+
+	0 : Don't shorten
+	1 : Shorten
+
+Default: >
+	let unite_quickfix_filename_is_pathshorten = 1
+<
+
+
+g:unite_quickfix_is_multiline			*g:unite_quickfix_is_multiline*
+	Whether or not to show lines that go beyond the width of the window in
+	multiple lines.
+
+	0 : Don't show in multiple lines
+	1 : Show in multiple lines
+
+Default: >
+	let g:unite_quickfix_is_multiline = 1
+<
+
+	*g:unite#filters#converter_quickfix_highlight#enable_bold_for_message*
+g:unite#filters#converter_quickfix_highlight#enable_bold_for_message
+	Setting bold type for error message.
+
+	0 : No bold type
+	1 : bold type
+
+Default: >
+	let g:unite#filters#converter_quickfix_highlight#enable_bold_for_message = 1
+<
+
+------------------------------------------------------------------------------
+HIGHLIGHTS					*unite-quickfix-highlight*
+
+Highlights to be applied at converter_quickfix_highlight.
+
+
+UniteQuickFixError		*unite-quickfix-highlight-UniteQuickFixError*
+	Setting the highlight of "error".
+	"error" のハイライトを設定します。
+Default: >
+	highlight UniteQuickFixError ctermfg=1 guifg=Red term=bold gui=bold
+<
+
+UniteQuickFixWarning		*unite-quickfix-highlight-UniteQuickFixWarning*
+	Setting the highlight of "warning".
+Default: >
+	highlight UniteQuickFixWarning ctermfg=1 guifg=Purple
+<
+
+==============================================================================
+EXAMPLES					*unite-quickfix-example*
+
+Enable highlighting			*unite-quickfix-example-highlight*
+You need to configure unite-filters in order to enable highlighting.
+Highlighting does not work with the -multi-line option. You need to use -wrap
+in order for it to work.
+
+Example: >
+	" Disable multi-line
+	let g:unite_quickfix_is_multiline=0
+	
+	" Set converter_quickfix_highlight as the converter
+	call unite#custom_source('quickfix', 'converters', 'converter_quickfix_highlight')
+	call unite#custom_source('location_list', 'converters', 'converter_quickfix_highlight')
+
+	" Highlighting does not work correctly unless used with -wrap option
+	:Unite quickfix -wrap
+<
+
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl:noet

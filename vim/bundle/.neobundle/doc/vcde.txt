@@ -1,0 +1,80 @@
+									*vcde*
+
+
+Description~
+	VCDE is a c++ development support by VJDE framework.
+
+Future~
+	Now, ctags file supported from two ways: 
+	1. ruby parser, 
+	2  readtags which come from ctag5.5.4
+	Default , use readtags , Once the $VIM_RUNTIME/plugin/vjde/readtags is
+not runnable for you OS, use following in your .vimrc to disable it. >
+	let g:vjde_readtags=''
+<
+	Then, ruby parser will be used.
+	Code completion in a gui window or a preview window for c++,simply
+namespace and typedef support. >
+	string str;
+	str.find
+		^<c-space>	
+<
+	Parameter preview in a window while your input a <C-space> after a 
+'(' >
+	string str;
+	str.find_first_of(
+			  ^<c-space>
+<
+
+	For quickly search the tag of c++ , you can generate a index for your
+tags. Use the flowing command: >
+	:call VjdeCppGenerateIdx()
+<
+	It's use |tags| parameter , then generate a index for each tag file,
+named tags.vjde_idx
+	NOTE: for *inux user, you must make sure that the director is writable
+for the user.
+
+	
+
+Setup~
+	To setup the completion for your own cpp files, you can set >
+	g:vjde_cpp_exts
+<
+	which is seperated by ';' , It's treat as the extensions of c++/c
+files , like >
+	let g:vjde_cpp_exts='cpp;c;cxx;h;hpp;hxx'
+<
+
+Smart pointer support~
+	Sometimes , We had use some smart pointer ,such as  >
+	typedef auto_ptr<MyClass> MyClassPtr;
+<
+At that time , some coding support is read a MyClassPtr as auto_ptr, so , code
+completion is not working correctly. So , add a file which is located : >
+	~/.vim/vjde/ptr.lst
+<
+Add the following line: >
+	auto_ptr
+	std::auto_ptr
+<
+Then , code completion will treat MyClassPtr as MyClass. 
+
+	
+Other language Support ~
+	NOTE: Just now, use <c-x><c-o> omni completion instead of this
+function.
+	VJDE support other language which is ctags supported.
+	Once you want to use with your language, setup the variable >
+	let g:vjde_ctags_exts='vim;rb'
+<
+	Then, the vim and ruby file can be previewed!
+
+Global Variables~
+g:vjde_max_deeps
+	Search for member in Inheries . 
+g:vjde_max_tags
+	The tags number will be searched.
+
+
+ vim:ts=8 sw=8 noexpandtab tw=78 ft=help:

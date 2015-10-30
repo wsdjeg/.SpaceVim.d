@@ -1,0 +1,76 @@
+*ref-erlang.txt*	A ref source for Erlang.
+
+Version: 0.1.2
+Author : thinca <thinca+vim@gmail.com>
+License: Creative Commons Attribution 2.1 Japan License
+         <http://creativecommons.org/licenses/by/2.1/jp/deed.en>
+
+==============================================================================
+CONTENTS					*ref-erlang-contents*
+
+INTRODUCTION			|ref-erlang-introduction|
+ARGUMENTS			|ref-erlang-arguments|
+CUSTOMIZING			|ref-erlang-customizing|
+CHANGELOG			|ref-erlang-changelog|
+
+
+==============================================================================
+INTRODUCTION					*ref-erlang-introduction*
+
+*ref-erlang* is a source for |ref.vim| to Erlang's man(erl -man).  Erlang's
+man works only on UNIX-like operating system.  So, this source supports
+similarly only UNIX-like operating system.
+
+
+Requirements:
+- |ref.vim| 0.4.1 or later
+- |ref-man| 0.4.1 or later
+- UNIX-like operating system
+
+
+
+==============================================================================
+ARGUMENTS					*ref-erlang-arguments*
+
+This source accepts the argument of the following two forms.
+
+	module
+	module:function
+
+
+==============================================================================
+CUSTOMIZING					*ref-erlang-customizing*
+
+g:ref_erlang_cmd				*g:ref_erlang_cmd*
+			Specifies the erl command.  This allows a |List| that
+			includes command and arguments.
+			The default value is "erl" if it is executable.
+			Otherwise, it is "".
+
+g:ref_erlang_man_dir				*g:ref_erlang_man_dir*
+			The man directory for Erlang.  This is used for
+			completion.
+			The default value is acquired by the following
+			command. >
+		erl -noshell -eval io:fwrite(code:root_dir()). -s init stop
+
+
+==============================================================================
+CHANGELOG					*ref-erlang-changelog*
+
+0.1.2	2010-10-31
+	- Improved the handling of error.
+
+0.1.1	2010-06-06
+	- Function names are completable.
+	- Search again as a function of the erlang module when the module was
+	  not found.
+	- Fixed the bug that the error occurs when query was empty.
+	- Fixed keyword pattern.
+
+0.1.0	2010-05-23
+	- Initial version.
+
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl

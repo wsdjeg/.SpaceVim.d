@@ -1,0 +1,104 @@
+rooter.txt
+
+                        ____              __
+                       / __ \____  ____  / /____  _____
+                      / /_/ / __ \/ __ \/ __/ _ \/ ___/
+                     / _, _/ /_/ / /_/ / /_/  __/ /
+                    /_/ \_\\____/\____/\__/\___/_/
+
+
+==============================================================================
+CONTENTS                                                     |rooter-contents|
+
+    Introduction ................................ |rooter-introduction|
+    Use ......................................... |rooter-use|
+    Configuration ............................... |rooter-configuration|
+    Installation ................................ |rooter-installation|
+
+==============================================================================
+Introduction                                      *rooter* *rooter-introduction*
+
+Rooter is a Vim plugin which changes the working directory to the project root
+when you open a file.
+
+More accurately, it'll do this when you open a typical webapp file. These
+files are identified by their extension.
+
+The project root is identified by the presence of known directory, such as a
+VCS directory, or file, such as a Rakefile. Currently git, darcs, mercurial,
+bazaar, and subversion are supported.
+
+==============================================================================
+Use                                                               *rooter-use*
+
+By default you don't need to do anything: vim-rooter will change the working
+directory automatically.
+
+You can always invoke vim-rooter manually with <Leader>cd.
+
+==============================================================================
+Configuration                                           *rooter-configuration*
+                                                        *g:rooter_manual_only*
+                                                        *g:rooter_disable_map*
+                                                           *g:rooter_patterns*
+                                                   *g:rooter_autocmd_patterns*
+                                                            *g:rooter_use_lcd*
+                             *g:rooter_change_directory_for_non_project_files*
+
+You can change the manual-invocation mapping by adding this to your .vimrc:
+
+map <silent> <unique> <Leader>foo <Plug>RooterChangeToRootDirectory
+where <Leader>foo is the mapping you want.
+
+To prevent vim-rooter from creating a mapping, do this: >
+
+    let g:rooter_disable_map = 1
+<
+You can change the file extensions which trigger vim-rooter by specifying a
+a comma separated list.
+>
+    let g:rooter_autocmd_patterns = '*.rb,*.js'
+<
+To stop vim-rooter changing directory automatically, add this to your .vimrc: >
+
+    let g:rooter_manual_only = 1
+<
+You can set your own directory and file patterns like this: >
+
+    let g:rooter_patterns = ['Rakefile', '.git/']
+<
+Vim-rooter checks the patterns depth-first in the order given. So to work
+correctly with git submodules you should have `.git` before `.git/`. All
+directories should have a trailing slash. >
+<
+Setting your own patterns overwrites the defaults. You can use >
+
+    let g:rooter_patterns = g:rooter_patterns + [ 'foo' ]
+
+to append to the default patterns.
+
+You can have vim-rooter locally change directory (|:lcd|) instead of changing
+directory (|:cd|) by adding this to your .vimrc: >
+
+    let g:rooter_use_lcd = 1
+
+When vim-rooter encounters a non-project file, it won't change directory by
+default. If you would instead like vim-rooter to change to the file's
+directory, do this: >
+
+    let g:rooter_change_directory_for_non_project_files = 1
+<
+This makes vim-rooter behave similarly to 'autochdir' for non-project files. >
+<
+If you don't want vim-rooter to echo the project directory, try this: >
+
+    let g:rooter_silent_chdir = 1
+<
+==============================================================================
+Installation                                             *rooter-installation*
+
+Install into ~/.vim/plugin/rooter.vim or, if you're using Pathogen, into
+~/.vim/bundle/rooter.vim.
+
+==============================================================================
+vim:tw=78:sw=4:ts=8:ft=help:norl:

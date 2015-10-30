@@ -1,0 +1,137 @@
+*unite-tag.txt* tags source for unite.vim
+
+Version:     0.2.0
+Author:      tsukkee <takayuki0510 at gmail.com>
+             thinca <thinca+vim@gmail.com>
+             Shougo <ShougoMatsu at gmail.com>
+Licence:     The MIT License
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+    THE SOFTWARE.
+
+
+==============================================================================
+INTRODUCTION						*unite-tag-introduction*
+
+*unite-tag* is a |unite.vim| plugin for selecting |tags| or selecting files
+including |tags|.
+
+Requirement:
+- |unite.vim| (Recommend latest version at https://github.com/Shougo/unite.vim)
+Note: Using tag/include source
+- |neoinclude| (Recommend latest version at
+  https://github.com/Shougo/neoinclude.vim)
+
+Latest version:
+https://github.com/tsukkee/unite-tag
+
+
+==============================================================================
+USAGE							*unite-tag-usage*
+
+To select tags, execute |:Unite| with argument of tag
+>
+	:Unite tag
+<
+To select files including tags, execute |:Unite| with argument of tag/file
+>
+	:Unite tag/file
+<
+To select include tags generated like |tagbar| or |ctrlp|, execute
+|:Unite| with argument of tag/include.
+Note: |neoinclude| is needed.
+>
+	:Unite tag/include
+<
+Also, you can filter result using parameter.
+>
+	:Unite tag:text
+<
+
+This plugin does not block vim because tags' information is aggregated
+asynchronously.
+
+
+
+==============================================================================
+CUSTOMIZE						*unite-tag-customize*
+
+If you want to unite-tag instead of |<C-]>|, try to write below in your vimrc.
+This allows you to use unite-tag only in normal buffers. But, if the tag
+files are too large, this mapping blocks vim for a while, because unite-tag
+aggregates tags' information synchronously when -immediately is set.
+>
+	autocmd BufEnter *
+	\   if empty(&buftype)
+	\|      nnoremap <buffer> <C-]> :<C-u>UniteWithCursorWord -immediately tag<CR>
+	\|  endif
+<
+------------------------------------------------------------------------------
+VARIABLES 						*unite-tag-variables*
+
+g:unite_source_tag_max_name_length	*g:unite_source_tag_max_name_length*
+	Max length of tag name field in candidate.
+	The default value is 25.
+
+
+g:unite_source_tag_max_kind_length	*g:unite_source_tag_max_kind_length*
+	Max length of tag kind field in candidate.
+	The default value is 8.
+
+
+g:unite_source_tag_max_fname_length	*g:unite_source_tag_max_fname_length*
+	Max length of file name field in candidate.
+	The default value is 20.
+
+
+				*g:unite_source_tag_strict_truncate_string*
+g:unite_source_tag_strict_truncate_string
+	Use multi-byte aware string truncate method(precise, but slower).
+	The default value is 1.
+
+
+g:unite_source_tag_show_fname		*g:unite_source_tag_show_fname*
+	Show file name field.
+	The default value is 1.
+
+
+g:unite_source_tag_show_kind		*g:unite_source_tag_show_kind*
+	Show kind field.
+	The default value is 1.
+
+
+g:unite_source_tag_show_location	*g:unite_source_tag_show_location*
+	Show source location field.
+	The default value is 1.
+
+
+g:unite_source_tag_relative_fname	*g:unite_source_tag_relative_fname*
+	Use relative file name in the file name field.
+	The default value is 1.
+
+
+==============================================================================
+FAQ							*unite-tag-faq*
+
+Q: I want to open files without generating tags files like ctrlp.vim or
+tagbar plugin.
+
+A: You can use "tag/include" source. But it needs |neoinclude| plugin. It uses
+automatically generated tag files.
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl

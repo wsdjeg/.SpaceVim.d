@@ -1,0 +1,194 @@
+*projectionist.txt* *projectionist* Project configuration
+
+Author:  Tim Pope <http://tpo.pe/>
+Repo:    https://github.com/tpope/vim-projectionist
+License: Same terms as Vim itself (see |license|)
+
+SETUP                                           *projectionist-setup*
+
+Projections are maps from file names and globs to sets of properties
+describing the file.  The simplest way to define them is to create a
+".projections.json" in the root of the project.  Here's a simple example for a
+Maven project:
+>
+    {
+      "src/main/java/*.java": {
+        "alternate": "src/test/java/{}.java",
+        "type": "source"
+      },
+      "src/test/java/*.java": {
+        "alternate": "src/main/java/{}.java",
+        "type": "test"
+      },
+      "*.java": {"dispatch": "javac {file}"},
+      "*": {"make": "mvn"}
+    }
+<
+In property values, "{}" will be replaced by the portion of the glob matched
+by the "*".  You can also chain one or more transformations inside the braces
+separated by bars, e.g. "{dot|hyphenate}".  The complete list of available
+transformations is as follows:
+
+Name            Behavior ~
+dot             / to .
+underscore      / to _
+backslash       / to \
+colons          / to ::
+hyphenate       _ to -
+blank           _ and - to space
+uppercase       uppercase
+camelcase       foo/bar_baz to Foo/BarBaz
+snakecase       Foo/BarBaz to foo/bar_baz
+capitalize      capitalize first letter and each letter after a slash
+dirname         remove last slash separated component
+basename        remove all but last slash separated component
+singular        singularize
+plural          pluralize
+file            absolute path to file
+project         absolute path to project
+open            literal {
+close           literal }
+
+From a globbing perspective, "*" is actually a stand in for "**/*".  For
+advanced cases, you can include both globs explicitly: "test/**/test_*.rb".
+When expanding with {}, the ** and * portions are joined with a slash.  If
+necessary, the dirname and basename expansions can be used to split the value
+back apart.
+
+The full list of available properties in a projection is as follows:
+
+						*projectionist-alternate*
+"alternate" ~
+        Determines the destination of the |projectionist-:A| command.  If this
+        is a list, the first readable file will be used.
+						*projectionist-console*
+"console" ~
+        Command to run to start a REPL or other interactive shell.  Will be
+        defined as :Console.  This is useful to set from a "*" projection or
+        on a simple file glob like "*.js".  Experimental.
+						*projectionist-dispatch*
+"dispatch" ~
+        Default task to use for |:Dispatch| in dispatch.vim.  If not provided,
+        the option for any existing alternate file is used instead.
+        Expansions are shell escaped.
+						*projectionist-make*
+"make" ~
+        Sets 'makeprg'.  Also loads a |:compiler| plugin if one is available
+        matching the executable name.  This is useful to set from a "*"
+        projection.  Expansions are shell escaped.
+						*projectionist-path*
+"path" ~
+        Additional directories to add to 'path'.  Can be relative to the
+        project root or absolute.  This is useful to set on a simple file glob
+        like "*.js".
+						*projectionist-start*
+"start" ~
+        Command to run to "boot" the project.  Examples include `lein run`,
+        `rails server`, and `foreman start`.  It will be used as a default
+        task for |:Start| in dispatch.vim.  This is useful to set from a "*"
+        projection.  Expansions are shell escaped.
+						*projectionist-template*
+"template" ~
+        Array of lines to use when creating a new file.
+						*projectionist-type*
+"type" ~
+        Declares the type of file and navigation command it belongs to.  If
+        this option is provided for a literal filename rather than a glob, it
+        is used as the default destination of the navigation command when no
+        argument is given.
+
+                                                *g:projectionist_heuristics*
+In addition to ".projections.json", projections can be defined globally
+through use of the |projectionist-autocmds| API or through the variable
+g:projectionist_heuristics, a |Dictionary| mapping between a string describing
+the root of the project and a set of projections.  The keys of the dictionary
+are files and directories that can be found in the root of a project, with &
+separating multiple requirements and | separating multiple alternatives.  You
+can also prefix a file or directory with ! to forbid rather than require its
+presence.
+
+In the example below, the first key requires a directory named
+lib/heroku/ and a file named init.rb, and the second requires a directory
+named etc/rbenv.d/ or one or more files matching the glob bin/rbenv-*.
+>
+    let g:projectionist_heuristics = {
+          \ "lib/heroku/&init.rb": {
+          \   "lib/heroku/command/*.rb": {"type": "command"}
+          \ },
+          \ "etc/rbenv.d/|bin/rbenv-*": {
+          \   "bin/rbenv-*": {"type": "command"},
+          \   "etc/rbenv.d/*.bash": {"type": "hook"}
+          \ }}
+
+Note the use of VimScript |line-continuation|.
+
+COMMANDS                                        *projectionist-commands*
+
+In addition to any navigation commands provided by your projections (which
+take the form :Efoo, :Sfoo, :Vfoo, :Tfoo, and :Dfoo), the following commands
+are available.
+
+                                                *projectionist-:A*
+:A                      Edit the alternate file for the current buffer, as
+                        defined by the "alternate" key.
+
+:A {file}               Edit {file} relative to the innermost root.
+                                                *projectionist-:AS*
+:AS [file]              Like :A, but open in a split.
+                                                *projectionist-:AV*
+:AV [file]              Like :A, but open in a vertical split.
+                                                *projectionist-:AT*
+:AT [file]              Like :A, but open in a tab.
+
+                                                *projectionist-:AD*
+:AD                     Replace the contents of the buffer with the new file
+                        template.
+
+:AD {file}              Like :A, but |:read| the file into the current buffer.
+
+                                                *projectionist-:Cd*
+:Cd                     |:cd| to the innermost root.
+
+:Cd {path}              |:cd| to {path} in the innermost root.
+
+                                                *projectionist-:Lcd*
+:Lcd [path]             Like :Cd, but use |:lcd|.
+
+                                                *projectionist-:ProjectDo*
+:ProjectDo {cmd}        Change directory to the project root, execute the
+                        given command, and change back.  This won't work if
+                        {cmd} leaves the focus in a different window.  Tab
+                        complete will erroneously reflect the current working
+                        directory, not the project root.
+
+AUTOCOMMANDS                                    *projectionist-autocmds*
+
+Projectionist.vim dispatches a |User| *ProjectionistDetect* event when
+searching for projections for a buffer.  You can call *projectionist#append()*
+to register projections for the file found in *g:projectionist_file* .
+>
+    autocmd User ProjectionistDetect
+          \ if SomeCondition(g:projectionist_file) |
+          \   call projectionist#append(root, projections) |
+          \ endif
+<
+The |User| *ProjectionistActivate* event is triggered when one or more sets of
+projections are found.  You can call *projectionist#query()* to retrieve an
+array of pairs of project roots and values for a given key.  Since typically
+you only care about the first (most precisely targeted) value, the following
+pattern may prove useful:
+>
+    autocmd User ProjectionistActivate call s:activate()
+
+    function! s:activate() abort
+      for [root, value] in projectionist#query('wrap')
+        let &l:textwidth = value
+        break
+      endfor
+    endfunction
+<
+You can also call *projectionist#path()* to get the root of the innermost set
+of projections, which is useful for implementing commands like
+|projectionist-:Cd|.
+
+ vim:tw=78:et:ft=help:norl:
