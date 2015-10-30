@@ -1,3 +1,7 @@
+![conplete](https://github.com/wsdjeg/DotFiles/blob/master/pic/complete.png)
+
+![check](https://github.com/wsdjeg/DotFiles/blob/master/pic/check.png)
+
 # Getting Started
 
 ## INSTALL
