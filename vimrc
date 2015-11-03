@@ -931,7 +931,8 @@ function! JavaFileTypeInit()
     inoremap <silent> <buffer> } <C-r>=JavaCloseBracket()<cr>
     inoremap <silent> <buffer> <CR> <C-r>=MyEnterfunc()<Cr>
     "inoremap <silent> <buffer> <C-u> <esc>bgUwea
-    inoremap <silent> <buffer> <leader>uu <esc>bgUwea
+    inoremap <silent> <buffer> <leader>UU <esc>bgUwea
+    inoremap <silent> <buffer> <leader>uu <esc>bguwea
     nnoremap <F4> :JCimportAdd<cr>
     inoremap <F4> <esc>:JCimportAddI<cr>
     "inoremap <silent> <buffer> . <C-r>=MyDotfunc()<Cr>
