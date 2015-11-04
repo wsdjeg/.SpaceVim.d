@@ -586,6 +586,7 @@ let g:JavaComplete_UseFQN = 1
 let g:JavaComplete_ServerAutoShutdownTime = 300
 let g:JavaComplete_MavenRepositoryDisable = 0
 NeoBundle 'VJDE/VJDE'
+NeoBundle 'wsdjeg/vim-dict'
 NeoBundle 'wsdjeg/java_getset.vim'
 NeoBundle 'JalaiAmitahl/maven-compiler.vim'
 autocmd Filetype pom compiler mvn
@@ -859,9 +860,10 @@ inoremap } <c-r>=ClosePair('}')<CR>
 autocmd Syntax java inoremap } <c-r>=CloseBracket()<CR>
 inoremap " <c-r>=QuoteDelim('"')<CR>
 inoremap ' <c-r>=QuoteDelim("'")<CR>
-autocmd! FileType jsp call JspFileTypeInit()
+autocmd FileType jsp call JspFileTypeInit()
 autocmd FileType html,css,jsp EmmetInstall
-autocmd! FileType java call JavaFileTypeInit()
+autocmd FileType java call JavaFileTypeInit()
+autocmd FileType xml call XmlFileTypeInit()
 function! JspFileTypeInit()
     set tags+=/home/wsdjeg/others/openjdk-8-src/tags
     set omnifunc=javacomplete#Complete
@@ -895,6 +897,11 @@ function! BracketsFunc()
         return "{}\<esc>i"
     else
         return "{\<cr>}\<esc>O"
+    endif
+endf
+function! XmlFileTypeInit()
+    if filereadable("AndroidManifest.xml")
+        set dict+=~/.vim/bundle/vim-dict/dict/android_xml.dic
     endif
 endf
 function! JavaFileTypeInit()
