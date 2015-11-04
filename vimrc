@@ -41,7 +41,7 @@ elseif has('lua')
     let s:settings.autocomplete_method = 'neocomplete'
 endif
 let s:settings.plugin_groups = []
-call add(s:settings.plugin_groups, 'core')
+
 call add(s:settings.plugin_groups, 'web')
 call add(s:settings.plugin_groups, 'javascript')
 call add(s:settings.plugin_groups, 'ruby')
@@ -52,11 +52,14 @@ call add(s:settings.plugin_groups, 'scm')
 call add(s:settings.plugin_groups, 'editing')
 call add(s:settings.plugin_groups, 'indents')
 call add(s:settings.plugin_groups, 'navigation')
+call add(s:settings.plugin_groups, 'misc')
+call add(s:settings.plugin_groups, 'textobj')
+
+call add(s:settings.plugin_groups, 'core')
 call add(s:settings.plugin_groups, 'unite')
 call add(s:settings.plugin_groups, 'ctrlp')
 call add(s:settings.plugin_groups, 'autocomplete')
-call add(s:settings.plugin_groups, 'textobj')
-call add(s:settings.plugin_groups, 'misc')
+"call add(s:settings.plugin_groups, 'colorscheme')
 if OSX()
     call add(s:settings.plugin_groups, 'osx')
 endif
@@ -162,6 +165,109 @@ if count(s:settings.plugin_groups, 'unite') "{{{
     "NeoBundle 'ujihisa/quicklearn'
     NeoBundle 'tex/vim-unite-id'
     NeoBundle 'sgur/unite-qf'
+    "" Unite: {{{
+
+    "call unite#filters#matcher_default#use(['matcher_fuzzy'])
+    "call unite#filters#sorter_default#use(['sorter_rank'])
+    "call unite#custom#profile('default', 'context', {'no_split':1, 'resize':0})
+
+
+    "" ------------  define custom action -------------------------------------------
+    "" file_association
+    "let s:file_association = {
+    "\   'description' : 'open withd file associetion'
+    "\    , 'is_selectable' : 1
+    "\    }
+
+    "function! s:file_association.func(candidates)
+    "for l:candidate in a:candidates
+    "" .vimrcに関数の定義有り
+    "call OpenFileAssociation(l:candidate.action__path)
+    "endfor
+    "endfunction
+
+    "call unite#custom_action('openable', 'file_association', s:file_association)
+    "unlet s:file_association
+
+
+
+    "call unite#custom#source('file_rec/async','sorters','sorter_rank', )
+    " replacing unite with ctrl-p
+    "let g:unite_enable_split_vertically = 1
+
+    let g:unite_source_file_mru_time_format = "%m/%d %T "
+    let g:unite_source_directory_mru_limit = 80
+    let g:unite_source_directory_mru_time_format = "%m/%d %T "
+    let g:unite_source_file_rec_max_depth = 6
+    let g:unite_enable_ignore_case = 1
+    let g:unite_enable_smart_case = 1
+    let g:unite_data_directory='~/.cache/unite'
+    let g:unite_enable_start_insert=1
+    let g:unite_source_history_yank_enable=1
+    let g:unite_prompt='>> '
+    let g:unite_split_rule = 'botright'
+    let g:unite_winheight=25
+    let g:unite_source_grep_default_opts = "-iRHn"
+                \ . " --exclude='tags'"
+                \ . " --exclude='cscope*'"
+                \ . " --exclude='*.svn*'"
+                \ . " --exclude='*.log*'"
+                \ . " --exclude='*tmp*'"
+                \ . " --exclude-dir='**/tmp'"
+                \ . " --exclude-dir='CVS'"
+                \ . " --exclude-dir='.svn'"
+                \ . " --exclude-dir='.git'"
+                \ . " --exclude-dir='node_modules'"
+
+
+    let g:unite_launch_apps = [
+                \ 'rake',
+                \ 'make',
+                \ 'git pull',
+                \ 'git push']
+
+    if executable('jvgrep')
+        " For jvgrep.
+        let g:unite_source_grep_command = 'jvgrep'
+        let g:unite_source_grep_default_opts = '-i --exclude ''\.(git|svn|hg|bzr)'''
+        let g:unite_source_grep_recursive_opt = '-R'
+    endif
+
+
+    if executable('ag')
+        let g:unite_source_grep_command='ag'
+        let g:unite_source_grep_default_opts='--nocolor --nogroup -S'
+        let g:unite_source_grep_recursive_opt=''
+    endif
+    let g:unite_source_grep_max_candidates = 200
+
+    if executable('ag')
+        " Use ag in unite grep source.
+        let g:unite_source_grep_command = 'ag'
+        let g:unite_source_grep_default_opts =
+                    \ '-i --line-numbers --nocolor --nogroup --hidden --ignore ' .
+                    \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+        let g:unite_source_grep_recursive_opt = ''
+    elseif executable('pt')
+        " Use pt in unite grep source.
+        " https://github.com/monochromegane/the_platinum_searcher
+        let g:unite_source_grep_command = 'pt'
+        let g:unite_source_grep_default_opts = '--nogroup --nocolor'
+        let g:unite_source_grep_recursive_opt = ''
+    elseif executable('ack-grep')
+        " Use ack in unite grep source.
+        let g:unite_source_grep_command = 'ack-grep'
+        let g:unite_source_grep_default_opts =
+                    \ '-i --no-heading --no-color -k -H'
+        let g:unite_source_grep_recursive_opt = ''
+    endif
+
+    " For ack.
+    if executable('ack')
+        let g:unite_source_grep_command = 'ack'
+        let g:unite_source_grep_default_opts = '-i --no-heading --no-color -k -H'
+        let g:unite_source_grep_recursive_opt = ''
+    endif
 endif "}}}
 
 
@@ -201,10 +307,10 @@ if count(s:settings.plugin_groups, 'ctrlp') "{{{
     "let g:ctrlp_open_multiple_files = 'v'
     set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class
     let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-      \ 'file': '\v\.(exe|so|dll)$',
-      \ 'link': 'some_bad_symbolic_links',
-      \ }
+                \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+                \ 'file': '\v\.(exe|so|dll)$',
+                \ 'link': 'some_bad_symbolic_links',
+                \ }
     let g:ctrlp_user_command = {
                 \ 'types': {
                 \ 1: ['.git', 'cd %s && git ls-files'],
@@ -422,6 +528,12 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
 
 endif "}}}
 
+if count(s:settings.plugin_groups, 'colorscheme') "{{{
+    "colorscheme
+    NeoBundle 'morhetz/gruvbox'
+    NeoBundle 'nanotech/jellybeans.vim'
+endif
+
 NeoBundle 'tpope/vim-scriptease'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-surround'
@@ -474,6 +586,7 @@ let g:JavaComplete_UseFQN = 1
 let g:JavaComplete_ServerAutoShutdownTime = 300
 let g:JavaComplete_MavenRepositoryDisable = 0
 NeoBundle 'VJDE/VJDE'
+NeoBundle 'wsdjeg/vim-dict'
 NeoBundle 'wsdjeg/java_getset.vim'
 NeoBundle 'JalaiAmitahl/maven-compiler.vim'
 autocmd Filetype pom compiler mvn
@@ -568,6 +681,7 @@ NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'tpope/vim-projectionist'
 NeoBundle 'Xuyuanp/nerdtree-git-plugin'
 NeoBundle 'taglist.vim'
+"FixWhitespace
 NeoBundle 'bronson/vim-trailing-whitespace'
 NeoBundle 'kien/rainbow_parentheses.vim'
 let g:rbpt_colorpairs = [
@@ -636,13 +750,14 @@ vnoremap <silent> <C-l> <Esc>:Ydv<CR>
 nnoremap <silent> <C-l> <Esc>:Ydc<CR>
 noremap <leader>yd :Yde<CR>
 
-"colorscheme
-NeoBundle 'morhetz/gruvbox'
 
 call neobundle#end()
-NeoBundleCheck
 filetype plugin indent on
-syntax on
+syntax enable
+if count(s:settings.plugin_groups, 'colorscheme') "{{{
+    exec 'colorscheme '.s:settings.colorscheme
+endif
+NeoBundleCheck
 
 " basic vim settiing
 "{{{
@@ -745,9 +860,10 @@ inoremap } <c-r>=ClosePair('}')<CR>
 autocmd Syntax java inoremap } <c-r>=CloseBracket()<CR>
 inoremap " <c-r>=QuoteDelim('"')<CR>
 inoremap ' <c-r>=QuoteDelim("'")<CR>
-autocmd! FileType jsp call JspFileTypeInit()
+autocmd FileType jsp call JspFileTypeInit()
 autocmd FileType html,css,jsp EmmetInstall
-autocmd! FileType java call JavaFileTypeInit()
+autocmd FileType java call JavaFileTypeInit()
+autocmd FileType xml call XmlFileTypeInit()
 function! JspFileTypeInit()
     set tags+=/home/wsdjeg/others/openjdk-8-src/tags
     set omnifunc=javacomplete#Complete
@@ -781,6 +897,11 @@ function! BracketsFunc()
         return "{}\<esc>i"
     else
         return "{\<cr>}\<esc>O"
+    endif
+endf
+function! XmlFileTypeInit()
+    if filereadable("AndroidManifest.xml")
+        set dict+=~/.vim/bundle/vim-dict/dict/android_xml.dic
     endif
 endf
 function! JavaFileTypeInit()
@@ -817,7 +938,8 @@ function! JavaFileTypeInit()
     inoremap <silent> <buffer> } <C-r>=JavaCloseBracket()<cr>
     inoremap <silent> <buffer> <CR> <C-r>=MyEnterfunc()<Cr>
     "inoremap <silent> <buffer> <C-u> <esc>bgUwea
-    inoremap <silent> <buffer> <leader>uu <esc>bgUwea
+    inoremap <silent> <buffer> <leader>UU <esc>bgUwea
+    inoremap <silent> <buffer> <leader>uu <esc>bguwea
     nnoremap <F4> :JCimportAdd<cr>
     inoremap <F4> <esc>:JCimportAddI<cr>
     "inoremap <silent> <buffer> . <C-r>=MyDotfunc()<Cr>
@@ -946,30 +1068,6 @@ augroup no_cursor_line_in_insert_mode
     autocmd BufEnter,WinEnter,InsertLeave * set cursorline
     autocmd BufLeave,WinLeave,InsertEnter * set nocursorline
 augroup END
-function! ToggleBG()
-    let s:tbg = &background
-    " Inversion
-    if s:tbg == "dark"
-        set background=light
-    else
-        set background=dark
-    endif
-endfunction
-noremap <silent><leader>bg :call ToggleBG()<CR>
-noremap <silent><leader>nu :call ToggleNumber()<CR>
-function! ToggleNumber()
-    let s:isThereNumber = &nu
-    let s:isThereRelativeNumber = &relativenumber
-    if s:isThereNumber && s:isThereRelativeNumber
-        set paste!
-        set nonumber
-        set norelativenumber
-    else
-        set paste!
-        set number
-        set relativenumber
-    endif
-endf
 "也可以通过'za'打开或者关闭折叠
 nnoremap <silent><leader><space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
 if has('autocmd')
@@ -1059,109 +1157,6 @@ endif
 
 
 
-"" Unite: {{{
-
-"call unite#filters#matcher_default#use(['matcher_fuzzy'])
-"call unite#filters#sorter_default#use(['sorter_rank'])
-"call unite#custom#profile('default', 'context', {'no_split':1, 'resize':0})
-
-
-"" ------------  define custom action -------------------------------------------
-"" file_association
-"let s:file_association = {
-"\   'description' : 'open withd file associetion'
-"\    , 'is_selectable' : 1
-"\    }
-
-"function! s:file_association.func(candidates)
-"for l:candidate in a:candidates
-"" .vimrcに関数の定義有り
-"call OpenFileAssociation(l:candidate.action__path)
-"endfor
-"endfunction
-
-"call unite#custom_action('openable', 'file_association', s:file_association)
-"unlet s:file_association
-
-
-
-"call unite#custom#source('file_rec/async','sorters','sorter_rank', )
-" replacing unite with ctrl-p
-"let g:unite_enable_split_vertically = 1
-
-let g:unite_source_file_mru_time_format = "%m/%d %T "
-let g:unite_source_directory_mru_limit = 80
-let g:unite_source_directory_mru_time_format = "%m/%d %T "
-let g:unite_source_file_rec_max_depth = 6
-let g:unite_enable_ignore_case = 1
-let g:unite_enable_smart_case = 1
-let g:unite_data_directory='~/.cache/unite'
-let g:unite_enable_start_insert=1
-let g:unite_source_history_yank_enable=1
-let g:unite_prompt='>> '
-let g:unite_split_rule = 'botright'
-let g:unite_winheight=25
-let g:unite_source_grep_default_opts = "-iRHn"
-            \ . " --exclude='tags'"
-            \ . " --exclude='cscope*'"
-            \ . " --exclude='*.svn*'"
-            \ . " --exclude='*.log*'"
-            \ . " --exclude='*tmp*'"
-            \ . " --exclude-dir='**/tmp'"
-            \ . " --exclude-dir='CVS'"
-            \ . " --exclude-dir='.svn'"
-            \ . " --exclude-dir='.git'"
-            \ . " --exclude-dir='node_modules'"
-
-
-let g:unite_launch_apps = [
-            \ 'rake',
-            \ 'make',
-            \ 'git pull',
-            \ 'git push']
-
-if executable('jvgrep')
-    " For jvgrep.
-    let g:unite_source_grep_command = 'jvgrep'
-    let g:unite_source_grep_default_opts = '-i --exclude ''\.(git|svn|hg|bzr)'''
-    let g:unite_source_grep_recursive_opt = '-R'
-endif
-
-
-if executable('ag')
-    let g:unite_source_grep_command='ag'
-    let g:unite_source_grep_default_opts='--nocolor --nogroup -S'
-    let g:unite_source_grep_recursive_opt=''
-endif
-let g:unite_source_grep_max_candidates = 200
-
-if executable('ag')
-    " Use ag in unite grep source.
-    let g:unite_source_grep_command = 'ag'
-    let g:unite_source_grep_default_opts =
-                \ '-i --line-numbers --nocolor --nogroup --hidden --ignore ' .
-                \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
-    let g:unite_source_grep_recursive_opt = ''
-elseif executable('pt')
-    " Use pt in unite grep source.
-    " https://github.com/monochromegane/the_platinum_searcher
-    let g:unite_source_grep_command = 'pt'
-    let g:unite_source_grep_default_opts = '--nogroup --nocolor'
-    let g:unite_source_grep_recursive_opt = ''
-elseif executable('ack-grep')
-    " Use ack in unite grep source.
-    let g:unite_source_grep_command = 'ack-grep'
-    let g:unite_source_grep_default_opts =
-                \ '-i --no-heading --no-color -k -H'
-    let g:unite_source_grep_recursive_opt = ''
-endif
-
-" For ack.
-if executable('ack')
-    let g:unite_source_grep_command = 'ack'
-    let g:unite_source_grep_default_opts = '-i --no-heading --no-color -k -H'
-    let g:unite_source_grep_recursive_opt = ''
-endif
 """ my custom unite config
 " The prefix key.
 nnoremap    [unite]   <Nop>
@@ -1548,43 +1543,30 @@ nnoremap goi :OpenBrowserSmartSearch http://www.iciba.com/<C-R>=expand("<cword>"
 ":OpenBrowserSmartSearch ggrks 
 "}}}
 
-augroup filetype_vim
-    "autocmd!
-    autocmd FileType vim setlocal foldmethod=marker
-    "autocmd FileType vim no za :call Fold_This_Vim_File()
-    function Fold_This_Vim_File()
-        if &foldenable==0
-            setlocal foldmethod=marker
-            execute "foldclose"
-        else
-            echo "1"
-        endif
-
-    endf
-augroup END
 
 "mapping
 "{{{
-"for fzf {{{
+"for fzf
 set rtp+=~/.fzf
 nnoremap <Leader>fz :FZF<CR>
-"}}}
 
-"for vim-fasd.vim {{{
+"for vim-fasd.vim
 nnoremap <Leader>z :Z<CR>
-"}}}
 
-"for ctrlp-z {{{
+"for ctrlp-z
 let g:ctrlp_z_nerdtree = 1
 let g:ctrlp_extensions = ['Z', 'F']
 nnoremap sz :CtrlPZ<Cr>
 nnoremap sf :CtrlPF<Cr>
-"}}}
-"}}}
+
+"background
+noremap <silent><leader>bg :call ToggleBG()<CR>
+"numbers
+noremap <silent><leader>nu :call ToggleNumber()<CR>
 
 
 "autocmds
-"{{{
+autocmd FileType vim setlocal foldmethod=marker
 "omnifunc
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd Filetype html setlocal omnifunc=htmlcomplete#CompleteTags
@@ -1655,5 +1637,27 @@ function! s:unite_my_settings()
 
     " Runs "split" action by <C-s>.
     imap <silent><buffer><expr> <C-s>     unite#do_action('split')
+endfunction
+function! ToggleNumber()
+    let s:isThereNumber = &nu
+    let s:isThereRelativeNumber = &relativenumber
+    if s:isThereNumber && s:isThereRelativeNumber
+        set paste!
+        set nonumber
+        set norelativenumber
+    else
+        set paste!
+        set number
+        set relativenumber
+    endif
+endf
+function! ToggleBG()
+    let s:tbg = &background
+    " Inversion
+    if s:tbg == "dark"
+        set background=light
+    else
+        set background=dark
+    endif
 endfunction
 "}}}
