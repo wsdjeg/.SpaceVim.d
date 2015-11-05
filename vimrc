@@ -871,7 +871,7 @@ function! JspFileTypeInit()
     nnoremap <F4> :JCimportAdd<cr>
     inoremap <F4> <esc>:JCimportAddI<cr>
     compiler mvn
-    if !filereadable("pom.xml")
+    if !filereadable("pom.xml")&&!filereadable(".classpath")
         inoremap <F5> <esc>:w<CR>:!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
         nnoremap <F5> :!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
         nnoremap <F6> :!java -cp classes/ -Djava.ext.dirs=lib/ com.wsdjeg.util.TestMethod
@@ -971,7 +971,7 @@ function! JavaFileTypeInit()
     "inoremap <silent> <buffer>  Y  <C-r>=WSDAutoComplete('Y')<CR>
     "inoremap <silent> <buffer>  Z  <C-r>=WSDAutoComplete('Z')<CR>
     compiler mvn
-    if !filereadable("pom.xml")
+    if !filereadable("pom.xml")&&!filereadable(".classpath")
         inoremap <F5> <esc>:w<CR>:!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
         nnoremap <F5> :!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
         nnoremap <F6> :!java -cp classes/ -Djava.ext.dirs=lib/ com.wsdjeg.util.TestMethod
