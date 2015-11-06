@@ -840,7 +840,7 @@ nnoremap <C-Right> <C-W><Right>
 nnoremap <C-Left> <C-W><Left>
 nnoremap <C-Up> <C-W><Up>
 nnoremap <C-Down> <C-W><Down>
-inoremap jk <esc>
+inoremap jk <esc><right>
 
 "Ctrl+Shift+上下移动当前行
 nnoremap <C-S-Down> :m .+1<CR>==
