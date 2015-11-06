@@ -90,3 +90,4 @@ source $ZSH/oh-my-zsh.sh
 
 unset JAVA_TOOL_OPTIONS
 setopt nonomatch
+alias gvim='vim'
