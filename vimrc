@@ -871,7 +871,7 @@ function! JspFileTypeInit()
     nnoremap <F4> :JCimportAdd<cr>
     inoremap <F4> <esc>:JCimportAddI<cr>
     compiler mvn
-    if !filereadable("pom.xml")
+    if !filereadable("pom.xml")&&!filereadable(".classpath")
         inoremap <F5> <esc>:w<CR>:!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
         nnoremap <F5> :!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
         nnoremap <F6> :!java -cp classes/ -Djava.ext.dirs=lib/ com.wsdjeg.util.TestMethod
@@ -971,11 +971,15 @@ function! JavaFileTypeInit()
     "inoremap <silent> <buffer>  Y  <C-r>=WSDAutoComplete('Y')<CR>
     "inoremap <silent> <buffer>  Z  <C-r>=WSDAutoComplete('Z')<CR>
     compiler mvn
-    if !filereadable("pom.xml")
+    if !filereadable("pom.xml")&&!filereadable(".classpath")
         inoremap <F5> <esc>:w<CR>:!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
         nnoremap <F5> :!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
         nnoremap <F6> :!java -cp classes/ -Djava.ext.dirs=lib/ com.wsdjeg.util.TestMethod
         let g:JavaComplete_LibsPath = 'classes/:lib/:/home/wsdjeg/tools/apache-tomcat-8.0.24/lib'
+    elseif !filereadable("pom.xml")&&filereadable(".classpath")
+        let g:syntastic_java_javac_options = '-d bin'
+        let g:syntastic_java_javac_classpath="bin"
+        let g:syntastic_java_javac_autoload_maven_classpath=0
     else
         "add struts2-core tags
         set tags+=/home/wsdjeg/others/struts/core/tags
