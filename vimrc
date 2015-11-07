@@ -632,8 +632,8 @@ let g:syntastic_vimlint_options = {
             \}
 NeoBundle 'ynkdir/vim-vimlparser'
 NeoBundle 'gcmt/wildfire.vim'
-map <SPACE> <Plug>(wildfire-fuel)
-vmap <C-SPACE> <Plug>(wildfire-water)
+noremap <SPACE> <Plug>(wildfire-fuel)
+vnoremap <C-SPACE> <Plug>(wildfire-water)
 let g:wildfire_objects = ["i'", 'i"', "i)", "i]", "i}", "ip", "it"]
 
 NeoBundle 'scrooloose/nerdcommenter'
