@@ -33,6 +33,7 @@ let s:settings.default_indent = 2
 let s:settings.max_column = 120
 let s:settings.autocomplete_method = 'neocomplcache'
 let s:settings.enable_cursorcolumn = 0
+let s:settings.use_colorscheme=0
 let s:settings.colorscheme = 'jellybeans'
 "if filereadable(expand("~/.vim/bundle/YouCompleteMe/python/ycm_core.*"))
 if 1
@@ -59,7 +60,9 @@ call add(s:settings.plugin_groups, 'core')
 call add(s:settings.plugin_groups, 'unite')
 call add(s:settings.plugin_groups, 'ctrlp')
 call add(s:settings.plugin_groups, 'autocomplete')
-"call add(s:settings.plugin_groups, 'colorscheme')
+if s:settings.use_colorscheme==1
+    call add(s:settings.plugin_groups, 'colorscheme')
+endif
 if OSX()
     call add(s:settings.plugin_groups, 'osx')
 endif
@@ -636,7 +639,7 @@ let g:wildfire_objects = ["i'", 'i"', "i)", "i]", "i}", "ip", "it"]
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'easymotion/vim-easymotion'
 NeoBundle 'MarcWeber/vim-addon-mw-utils'
-NeoBundle 'tomtom/tlib_vim'
+"NeoBundle 'tomtom/tlib_vim'
 NeoBundle 'airblade/vim-rooter'
 let g:rooter_patterns = ['Rakefile' , 'pom.xml' , 'web.xml' , '.git/']
 NeoBundle 'Yggdroot/indentLine'
