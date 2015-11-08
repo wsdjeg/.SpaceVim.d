@@ -383,71 +383,71 @@ if count(s:settings.plugin_groups, 'unite') "{{{
                 \'Gcd'],
                 \]
     nnoremap <silent>[menu]g :Unite -silent -start-insert menu:git<CR>
-""" my custom unite config
-" The prefix key.
-nnoremap    [unite]   <Nop>
-nmap    f [unite]
-nnoremap <space>/ :Unite grep:.<cr>
-nnoremap <silent> <C-f> :<C-u>Unite -no-split -buffer-name=files -start-insert file_rec/async:!<cr>
-nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files -start-insert file<cr>
-nnoremap <leader>m :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
-nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
-nnoremap <silent> <C-b> :<C-u>Unite -start-insert -buffer-name=buffer buffer<cr>
+    """ my custom unite config
+    " The prefix key.
+    nnoremap    [unite]   <Nop>
+    nmap    f [unite]
+    nnoremap <space>/ :Unite grep:.<cr>
+    nnoremap <silent> <C-f> :<C-u>Unite -no-split -buffer-name=files -start-insert file_rec/async:!<cr>
+    nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files -start-insert file<cr>
+    nnoremap <leader>m :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
+    nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
+    nnoremap <silent> <C-b> :<C-u>Unite -start-insert -buffer-name=buffer buffer<cr>
 
-nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir
-            \ -buffer-name=files buffer bookmark file<CR>
-nnoremap <silent> [unite]b  :<C-u>UniteWithBufferDir
-            \ -buffer-name=files -prompt=%\  buffer bookmark file<CR>
-nnoremap <silent> [unite]r  :<C-u>Unite
-            \ -buffer-name=register register<CR>
-nnoremap <silent> [unite]o  :<C-u>Unite outline<CR>
+    nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir
+                \ -buffer-name=files buffer bookmark file<CR>
+    nnoremap <silent> [unite]b  :<C-u>UniteWithBufferDir
+                \ -buffer-name=files -prompt=%\  buffer bookmark file<CR>
+    nnoremap <silent> [unite]r  :<C-u>Unite
+                \ -buffer-name=register register<CR>
+    nnoremap <silent> [unite]o  :<C-u>Unite outline<CR>
 
-nnoremap <silent> [unite]s  :<C-u>Unite session<CR>
-nnoremap <silent> [unite]n  :<C-u>Unite session/new<CR>
-
-
-nnoremap <silent> [unite]fr
-            \ :<C-u>Unite -buffer-name=resume resume<CR>
-nnoremap <silent> [unite]ma
-            \ :<C-u>Unite mapping<CR>
-nnoremap <silent> [unite]me
-            \ :<C-u>Unite output:message<CR>
-nnoremap  [unite]f  :<C-u>Unite source<CR>
-
-nnoremap <silent> [unite]w
-            \ :<C-u>Unite -buffer-name=files -no-split
-            \ jump_point file_point buffer_tab
-            \ file_rec:! file file/new<CR>
-
-" Start insert.
-"call unite#custom#profile('default', 'context', {
-"\   'start_insert': 1
-"\ })
-
-" Like ctrlp.vim settings.
-"call unite#custom#profile('default', 'context', {
-"\   'start_insert': 1,
-"\   'winheight': 10,
-"\   'direction': 'botright',
-"\ })
-
-" Prompt choices.
-"call unite#custom#profile('default', 'context', {
-"\   'prompt': '>> ',
-"\ })
+    nnoremap <silent> [unite]s  :<C-u>Unite session<CR>
+    nnoremap <silent> [unite]n  :<C-u>Unite session/new<CR>
 
 
+    nnoremap <silent> [unite]fr
+                \ :<C-u>Unite -buffer-name=resume resume<CR>
+    nnoremap <silent> [unite]ma
+                \ :<C-u>Unite mapping<CR>
+    nnoremap <silent> [unite]me
+                \ :<C-u>Unite output:message<CR>
+    nnoremap  [unite]f  :<C-u>Unite source<CR>
 
-" Custom mappings for the unite buffer
+    nnoremap <silent> [unite]w
+                \ :<C-u>Unite -buffer-name=files -no-split
+                \ jump_point file_point buffer_tab
+                \ file_rec:! file file/new<CR>
+
+    " Start insert.
+    "call unite#custom#profile('default', 'context', {
+    "\   'start_insert': 1
+    "\ })
+
+    " Like ctrlp.vim settings.
+    "call unite#custom#profile('default', 'context', {
+    "\   'start_insert': 1,
+    "\   'winheight': 10,
+    "\   'direction': 'botright',
+    "\ })
+
+    " Prompt choices.
+    "call unite#custom#profile('default', 'context', {
+    "\   'prompt': '>> ',
+    "\ })
 
 
 
-"" end for my custom unite config
+    " Custom mappings for the unite buffer
 
 
 
-"}
-"}}}
+    "" end for my custom unite config
+
+
+
+    "}
+    "}}}
 
 endif "}}}
 
