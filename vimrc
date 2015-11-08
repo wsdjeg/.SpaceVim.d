@@ -33,6 +33,7 @@ let s:settings.default_indent = 2
 let s:settings.max_column = 120
 let s:settings.autocomplete_method = 'neocomplcache'
 let s:settings.enable_cursorcolumn = 0
+let s:settings.use_colorscheme=0
 let s:settings.colorscheme = 'jellybeans'
 "if filereadable(expand("~/.vim/bundle/YouCompleteMe/python/ycm_core.*"))
 if 1
@@ -59,7 +60,9 @@ call add(s:settings.plugin_groups, 'core')
 call add(s:settings.plugin_groups, 'unite')
 call add(s:settings.plugin_groups, 'ctrlp')
 call add(s:settings.plugin_groups, 'autocomplete')
-"call add(s:settings.plugin_groups, 'colorscheme')
+if s:settings.use_colorscheme==1
+    call add(s:settings.plugin_groups, 'colorscheme')
+endif
 if OSX()
     call add(s:settings.plugin_groups, 'osx')
 endif
@@ -268,6 +271,184 @@ if count(s:settings.plugin_groups, 'unite') "{{{
         let g:unite_source_grep_default_opts = '-i --no-heading --no-color -k -H'
         let g:unite_source_grep_recursive_opt = ''
     endif
+    "for unite-gtags {{{
+
+    nnoremap <leader>gd :execute 'Unite  -auto-preview -start-insert -no-split  gtags/def:'.expand('<cword>')<CR>
+    nnoremap <leader>gc :execute 'Unite  -auto-preview -start-insert -no-split gtags/context'<CR>
+    nnoremap <leader>gr :execute 'Unite  -auto-preview -start-insert -no-split gtags/ref'<CR>
+    nnoremap <leader>gg :execute 'Unite  -auto-preview -start-insert -no-split gtags/grep'<CR>
+    nnoremap <leader>gp :execute 'Unite  -auto-preview -start-insert -no-split gtags/completion'<CR>
+    vnoremap <leader>gd <ESC>:execute 'Unite -auto-preview -start-insert -no-split gtags/def:'.GetVisualSelection()<CR>
+
+    let g:unite_source_gtags_project_config = {
+                \ '_':                   { 'treelize': 0 }
+                \ }
+    "" File search
+
+    "nnoremap <silent><C-p> :Unite -no-split -start-insert file_rec buffer<CR>
+    "nnoremap <leader>mm :Unite -auto-resize file file_mru file_rec<cr>
+    nnoremap <leader>mm :Unite   -no-split -start-insert   file file_mru file_rec buffer<cr>
+    nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
+    nnoremap <leader>tf :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
+    nnoremap <leader>mr :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
+    nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
+    nnoremap <leader>tb :<C-u>Unite -no-split -buffer-name=buffer_tab  buffer_tab<cr>
+
+    "" shortcup for key mapping
+    nnoremap <silent><leader>u  :<C-u>Unite -start-insert mapping<CR>
+
+    "" Execute help.
+    nnoremap <silent><leader>h  :Unite -start-insert -no-split help<CR>
+    " Execute help by cursor keyword.
+    nnoremap <silent> g<C-h>  :<C-u>UniteWithCursorWord help<CR>
+    "" Tag search
+
+    """ For searching the word in the cursor in tag file
+    nnoremap <silent><leader>f :Unite -no-split tag/include:<C-R><C-w><CR>
+
+    nnoremap <silent><leader>ff :Unite tag/include -start-insert -no-split<CR>
+
+    "" grep dictionay
+
+    """ For searching the word in the cursor in the current directory
+    nnoremap <silent><leader>v :Unite -auto-preview -no-split grep:.::<C-R><C-w><CR>
+
+    nnoremap <space>/ :Unite -auto-preview grep:.<cr>
+
+    """ For searching the word handin
+    nnoremap <silent><leader>vs :Unite -auto-preview -no-split grep:.<CR>
+
+    """ For searching the word in the cursor in the current buffer
+    noremap <silent><leader>vf :Unite -auto-preview -no-split grep:%::<C-r><C-w><CR>
+
+    """ For searching the word in the cursor in all opened buffer
+    noremap <silent><leader>va :Unite -auto-preview -no-split grep:$buffers::<C-r><C-w><CR>
+
+
+    "" outline
+    "nnoremap <leader>o :Unite -start-insert -no-split outline<CR>
+
+    nnoremap <leader>o :<C-u>Unite -buffer-name=outline   -start-insert -auto-preview -no-split outline<cr>
+    "" Line search
+    nnoremap <leader>l :Unite line -start-insert  -auto-preview -no-split<CR>
+
+    "" Yank history
+    nnoremap <leader>y :<C-u>Unite -no-split -auto-preview -buffer-name=yank history/yank<cr>
+    "nnoremap <space>y :Unite history/yank<cr>
+
+
+    " search plugin
+    " :Unite neobundle/search
+
+
+
+    nnoremap <space>s :Unite -quick-match -auto-preview buffer<cr>
+
+
+    "for Unite menu{
+
+    let g:unite_source_menu_menus = {}
+    let g:unite_source_menu_menus.git = {
+                \ 'description' : '            gestionar repositorios git
+                \                            ⌘ [espacio]g',
+                \}
+    let g:unite_source_menu_menus.git.command_candidates = [
+                \['▷ tig                                                        ⌘ ,gt',
+                \'normal ,gt'],
+                \['▷ git status       (Fugitive)                                ⌘ ,gs',
+                \'Gstatus'],
+                \['▷ git diff         (Fugitive)                                ⌘ ,gd',
+                \'Gdiff'],
+                \['▷ git commit       (Fugitive)                                ⌘ ,gc',
+                \'Gcommit'],
+                \['▷ git log          (Fugitive)                                ⌘ ,gl',
+                \'exe "silent Glog | Unite quickfix"'],
+                \['▷ git blame        (Fugitive)                                ⌘ ,gb',
+                \'Gblame'],
+                \['▷ git stage        (Fugitive)                                ⌘ ,gw',
+                \'Gwrite'],
+                \['▷ git checkout     (Fugitive)                                ⌘ ,go',
+                \'Gread'],
+                \['▷ git rm           (Fugitive)                                ⌘ ,gr',
+                \'Gremove'],
+                \['▷ git mv           (Fugitive)                                ⌘ ,gm',
+                \'exe "Gmove " input("destino: ")'],
+                \['▷ git push         (Fugitive, salida por buffer)             ⌘ ,gp',
+                \'Git! push'],
+                \['▷ git pull         (Fugitive, salida por buffer)             ⌘ ,gP',
+                \'Git! pull'],
+                \['▷ git prompt       (Fugitive, salida por buffer)             ⌘ ,gi',
+                \'exe "Git! " input("comando git: ")'],
+                \['▷ git cd           (Fugitive)',
+                \'Gcd'],
+                \]
+    nnoremap <silent>[menu]g :Unite -silent -start-insert menu:git<CR>
+    """ my custom unite config
+    " The prefix key.
+    nnoremap    [unite]   <Nop>
+    nmap    f [unite]
+    nnoremap <space>/ :Unite grep:.<cr>
+    nnoremap <silent> <C-f> :<C-u>Unite -no-split -buffer-name=files -start-insert file_rec/async:!<cr>
+    nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files -start-insert file<cr>
+    nnoremap <leader>m :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
+    nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
+    nnoremap <silent> <C-b> :<C-u>Unite -start-insert -buffer-name=buffer buffer<cr>
+
+    nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir
+                \ -buffer-name=files buffer bookmark file<CR>
+    nnoremap <silent> [unite]b  :<C-u>UniteWithBufferDir
+                \ -buffer-name=files -prompt=%\  buffer bookmark file<CR>
+    nnoremap <silent> [unite]r  :<C-u>Unite
+                \ -buffer-name=register register<CR>
+    nnoremap <silent> [unite]o  :<C-u>Unite outline<CR>
+
+    nnoremap <silent> [unite]s  :<C-u>Unite session<CR>
+    nnoremap <silent> [unite]n  :<C-u>Unite session/new<CR>
+
+
+    nnoremap <silent> [unite]fr
+                \ :<C-u>Unite -buffer-name=resume resume<CR>
+    nnoremap <silent> [unite]ma
+                \ :<C-u>Unite mapping<CR>
+    nnoremap <silent> [unite]me
+                \ :<C-u>Unite output:message<CR>
+    nnoremap  [unite]f  :<C-u>Unite source<CR>
+
+    nnoremap <silent> [unite]w
+                \ :<C-u>Unite -buffer-name=files -no-split
+                \ jump_point file_point buffer_tab
+                \ file_rec:! file file/new<CR>
+
+    " Start insert.
+    "call unite#custom#profile('default', 'context', {
+    "\   'start_insert': 1
+    "\ })
+
+    " Like ctrlp.vim settings.
+    "call unite#custom#profile('default', 'context', {
+    "\   'start_insert': 1,
+    "\   'winheight': 10,
+    "\   'direction': 'botright',
+    "\ })
+
+    " Prompt choices.
+    "call unite#custom#profile('default', 'context', {
+    "\   'prompt': '>> ',
+    "\ })
+
+
+
+    " Custom mappings for the unite buffer
+
+
+
+    "" end for my custom unite config
+
+
+
+    "}
+    "}}}
+
 endif "}}}
 
 
@@ -621,7 +802,7 @@ let g:syntastic_warning_symbol = '∆'
 let g:syntastic_style_warning_symbol = '≈'
 NeoBundle 'syngan/vim-vimlint', {
             \ 'depends' : 'ynkdir/vim-vimlparser'}
-let g:syntastic_vimlint_options = { 
+let g:syntastic_vimlint_options = {
             \'EVL102': 1 ,
             \'EVL103': 1 ,
             \'EVL205': 1 ,
@@ -629,14 +810,14 @@ let g:syntastic_vimlint_options = {
             \}
 NeoBundle 'ynkdir/vim-vimlparser'
 NeoBundle 'gcmt/wildfire.vim'
-map <SPACE> <Plug>(wildfire-fuel)
-vmap <C-SPACE> <Plug>(wildfire-water)
+noremap <SPACE> <Plug>(wildfire-fuel)
+vnoremap <C-SPACE> <Plug>(wildfire-water)
 let g:wildfire_objects = ["i'", 'i"', "i)", "i]", "i}", "ip", "it"]
 
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'easymotion/vim-easymotion'
 NeoBundle 'MarcWeber/vim-addon-mw-utils'
-NeoBundle 'tomtom/tlib_vim'
+"NeoBundle 'tomtom/tlib_vim'
 NeoBundle 'airblade/vim-rooter'
 let g:rooter_patterns = ['Rakefile' , 'pom.xml' , 'web.xml' , '.git/']
 NeoBundle 'Yggdroot/indentLine'
@@ -759,6 +940,324 @@ if count(s:settings.plugin_groups, 'colorscheme') "{{{
 endif
 NeoBundleCheck
 
+"}}}
+autocmd FileType jsp call JspFileTypeInit()
+autocmd FileType html,css,jsp EmmetInstall
+autocmd FileType java call JavaFileTypeInit()
+autocmd FileType xml call XmlFileTypeInit()
+"function MyDotfunc()
+"if pumvisible()
+"return "\exe JCimportAddI."
+"else
+"return "."
+"endif
+"endf
+"autocmd Syntax java inoremap { {<CR>}<Esc>O
+"}}}
+"##########
+"autocmd(s)
+"##########
+augroup no_cursor_line_in_insert_mode
+    autocmd!
+    autocmd BufEnter,WinEnter,InsertLeave * set cursorline
+    autocmd BufLeave,WinLeave,InsertEnter * set nocursorline
+augroup END
+"也可以通过'za'打开或者关闭折叠
+nnoremap <silent><leader><space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
+if has('autocmd')
+
+    augroup ex
+        au!
+
+        " ------------------------------------------------------------------
+        " Desc: Buffer
+        " ------------------------------------------------------------------
+
+        " when editing a file, always jump to the last known cursor position.
+        " don't do it when the position is invalid or when inside an event handler
+        " (happens when dropping a file on gvim).
+        au BufReadPost *
+                    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+                    \   exe "normal g`\"" |
+                    \ endif
+        au BufNewFile,BufEnter * set cpoptions+=d " NOTE: ctags find the tags file from the current path instead of the path of currect file
+        au BufEnter * :syntax sync fromstart " ensure every file does syntax highlighting (full)
+        au BufNewFile,BufRead *.avs set syntax=avs " for avs syntax file.
+
+        " DISABLE {
+        " NOTE: will have problem with exvim, because exvim use exES_CWD as working directory for tag and other thing
+        " Change current directory to the file of the buffer ( from Script#65"CD.vim"
+        " au   BufEnter *   execute ":lcd " . expand("%:p:h")
+        " } DISABLE end
+
+        " ------------------------------------------------------------------
+        " Desc: file types
+        " ------------------------------------------------------------------
+
+        au FileType text setlocal textwidth=78 " for all text files set 'textwidth' to 78 characters.
+        au FileType c,cpp,cs,swig set nomodeline " this will avoid bug in my project with namespace ex, the vim will tree ex:: as modeline.
+
+        " disable auto-comment for c/cpp, lua, javascript, c# and vim-script
+        au FileType c,cpp,java,javascript set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,f://
+        au FileType cs set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,f:///,f://
+        au FileType xml set comments=s:<!--,m:\ \ \ \ \ ,e:-->
+        "au FileType pom set comments=s:<!--,m:\ \ \ \ \ ,e:-->
+        au FileType vim set comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",f:\"
+        au FileType lua set comments=f:--
+
+        " if edit python scripts, check if have \t. ( python said: the programme can only use \t or not, but can't use them together )
+        au FileType python,coffee call s:check_if_expand_tab()
+    augroup END
+
+    function! s:check_if_expand_tab()
+        let has_noexpandtab = search('^\t','wn')
+        let has_expandtab = search('^    ','wn')
+
+        "
+        if has_noexpandtab && has_expandtab
+            let idx = inputlist ( ['ERROR: current file exists both expand and noexpand TAB, python can only use one of these two mode in one file.\nSelect Tab Expand Type:',
+                        \ '1. expand (tab=space, recommended)',
+                        \ '2. noexpand (tab=\t, currently have risk)',
+                        \ '3. do nothing (I will handle it by myself)'])
+            let tab_space = printf('%*s',&tabstop,'')
+            if idx == 1
+                let has_noexpandtab = 0
+                let has_expandtab = 1
+                silent exec '%s/\t/' . tab_space . '/g'
+            elseif idx == 2
+                let has_noexpandtab = 1
+                let has_expandtab = 0
+                silent exec '%s/' . tab_space . '/\t/g'
+            else
+                return
+            endif
+        endif
+
+        "
+        if has_noexpandtab == 1 && has_expandtab == 0
+            echomsg 'substitute space to TAB...'
+            set noexpandtab
+            echomsg 'done!'
+        elseif has_noexpandtab == 0 && has_expandtab == 1
+            echomsg 'substitute TAB to space...'
+            set expandtab
+            echomsg 'done!'
+        else
+            " it may be a new file
+            " we use original vim setting
+        endif
+    endfunction
+endif
+
+
+
+
+
+"for gtags-cscope {{{
+"" settings of cscope.
+"" I use GNU global instead cscope because global is faster.
+"set cscopetag
+"set cscopeprg=gtags-cscope
+"cs add /home/chenchunsheng/qc4.4_20140513/GTAGS
+
+"set cscopequickfix=c-,d-,e-,f-,g0,i-,s-,t-
+"nmap <silent> <leader>vj <ESC>:cstag <c-r><c-w><CR>
+"nmap <silent> <leader>vc <ESC>:lcs f c <C-R>=expand("<cword>")<cr><cr>
+"nmap <silent> <leader>vd <ESC>:lcs f d <C-R>=expand("<cword>")<cr><cr>
+"nmap <silent> <leader>ve <ESC>:lcs f e <C-R>=expand("<cword>")<cr><cr>
+"nmap <silent> <leader>vf <ESC>:lcs f f <C-R>=expand("<cfile>")<cr><cr>
+"nmap <silent> <leader>vg <ESC>:lcs f g <C-R>=expand("<cword>")<cr><cr>
+"nmap <silent> <leader>vi <ESC>:lcs f i <C-R>=expand("<cfile>")<cr><cr>
+"nmap <silent> <leader>vs <ESC>:lcs f s <C-R>=expand("<cword>")<cr><cr>
+"nmap <silent> <leader>vt <ESC>:lcs f t <C-R>=expand("<cword>")<cr><cr>
+"command! -nargs=+ -complete=dir FindFiles :call FindFiles(<f-args>)
+"au VimEnter * call VimEnterCallback()
+"au BufAdd *.[ch] call FindGtags(expand('<afile>'))
+"au BufWritePost *.[ch] call UpdateGtags(expand('<afile>'))
+
+"function! FindFiles(pat, ...)
+"let path = ''
+"for str in a:000
+"let path .= str . ','
+"endfor
+
+"if path == ''
+"let path = &path
+"endif
+
+"echo 'finding...'
+"redraw
+"call append(line('$'), split(globpath(path, a:pat), '\n'))
+"echo 'finding...done!'
+"redraw
+"endfunc
+
+"function! VimEnterCallback()
+"for f in argv()
+"if fnamemodify(f, ':e') != 'c' && fnamemodify(f, ':e') != 'h'
+"continue
+"endif
+
+"call FindGtags(f)
+"endfor
+"endfunc
+
+"function! FindGtags(f)
+"let dir = fnamemodify(a:f, ':p:h')
+"while 1
+"let tmp = dir . '/GTAGS'
+"if filereadable(tmp)
+"exe 'cs add ' . tmp . ' ' . dir
+"break
+"elseif dir == '/'
+"break
+"endif
+
+"let dir = fnamemodify(dir, ":h")
+"endwhile
+"endfunc
+
+"function! UpdateGtags(f)
+"let dir = fnamemodify(a:f, ':p:h')
+"exe 'silent !cd ' . dir . ' && global -u &> /dev/null &'
+"endfunction
+"}}}
+
+" specify your project path as key.
+" '_' in key means default configuration.
+" }}}
+
+"for vimfiler {{{
+let g:vimfiler_as_default_explorer = 1
+
+"}}}
+
+"for quicklearn {{{
+"nnoremap <space>R :<C-u>Unite quicklearn -immediately<Cr>
+"}}}
+
+"for buftabs {{{
+noremap <Leader>bp :bprev<CR>
+noremap <Leader>bn :bnext<CR>
+"}}}
+
+"for taghighlight {{{
+"
+""let s:plugin_paths = split(globpath(&rtp, 'plugin/TagHighlight/TagHighlight.py'), '\n') --> in taghighlight.vim
+""let s:plugin_paths = split('~/.vim/bundle/TagHighlight/plugin/TagHighlight/TagHighlight.py', '\n')
+"
+"
+"hi Class                ctermfg=205   cterm=bold
+"hi Structure            ctermfg=205   cterm=bold
+"hi DefinedName          ctermfg=49    cterm=bold
+"hi Member              ctermfg=244
+"hi Label                   ctermfg=21    cterm=bold
+"hi EnumerationName      ctermfg=19
+"hi EnumerationValue     ctermfg=57
+"hi LocalVariable        ctermfg=100
+"hi GlobalVariable       ctermfg=93
+
+"}}}
+
+
+" CtrlSF {{{
+"nnoremap <C-F> :CtrlSF<space>
+"nmap <Leader>cf :CtrlSF <c-r><c-w><CR>
+"nmap <Leader>csf :CtrlSFOpen<CR>
+"}}}
+
+" for codesearch{{{
+" Make search case insensitive
+let g:unite_source_codesearch_ignore_case = 1
+call unite#custom#source('codesearch', 'max_candidates', 30)
+
+"}}}
+
+"webdictサイトの設定
+let g:ref_source_webdict_sites = {
+            \   'je': {
+            \     'url': 'http://dictionary.infoseek.ne.jp/jeword/%s',
+            \   },
+            \   'ej': {
+            \     'url': 'http://dictionary.infoseek.ne.jp/ejword/%s',
+            \   },
+            \   'wiki': {
+            \     'url': 'http://ja.wikipedia.org/wiki/%s',
+            \   },
+            \   'cn': {
+            \     'url': 'http://www.iciba.com/%s',
+            \   },
+            \   'wikipedia:en':{'url': 'http://en.wikipedia.org/wiki/%s',  },
+            \   'bing':{'url': 'http://cn.bing.com/search?q=%s', },
+            \ }
+
+
+"デフォルトサイト
+let g:ref_source_webdict_sites.default = 'cn'
+"let g:ref_source_webdict_cmd='lynx -dump -nonumbers %s'
+"let g:ref_source_webdict_cmd='w3m -dump %s'
+"出力に対するフィルタ。最初の数行を削除
+function! g:ref_source_webdict_sites.je.filter(output)
+    return join(split(a:output, "\n")[15 :], "\n")
+endfunction
+function! g:ref_source_webdict_sites.ej.filter(output)
+    return join(split(a:output, "\n")[15 :], "\n")
+endfunction
+function! g:ref_source_webdict_sites.wiki.filter(output)
+    return join(split(a:output, "\n")[17 :], "\n")
+endfunction
+
+nnoremap <Leader>rj :<C-u>Ref webdict je<Space>
+nnoremap <Leader>re :<C-u>Ref webdict ej<Space>
+nnoremap <Leader>rc :<C-u>Ref webdict cn<Space>
+nnoremap <Leader>rw :<C-u>Ref webdict wikipedia:en<Space>
+nnoremap <Leader>rb :<C-u>Ref webdict bing<Space>
+
+"}}}
+" Man.vim {{{
+source $VIMRUNTIME/ftplugin/man.vim
+nnoremap <C-K> :Man 3 <C-R>=expand("<cword>")<CR><CR>
+inoremap <C-K> <ESC>:Man 3 <C-R>=expand("<cword>")<CR><CR>
+"}}}
+"for open-browser {{{
+" This is my setting.
+let g:netrw_nogx = 1 " disable netrw's gx mapping.
+"nmap gx <Plug>(openbrowser-smart-search)
+"vmap gx <Plug>(openbrowser-smart-search)
+
+
+"" Open URI under cursor.
+nnoremap go <Plug>(openbrowser-open)
+"" Open selected URI.
+vnoremap go <Plug>(openbrowser-open)
+
+" Search word under cursor.
+nnoremap gs <Plug>(openbrowser-search)
+" Search selected word.
+vnoremap gs <Plug>(openbrowser-search)
+
+" If it looks like URI, Open URI under cursor.
+" Otherwise, Search word under cursor.
+nnoremap gx <Plug>(openbrowser-smart-search)
+" If it looks like URI, Open selected URI.
+" Otherwise, Search selected word.
+vnoremap gx <Plug>(openbrowser-smart-search)
+
+vnoremap gob :OpenBrowser http://www.baidu.com/s?wd=<C-R>=expand("<cword>")<cr><cr>
+nnoremap gob :OpenBrowser http://www.baidu.com/s?wd=<C-R>=expand("<cword>")<cr><cr>
+
+vnoremap gog :OpenBrowser http://www.google.com/?#newwindow=1&q=<C-R>=expand("<cword>")<cr><cr>
+nnoremap gog :OpenBrowser http://www.google.com/?#newwindow=1&q=<C-R>=expand("<cword>")<cr><cr>
+
+vnoremap goi :OpenBrowserSmartSearch http://www.iciba.com/<C-R>=expand("<cword>")<cr><cr>
+nnoremap goi :OpenBrowserSmartSearch http://www.iciba.com/<C-R>=expand("<cword>")<cr><cr>
+" In command-line
+":OpenBrowser http://google.com/
+":OpenBrowserSearch ggrks
+":OpenBrowserSmartSearch http://google.com/
+":OpenBrowserSmartSearch ggrks
+"}}}
+
 " basic vim settiing
 "{{{
 "显示相对行号
@@ -772,10 +1271,14 @@ set smartindent
 " 状态栏预览命令
 set wildmenu
 set cindent
-set linebreak					"整词换行
-set tabstop=4					"Tab键的宽度
-set expandtab					"用空格来执行tab
-set softtabstop=4				" 统一缩进为4
+"整词换行
+set linebreak
+"Tab键的宽度
+set tabstop=4
+"用空格来执行tab
+set expandtab
+" 统一缩进为4
+set softtabstop=4
 set shiftwidth=4
 "set nobackup
 set backup
@@ -825,14 +1328,14 @@ set t_Co=256
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-"set completeopt=longest,menu
-"设置molokai配色 但是颜色太丑
-"colo molokai
-"}}}
+set completeopt=longest,menu
+
+"mapping
+"{{{
 "全局映射
 "Super paste it does not work
 "ino <C-v> <esc>:set paste<cr>mui<C-R>+<esc>mv'uV'v=:set nopaste<cr>
-" {{{对于没有权限的文件使用 :w!!来保存
+"对于没有权限的文件使用 :w!!来保存
 cnoremap w!! %!sudo tee > /dev/null %
 
 " 映射Ctrl+上下左右来切换窗口
@@ -840,7 +1343,7 @@ nnoremap <C-Right> <C-W><Right>
 nnoremap <C-Left> <C-W><Left>
 nnoremap <C-Up> <C-W><Up>
 nnoremap <C-Down> <C-W><Down>
-inoremap jk <esc><right>
+inoremap jk <esc>
 
 "Ctrl+Shift+上下移动当前行
 nnoremap <C-S-Down> :m .+1<CR>==
@@ -860,36 +1363,121 @@ inoremap } <c-r>=ClosePair('}')<CR>
 autocmd Syntax java inoremap } <c-r>=CloseBracket()<CR>
 inoremap " <c-r>=QuoteDelim('"')<CR>
 inoremap ' <c-r>=QuoteDelim("'")<CR>
-autocmd FileType jsp call JspFileTypeInit()
-autocmd FileType html,css,jsp EmmetInstall
-autocmd FileType java call JavaFileTypeInit()
-autocmd FileType xml call XmlFileTypeInit()
-function! JspFileTypeInit()
-    set tags+=/home/wsdjeg/others/openjdk-8-src/tags
-    set omnifunc=javacomplete#Complete
-    inoremap . <c-r>=OnmiConfigForJsp()<cr>
-    nnoremap <F4> :JCimportAdd<cr>
-    inoremap <F4> <esc>:JCimportAddI<cr>
-    compiler mvn
-    if !filereadable("pom.xml")&&!filereadable(".classpath")
-        inoremap <F5> <esc>:w<CR>:!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
-        nnoremap <F5> :!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
-        nnoremap <F6> :!java -cp classes/ -Djava.ext.dirs=lib/ com.wsdjeg.util.TestMethod
-        let g:JavaComplete_LibsPath = 'classes/:lib/:/home/wsdjeg/tools/apache-tomcat-8.0.24/lib'
+"for fzf
+set rtp+=~/.fzf
+nnoremap <Leader>fz :FZF<CR>
+
+"for vim-fasd.vim
+nnoremap <Leader>z :Z<CR>
+
+"for ctrlp-z
+let g:ctrlp_z_nerdtree = 1
+let g:ctrlp_extensions = ['Z', 'F']
+nnoremap sz :CtrlPZ<Cr>
+nnoremap sf :CtrlPF<Cr>
+
+"background
+noremap <silent><leader>bg :call ToggleBG()<CR>
+"numbers
+noremap <silent><leader>nu :call ToggleNumber()<CR>
+
+
+"autocmds
+autocmd FileType vim setlocal foldmethod=marker
+"omnifunc
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd Filetype html setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType unite call s:unite_my_settings()
+"}}}
+
+"functions
+"{{{
+function! OnmiConfigForJsp()
+    let pos1 = search("</script>","nb",line("w0"))
+    let pos2 = search("<script","nb",line("w0"))
+    let pos3 = search("</script>","n",line("w$"))
+    let pos4 = search("<script","n",line("w$"))
+    let pos0 = line('.')
+    if pos1 < pos2 && pos2 < pos0 && pos0 < pos3
+        set omnifunc=javascriptcomplete#CompleteJS
+        return "\<esc>a."
     else
-        no <F9> :make clean<CR><CR>
-        no <F5> <up>:wa<CR> :make clean compile<CR><CR>
-        no <F6> :make exec:exec<CR>
+        set omnifunc=javacomplete#Complete
+        return "\<esc>a."
+    endif
+endf
+function! s:unite_my_settings()
+    " Overwrite settings.
+
+    " Play nice with supertab
+    let b:SuperTabDisabled=1
+    " Enable navigation with control-j and control-k in insert mode
+    imap <buffer> <C-n>   <Plug>(unite_select_next_line)
+    nmap <buffer> <C-n>   <Plug>(unite_select_next_line)
+    imap <buffer> <C-p>   <Plug>(unite_select_previous_line)
+    nmap <buffer> <C-p>   <Plug>(unite_select_previous_line)
+
+
+    imap <buffer> jj      <Plug>(unite_insert_leave)
+    "imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
+
+    imap <buffer><expr> j unite#smart_map('j', '')
+    imap <buffer> <TAB>   <Plug>(unite_select_next_line)
+    imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
+    imap <buffer> '     <Plug>(unite_quick_match_default_action)
+    nmap <buffer> '     <Plug>(unite_quick_match_default_action)
+    imap <buffer><expr> x
+                \ unite#smart_map('x', "\<Plug>(unite_quick_match_choose_action)")
+    nmap <buffer> x     <Plug>(unite_quick_match_choose_action)
+    nmap <buffer> <C-z>     <Plug>(unite_toggle_transpose_window)
+    imap <buffer> <C-z>     <Plug>(unite_toggle_transpose_window)
+    imap <buffer> <C-y>     <Plug>(unite_narrowing_path)
+    nmap <buffer> <C-y>     <Plug>(unite_narrowing_path)
+    nmap <buffer> <C-e>     <Plug>(unite_toggle_auto_preview)
+    imap <buffer> <C-e>     <Plug>(unite_toggle_auto_preview)
+    nmap <buffer> <C-r>     <Plug>(unite_narrowing_input_history)
+    imap <buffer> <C-r>     <Plug>(unite_narrowing_input_history)
+    nnoremap <silent><buffer><expr> l
+                \ unite#smart_map('l', unite#do_action('default'))
+
+    let unite = unite#get_current_unite()
+    if unite.profile_name ==# 'search'
+        nnoremap <silent><buffer><expr> r     unite#do_action('replace')
+    else
+        nnoremap <silent><buffer><expr> r     unite#do_action('rename')
+    endif
+
+    nnoremap <silent><buffer><expr> cd     unite#do_action('lcd')
+    nnoremap <buffer><expr> S      unite#mappings#set_current_filters(
+                \ empty(unite#mappings#get_current_filters()) ?
+                \ ['sorter_reverse'] : [])
+
+    " Runs "split" action by <C-s>.
+    imap <silent><buffer><expr> <C-s>     unite#do_action('split')
+endfunction
+function! ToggleNumber()
+    let s:isThereNumber = &nu
+    let s:isThereRelativeNumber = &relativenumber
+    if s:isThereNumber && s:isThereRelativeNumber
+        set paste!
+        set nonumber
+        set norelativenumber
+    else
+        set paste!
+        set number
+        set relativenumber
+    endif
+endf
+function! ToggleBG()
+    let s:tbg = &background
+    " Inversion
+    if s:tbg == "dark"
+        set background=light
+    else
+        set background=dark
     endif
 endfunction
-"function MyDotfunc()
-"if pumvisible()
-"return "\exe JCimportAddI."
-"else
-"return "."
-"endif
-"endf
-"autocmd Syntax java inoremap { {<CR>}<Esc>O
 function! BracketsFunc()
     let line = getline('.')
     let col = col('.')
@@ -940,6 +1528,8 @@ function! JavaFileTypeInit()
     "inoremap <silent> <buffer> <C-u> <esc>bgUwea
     inoremap <silent> <buffer> <leader>UU <esc>bgUwea
     inoremap <silent> <buffer> <leader>uu <esc>bguwea
+    inoremap <silent> <buffer> <leader>ua <esc>bgulea
+    inoremap <silent> <buffer> <leader>Ua <esc>bgUlea
     nnoremap <F4> :JCimportAdd<cr>
     inoremap <F4> <esc>:JCimportAddI<cr>
     "inoremap <silent> <buffer> . <C-r>=MyDotfunc()<Cr>
@@ -1063,605 +1653,22 @@ function QuoteDelim(char)
         return a:char.a:char."\<Esc>i"
     endif
 endf
-"}}}
-"##########
-"autocmd(s)
-"##########
-augroup no_cursor_line_in_insert_mode
-    autocmd!
-    autocmd BufEnter,WinEnter,InsertLeave * set cursorline
-    autocmd BufLeave,WinLeave,InsertEnter * set nocursorline
-augroup END
-"也可以通过'za'打开或者关闭折叠
-nnoremap <silent><leader><space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
-if has('autocmd')
-
-    augroup ex
-        au!
-
-        " ------------------------------------------------------------------
-        " Desc: Buffer
-        " ------------------------------------------------------------------
-
-        " when editing a file, always jump to the last known cursor position.
-        " don't do it when the position is invalid or when inside an event handler
-        " (happens when dropping a file on gvim).
-        au BufReadPost *
-                    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-                    \   exe "normal g`\"" |
-                    \ endif
-        au BufNewFile,BufEnter * set cpoptions+=d " NOTE: ctags find the tags file from the current path instead of the path of currect file
-        au BufEnter * :syntax sync fromstart " ensure every file does syntax highlighting (full)
-        au BufNewFile,BufRead *.avs set syntax=avs " for avs syntax file.
-
-        " DISABLE {
-        " NOTE: will have problem with exvim, because exvim use exES_CWD as working directory for tag and other thing
-        " Change current directory to the file of the buffer ( from Script#65"CD.vim"
-        " au   BufEnter *   execute ":lcd " . expand("%:p:h")
-        " } DISABLE end
-
-        " ------------------------------------------------------------------
-        " Desc: file types
-        " ------------------------------------------------------------------
-
-        au FileType text setlocal textwidth=78 " for all text files set 'textwidth' to 78 characters.
-        au FileType c,cpp,cs,swig set nomodeline " this will avoid bug in my project with namespace ex, the vim will tree ex:: as modeline.
-
-        " disable auto-comment for c/cpp, lua, javascript, c# and vim-script
-        au FileType c,cpp,java,javascript set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,f://
-        au FileType cs set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,f:///,f://
-        au FileType xml set comments=s:<!--,m:\ \ \ \ \ ,e:-->
-        "au FileType pom set comments=s:<!--,m:\ \ \ \ \ ,e:-->
-        au FileType vim set comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",f:\"
-        au FileType lua set comments=f:--
-
-        " if edit python scripts, check if have \t. ( python said: the programme can only use \t or not, but can't use them together )
-        au FileType python,coffee call s:check_if_expand_tab()
-    augroup END
-
-    function! s:check_if_expand_tab()
-        let has_noexpandtab = search('^\t','wn')
-        let has_expandtab = search('^    ','wn')
-
-        "
-        if has_noexpandtab && has_expandtab
-            let idx = inputlist ( ['ERROR: current file exists both expand and noexpand TAB, python can only use one of these two mode in one file.\nSelect Tab Expand Type:',
-                        \ '1. expand (tab=space, recommended)',
-                        \ '2. noexpand (tab=\t, currently have risk)',
-                        \ '3. do nothing (I will handle it by myself)'])
-            let tab_space = printf('%*s',&tabstop,'')
-            if idx == 1
-                let has_noexpandtab = 0
-                let has_expandtab = 1
-                silent exec '%s/\t/' . tab_space . '/g'
-            elseif idx == 2
-                let has_noexpandtab = 1
-                let has_expandtab = 0
-                silent exec '%s/' . tab_space . '/\t/g'
-            else
-                return
-            endif
-        endif
-
-        "
-        if has_noexpandtab == 1 && has_expandtab == 0
-            echomsg 'substitute space to TAB...'
-            set noexpandtab
-            echomsg 'done!'
-        elseif has_noexpandtab == 0 && has_expandtab == 1
-            echomsg 'substitute TAB to space...'
-            set expandtab
-            echomsg 'done!'
-        else
-            " it may be a new file
-            " we use original vim setting
-        endif
-    endfunction
-endif
-
-
-
-""" my custom unite config
-" The prefix key.
-nnoremap    [unite]   <Nop>
-nmap    f [unite]
-nnoremap <space>/ :Unite grep:.<cr>
-nnoremap <silent> <C-f> :<C-u>Unite -no-split -buffer-name=files -start-insert file_rec/async:!<cr>
-nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files -start-insert file<cr>
-nnoremap <leader>m :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
-nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
-nnoremap <silent> <C-b> :<C-u>Unite -start-insert -buffer-name=buffer buffer<cr>
-
-nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir
-            \ -buffer-name=files buffer bookmark file<CR>
-nnoremap <silent> [unite]b  :<C-u>UniteWithBufferDir
-            \ -buffer-name=files -prompt=%\  buffer bookmark file<CR>
-nnoremap <silent> [unite]r  :<C-u>Unite
-            \ -buffer-name=register register<CR>
-nnoremap <silent> [unite]o  :<C-u>Unite outline<CR>
-
-nnoremap <silent> [unite]s  :<C-u>Unite session<CR>
-nnoremap <silent> [unite]n  :<C-u>Unite session/new<CR>
-
-
-nnoremap <silent> [unite]fr
-            \ :<C-u>Unite -buffer-name=resume resume<CR>
-nnoremap <silent> [unite]ma
-            \ :<C-u>Unite mapping<CR>
-nnoremap <silent> [unite]me
-            \ :<C-u>Unite output:message<CR>
-nnoremap  [unite]f  :<C-u>Unite source<CR>
-
-nnoremap <silent> [unite]w
-            \ :<C-u>Unite -buffer-name=files -no-split
-            \ jump_point file_point buffer_tab
-            \ file_rec:! file file/new<CR>
-
-" Start insert.
-"call unite#custom#profile('default', 'context', {
-"\   'start_insert': 1
-"\ })
-
-" Like ctrlp.vim settings.
-"call unite#custom#profile('default', 'context', {
-"\   'start_insert': 1,
-"\   'winheight': 10,
-"\   'direction': 'botright',
-"\ })
-
-" Prompt choices.
-"call unite#custom#profile('default', 'context', {
-"\   'prompt': '>> ',
-"\ })
-
-
-
-" Custom mappings for the unite buffer
-autocmd FileType unite call s:unite_my_settings()
-
-
-
-"" end for my custom unite config
-
-
-"" File search
-
-"nnoremap <silent><C-p> :Unite -no-split -start-insert file_rec buffer<CR>
-"nnoremap <leader>mm :Unite -auto-resize file file_mru file_rec<cr>
-nnoremap <leader>mm :Unite   -no-split -start-insert   file file_mru file_rec buffer<cr>
-nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
-nnoremap <leader>tf :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
-nnoremap <leader>mr :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
-nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
-nnoremap <leader>tb :<C-u>Unite -no-split -buffer-name=buffer_tab  buffer_tab<cr>
-
-"" shortcup for key mapping
-nnoremap <silent><leader>u  :<C-u>Unite -start-insert mapping<CR>
-
-"" Execute help.
-nnoremap <silent><leader>h  :Unite -start-insert -no-split help<CR>
-" Execute help by cursor keyword.
-nnoremap <silent> g<C-h>  :<C-u>UniteWithCursorWord help<CR>
-"" Tag search
-
-""" For searching the word in the cursor in tag file
-nnoremap <silent><leader>f :Unite -no-split tag/include:<C-R><C-w><CR>
-
-nnoremap <silent><leader>ff :Unite tag/include -start-insert -no-split<CR>
-
-"" grep dictionay
-
-""" For searching the word in the cursor in the current directory
-nnoremap <silent><leader>v :Unite -auto-preview -no-split grep:.::<C-R><C-w><CR>
-
-nnoremap <space>/ :Unite -auto-preview grep:.<cr>
-
-""" For searching the word handin
-nnoremap <silent><leader>vs :Unite -auto-preview -no-split grep:.<CR>
-
-""" For searching the word in the cursor in the current buffer
-noremap <silent><leader>vf :Unite -auto-preview -no-split grep:%::<C-r><C-w><CR>
-
-""" For searching the word in the cursor in all opened buffer
-noremap <silent><leader>va :Unite -auto-preview -no-split grep:$buffers::<C-r><C-w><CR>
-
-
-"" outline
-"nnoremap <leader>o :Unite -start-insert -no-split outline<CR>
-
-nnoremap <leader>o :<C-u>Unite -buffer-name=outline   -start-insert -auto-preview -no-split outline<cr>
-"" Line search
-nnoremap <leader>l :Unite line -start-insert  -auto-preview -no-split<CR>
-
-"" Yank history
-nnoremap <leader>y :<C-u>Unite -no-split -auto-preview -buffer-name=yank history/yank<cr>
-"nnoremap <space>y :Unite history/yank<cr>
-
-
-" search plugin
-" :Unite neobundle/search
-
-
-
-nnoremap <space>s :Unite -quick-match -auto-preview buffer<cr>
-
-
-"for Unite menu{
-
-let g:unite_source_menu_menus = {}
-let g:unite_source_menu_menus.git = {
-            \ 'description' : '            gestionar repositorios git
-            \                            ⌘ [espacio]g',
-            \}
-let g:unite_source_menu_menus.git.command_candidates = [
-            \['▷ tig                                                        ⌘ ,gt',
-            \'normal ,gt'],
-            \['▷ git status       (Fugitive)                                ⌘ ,gs',
-            \'Gstatus'],
-            \['▷ git diff         (Fugitive)                                ⌘ ,gd',
-            \'Gdiff'],
-            \['▷ git commit       (Fugitive)                                ⌘ ,gc',
-            \'Gcommit'],
-            \['▷ git log          (Fugitive)                                ⌘ ,gl',
-            \'exe "silent Glog | Unite quickfix"'],
-            \['▷ git blame        (Fugitive)                                ⌘ ,gb',
-            \'Gblame'],
-            \['▷ git stage        (Fugitive)                                ⌘ ,gw',
-            \'Gwrite'],
-            \['▷ git checkout     (Fugitive)                                ⌘ ,go',
-            \'Gread'],
-            \['▷ git rm           (Fugitive)                                ⌘ ,gr',
-            \'Gremove'],
-            \['▷ git mv           (Fugitive)                                ⌘ ,gm',
-            \'exe "Gmove " input("destino: ")'],
-            \['▷ git push         (Fugitive, salida por buffer)             ⌘ ,gp',
-            \'Git! push'],
-            \['▷ git pull         (Fugitive, salida por buffer)             ⌘ ,gP',
-            \'Git! pull'],
-            \['▷ git prompt       (Fugitive, salida por buffer)             ⌘ ,gi',
-            \'exe "Git! " input("comando git: ")'],
-            \['▷ git cd           (Fugitive)',
-            \'Gcd'],
-            \]
-nnoremap <silent>[menu]g :Unite -silent -start-insert menu:git<CR>
-
-"}
-"}}}
-
-
-
-"for gtags-cscope {{{
-"" settings of cscope.
-"" I use GNU global instead cscope because global is faster.
-"set cscopetag
-"set cscopeprg=gtags-cscope
-"cs add /home/chenchunsheng/qc4.4_20140513/GTAGS
-
-"set cscopequickfix=c-,d-,e-,f-,g0,i-,s-,t-
-"nmap <silent> <leader>vj <ESC>:cstag <c-r><c-w><CR>
-"nmap <silent> <leader>vc <ESC>:lcs f c <C-R>=expand("<cword>")<cr><cr>
-"nmap <silent> <leader>vd <ESC>:lcs f d <C-R>=expand("<cword>")<cr><cr>
-"nmap <silent> <leader>ve <ESC>:lcs f e <C-R>=expand("<cword>")<cr><cr>
-"nmap <silent> <leader>vf <ESC>:lcs f f <C-R>=expand("<cfile>")<cr><cr>
-"nmap <silent> <leader>vg <ESC>:lcs f g <C-R>=expand("<cword>")<cr><cr>
-"nmap <silent> <leader>vi <ESC>:lcs f i <C-R>=expand("<cfile>")<cr><cr>
-"nmap <silent> <leader>vs <ESC>:lcs f s <C-R>=expand("<cword>")<cr><cr>
-"nmap <silent> <leader>vt <ESC>:lcs f t <C-R>=expand("<cword>")<cr><cr>
-"command! -nargs=+ -complete=dir FindFiles :call FindFiles(<f-args>)
-"au VimEnter * call VimEnterCallback()
-"au BufAdd *.[ch] call FindGtags(expand('<afile>'))
-"au BufWritePost *.[ch] call UpdateGtags(expand('<afile>'))
-
-"function! FindFiles(pat, ...)
-"let path = ''
-"for str in a:000
-"let path .= str . ','
-"endfor
-
-"if path == ''
-"let path = &path
-"endif
-
-"echo 'finding...'
-"redraw
-"call append(line('$'), split(globpath(path, a:pat), '\n'))
-"echo 'finding...done!'
-"redraw
-"endfunc
-
-"function! VimEnterCallback()
-"for f in argv()
-"if fnamemodify(f, ':e') != 'c' && fnamemodify(f, ':e') != 'h'
-"continue
-"endif
-
-"call FindGtags(f)
-"endfor
-"endfunc
-
-"function! FindGtags(f)
-"let dir = fnamemodify(a:f, ':p:h')
-"while 1
-"let tmp = dir . '/GTAGS'
-"if filereadable(tmp)
-"exe 'cs add ' . tmp . ' ' . dir
-"break
-"elseif dir == '/'
-"break
-"endif
-
-"let dir = fnamemodify(dir, ":h")
-"endwhile
-"endfunc
-
-"function! UpdateGtags(f)
-"let dir = fnamemodify(a:f, ':p:h')
-"exe 'silent !cd ' . dir . ' && global -u &> /dev/null &'
-"endfunction
-"}}}
-
-"for unite-gtags {{{
-
-nnoremap <leader>gd :execute 'Unite  -auto-preview -start-insert -no-split  gtags/def:'.expand('<cword>')<CR>
-nnoremap <leader>gc :execute 'Unite  -auto-preview -start-insert -no-split gtags/context'<CR>
-nnoremap <leader>gr :execute 'Unite  -auto-preview -start-insert -no-split gtags/ref'<CR>
-nnoremap <leader>gg :execute 'Unite  -auto-preview -start-insert -no-split gtags/grep'<CR>
-nnoremap <leader>gp :execute 'Unite  -auto-preview -start-insert -no-split gtags/completion'<CR>
-vnoremap <leader>gd <ESC>:execute 'Unite -auto-preview -start-insert -no-split gtags/def:'.GetVisualSelection()<CR>
-
-let g:unite_source_gtags_project_config = {
-            \ '_':                   { 'treelize': 0 }
-            \ }
-" specify your project path as key.
-" '_' in key means default configuration.
-" }}}
-
-"for vimfiler {{{
-let g:vimfiler_as_default_explorer = 1
-
-"}}}
-
-"for quicklearn {{{
-"nnoremap <space>R :<C-u>Unite quicklearn -immediately<Cr>
-"}}}
-
-"for buftabs {{{
-noremap <Leader>bp :bprev<CR>
-noremap <Leader>bn :bnext<CR>
-"}}}
-
-"for taghighlight {{{
-"
-""let s:plugin_paths = split(globpath(&rtp, 'plugin/TagHighlight/TagHighlight.py'), '\n') --> in taghighlight.vim
-""let s:plugin_paths = split('~/.vim/bundle/TagHighlight/plugin/TagHighlight/TagHighlight.py', '\n')
-"
-"
-"hi Class                ctermfg=205   cterm=bold
-"hi Structure            ctermfg=205   cterm=bold
-"hi DefinedName          ctermfg=49    cterm=bold
-"hi Member              ctermfg=244
-"hi Label                   ctermfg=21    cterm=bold
-"hi EnumerationName      ctermfg=19
-"hi EnumerationValue     ctermfg=57
-"hi LocalVariable        ctermfg=100
-"hi GlobalVariable       ctermfg=93
-
-"}}}
-
-
-" CtrlSF {{{
-"nnoremap <C-F> :CtrlSF<space>
-"nmap <Leader>cf :CtrlSF <c-r><c-w><CR>
-"nmap <Leader>csf :CtrlSFOpen<CR>
-"}}}
-
-" for codesearch{{{
-" Make search case insensitive
-let g:unite_source_codesearch_ignore_case = 1
-call unite#custom#source('codesearch', 'max_candidates', 30)
-
-"}}}
-
-"webdictサイトの設定
-let g:ref_source_webdict_sites = {
-            \   'je': {
-            \     'url': 'http://dictionary.infoseek.ne.jp/jeword/%s',
-            \   },
-            \   'ej': {
-            \     'url': 'http://dictionary.infoseek.ne.jp/ejword/%s',
-            \   },
-            \   'wiki': {
-            \     'url': 'http://ja.wikipedia.org/wiki/%s',
-            \   },
-            \   'cn': {
-            \     'url': 'http://www.iciba.com/%s',
-            \   },
-            \   'wikipedia:en':{'url': 'http://en.wikipedia.org/wiki/%s',  },
-            \   'bing':{'url': 'http://cn.bing.com/search?q=%s', },
-            \ }
-
-
-"デフォルトサイト
-let g:ref_source_webdict_sites.default = 'cn'
-"let g:ref_source_webdict_cmd='lynx -dump -nonumbers %s'
-"let g:ref_source_webdict_cmd='w3m -dump %s'
-"出力に対するフィルタ。最初の数行を削除
-function! g:ref_source_webdict_sites.je.filter(output)
-    return join(split(a:output, "\n")[15 :], "\n")
-endfunction
-function! g:ref_source_webdict_sites.ej.filter(output)
-    return join(split(a:output, "\n")[15 :], "\n")
-endfunction
-function! g:ref_source_webdict_sites.wiki.filter(output)
-    return join(split(a:output, "\n")[17 :], "\n")
-endfunction
-
-nmap <Leader>rj :<C-u>Ref webdict je<Space>
-nmap <Leader>re :<C-u>Ref webdict ej<Space>
-nmap <Leader>rc :<C-u>Ref webdict cn<Space>
-nmap <Leader>rw :<C-u>Ref webdict wikipedia:en<Space>
-nmap <Leader>rb :<C-u>Ref webdict bing<Space>
-
-"}}}
-" Man.vim {{{
-source $VIMRUNTIME/ftplugin/man.vim
-nnoremap <C-K> :Man 3 <C-R>=expand("<cword>")<CR><CR>
-inoremap <C-K> <ESC>:Man 3 <C-R>=expand("<cword>")<CR><CR>
-"}}}
-"for open-browser {{{
-" This is my setting. 
-let g:netrw_nogx = 1 " disable netrw's gx mapping. 
-"nmap gx <Plug>(openbrowser-smart-search) 
-"vmap gx <Plug>(openbrowser-smart-search) 
-
-
-"" Open URI under cursor. 
-nmap go <Plug>(openbrowser-open) 
-"" Open selected URI. 
-vmap go <Plug>(openbrowser-open) 
-
-" Search word under cursor. 
-nmap gs <Plug>(openbrowser-search) 
-" Search selected word. 
-vmap gs <Plug>(openbrowser-search) 
-
-" If it looks like URI, Open URI under cursor. 
-" Otherwise, Search word under cursor. 
-nmap gx <Plug>(openbrowser-smart-search) 
-" If it looks like URI, Open selected URI. 
-" Otherwise, Search selected word. 
-vmap gx <Plug>(openbrowser-smart-search) 
-
-vnoremap gob :OpenBrowser http://www.baidu.com/s?wd=<C-R>=expand("<cword>")<cr><cr>
-nnoremap gob :OpenBrowser http://www.baidu.com/s?wd=<C-R>=expand("<cword>")<cr><cr>
-
-vnoremap gog :OpenBrowser http://www.google.com/?#newwindow=1&q=<C-R>=expand("<cword>")<cr><cr>
-nnoremap gog :OpenBrowser http://www.google.com/?#newwindow=1&q=<C-R>=expand("<cword>")<cr><cr>
-
-vnoremap goi :OpenBrowserSmartSearch http://www.iciba.com/<C-R>=expand("<cword>")<cr><cr>
-nnoremap goi :OpenBrowserSmartSearch http://www.iciba.com/<C-R>=expand("<cword>")<cr><cr>
-" In command-line 
-":OpenBrowser http://google.com/ 
-":OpenBrowserSearch ggrks 
-":OpenBrowserSmartSearch http://google.com/ 
-":OpenBrowserSmartSearch ggrks 
-"}}}
-
-
-"mapping
-"{{{
-"for fzf
-set rtp+=~/.fzf
-nnoremap <Leader>fz :FZF<CR>
-
-"for vim-fasd.vim
-nnoremap <Leader>z :Z<CR>
-
-"for ctrlp-z
-let g:ctrlp_z_nerdtree = 1
-let g:ctrlp_extensions = ['Z', 'F']
-nnoremap sz :CtrlPZ<Cr>
-nnoremap sf :CtrlPF<Cr>
-
-"background
-noremap <silent><leader>bg :call ToggleBG()<CR>
-"numbers
-noremap <silent><leader>nu :call ToggleNumber()<CR>
-
-
-"autocmds
-autocmd FileType vim setlocal foldmethod=marker
-"omnifunc
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd Filetype html setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-"}}}
-
-"functions
-"{{{
-function! OnmiConfigForJsp()
-    let pos1 = search("</script>","nb",line("w0"))
-    let pos2 = search("<script","nb",line("w0"))
-    let pos3 = search("</script>","n",line("w$"))
-    let pos4 = search("<script","n",line("w$"))
-    let pos0 = line('.')
-    if pos1 < pos2 && pos2 < pos0 && pos0 < pos3
-        set omnifunc=javascriptcomplete#CompleteJS
-        return "\<esc>a."
+function! JspFileTypeInit()
+    set tags+=/home/wsdjeg/others/openjdk-8-src/tags
+    set omnifunc=javacomplete#Complete
+    inoremap . <c-r>=OnmiConfigForJsp()<cr>
+    nnoremap <F4> :JCimportAdd<cr>
+    inoremap <F4> <esc>:JCimportAddI<cr>
+    compiler mvn
+    if !filereadable("pom.xml")&&!filereadable(".classpath")
+        inoremap <F5> <esc>:w<CR>:!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
+        nnoremap <F5> :!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
+        nnoremap <F6> :!java -cp classes/ -Djava.ext.dirs=lib/ com.wsdjeg.util.TestMethod
+        let g:JavaComplete_LibsPath = 'classes/:lib/:/home/wsdjeg/tools/apache-tomcat-8.0.24/lib'
     else
-        set omnifunc=javacomplete#Complete
-        return "\<esc>a."
-    endif
-endf
-function! s:unite_my_settings()
-    " Overwrite settings.
-
-    " Play nice with supertab
-    let b:SuperTabDisabled=1
-    " Enable navigation with control-j and control-k in insert mode
-    imap <buffer> <C-n>   <Plug>(unite_select_next_line)
-    nmap <buffer> <C-n>   <Plug>(unite_select_next_line)
-    imap <buffer> <C-p>   <Plug>(unite_select_previous_line)
-    nmap <buffer> <C-p>   <Plug>(unite_select_previous_line)
-
-
-    imap <buffer> jj      <Plug>(unite_insert_leave)
-    "imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
-
-    imap <buffer><expr> j unite#smart_map('j', '')
-    imap <buffer> <TAB>   <Plug>(unite_select_next_line)
-    imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
-    imap <buffer> '     <Plug>(unite_quick_match_default_action)
-    nmap <buffer> '     <Plug>(unite_quick_match_default_action)
-    imap <buffer><expr> x
-                \ unite#smart_map('x', "\<Plug>(unite_quick_match_choose_action)")
-    nmap <buffer> x     <Plug>(unite_quick_match_choose_action)
-    nmap <buffer> <C-z>     <Plug>(unite_toggle_transpose_window)
-    imap <buffer> <C-z>     <Plug>(unite_toggle_transpose_window)
-    imap <buffer> <C-y>     <Plug>(unite_narrowing_path)
-    nmap <buffer> <C-y>     <Plug>(unite_narrowing_path)
-    nmap <buffer> <C-e>     <Plug>(unite_toggle_auto_preview)
-    imap <buffer> <C-e>     <Plug>(unite_toggle_auto_preview)
-    nmap <buffer> <C-r>     <Plug>(unite_narrowing_input_history)
-    imap <buffer> <C-r>     <Plug>(unite_narrowing_input_history)
-    nnoremap <silent><buffer><expr> l
-                \ unite#smart_map('l', unite#do_action('default'))
-
-    let unite = unite#get_current_unite()
-    if unite.profile_name ==# 'search'
-        nnoremap <silent><buffer><expr> r     unite#do_action('replace')
-    else
-        nnoremap <silent><buffer><expr> r     unite#do_action('rename')
-    endif
-
-    nnoremap <silent><buffer><expr> cd     unite#do_action('lcd')
-    nnoremap <buffer><expr> S      unite#mappings#set_current_filters(
-                \ empty(unite#mappings#get_current_filters()) ?
-                \ ['sorter_reverse'] : [])
-
-    " Runs "split" action by <C-s>.
-    imap <silent><buffer><expr> <C-s>     unite#do_action('split')
-endfunction
-function! ToggleNumber()
-    let s:isThereNumber = &nu
-    let s:isThereRelativeNumber = &relativenumber
-    if s:isThereNumber && s:isThereRelativeNumber
-        set paste!
-        set nonumber
-        set norelativenumber
-    else
-        set paste!
-        set number
-        set relativenumber
-    endif
-endf
-function! ToggleBG()
-    let s:tbg = &background
-    " Inversion
-    if s:tbg == "dark"
-        set background=light
-    else
-        set background=dark
+        no <F9> :make clean<CR><CR>
+        no <F5> <up>:wa<CR> :make clean compile<CR><CR>
+        no <F6> :make exec:exec<CR>
     endif
 endfunction
 "}}}
