@@ -569,7 +569,7 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
                     \   'perl' : ['->'],
                     \   'php' : ['->', '::'],
                     \   'cs,javascript,d,python,perl6,scala,vb,elixir,go' : ['.'],
-                    \   'java,jsp' : ['re!\s[A-Z]\w','.'],
+                    \   'java,jsp' : ['.'],
                     \   'vim' : ['re![_a-zA-Z]+[_\w]*\.'],
                     \   'ruby' : ['.', '::'],
                     \   'lua' : ['.', ':'],
@@ -1525,11 +1525,11 @@ function! JavaFileTypeInit()
     inoremap <silent> <buffer> { <C-r>=BracketsFunc()<cr>
     inoremap <silent> <buffer> } <C-r>=JavaCloseBracket()<cr>
     inoremap <silent> <buffer> <CR> <C-r>=MyEnterfunc()<Cr>
-    "inoremap <silent> <buffer> <C-u> <esc>bgUwea
     inoremap <silent> <buffer> <leader>UU <esc>bgUwea
     inoremap <silent> <buffer> <leader>uu <esc>bguwea
     inoremap <silent> <buffer> <leader>ua <esc>bgulea
     inoremap <silent> <buffer> <leader>Ua <esc>bgUlea
+    nnoremap <silent> <buffer> <leader>test :Unite -log -wrap output/shellcmd:mvn\ test\|ag\ '^[^[]'<cr><esc>
     nnoremap <F4> :JCimportAdd<cr>
     inoremap <F4> <esc>:JCimportAddI<cr>
     "inoremap <silent> <buffer> . <C-r>=MyDotfunc()<Cr>
