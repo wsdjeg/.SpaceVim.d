@@ -31,12 +31,14 @@ endif
 let s:settings = {}
 let s:settings.default_indent = 2
 let s:settings.max_column = 120
-let s:settings.autocomplete_method = 'neocomplcache'
+let s:settings.autocomplete_method = 'ycm'
 let s:settings.enable_cursorcolumn = 0
+let s:settings.enable_cursorline = 0
 let s:settings.use_colorscheme=0
-let s:settings.colorscheme = 'jellybeans'
-"if filereadable(expand("~/.vim/bundle/YouCompleteMe/python/ycm_core.*"))
-if 1
+let s:settings.vim_help_language='en'
+let s:settings.colorscheme = 'solarized'
+
+if s:settings.autocomplete_method == 'ycm'
     let s:settings.autocomplete_method = 'ycm'
 elseif has('lua')
     let s:settings.autocomplete_method = 'neocomplete'
@@ -54,12 +56,14 @@ call add(s:settings.plugin_groups, 'editing')
 call add(s:settings.plugin_groups, 'indents')
 call add(s:settings.plugin_groups, 'navigation')
 call add(s:settings.plugin_groups, 'misc')
-call add(s:settings.plugin_groups, 'textobj')
 
 call add(s:settings.plugin_groups, 'core')
 call add(s:settings.plugin_groups, 'unite')
 call add(s:settings.plugin_groups, 'ctrlp')
 call add(s:settings.plugin_groups, 'autocomplete')
+if s:settings.vim_help_language == 'cn'
+    call add(s:settings.plugin_groups, 'chinese')
+endif
 if s:settings.use_colorscheme==1
     call add(s:settings.plugin_groups, 'colorscheme')
 endif
@@ -113,6 +117,7 @@ endif "}}}
 
 if count(s:settings.plugin_groups, 'unite') "{{{
     NeoBundle 'Shougo/unite.vim'
+    NeoBundle 'Shougo/neoyank.vim'
     NeoBundle 'soh335/unite-qflist'
     NeoBundle 'ujihisa/unite-equery'
     NeoBundle 'm2mdas/unite-file-vcs'
@@ -174,30 +179,6 @@ if count(s:settings.plugin_groups, 'unite') "{{{
     "call unite#filters#sorter_default#use(['sorter_rank'])
     "call unite#custom#profile('default', 'context', {'no_split':1, 'resize':0})
 
-
-    "" ------------  define custom action -------------------------------------------
-    "" file_association
-    "let s:file_association = {
-    "\   'description' : 'open withd file associetion'
-    "\    , 'is_selectable' : 1
-    "\    }
-
-    "function! s:file_association.func(candidates)
-    "for l:candidate in a:candidates
-    "" .vimrcに関数の定義有り
-    "call OpenFileAssociation(l:candidate.action__path)
-    "endfor
-    "endfunction
-
-    "call unite#custom_action('openable', 'file_association', s:file_association)
-    "unlet s:file_association
-
-
-
-    "call unite#custom#source('file_rec/async','sorters','sorter_rank', )
-    " replacing unite with ctrl-p
-    "let g:unite_enable_split_vertically = 1
-
     let g:unite_source_file_mru_time_format = "%m/%d %T "
     let g:unite_source_directory_mru_limit = 80
     let g:unite_source_directory_mru_time_format = "%m/%d %T "
@@ -222,56 +203,77 @@ if count(s:settings.plugin_groups, 'unite') "{{{
                 \ . " --exclude-dir='.git'"
                 \ . " --exclude-dir='node_modules'"
 
-
     let g:unite_launch_apps = [
                 \ 'rake',
                 \ 'make',
                 \ 'git pull',
                 \ 'git push']
+    let g:unite_source_menu_menus = {}
+    let g:unite_source_menu_menus.git = {
+                \ 'description' : '            gestionar repositorios git
+                \                            ⌘ [espacio]g',
+                \}
+    let g:unite_source_menu_menus.git.command_candidates = [
+                \['▷ tig                                                        ⌘ ,gt',
+                \'normal ,gt'],
+                \['▷ git status       (Fugitive)                                ⌘ ,gs',
+                \'Gstatus'],
+                \['▷ git diff         (Fugitive)                                ⌘ ,gd',
+                \'Gdiff'],
+                \['▷ git commit       (Fugitive)                                ⌘ ,gc',
+                \'Gcommit'],
+                \['▷ git log          (Fugitive)                                ⌘ ,gl',
+                \'exe "silent Glog | Unite quickfix"'],
+                \['▷ git blame        (Fugitive)                                ⌘ ,gb',
+                \'Gblame'],
+                \['▷ git stage        (Fugitive)                                ⌘ ,gw',
+                \'Gwrite'],
+                \['▷ git checkout     (Fugitive)                                ⌘ ,go',
+                \'Gread'],
+                \['▷ git rm           (Fugitive)                                ⌘ ,gr',
+                \'Gremove'],
+                \['▷ git mv           (Fugitive)                                ⌘ ,gm',
+                \'exe "Gmove " input("destino: ")'],
+                \['▷ git push         (Fugitive, salida por buffer)             ⌘ ,gp',
+                \'Git! push'],
+                \['▷ git pull         (Fugitive, salida por buffer)             ⌘ ,gP',
+                \'Git! pull'],
+                \['▷ git prompt       (Fugitive, salida por buffer)             ⌘ ,gi',
+                \'exe "Git! " input("comando git: ")'],
+                \['▷ git cd           (Fugitive)',
+                \'Gcd'],
+                \]
 
     if executable('jvgrep')
-        " For jvgrep.
         let g:unite_source_grep_command = 'jvgrep'
         let g:unite_source_grep_default_opts = '-i --exclude ''\.(git|svn|hg|bzr)'''
         let g:unite_source_grep_recursive_opt = '-R'
     endif
 
-
-    if executable('ag')
-        let g:unite_source_grep_command='ag'
-        let g:unite_source_grep_default_opts='--nocolor --nogroup -S'
-        let g:unite_source_grep_recursive_opt=''
-    endif
     let g:unite_source_grep_max_candidates = 200
 
     if executable('ag')
-        " Use ag in unite grep source.
         let g:unite_source_grep_command = 'ag'
         let g:unite_source_grep_default_opts =
                     \ '-i --line-numbers --nocolor --nogroup --hidden --ignore ' .
                     \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
         let g:unite_source_grep_recursive_opt = ''
     elseif executable('pt')
-        " Use pt in unite grep source.
-        " https://github.com/monochromegane/the_platinum_searcher
         let g:unite_source_grep_command = 'pt'
         let g:unite_source_grep_default_opts = '--nogroup --nocolor'
         let g:unite_source_grep_recursive_opt = ''
     elseif executable('ack-grep')
-        " Use ack in unite grep source.
         let g:unite_source_grep_command = 'ack-grep'
         let g:unite_source_grep_default_opts =
                     \ '-i --no-heading --no-color -k -H'
         let g:unite_source_grep_recursive_opt = ''
     endif
 
-    " For ack.
     if executable('ack')
         let g:unite_source_grep_command = 'ack'
         let g:unite_source_grep_default_opts = '-i --no-heading --no-color -k -H'
         let g:unite_source_grep_recursive_opt = ''
     endif
-    "for unite-gtags {{{
 
     nnoremap <leader>gd :execute 'Unite  -auto-preview -start-insert -no-split  gtags/def:'.expand('<cword>')<CR>
     nnoremap <leader>gc :execute 'Unite  -auto-preview -start-insert -no-split gtags/context'<CR>
@@ -284,8 +286,16 @@ if count(s:settings.plugin_groups, 'unite') "{{{
                 \ '_':                   { 'treelize': 0 }
                 \ }
     "" File search
+    "Ctrlsf
+    nmap <C-F>f <Plug>CtrlSFPrompt
+    vmap <C-F>f <Plug>CtrlSFVwordPath
+    vmap <C-F>F <Plug>CtrlSFVwordExec
+    nmap <C-F>n <Plug>CtrlSFCwordPath
+    nmap <C-F>p <Plug>CtrlSFPwordPath
+    nnoremap <C-F>o :CtrlSFOpen<CR>
+    nnoremap <C-F>t :CtrlSFToggle<CR>
+    inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
 
-    "nnoremap <silent><C-p> :Unite -no-split -start-insert file_rec buffer<CR>
     "nnoremap <leader>mm :Unite -auto-resize file file_mru file_rec<cr>
     nnoremap <leader>mm :Unite   -no-split -start-insert   file file_mru file_rec buffer<cr>
     nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
@@ -347,48 +357,11 @@ if count(s:settings.plugin_groups, 'unite') "{{{
 
     "for Unite menu{
 
-    let g:unite_source_menu_menus = {}
-    let g:unite_source_menu_menus.git = {
-                \ 'description' : '            gestionar repositorios git
-                \                            ⌘ [espacio]g',
-                \}
-    let g:unite_source_menu_menus.git.command_candidates = [
-                \['▷ tig                                                        ⌘ ,gt',
-                \'normal ,gt'],
-                \['▷ git status       (Fugitive)                                ⌘ ,gs',
-                \'Gstatus'],
-                \['▷ git diff         (Fugitive)                                ⌘ ,gd',
-                \'Gdiff'],
-                \['▷ git commit       (Fugitive)                                ⌘ ,gc',
-                \'Gcommit'],
-                \['▷ git log          (Fugitive)                                ⌘ ,gl',
-                \'exe "silent Glog | Unite quickfix"'],
-                \['▷ git blame        (Fugitive)                                ⌘ ,gb',
-                \'Gblame'],
-                \['▷ git stage        (Fugitive)                                ⌘ ,gw',
-                \'Gwrite'],
-                \['▷ git checkout     (Fugitive)                                ⌘ ,go',
-                \'Gread'],
-                \['▷ git rm           (Fugitive)                                ⌘ ,gr',
-                \'Gremove'],
-                \['▷ git mv           (Fugitive)                                ⌘ ,gm',
-                \'exe "Gmove " input("destino: ")'],
-                \['▷ git push         (Fugitive, salida por buffer)             ⌘ ,gp',
-                \'Git! push'],
-                \['▷ git pull         (Fugitive, salida por buffer)             ⌘ ,gP',
-                \'Git! pull'],
-                \['▷ git prompt       (Fugitive, salida por buffer)             ⌘ ,gi',
-                \'exe "Git! " input("comando git: ")'],
-                \['▷ git cd           (Fugitive)',
-                \'Gcd'],
-                \]
     nnoremap <silent>[menu]g :Unite -silent -start-insert menu:git<CR>
-    """ my custom unite config
     " The prefix key.
     nnoremap    [unite]   <Nop>
     nmap    f [unite]
     nnoremap <space>/ :Unite grep:.<cr>
-    nnoremap <silent> <C-f> :<C-u>Unite -no-split -buffer-name=files -start-insert file_rec/async:!<cr>
     nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files -start-insert file<cr>
     nnoremap <leader>m :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
     nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
@@ -418,36 +391,6 @@ if count(s:settings.plugin_groups, 'unite') "{{{
                 \ :<C-u>Unite -buffer-name=files -no-split
                 \ jump_point file_point buffer_tab
                 \ file_rec:! file file/new<CR>
-
-    " Start insert.
-    "call unite#custom#profile('default', 'context', {
-    "\   'start_insert': 1
-    "\ })
-
-    " Like ctrlp.vim settings.
-    "call unite#custom#profile('default', 'context', {
-    "\   'start_insert': 1,
-    "\   'winheight': 10,
-    "\   'direction': 'botright',
-    "\ })
-
-    " Prompt choices.
-    "call unite#custom#profile('default', 'context', {
-    "\   'prompt': '>> ',
-    "\ })
-
-
-
-    " Custom mappings for the unite buffer
-
-
-
-    "" end for my custom unite config
-
-
-
-    "}
-    "}}}
 
 endif "}}}
 
@@ -569,7 +512,7 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
                     \   'perl' : ['->'],
                     \   'php' : ['->', '::'],
                     \   'cs,javascript,d,python,perl6,scala,vb,elixir,go' : ['.'],
-                    \   'java,jsp' : ['re!\s[A-Z]\w','.'],
+                    \   'java,jsp' : ['.'],
                     \   'vim' : ['re![_a-zA-Z]+[_\w]*\.'],
                     \   'ruby' : ['.', '::'],
                     \   'lua' : ['.', ':'],
@@ -713,8 +656,13 @@ if count(s:settings.plugin_groups, 'colorscheme') "{{{
     "colorscheme
     NeoBundle 'morhetz/gruvbox'
     NeoBundle 'nanotech/jellybeans.vim'
+    NeoBundle 'altercation/vim-colors-solarized'
 endif
 
+if count(s:settings.plugin_groups, 'chinese') "{{{
+    "NeoBundle 'vimchina/vimcdoc'
+    NeoBundle "vimcn/vimcdoc"
+endif
 NeoBundle 'tpope/vim-scriptease'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-surround'
@@ -766,7 +714,7 @@ NeoBundle 'wsdjeg/vim-javacomplete2'
 let g:JavaComplete_UseFQN = 1
 let g:JavaComplete_ServerAutoShutdownTime = 300
 let g:JavaComplete_MavenRepositoryDisable = 0
-NeoBundle 'VJDE/VJDE'
+"NeoBundle 'VJDE/VJDE'
 NeoBundle 'wsdjeg/vim-dict'
 NeoBundle 'wsdjeg/java_getset.vim'
 NeoBundle 'JalaiAmitahl/maven-compiler.vim'
@@ -863,7 +811,8 @@ NeoBundle 'tpope/vim-projectionist'
 NeoBundle 'Xuyuanp/nerdtree-git-plugin'
 NeoBundle 'taglist.vim'
 "FixWhitespace
-NeoBundle 'bronson/vim-trailing-whitespace'
+"NeoBundle 'bronson/vim-trailing-whitespace'
+NeoBundle 'ntpeters/vim-better-whitespace'
 NeoBundle 'kien/rainbow_parentheses.vim'
 let g:rbpt_colorpairs = [
             \ ['brown',       'RoyalBlue3'],
@@ -919,7 +868,6 @@ autocmd filetype markdown nmap fi :!firefox %.html & <CR><CR>
 autocmd filetype html nmap fi :!firefox % &
 NeoBundle 'wsdjeg/matchit.zip'
 NeoBundle 'tomasr/molokai'
-NeoBundle 'vimchina/vimcdoc'
 NeoBundle 'sjl/gundo.vim'
 nnoremap <silent> <F7> :GundoToggle<CR>
 NeoBundle 'nerdtree-ack'
@@ -931,11 +879,11 @@ vnoremap <silent> <C-l> <Esc>:Ydv<CR>
 nnoremap <silent> <C-l> <Esc>:Ydc<CR>
 noremap <leader>yd :Yde<CR>
 
-
 call neobundle#end()
 filetype plugin indent on
 syntax enable
 if count(s:settings.plugin_groups, 'colorscheme') "{{{
+    set background=dark
     exec 'colorscheme '.s:settings.colorscheme
 endif
 NeoBundleCheck
@@ -945,226 +893,41 @@ autocmd FileType jsp call JspFileTypeInit()
 autocmd FileType html,css,jsp EmmetInstall
 autocmd FileType java call JavaFileTypeInit()
 autocmd FileType xml call XmlFileTypeInit()
-"function MyDotfunc()
-"if pumvisible()
-"return "\exe JCimportAddI."
-"else
-"return "."
-"endif
-"endf
-"autocmd Syntax java inoremap { {<CR>}<Esc>O
-"}}}
-"##########
-"autocmd(s)
-"##########
-augroup no_cursor_line_in_insert_mode
-    autocmd!
-    autocmd BufEnter,WinEnter,InsertLeave * set cursorline
-    autocmd BufLeave,WinLeave,InsertEnter * set nocursorline
-augroup END
-"也可以通过'za'打开或者关闭折叠
-nnoremap <silent><leader><space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
-if has('autocmd')
+autocmd BufEnter,WinEnter,InsertLeave * set cursorline
+autocmd BufLeave,WinLeave,InsertEnter * set nocursorline
+au BufReadPost *
+            \ if line("'\"") > 0 && line("'\"") <= line("$") |
+            \   exe "normal g`\"" |
+            \ endif
+au BufNewFile,BufEnter * set cpoptions+=d " NOTE: ctags find the tags file from the current path instead of the path of currect file
+au BufEnter * :syntax sync fromstart " ensure every file does syntax highlighting (full)
+au BufNewFile,BufRead *.avs set syntax=avs " for avs syntax file.
+au FileType text setlocal textwidth=78 " for all text files set 'textwidth' to 78 characters.
+au FileType c,cpp,cs,swig set nomodeline " this will avoid bug in my project with namespace ex, the vim will tree ex:: as modeline.
+au FileType c,cpp,java,javascript set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,f://
+au FileType cs set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,f:///,f://
+au FileType xml set comments=s:<!--,m:\ \ \ \ \ ,e:-->
+"au FileType pom set comments=s:<!--,m:\ \ \ \ \ ,e:-->
+au FileType vim set comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",f:\"
+au FileType lua set comments=f:--
 
-    augroup ex
-        au!
+" if edit python scripts, check if have \t. ( python said: the programme can only use \t or not, but can't use them together )
+au FileType python,coffee call s:check_if_expand_tab()
 
-        " ------------------------------------------------------------------
-        " Desc: Buffer
-        " ------------------------------------------------------------------
-
-        " when editing a file, always jump to the last known cursor position.
-        " don't do it when the position is invalid or when inside an event handler
-        " (happens when dropping a file on gvim).
-        au BufReadPost *
-                    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-                    \   exe "normal g`\"" |
-                    \ endif
-        au BufNewFile,BufEnter * set cpoptions+=d " NOTE: ctags find the tags file from the current path instead of the path of currect file
-        au BufEnter * :syntax sync fromstart " ensure every file does syntax highlighting (full)
-        au BufNewFile,BufRead *.avs set syntax=avs " for avs syntax file.
-
-        " DISABLE {
-        " NOTE: will have problem with exvim, because exvim use exES_CWD as working directory for tag and other thing
-        " Change current directory to the file of the buffer ( from Script#65"CD.vim"
-        " au   BufEnter *   execute ":lcd " . expand("%:p:h")
-        " } DISABLE end
-
-        " ------------------------------------------------------------------
-        " Desc: file types
-        " ------------------------------------------------------------------
-
-        au FileType text setlocal textwidth=78 " for all text files set 'textwidth' to 78 characters.
-        au FileType c,cpp,cs,swig set nomodeline " this will avoid bug in my project with namespace ex, the vim will tree ex:: as modeline.
-
-        " disable auto-comment for c/cpp, lua, javascript, c# and vim-script
-        au FileType c,cpp,java,javascript set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,f://
-        au FileType cs set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,f:///,f://
-        au FileType xml set comments=s:<!--,m:\ \ \ \ \ ,e:-->
-        "au FileType pom set comments=s:<!--,m:\ \ \ \ \ ,e:-->
-        au FileType vim set comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",f:\"
-        au FileType lua set comments=f:--
-
-        " if edit python scripts, check if have \t. ( python said: the programme can only use \t or not, but can't use them together )
-        au FileType python,coffee call s:check_if_expand_tab()
-    augroup END
-
-    function! s:check_if_expand_tab()
-        let has_noexpandtab = search('^\t','wn')
-        let has_expandtab = search('^    ','wn')
-
-        "
-        if has_noexpandtab && has_expandtab
-            let idx = inputlist ( ['ERROR: current file exists both expand and noexpand TAB, python can only use one of these two mode in one file.\nSelect Tab Expand Type:',
-                        \ '1. expand (tab=space, recommended)',
-                        \ '2. noexpand (tab=\t, currently have risk)',
-                        \ '3. do nothing (I will handle it by myself)'])
-            let tab_space = printf('%*s',&tabstop,'')
-            if idx == 1
-                let has_noexpandtab = 0
-                let has_expandtab = 1
-                silent exec '%s/\t/' . tab_space . '/g'
-            elseif idx == 2
-                let has_noexpandtab = 1
-                let has_expandtab = 0
-                silent exec '%s/' . tab_space . '/\t/g'
-            else
-                return
-            endif
-        endif
-
-        "
-        if has_noexpandtab == 1 && has_expandtab == 0
-            echomsg 'substitute space to TAB...'
-            set noexpandtab
-            echomsg 'done!'
-        elseif has_noexpandtab == 0 && has_expandtab == 1
-            echomsg 'substitute TAB to space...'
-            set expandtab
-            echomsg 'done!'
-        else
-            " it may be a new file
-            " we use original vim setting
-        endif
-    endfunction
-endif
-
-
-
-
-
-"for gtags-cscope {{{
-"" settings of cscope.
-"" I use GNU global instead cscope because global is faster.
-"set cscopetag
-"set cscopeprg=gtags-cscope
-"cs add /home/chenchunsheng/qc4.4_20140513/GTAGS
-
-"set cscopequickfix=c-,d-,e-,f-,g0,i-,s-,t-
-"nmap <silent> <leader>vj <ESC>:cstag <c-r><c-w><CR>
-"nmap <silent> <leader>vc <ESC>:lcs f c <C-R>=expand("<cword>")<cr><cr>
-"nmap <silent> <leader>vd <ESC>:lcs f d <C-R>=expand("<cword>")<cr><cr>
-"nmap <silent> <leader>ve <ESC>:lcs f e <C-R>=expand("<cword>")<cr><cr>
-"nmap <silent> <leader>vf <ESC>:lcs f f <C-R>=expand("<cfile>")<cr><cr>
-"nmap <silent> <leader>vg <ESC>:lcs f g <C-R>=expand("<cword>")<cr><cr>
-"nmap <silent> <leader>vi <ESC>:lcs f i <C-R>=expand("<cfile>")<cr><cr>
-"nmap <silent> <leader>vs <ESC>:lcs f s <C-R>=expand("<cword>")<cr><cr>
-"nmap <silent> <leader>vt <ESC>:lcs f t <C-R>=expand("<cword>")<cr><cr>
-"command! -nargs=+ -complete=dir FindFiles :call FindFiles(<f-args>)
-"au VimEnter * call VimEnterCallback()
-"au BufAdd *.[ch] call FindGtags(expand('<afile>'))
-"au BufWritePost *.[ch] call UpdateGtags(expand('<afile>'))
-
-"function! FindFiles(pat, ...)
-"let path = ''
-"for str in a:000
-"let path .= str . ','
-"endfor
-
-"if path == ''
-"let path = &path
-"endif
-
-"echo 'finding...'
-"redraw
-"call append(line('$'), split(globpath(path, a:pat), '\n'))
-"echo 'finding...done!'
-"redraw
-"endfunc
-
-"function! VimEnterCallback()
-"for f in argv()
-"if fnamemodify(f, ':e') != 'c' && fnamemodify(f, ':e') != 'h'
-"continue
-"endif
-
-"call FindGtags(f)
-"endfor
-"endfunc
-
-"function! FindGtags(f)
-"let dir = fnamemodify(a:f, ':p:h')
-"while 1
-"let tmp = dir . '/GTAGS'
-"if filereadable(tmp)
-"exe 'cs add ' . tmp . ' ' . dir
-"break
-"elseif dir == '/'
-"break
-"endif
-
-"let dir = fnamemodify(dir, ":h")
-"endwhile
-"endfunc
-
-"function! UpdateGtags(f)
-"let dir = fnamemodify(a:f, ':p:h')
-"exe 'silent !cd ' . dir . ' && global -u &> /dev/null &'
-"endfunction
-"}}}
-
-" specify your project path as key.
-" '_' in key means default configuration.
-" }}}
 
 "for vimfiler {{{
 let g:vimfiler_as_default_explorer = 1
 
 "}}}
 
-"for quicklearn {{{
-"nnoremap <space>R :<C-u>Unite quicklearn -immediately<Cr>
-"}}}
 
 "for buftabs {{{
 noremap <Leader>bp :bprev<CR>
 noremap <Leader>bn :bnext<CR>
 "}}}
 
-"for taghighlight {{{
-"
-""let s:plugin_paths = split(globpath(&rtp, 'plugin/TagHighlight/TagHighlight.py'), '\n') --> in taghighlight.vim
-""let s:plugin_paths = split('~/.vim/bundle/TagHighlight/plugin/TagHighlight/TagHighlight.py', '\n')
-"
-"
-"hi Class                ctermfg=205   cterm=bold
-"hi Structure            ctermfg=205   cterm=bold
-"hi DefinedName          ctermfg=49    cterm=bold
-"hi Member              ctermfg=244
-"hi Label                   ctermfg=21    cterm=bold
-"hi EnumerationName      ctermfg=19
-"hi EnumerationValue     ctermfg=57
-"hi LocalVariable        ctermfg=100
-"hi GlobalVariable       ctermfg=93
-
-"}}}
 
 
-" CtrlSF {{{
-"nnoremap <C-F> :CtrlSF<space>
-"nmap <Leader>cf :CtrlSF <c-r><c-w><CR>
-"nmap <Leader>csf :CtrlSFOpen<CR>
-"}}}
 
 " for codesearch{{{
 " Make search case insensitive
@@ -1318,8 +1081,12 @@ set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 set termencoding=utf-8
 set encoding=utf-8
 set scrolloff=7               "最低显示行数
-set cursorline					"显示当前行
-"set cursorcolumn				"显示当前列
+if s:settings.enable_cursorline == 1
+    set cursorline					"显示当前行
+endif
+if s:settings.enable_cursorcolumn == 1
+    set cursorcolumn				"显示当前列
+endif
 set incsearch
 set autowrite
 set hlsearch
@@ -1333,10 +1100,13 @@ set completeopt=longest,menu
 "mapping
 "{{{
 "全局映射
+"也可以通过'za'打开或者关闭折叠
+nnoremap <silent><leader><space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
 "Super paste it does not work
 "ino <C-v> <esc>:set paste<cr>mui<C-R>+<esc>mv'uV'v=:set nopaste<cr>
 "对于没有权限的文件使用 :w!!来保存
 cnoremap w!! %!sudo tee > /dev/null %
+
 
 " 映射Ctrl+上下左右来切换窗口
 nnoremap <C-Right> <C-W><Right>
@@ -1525,11 +1295,11 @@ function! JavaFileTypeInit()
     inoremap <silent> <buffer> { <C-r>=BracketsFunc()<cr>
     inoremap <silent> <buffer> } <C-r>=JavaCloseBracket()<cr>
     inoremap <silent> <buffer> <CR> <C-r>=MyEnterfunc()<Cr>
-    "inoremap <silent> <buffer> <C-u> <esc>bgUwea
     inoremap <silent> <buffer> <leader>UU <esc>bgUwea
     inoremap <silent> <buffer> <leader>uu <esc>bguwea
     inoremap <silent> <buffer> <leader>ua <esc>bgulea
     inoremap <silent> <buffer> <leader>Ua <esc>bgUlea
+    nnoremap <silent> <buffer> <leader>test :Unite -log -wrap output/shellcmd:mvn\ test\|ag\ '^[^[]'<cr><esc>
     nnoremap <F4> :JCimportAdd<cr>
     inoremap <F4> <esc>:JCimportAddI<cr>
     "inoremap <silent> <buffer> . <C-r>=MyDotfunc()<Cr>
@@ -1669,6 +1439,44 @@ function! JspFileTypeInit()
         no <F9> :make clean<CR><CR>
         no <F5> <up>:wa<CR> :make clean compile<CR><CR>
         no <F6> :make exec:exec<CR>
+    endif
+endfunction
+function! s:check_if_expand_tab()
+    let has_noexpandtab = search('^\t','wn')
+    let has_expandtab = search('^    ','wn')
+
+    "
+    if has_noexpandtab && has_expandtab
+        let idx = inputlist ( ['ERROR: current file exists both expand and noexpand TAB, python can only use one of these two mode in one file.\nSelect Tab Expand Type:',
+                    \ '1. expand (tab=space, recommended)',
+                    \ '2. noexpand (tab=\t, currently have risk)',
+                    \ '3. do nothing (I will handle it by myself)'])
+        let tab_space = printf('%*s',&tabstop,'')
+        if idx == 1
+            let has_noexpandtab = 0
+            let has_expandtab = 1
+            silent exec '%s/\t/' . tab_space . '/g'
+        elseif idx == 2
+            let has_noexpandtab = 1
+            let has_expandtab = 0
+            silent exec '%s/' . tab_space . '/\t/g'
+        else
+            return
+        endif
+    endif
+
+    "
+    if has_noexpandtab == 1 && has_expandtab == 0
+        echomsg 'substitute space to TAB...'
+        set noexpandtab
+        echomsg 'done!'
+    elseif has_noexpandtab == 0 && has_expandtab == 1
+        echomsg 'substitute TAB to space...'
+        set expandtab
+        echomsg 'done!'
+    else
+        " it may be a new file
+        " we use original vim setting
     endif
 endfunction
 "}}}
