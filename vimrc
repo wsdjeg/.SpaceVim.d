@@ -33,6 +33,7 @@ let s:settings.default_indent = 2
 let s:settings.max_column = 120
 let s:settings.autocomplete_method = 'ycm'
 let s:settings.enable_cursorcolumn = 0
+let s:settings.enable_cursorline = 0
 let s:settings.use_colorscheme=0
 let s:settings.vim_help_language='en'
 let s:settings.colorscheme = 'solarized'
@@ -878,7 +879,6 @@ vnoremap <silent> <C-l> <Esc>:Ydv<CR>
 nnoremap <silent> <C-l> <Esc>:Ydc<CR>
 noremap <leader>yd :Yde<CR>
 
-
 call neobundle#end()
 filetype plugin indent on
 syntax enable
@@ -1081,8 +1081,12 @@ set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 set termencoding=utf-8
 set encoding=utf-8
 set scrolloff=7               "最低显示行数
-set cursorline					"显示当前行
-"set cursorcolumn				"显示当前列
+if s:settings.enable_cursorline == 1
+    set cursorline					"显示当前行
+endif
+if s:settings.enable_cursorcolumn == 1
+    set cursorcolumn				"显示当前列
+endif
 set incsearch
 set autowrite
 set hlsearch
