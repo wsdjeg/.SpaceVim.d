@@ -35,7 +35,7 @@ let s:settings.autocomplete_method = 'ycm'
 let s:settings.enable_cursorcolumn = 0
 let s:settings.use_colorscheme=0
 let s:settings.vim_help_language='en'
-let s:settings.colorscheme = 'jellybeans'
+let s:settings.colorscheme = 'solarized'
 
 if s:settings.autocomplete_method == 'ycm'
     let s:settings.autocomplete_method = 'ycm'
@@ -655,6 +655,7 @@ if count(s:settings.plugin_groups, 'colorscheme') "{{{
     "colorscheme
     NeoBundle 'morhetz/gruvbox'
     NeoBundle 'nanotech/jellybeans.vim'
+    NeoBundle 'altercation/vim-colors-solarized'
 endif
 
 if count(s:settings.plugin_groups, 'chinese') "{{{
@@ -882,6 +883,7 @@ call neobundle#end()
 filetype plugin indent on
 syntax enable
 if count(s:settings.plugin_groups, 'colorscheme') "{{{
+    set background=dark
     exec 'colorscheme '.s:settings.colorscheme
 endif
 NeoBundleCheck
