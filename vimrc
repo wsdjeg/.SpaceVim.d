@@ -498,12 +498,13 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
     NeoBundle 'honza/vim-snippets'
     if s:settings.autocomplete_method == 'ycm' "{{{
         NeoBundle 'Valloric/YouCompleteMe'
-        NeoBundle 'SirVer/ultisnips'
-        let g:UltiSnipsExpandTrigger="<tab>"
-        let g:UltiSnipsJumpForwardTrigger="<tab>"
-        let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
-
-        let g:ycm_server_log_level = 'debug'
+        "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+        "let g:ycm_confirm_extra_conf = 0
+        let g:ycm_collect_identifiers_from_tags_files = 1
+        let g:ycm_collect_identifiers_from_comments_and_strings = 1
+        let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
+        let g:ycm_key_list_previous_completion = ['<C-S-TAB>','<Up>']
+        let g:ycm_seed_identifiers_with_syntax = 1
         let g:ycm_semantic_triggers =  {
                     \   'c' : ['->', '.'],
                     \   'objc' : ['->', '.'],
@@ -518,38 +519,21 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
                     \   'lua' : ['.', ':'],
                     \   'erlang' : [':'],
                     \ }
-
-        "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-        let g:ycm_confirm_extra_conf = 0
-        let g:ycm_collect_identifiers_from_tags_files = 1
-        let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
-        let g:ycm_key_list_previous_completion = ['<C-S-TAB>','<Up>']
-        let g:SuperTabDefaultCompletionType = '<C-n>'
-        let g:ycm_seed_identifiers_with_syntax = 1
-        let g:ycm_add_preview_to_completeopt = 1
-        let g:ycm_min_num_of_chars_for_completion = 2
+        NeoBundle 'SirVer/ultisnips'
+        let g:UltiSnipsExpandTrigger="<tab>"
+        let g:UltiSnipsJumpForwardTrigger="<tab>"
+        let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
+        let g:UltiSnipsSnippetsDir='~/DotFiles/snippets'
+        NeoBundle 'ervandew/supertab'
         let g:SuperTabContextDefaultCompletionType = "<c-n>"
-        let g:ycm_max_diagnostics_to_display = 30
-        "let g:ycm_key_invoke_completion = '<C-Space>'
+        let g:SuperTabDefaultCompletionType = '<C-n>'
         inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
         inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
         inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
         inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
         autocmd InsertLeave * if pumvisible() == 0|pclose|endif
         inoremap <silent> <buffer> <CR> <C-r>=MyEnterfunc()<Cr>
-        function MyEnterfunc()
-            if pumvisible()
-                return "\<esc>a"
-            else
-                return "\<Enter>"
-            endif
-        endf
         let g:neobundle#install_process_timeout = 1500
-
-        "}}}
-        "}}}
-        let g:UltiSnipsSnippetsDir='~/.vim/snippets'
-        "}}}
     else
         NeoBundle 'Shougo/neosnippet-snippets'
         NeoBundle 'Shougo/neosnippet.vim' "{{{
@@ -560,7 +544,6 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
         smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
         imap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
         smap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
-        "}}}
     endif "}}}
     if s:settings.autocomplete_method == 'neocomplete' "{{{
         "NeoBundleLazy 'Shougo/neocomplete.vim', {'autoload':{'insert':1}, 'vim_version':'7.3.885'} "{{{
@@ -719,7 +702,6 @@ NeoBundle 'wsdjeg/vim-dict'
 NeoBundle 'wsdjeg/java_getset.vim'
 NeoBundle 'JalaiAmitahl/maven-compiler.vim'
 autocmd Filetype pom compiler mvn
-NeoBundle 'ervandew/supertab'
 NeoBundle 'vim-jp/vim-java'
 NeoBundle 'bling/vim-airline'
 let g:Powerline_sybols = 'unicode'
@@ -1479,4 +1461,12 @@ function! s:check_if_expand_tab()
         " we use original vim setting
     endif
 endfunction
-"}}}
+function MyEnterfunc()
+    if pumvisible()
+        return "\<esc>a"
+    elseif getline('.')[col('.') - 2]=="{"&&getline('.')[col('.')-1]=="}"
+        return "\<Enter>\<esc>ko"
+    else
+        return "\<Enter>"
+    endif
+endf
