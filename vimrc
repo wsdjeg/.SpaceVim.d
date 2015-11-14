@@ -1463,9 +1463,9 @@ function! s:check_if_expand_tab()
     endif
 endfunction
 function MyEnterfunc()
-    "if pumvisible()
-        "return "\<c-y>"
-    "else
+    if pumvisible()
+        return "\<esc>a"
+    else
     if getline('.')[col('.') - 2]=="{"&&getline('.')[col('.')-1]=="}"
         return "\<Enter>\<esc>ko"
     else
