@@ -847,9 +847,6 @@ endfunction
 "}}}
 
 NeoBundle 'wsdjeg/MarkDown.pl'
-autocmd filetype markdown nmap md :!~/.config/nvim/bundle/MarkDown.pl/markdown.pl % > %.html<cr><cr>
-autocmd filetype markdown nmap fi :!firefox %.html & <CR><CR>
-autocmd filetype html nmap fi :!firefox % &
 NeoBundle 'wsdjeg/matchit.zip'
 NeoBundle 'tomasr/molokai'
 NeoBundle 'sjl/gundo.vim'
@@ -1278,7 +1275,6 @@ function! JavaFileTypeInit()
     "nnoremap <leader>[ :tp
     inoremap <silent> <buffer> { <C-r>=BracketsFunc()<cr>
     inoremap <silent> <buffer> } <C-r>=JavaCloseBracket()<cr>
-    inoremap <silent> <buffer> <CR> <C-r>=MyEnterfunc()<Cr>
     inoremap <silent> <buffer> <leader>UU <esc>bgUwea
     inoremap <silent> <buffer> <leader>uu <esc>bguwea
     inoremap <silent> <buffer> <leader>ua <esc>bgulea
@@ -1467,9 +1463,10 @@ function! s:check_if_expand_tab()
     endif
 endfunction
 function MyEnterfunc()
-    if pumvisible()
-        return "\<esc>a"
-    elseif getline('.')[col('.') - 2]=="{"&&getline('.')[col('.')-1]=="}"
+    "if pumvisible()
+        "return "\<c-y>"
+    "else
+    if getline('.')[col('.') - 2]=="{"&&getline('.')[col('.')-1]=="}"
         return "\<Enter>\<esc>ko"
     else
         return "\<Enter>"
