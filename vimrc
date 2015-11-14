@@ -186,7 +186,7 @@ if count(s:settings.plugin_groups, 'unite') "{{{
     let g:unite_enable_ignore_case = 1
     let g:unite_enable_smart_case = 1
     let g:unite_data_directory='~/.cache/unite'
-    let g:unite_enable_start_insert=1
+    "let g:unite_enable_start_insert=1
     let g:unite_source_history_yank_enable=1
     let g:unite_prompt='>> '
     let g:unite_split_rule = 'botright'
@@ -700,6 +700,8 @@ let g:JavaComplete_MavenRepositoryDisable = 0
 "NeoBundle 'VJDE/VJDE'
 NeoBundle 'wsdjeg/vim-dict'
 NeoBundle 'wsdjeg/java_getset.vim'
+NeoBundle 'wsdjeg/JavaUnit.vim'
+let g:JavaUnit_key = "<leader>ooo"
 NeoBundle 'JalaiAmitahl/maven-compiler.vim'
 autocmd Filetype pom compiler mvn
 NeoBundle 'vim-jp/vim-java'
@@ -721,7 +723,7 @@ let g:user_emmet_settings = {
 "profile! file */syntastic/*
 NeoBundle 'scrooloose/syntastic'
 let g:syntastic_java_javac_delete_output = 0
-let g:syntastic_java_javac_config_file_enabled = 0
+let g:syntastic_java_javac_config_file_enabled = 1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
@@ -1314,10 +1316,13 @@ function! JavaFileTypeInit()
     "inoremap <silent> <buffer>  Z  <C-r>=WSDAutoComplete('Z')<CR>
     compiler mvn
     if !filereadable("pom.xml")&&!filereadable(".classpath")
-        inoremap <F5> <esc>:w<CR>:!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
-        nnoremap <F5> :!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
-        nnoremap <F6> :!java -cp classes/ -Djava.ext.dirs=lib/ com.wsdjeg.util.TestMethod
-        let g:JavaComplete_LibsPath = 'classes/:lib/:/home/wsdjeg/tools/apache-tomcat-8.0.24/lib'
+        "inoremap <F5> <esc>:w<CR>:!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
+        "nnoremap <F5> :!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
+        "nnoremap <F6> :!java -cp classes/ -Djava.ext.dirs=lib/ com.wsdjeg.util.TestMethod
+        "let g:JavaComplete_LibsPath = 'classes/:lib/:/home/wsdjeg/tools/apache-tomcat-8.0.24/lib'
+        "let g:syntastic_java_javac_options = '-d bin'
+        let g:syntastic_java_javac_classpath="bin"
+        let g:syntastic_java_javac_autoload_maven_classpath=0
     elseif !filereadable("pom.xml")&&filereadable(".classpath")
         let g:syntastic_java_javac_options = '-d bin'
         let g:syntastic_java_javac_classpath="bin"
