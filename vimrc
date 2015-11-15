@@ -1316,7 +1316,7 @@ function! JavaFileTypeInit()
         "nnoremap <F5> :!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
         "nnoremap <F6> :!java -cp classes/ -Djava.ext.dirs=lib/ com.wsdjeg.util.TestMethod
         "let g:JavaComplete_LibsPath = 'classes/:lib/:/home/wsdjeg/tools/apache-tomcat-8.0.24/lib'
-        "let g:syntastic_java_javac_options = '-d bin'
+        let g:syntastic_java_javac_options = '-d bin'
         let g:syntastic_java_javac_classpath="bin"
         let g:syntastic_java_javac_autoload_maven_classpath=0
     elseif !filereadable("pom.xml")&&filereadable(".classpath")
