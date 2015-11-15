@@ -25,7 +25,6 @@ else
         silent exec 'language en_US.utf8'
     endif
 endif
-
 "vim settings {{{
 "initialize default settings
 let s:settings = {}
@@ -505,6 +504,7 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
         let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
         let g:ycm_key_list_previous_completion = ['<C-S-TAB>','<Up>']
         let g:ycm_seed_identifiers_with_syntax = 1
+        let g:ycm_key_invoke_completion = '<leader><tab>'
         let g:ycm_semantic_triggers =  {
                     \   'c' : ['->', '.'],
                     \   'objc' : ['->', '.'],
@@ -828,7 +828,7 @@ let g:tagbar_left = 1
 let g:NERDTreeWinPos='right'
 let g:NERDTreeWinSize=31
 let g:NERDTreeChDirMode=1
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let g:Tlist_Ctags_Cmd = '/usr/bin/ctags'  "设置ctags执行路径
 let g:Tlist_Auto_Update=1
 let g:Tlist_Auto_Open =0
@@ -1005,6 +1005,14 @@ nnoremap goi :OpenBrowserSmartSearch http://www.iciba.com/<C-R>=expand("<cword>"
 " basic vim settiing
 "{{{
 "显示相对行号
+if has("gui_running")&&0
+set guioptions-=m " 隐藏菜单栏
+set guioptions-=T " 隐藏工具栏
+set guioptions-=L " 隐藏左侧滚动条
+set guioptions-=r " 隐藏右侧滚动条
+set guioptions-=b " 隐藏底部滚动条
+set showtabline=0 " 隐藏Tab栏
+endif 
 set relativenumber
 " 显示行号
 set number
