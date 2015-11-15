@@ -1,0 +1,38 @@
+<h1>vim configuration for happy java coding</h1>
+
+<p><img src="https://github.com/wsdjeg/DotFiles/blob/master/pic/complete.png" alt="conplete" title="" /></p>
+
+<p><img src="https://github.com/wsdjeg/DotFiles/blob/master/pic/check.png" alt="check" title="" /></p>
+
+<h1>Getting Started</h1>
+
+<h2>INSTALL</h2>
+
+<h2>Requirements</h2>
+
+<ol>
+<li>jdk 1.8  <code>sudo apt-get install openjdk-8-jdk</code></li>
+<li>Vim 7.3.885+ compiled with lua. If :echo has("lua") returns 1, then you're done; otherwise, see below.</li>
+</ol>
+
+<p>install vim with lua e.g.
+<code>shell
+$ sudo apt-get install vim-nox
+</code></p>
+
+<p>configration for vim</p>
+
+<p><code>shell
+$ mkdir -p ~/.vim/bundle
+$ git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
+$ git clone git@github.com:wsdjeg/DotFiles.git ~/DotFiles
+$ cp .vimrc vimrc.bak
+$ cp DotFiles/vimrc .vimrc
+</code>
+Launch <code>vim</code>, run <code>:NeoBundleInstall</code></p>
+
+<p>or</p>
+
+<p>Command run <code>vim +NeoBundleInstall +qall</code></p>
+
+<p>NOTE:my vimrc requile</p>
