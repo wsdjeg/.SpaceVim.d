@@ -862,7 +862,7 @@ noremap <leader>yd :Yde<CR>
 
 call neobundle#end()
 filetype plugin indent on
-syntax enable
+syntax on
 if count(s:settings.plugin_groups, 'colorscheme') "{{{
     set background=dark
     exec 'colorscheme '.s:settings.colorscheme
@@ -873,7 +873,6 @@ NeoBundleCheck
 autocmd FileType jsp call JspFileTypeInit()
 autocmd FileType html,css,jsp EmmetInstall
 autocmd FileType java call JavaFileTypeInit()
-autocmd FileType xml call XmlFileTypeInit()
 autocmd BufEnter,WinEnter,InsertLeave * set cursorline
 autocmd BufLeave,WinLeave,InsertEnter * set nocursorline
 au BufReadPost *
@@ -887,7 +886,7 @@ au FileType text setlocal textwidth=78 " for all text files set 'textwidth' to 7
 au FileType c,cpp,cs,swig set nomodeline " this will avoid bug in my project with namespace ex, the vim will tree ex:: as modeline.
 au FileType c,cpp,java,javascript set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,f://
 au FileType cs set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,f:///,f://
-au FileType xml set comments=s:<!--,m:\ \ \ \ \ ,e:-->
+"au FileType xml set comments=s:<!--,m:\ \ \ \ \ ,e:-->
 "au FileType pom set comments=s:<!--,m:\ \ \ \ \ ,e:-->
 au FileType vim set comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",f:\"
 au FileType lua set comments=f:--
@@ -1146,7 +1145,7 @@ autocmd FileType vim setlocal foldmethod=marker
 "omnifunc
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd Filetype html setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType xml call XmlFileTypeInit()
 autocmd FileType unite call s:unite_my_settings()
 "}}}
 
@@ -1247,6 +1246,7 @@ function! BracketsFunc()
     endif
 endf
 function! XmlFileTypeInit()
+    set omnifunc=xmlcomplete#CompleteTags
     if filereadable("AndroidManifest.xml")
         set dict+=~/.vim/bundle/vim-dict/dict/android_xml.dic
     endif
