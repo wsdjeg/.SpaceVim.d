@@ -719,8 +719,8 @@ let g:user_emmet_settings = {
             \  },
             \}
 " use this two command to find how long the plugin take!
-"profile start syntastic.log
-"profile! file */syntastic/*
+profile start vim-javacomplete2.log
+profile! file */vim-javacomplete2/*
 NeoBundle 'scrooloose/syntastic'
 let g:syntastic_java_javac_delete_output = 0
 let g:syntastic_java_javac_config_file_enabled = 1
@@ -1004,7 +1004,7 @@ nnoremap goi :OpenBrowserSmartSearch http://www.iciba.com/<C-R>=expand("<cword>"
 " basic vim settiing
 "{{{
 "显示相对行号
-if has("gui_running")&&0
+if has("gui_running")
 set guioptions-=m " 隐藏菜单栏
 set guioptions-=T " 隐藏工具栏
 set guioptions-=L " 隐藏左侧滚动条
@@ -1288,8 +1288,8 @@ function! JavaFileTypeInit()
     inoremap <silent> <buffer> <leader>ua <esc>bgulea
     inoremap <silent> <buffer> <leader>Ua <esc>bgUlea
     nnoremap <silent> <buffer> <leader>test :Unite -log -wrap output/shellcmd:mvn\ test\|ag\ '^[^[]'<cr><esc>
-    nnoremap <F4> :JCimportAdd<cr>
-    inoremap <F4> <esc>:JCimportAddI<cr>
+    nmap <silent><buffer> <F4> <Plug>(JavaComplete-Imports-Add)
+    imap <silent><buffer> <F4> <Plug>(JavaComplete-Imports-Add)
     "inoremap <silent> <buffer> . <C-r>=MyDotfunc()<Cr>
     "inoremap <silent> <buffer>  .  <C-r>=WSDAutoComplete('.')<CR>
     "inoremap <silent> <buffer>  A  <C-r>=WSDAutoComplete('A')<CR>

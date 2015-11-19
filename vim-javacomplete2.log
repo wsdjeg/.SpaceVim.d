@@ -1,0 +1,59 @@
+SCRIPT  /home/wsdjeg/.vim/bundle/vim-javacomplete2/plugin/javacomplete.vim
+Sourced 1 time
+Total time:   0.000229
+ Self time:   0.000229
+
+count  total (s)   self (s)
+                            " Java complete plugin file
+                            " Maintainer:	artur shaik <ashaihullin@gmail.com>
+                            
+    1              0.000010 command! JCimportsAddMissing call javacomplete#imports#AddMissing()
+    1              0.000009 command! JCimportsRemoveUnused call javacomplete#imports#RemoveUnused()
+    1              0.000010 command! JCimportAdd call javacomplete#imports#Add()
+    1              0.000007 command! JCimportAddI call javacomplete#imports#Add(1)
+                            
+    1              0.000008 command! JCserverShowPort call javacomplete#server#ShowPort()
+    1              0.000007 command! JCserverShowPID call javacomplete#server#ShowPID()
+    1              0.000007 command! JCserverStart call javacomplete#server#Start()
+    1              0.000007 command! JCserverTerminate call javacomplete#server#Terminate()
+    1              0.000008 command! JCserverCompile call javacomplete#server#Compile()
+                            
+    1              0.000008 command! JCdebugEnableLogs call javacomplete#logger#Enable()
+    1              0.000007 command! JCdebugDisableLogs call javacomplete#logger#Disable()
+    1              0.000008 command! JCdebugGetLogContent call javacomplete#logger#GetContent()
+                            
+    1              0.000007 command! JCcacheClear call javacomplete#ClearCache()
+                            
+    1              0.000006 command! JCstart call javacomplete#Start()
+                            
+    1              0.000010 autocmd Filetype java,jsp JCstart
+                            
+    1              0.000004 function! s:nop(s)
+                              return ''
+                            endfunction
+                            
+    1              0.000018 nnoremap <Plug>(JavaComplete-Imports-AddMissing) :call javacomplete#imports#AddMissing()<cr>
+    1              0.000017 inoremap <Plug>(JavaComplete-Imports-AddMissing) <c-r>=<SID>nop(javacomplete#imports#AddMissing())<cr>
+    1              0.000016 nnoremap <Plug>(JavaComplete-Imports-RemoveUnused) :call javacomplete#imports#RemoveUnused()<cr>
+    1              0.000016 inoremap <Plug>(JavaComplete-Imports-RemoveUnused) <c-r>=<SID>nop(javacomplete#imports#RemoveUnused())<cr>
+    1              0.000015 nnoremap <Plug>(JavaComplete-Imports-Add) :call javacomplete#imports#Add()<cr>
+    1              0.000013 inoremap <Plug>(JavaComplete-Imports-Add) <c-r>=<SID>nop(javacomplete#imports#Add())<cr>
+                            
+                            " vim:set fdm=marker sw=2 nowrap:
+
+FUNCTION  <SNR>84_nop()
+Called 0 times
+Total time:   0.000000
+ Self time:   0.000000
+
+count  total (s)   self (s)
+                              return ''
+
+FUNCTIONS SORTED ON TOTAL TIME
+count  total (s)   self (s)  function
+                             <SNR>84_nop()
+
+FUNCTIONS SORTED ON SELF TIME
+count  total (s)   self (s)  function
+                             <SNR>84_nop()
+
