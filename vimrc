@@ -719,8 +719,8 @@ let g:user_emmet_settings = {
             \  },
             \}
 " use this two command to find how long the plugin take!
-profile start vim-javacomplete2.log
-profile! file */vim-javacomplete2/*
+"profile start vim-javacomplete2.log
+"profile! file */vim-javacomplete2/*
 NeoBundle 'scrooloose/syntastic'
 let g:syntastic_java_javac_delete_output = 0
 let g:syntastic_java_javac_config_file_enabled = 1
