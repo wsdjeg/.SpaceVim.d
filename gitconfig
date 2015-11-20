@@ -1,3 +1,9 @@
 [user]
 	name = wsdjeg
 	email = wsdjeg@outlook.com
+[push]
+	default = simple
+[merge]
+	tool = vimdiff
+[credential]
+	helper = store
