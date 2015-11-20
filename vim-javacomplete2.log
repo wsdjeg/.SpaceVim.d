@@ -1,0 +1,1416 @@
+SCRIPT  /home/wsdjeg/.vim/bundle/vim-javacomplete2/plugin/javacomplete.vim
+Sourced 1 time
+Total time:   0.000236
+ Self time:   0.000236
+
+count  total (s)   self (s)
+                            " Java complete plugin file
+                            " Maintainer:	artur shaik <ashaihullin@gmail.com>
+                            
+    1              0.000010 command! JCimportsAddMissing call javacomplete#imports#AddMissing()
+    1              0.000008 command! JCimportsRemoveUnused call javacomplete#imports#RemoveUnused()
+    1              0.000011 command! JCimportAdd call javacomplete#imports#Add()
+    1              0.000007 command! JCimportAddI call javacomplete#imports#Add(1)
+                            
+    1              0.000008 command! JCserverShowPort call javacomplete#server#ShowPort()
+    1              0.000008 command! JCserverShowPID call javacomplete#server#ShowPID()
+    1              0.000008 command! JCserverStart call javacomplete#server#Start()
+    1              0.000008 command! JCserverTerminate call javacomplete#server#Terminate()
+    1              0.000008 command! JCserverCompile call javacomplete#server#Compile()
+                            
+    1              0.000008 command! JCdebugEnableLogs call javacomplete#logger#Enable()
+    1              0.000007 command! JCdebugDisableLogs call javacomplete#logger#Disable()
+    1              0.000009 command! JCdebugGetLogContent call javacomplete#logger#GetContent()
+                            
+    1              0.000007 command! JCcacheClear call javacomplete#ClearCache()
+                            
+    1              0.000006 command! JCstart call javacomplete#Start()
+                            
+    1              0.000010 autocmd Filetype java,jsp JCstart
+                            
+    1              0.000003 function! s:nop(s)
+                              return ''
+                            endfunction
+                            
+    1              0.000018 nnoremap <Plug>(JavaComplete-Imports-AddMissing) :call javacomplete#imports#AddMissing()<cr>
+    1              0.000017 inoremap <Plug>(JavaComplete-Imports-AddMissing) <c-r>=<SID>nop(javacomplete#imports#AddMissing())<cr>
+    1              0.000017 nnoremap <Plug>(JavaComplete-Imports-RemoveUnused) :call javacomplete#imports#RemoveUnused()<cr>
+    1              0.000016 inoremap <Plug>(JavaComplete-Imports-RemoveUnused) <c-r>=<SID>nop(javacomplete#imports#RemoveUnused())<cr>
+    1              0.000015 nnoremap <Plug>(JavaComplete-Imports-Add) :call javacomplete#imports#Add()<cr>
+    1              0.000014 inoremap <Plug>(JavaComplete-Imports-Add) <c-r>=<SID>nop(javacomplete#imports#Add())<cr>
+                            
+                            " vim:set fdm=marker sw=2 nowrap:
+
+SCRIPT  /home/wsdjeg/.vim/bundle/vim-javacomplete2/autoload/javacomplete.vim
+Sourced 1 time
+Total time:  35.594936
+ Self time:   0.001814
+
+count  total (s)   self (s)
+                            " Vim completion script for java
+                            " Maintainer:	artur shaik <ashaihullin@gmail.com>
+                            
+                            " It doesn't make sense to do any work if vim doesn't support any Python since
+                            " we relly on it to properly work.
+    1              0.000007 if has("python")
+    1              0.000012   command! -nargs=1 JavacompletePy py <args>
+    1              0.000008   command! -nargs=1 JavacompletePyfile pyfile <args>
+    1              0.000002 elseif has("python3")
+                              command! -nargs=1 JavacompletePy py3 <args>
+                              command! -nargs=1 JavacompletePyfile py3file <args>
+                            else
+                              echoerr "Javacomplete needs Python support to run!"
+                              finish
+                            endif
+                            
+    1              0.000033 let g:J_ARRAY_TYPE_MEMBERS = [
+                                  \	{'kind': 'm',		'word': 'clone(',	'abbr': 'clone()',	'menu': 'Object clone()', },
+                                  \	{'kind': 'm',		'word': 'equals(',	'abbr': 'equals()',	'menu': 'boolean equals(Object)', },
+                                  \	{'kind': 'm',		'word': 'getClass(',	'abbr': 'getClass()',	'menu': 'Class Object.getClass()', },
+                                  \	{'kind': 'm',		'word': 'hashCode(',	'abbr': 'hashCode()',	'menu': 'int hashCode()', },
+                                  \	{'kind': 'f',		'word': 'length',				'menu': 'int'},
+                                  \	{'kind': 'm',		'word': 'notify(',	'abbr': 'notify()',	'menu': 'void Object.notify()', },
+                                  \	{'kind': 'm',		'word': 'notifyAll(',	'abbr': 'notifyAll()',	'menu': 'void Object.notifyAll()', },
+                                  \	{'kind': 'm',		'word': 'toString(',	'abbr': 'toString()',	'menu': 'String toString()', },
+                                  \	{'kind': 'm',		'word': 'wait(',	'abbr': 'wait()',	'menu': 'void Object.wait() throws InterruptedException', },
+                                  \	{'kind': 'm', 'dup': 1, 'word': 'wait(',	'abbr': 'wait()',	'menu': 'void Object.wait(long timeout) throws InterruptedException', },
+                                  \	{'kind': 'm', 'dup': 1, 'word': 'wait(',	'abbr': 'wait()',	'menu': 'void Object.wait(long timeout, int nanos) throws InterruptedException', }]
+                            
+    1              0.000035 let g:J_ARRAY_TYPE_INFO = {'tag': 'CLASSDEF', 'name': '[', 'ctors': [], 
+                                  \     'fields': [{'n': 'length', 'm': '1', 't': 'int'}],
+                                  \     'methods':[
+                                  \	{'n': 'clone',	  'm': '1',		'r': 'Object',	'p': [],		'd': 'Object clone()'},
+                                  \	{'n': 'equals',	  'm': '1',		'r': 'boolean',	'p': ['Object'],	'd': 'boolean Object.equals(Object obj)'},
+                                  \	{'n': 'getClass', 'm': '100010001',	'r': 'Class',	'p': [],		'd': 'Class Object.getClass()'},
+                                  \	{'n': 'hashCode', 'm': '100000001',	'r': 'int',	'p': [],		'd': 'int Object.hashCode()'},
+                                  \	{'n': 'notify',	  'm': '100010001',	'r': 'void',	'p': [],		'd': 'void Object.notify()'},
+                                  \	{'n': 'notifyAll','m': '100010001',	'r': 'void',	'p': [],		'd': 'void Object.notifyAll()'},
+                                  \	{'n': 'toString', 'm': '1', 		'r': 'String',	'p': [],		'd': 'String Object.toString()'},
+                                  \	{'n': 'wait',	  'm': '10001',		'r': 'void',	'p': [],		'd': 'void Object.wait() throws InterruptedException'},
+                                  \	{'n': 'wait',	  'm': '100010001',	'r': 'void',	'p': ['long'],		'd': 'void Object.wait(long timeout) throws InterruptedException'},
+                                  \	{'n': 'wait',	  'm': '10001',		'r': 'void',	'p': ['long','int'],	'd': 'void Object.wait(long timeout, int nanos) throws InterruptedException'},
+                                  \    ]}
+                            
+    1              0.000005 let g:J_PRIMITIVE_TYPE_INFO = {'tag': 'CLASSDEF', 'name': '!', 'fields': [{'n': 'class','m': '1','t': 'Class'}]}
+                            
+    1              0.000012 let g:J_JSP_BUILTIN_OBJECTS = {'session':	'javax.servlet.http.HttpSession',
+                                  \	'request':	'javax.servlet.http.HttpServletRequest',
+                                  \	'response':	'javax.servlet.http.HttpServletResponse',
+                                  \	'pageContext':	'javax.servlet.jsp.PageContext', 
+                                  \	'application':	'javax.servlet.ServletContext',
+                                  \	'config':	'javax.servlet.ServletConfig',
+                                  \	'out':		'javax.servlet.jsp.JspWriter',
+                                  \	'page':		'javax.servlet.jsp.HttpJspPage', }
+                            
+                            
+    1              0.000004 let g:J_PRIMITIVE_TYPES	= ['boolean', 'byte', 'char', 'int', 'short', 'long', 'float', 'double']
+    1              0.000005 let g:J_KEYWORDS_MODS	= ['public', 'private', 'protected', 'static', 'final', 'synchronized', 'volatile', 'transient', 'native', 'strictfp', 'abstract']
+    1              0.000005 let g:J_KEYWORDS_TYPE	= ['class', 'interface', 'enum']
+    1              0.000027 let g:J_KEYWORDS		= g:J_PRIMITIVE_TYPES + g:J_KEYWORDS_MODS + g:J_KEYWORDS_TYPE + ['super', 'this', 'void'] + ['assert', 'break', 'case', 'catch', 'const', 'continue', 'default', 'do', 'else', 'extends', 'finally', 'for', 'goto', 'if', 'implements', 'import', 'instanceof', 'interface', 'new', 'package', 'return', 'switch', 'throw', 'throws', 'try', 'while', 'true', 'false', 'null']
+                            
+    1              0.000012 let g:IS_WINDOWS = has("win32") || has("win64") || has("win16") || has("dos32") || has("dos16")
+    1              0.000002 if g:IS_WINDOWS
+                              let g:PATH_SEP	= ';'
+                              let g:FILE_SEP	= '\'
+                            else
+    1              0.000002   let g:PATH_SEP	= ':'
+    1              0.000001   let g:FILE_SEP	= '/'
+    1              0.000001 endif
+                            
+    1              0.000002 let g:RE_BRACKETS	= '\%(\s*\[\s*\]\)'
+    1              0.000002 let g:RE_IDENTIFIER	= '[a-zA-Z_$][a-zA-Z0-9_$]*'
+    1              0.000002 let g:RE_ANNOTATION	= '@[a-zA-Z_][a-zA-Z0-9_$]*'
+    1              0.000004 let g:RE_QUALID		= g:RE_IDENTIFIER. '\%(\s*\.\s*' .g:RE_IDENTIFIER. '\)*'
+                            
+    1              0.000003 let g:RE_REFERENCE_TYPE	= g:RE_QUALID . g:RE_BRACKETS . '*'
+    1              0.000002 let g:RE_TYPE		= g:RE_REFERENCE_TYPE
+                            
+    1              0.000003 let g:RE_TYPE_ARGUMENT	= '\%(?\s\+\%(extends\|super\)\s\+\)\=' . g:RE_TYPE
+    1              0.000004 let g:RE_TYPE_ARGUMENT_EXTENDS	= '\%(?\s\+\%(extends\|super\)\s\+\)' . g:RE_TYPE
+    1              0.000005 let g:RE_TYPE_ARGUMENTS	= '<' . g:RE_TYPE_ARGUMENT . '\%(\s*,\s*' . g:RE_TYPE_ARGUMENT . '\)*>'
+    1              0.000012 let g:RE_TYPE_WITH_ARGUMENTS_I	= g:RE_IDENTIFIER . '\s*' . g:RE_TYPE_ARGUMENTS
+    1              0.000005 let g:RE_TYPE_WITH_ARGUMENTS	= g:RE_TYPE_WITH_ARGUMENTS_I . '\%(\s*' . g:RE_TYPE_WITH_ARGUMENTS_I . '\)*'
+                            
+    1              0.000003 let g:RE_TYPE_MODS	= '\%(public\|protected\|private\|abstract\|static\|final\|strictfp\)'
+    1              0.000002 let g:RE_TYPE_DECL_HEAD	= '\(class\|interface\|enum\)[ \t\n\r]\+'
+    1              0.000006 let g:RE_TYPE_DECL	= '\<\C\(\%(' .g:RE_TYPE_MODS. '\s\+\)*\)' .g:RE_TYPE_DECL_HEAD. '\(' .g:RE_IDENTIFIER. '\)[{< \t\n\r]'
+                            
+    1              0.000004 let g:RE_ARRAY_TYPE	= '^\s*\(' .g:RE_QUALID . '\)\(' . g:RE_BRACKETS . '\+\)\s*$'
+    1              0.000004 let g:RE_SELECT_OR_ACCESS	= '^\s*\(' . g:RE_IDENTIFIER . '\)\s*\(\[.*\]\)\=\s*$'
+    1              0.000003 let g:RE_ARRAY_ACCESS	= '^\s*\(' . g:RE_IDENTIFIER . '\)\s*\(\[.*\]\)\+\s*$'
+    1              0.000004 let g:RE_CASTING	= '^\s*(\(' .g:RE_QUALID. '\))\s*\(' . g:RE_IDENTIFIER . '\)\>'
+                            
+    1              0.000009 let g:RE_KEYWORDS	= '\<\%(' . join(g:J_KEYWORDS, '\|') . '\)\>'
+                            
+    1              0.000004 let g:JAVA_HOME = $JAVA_HOME
+                            
+    1              0.000002 let g:JavaComplete_Cache = {}	" FQN -> member list, e.g. {'java.lang.StringBuffer': classinfo, 'java.util': packageinfo, '/dir/TopLevelClass.java': compilationUnit}
+    1              0.000002 let g:JavaComplete_Files = {}	" srouce file path -> properties, e.g. {filekey: {'unit': compilationUnit, 'changedtick': tick, }}
+                            
+    1              0.000003 fu! SScope()
+                              return s:
+                            endfu
+                            
+    1              0.000003 function! javacomplete#ClearCache()
+                              let g:JavaComplete_Cache = {}
+                              let g:JavaComplete_Files = {}
+                            endfunction
+                            
+    1              0.000003 function! javacomplete#Complete(findstart, base)
+                              return javacomplete#complete#complete#Complete(a:findstart, a:base)
+                            endfunction
+                            
+    1              0.000011 function! s:GetBase(extra)
+                              let base = expand("~/.javacomplete2/". a:extra)
+                              if !isdirectory(base)
+                                call mkdir(base, "p")
+                              endif
+                            
+                              return base
+                            endfunction
+                            
+    1              0.000003 function! s:ReadClassPathFile(classpath_file)
+                              let cp = ''
+                              let file = g:JavaComplete_Home. "/autoload/classpath.py"
+                              execute "JavacompletePyfile" file
+                              JavacompletePy import vim
+                              JavacompletePy vim.command("let cp = '%s'" % os.pathsep.join(ReadClasspathFile(vim.eval('a:classpath_file'))).replace('\\', '/'))
+                              return cp
+                            endfunction
+                            
+    1              0.000002 function! s:FindClassPath() abort
+                              if has('python') || has('python3')
+                                let classpath_file = fnamemodify(findfile('.classpath', escape(expand('.'), '*[]?{}, ') . ';'), ':p')
+                                if !empty(classpath_file) && filereadable(classpath_file)
+                                  let cp = s:ReadClassPathFile(classpath_file)
+                                  if !empty(cp)
+                                    return cp
+                                  endif
+                                endif
+                              endif
+                            
+                              let base = s:GetBase("classpath/")
+                            
+                              if executable('mvn') && g:JavaComplete_PomPath != ""
+                                let key = substitute(g:JavaComplete_PomPath, '[\\/:;]', '_', 'g')
+                                let path = base . key
+                            
+                                if filereadable(path)
+                                  if getftime(path) >= getftime(g:JavaComplete_PomPath)
+                                    return join(readfile(path), '')
+                                  endif
+                                endif
+                                return s:GenerateMavenClassPath(path, g:JavaComplete_PomPath)
+                              endif
+                            
+                              if executable('gradle') || executable('gradlew')
+                                if g:JavaComplete_GradlePath != ""
+                                  let key = substitute(g:JavaComplete_GradlePath, '[\\/:;]', '_', 'g')
+                                  let path = base . key
+                            
+                                  if filereadable(path)
+                                    if getftime(path) >= getftime(g:JavaComplete_GradlePath)
+                                      return join(readfile(path), '')
+                                    endif
+                                  endif
+                                  return s:GenerateGradleClassPath(path, g:JavaComplete_GradlePath)
+                                endif
+                              endif
+                            
+                              return '.'
+                            endfunction
+                            
+    1              0.000003 function! s:GenerateMavenClassPath(path, pom) abort
+                              let lines = split(system('mvn --file ' . a:pom . ' dependency:build-classpath -DincludeScope=test'), "\n")
+                              for i in range(len(lines))
+                                if lines[i] =~ 'Dependencies classpath:'
+                                  let cp = lines[i+1] . g:PATH_SEP . join([fnamemodify(a:pom, ':h'), 'target', 'classes'], g:FILE_SEP)
+                                  call writefile([cp], a:path)
+                                  return cp
+                                endif
+                              endfor
+                              return '.'
+                            endfunction
+                            
+    1              0.000002 function! s:GenerateGradleClassPath(path, gradle) abort
+                              try
+                                let f = tempname()
+                                let gradle = ''
+                                if executable('./gradlew')
+                                  if has("win32") || has("win16")
+                                    let gradle = 'gradle.bat'
+                                  else
+                                    let gradle = './gradlew'
+                                  endif
+                                else
+                                  let gradle = 'gradle'
+                                endif
+                                call writefile(["allprojects{apply from: '" . g:JavaComplete_Home . "/classpath.gradle'}"], f)
+                                let ret = system(gradle . ' -q -i ' . shellescape(f) . ' classpath' )
+                                if v:shell_error == 0
+                                  let cp = filter(split(ret, "\n"), 'v:val =~ "^CLASSPATH:"')[0][10:]
+                                  call writefile([cp], a:path)
+                                  return cp
+                                endif
+                              catch
+                              finally
+                                call delete(f)
+                              endtry
+                              return '.'
+                            endfunction
+                            
+                            " workaround for https://github.com/artur-shaik/vim-javacomplete2/issues/20
+                            " should be removed in future versions
+    1              0.000003 function! javacomplete#GlobPathList(path, pattern, suf)
+                              return s:GlobPathList(a:path, a:pattern, a:suf)
+                            endfunction
+                            
+    1              0.000002 function! s:GlobPathList(path, pattern, suf)
+                              if has("patch-7.4.279")
+                                return globpath(a:path, a:pattern, a:suf, 1)
+                              else
+                                return split(globpath(a:path, a:pattern, a:suf), "\n")
+                              endif
+                            endfunction
+                            
+                            " key of g:JavaComplete_Files for current buffer. It may be the full path of current file or the bufnr of unnamed buffer, and is updated when BufEnter, BufLeave.
+    1              0.000003 function! javacomplete#GetCurrentFileKey()
+                              return s:GetCurrentFileKey()
+                            endfunction
+                            
+    1              0.000002 function! s:GetCurrentFileKey()
+                              return has("autocmd") ? s:curfilekey : empty(expand('%')) ? bufnr('%') : expand('%:p')
+                            endfunction
+                            
+    1              0.000001 function! s:SetCurrentFileKey()
+                              let s:curfilekey = empty(expand('%')) ? bufnr('%') : expand('%:p')
+                            endfunction
+    1   0.000028   0.000006 call s:SetCurrentFileKey()
+                            
+    1              0.000003 function! s:HandleTextChangedI()
+                              if exists('g:JC_ClassnameCompletedFlag') && g:JC_ClassnameCompletedFlag
+                                let g:JC_ClassnameCompletedFlag = 0
+                                call javacomplete#imports#Add()
+                              endif
+                            
+                              if exists('g:JC_DeclarationCompletedFlag') && g:JC_DeclarationCompletedFlag
+                                let g:JC_DeclarationCompletedFlag = 0
+                                if empty(javacomplete#util#Trim(getline('.')))
+                                  call feedkeys("}\eO", "n")
+                                else
+                                  call feedkeys("\b\r}\eO", "n")
+                                endif
+                              endif
+                            endfunction
+                            
+    1              0.000002 function! s:HandleInsertLeave()
+                              if exists('g:JC_DeclarationCompletedFlag') && g:JC_DeclarationCompletedFlag
+                                let g:JC_DeclarationCompletedFlag = 0
+                              endif
+                              if exists('g:JC_ClassnameCompletedFlag') && g:JC_ClassnameCompletedFlag
+                                let g:JC_ClassnameCompletedFlag = 0
+                              endif
+                            endfunction
+                            
+    1              0.000003 function! javacomplete#UseFQN() 
+                              if exists('g:JavaComplete_UseFQN') && g:JavaComplete_UseFQN
+                                return 1
+                              endif
+                              return 0
+                            endfunction
+                            
+    1              0.000002 function! s:RemoveCurrentFromCache()
+                              let package = javacomplete#complete#complete#GetPackageName()
+                              let classname = split(expand('%:t'), '\.')[0]
+                              let fqn = package. '.'. classname
+                              if has_key(g:JavaComplete_Cache, fqn)
+                                call remove(g:JavaComplete_Cache, fqn)
+                              endif
+                              call javacomplete#server#Communicate('-clear-from-cache', fqn, 's:RemoveCurrentFromCache')
+                            endfunction
+                            
+    1              0.000004 augroup javacomplete
+    1              0.000173   autocmd!
+    1              0.000014   autocmd BufEnter *.java,*.jsp call s:SetCurrentFileKey()
+    1              0.000008   autocmd BufWrite *.java call s:RemoveCurrentFromCache()
+    1              0.000007   autocmd VimLeave * call javacomplete#server#Terminate()
+                            
+    1              0.000006   if has("patch-7.3.867")
+    1              0.000008     autocmd TextChangedI *.java,*.jsp call s:HandleTextChangedI()
+    1              0.000001   endif
+    1              0.000007   autocmd InsertLeave *.java,*.jsp call s:HandleInsertLeave()
+    1              0.000002 augroup END
+                            
+    1              0.000014 let g:JavaComplete_Home = fnamemodify(expand('<sfile>'), ':p:h:h:gs?\\?/?')
+    1              0.000006 let g:JavaComplete_JavaParserJar = fnamemodify(g:JavaComplete_Home. "/libs/javaparser.jar", "p")
+                            
+    1              0.000515 call javacomplete#logger#Log("JavaComplete_Home: ". g:JavaComplete_Home)
+                            
+    1              0.000005 let g:JavaComplete_SourcesPath = get(g:, 'JavaComplete_SourcesPath', '')
+    1   0.000026   0.000008 let s:sources = s:GlobPathList(getcwd(), 'src', 0)
+    4              0.000009 for i in ['*/', '*/*/', '*/*/*/']
+    3   0.000420   0.000029   call extend(s:sources, s:GlobPathList(getcwd(), i. '/src', 0))
+    3              0.000005 endfor
+    2              0.000004 for src in s:sources
+    1              0.000015   if match(src, '.*build.*') < 0
+    1              0.000005     let g:JavaComplete_SourcesPath = g:JavaComplete_SourcesPath. g:PATH_SEP.src
+    1              0.000001   endif
+    1              0.000001 endfor
+    1              0.000002 unlet s:sources
+    1   0.000013   0.000008 call javacomplete#logger#Log("Default sources: ". g:JavaComplete_SourcesPath)
+                            
+    1              0.000004 if !exists('g:JavaComplete_MavenRepositoryDisable') || !g:JavaComplete_MavenRepositoryDisable
+    1              0.000003   if exists('g:JavaComplete_LibsPath')
+                                let g:JavaComplete_LibsPath .= g:PATH_SEP
+                              else
+    1              0.000002     let g:JavaComplete_LibsPath = ""
+    1              0.000001   endif
+                            
+    1              0.000002   if !exists('g:JavaComplete_PomPath')
+    1              0.000303     let g:JavaComplete_PomPath = findfile('pom.xml', escape(expand('.'), '*[]?{}, ') . ';')
+    1              0.000003     if g:JavaComplete_PomPath != ""
+                                  let g:JavaComplete_PomPath = fnamemodify(g:JavaComplete_PomPath, ':p')
+                                endif
+    1              0.000001   endif
+                            
+    1              0.000002   if !exists('g:JavaComplete_GradlePath')
+    1              0.000010     if filereadable(getcwd() . "/build.gradle")
+    1              0.000005       let g:JavaComplete_GradlePath = getcwd() . "/build.gradle"
+    1              0.000001     else
+                                  let g:JavaComplete_GradlePath = findfile('build.gradle', escape(expand('.'), '*[]?{}, ') . ';')
+                                endif
+    1              0.000002     if g:JavaComplete_GradlePath != ""
+    1              0.000006       let g:JavaComplete_GradlePath = fnamemodify(g:JavaComplete_GradlePath, ':p')
+    1              0.000001     endif
+    1              0.000001   endif
+                            
+    1  35.592656   0.000020   let g:JavaComplete_LibsPath .= s:FindClassPath()
+    1              0.000012 endif
+                            
+    1              0.000014 function! javacomplete#Start()
+                              call javacomplete#server#Start()
+                            endfunction
+                            
+                            " vim:set fdm=marker sw=2 nowrap:
+
+SCRIPT  /home/wsdjeg/.vim/bundle/vim-javacomplete2/autoload/javacomplete/logger.vim
+Sourced 1 time
+Total time:   0.000035
+ Self time:   0.000035
+
+count  total (s)   self (s)
+                            " Vim completion script for java
+                            " Maintainer:	artur shaik <ashaihullin@gmail.com>
+                            "
+                            " Debug methods
+                            
+    1              0.000003 let s:log = []
+    1              0.000002 let s:loglevel = 1
+    1              0.000004 function! javacomplete#logger#Enable()
+                                let s:loglevel = 0
+                            endfunction
+                            
+    1              0.000003 function! javacomplete#logger#Disable()
+                                let s:loglevel = 1
+                            endfunction
+                            
+    1              0.000003 function! javacomplete#logger#GetContent()
+                                new
+                                put =s:log
+                            endfunction
+                            
+    1              0.000003 function! javacomplete#logger#Log(key)
+                                if 0 >= s:loglevel
+                                    call add(s:log, a:key)
+                                endif
+                            endfunction
+
+SCRIPT  /home/wsdjeg/.vim/bundle/vim-javacomplete2/autoload/javacomplete/server.vim
+Sourced 1 time
+Total time:   0.000880
+ Self time:   0.000880
+
+count  total (s)   self (s)
+                            " Vim completion script for java
+                            " Maintainer:	artur shaik <ashaihullin@gmail.com>
+                            "
+                            " Java server bridge initiator and caller
+                            
+    1              0.000017 function! s:System(cmd, caller)
+                              let t = reltime()
+                              let res = system(a:cmd)
+                              call javacomplete#logger#Log(reltimestr(reltime(t)) . 's to exec "' . a:cmd . '" by ' . a:caller)
+                              return res
+                            endfunction
+                            
+    1              0.000014 if exists('*uniq')
+    1              0.000008   function! s:_uniq(list) abort
+                                return uniq(a:list)
+                              endfunction
+    1              0.000004 else
+                              function! s:_uniq(list) abort
+                                let i = len(a:list) - 1
+                                while 0 < i
+                                  if a:list[i] ==# a:list[i - 1]
+                                    call remove(a:list, i)
+                                    let i -= 2
+                                  else
+                                    let i -= 1
+                                  endif
+                                endwhile
+                                return a:list
+                              endfunction
+                            endif
+                            
+    1              0.000006 function! s:Poll()
+                              let value = 0
+                            JavacompletePy << EOPC
+                            try:
+                              vim.command("let value = '%d'" % bridgeState.poll())
+                            except:
+                              # we'll get here if the bridgeState variable was not defined or if it's None.
+                              # In this case we stop the processing and return the default 0 value.
+                              pass
+                            EOPC
+                              return value
+                            endfunction
+                            
+    1              0.000010 function! javacomplete#server#Terminate()
+                              if s:Poll() != 0
+                                JavacompletePy bridgeState.terminateServer()
+                              endif
+                            endfunction
+                            
+    1              0.000009 function! javacomplete#server#Start()
+                              if s:Poll() == 0
+                                call javacomplete#logger#Log("Start server")
+                            
+                                let classpath = javacomplete#server#GetClassPath()
+                                let sources = ''
+                                if exists('g:JavaComplete_SourcesPath')
+                                  let sources = '-sources "'. s:ExpandAllPaths(g:JavaComplete_SourcesPath). '" '
+                                endif
+                            
+                                let args = ' kg.ash.javavi.Javavi '. sources
+                                if exists('g:JavaComplete_ServerAutoShutdownTime')
+                                  let args .= ' -t '. g:JavaComplete_ServerAutoShutdownTime
+                                endif
+                                let args .= ' -D '
+                            
+                                let file = g:JavaComplete_Home. "/autoload/javavibridge.py"
+                                execute "JavacompletePyfile ". file
+                            
+                                JavacompletePy import vim
+                                JavacompletePy bridgeState = JavaviBridge()
+                                JavacompletePy bridgeState.setupServer(vim.eval('javacomplete#server#GetJVMLauncher()'), vim.eval('args'), vim.eval('classpath'))
+                            
+                              endif
+                            endfunction
+                            
+    1              0.000008 function! javacomplete#server#ShowPort()
+                              if s:Poll()
+                                JavacompletePy vim.command('echo "Javavi port: %d"' % bridgeState.port())
+                              endif
+                            endfunction
+                            
+    1              0.000007 function! javacomplete#server#ShowPID()
+                              if s:Poll()
+                                JavacompletePy vim.command('echo "Javavi pid: %d"' % bridgeState.pid())
+                              endif
+                            endfunction
+                            
+    1              0.000009 function! javacomplete#server#GetCompiler()
+                              return exists('g:JavaComplete_JavaCompiler') && g:JavaComplete_JavaCompiler !~  '^\s*$' ? g:JavaComplete_JavaCompiler : 'javac'
+                            endfunction
+                            
+    1              0.000010 function! javacomplete#server#SetCompiler(compiler)
+                              let g:JavaComplete_JavaCompiler = a:compiler
+                            endfunction
+                            
+    1              0.000008 function! javacomplete#server#GetJVMLauncher()
+                              return exists('g:JavaComplete_JvmLauncher') && g:JavaComplete_JvmLauncher !~  '^\s*$' ? g:JavaComplete_JvmLauncher : 'java'
+                            endfunction
+                            
+    1              0.000010 function! javacomplete#server#SetJVMLauncher(interpreter)
+                              if javacomplete#server#GetJVMLauncher() != a:interpreter
+                                let g:JavaComplete_Cache = {}
+                              endif
+                              let g:JavaComplete_JvmLauncher = a:interpreter
+                            endfunction
+                            
+    1              0.000008 function! javacomplete#server#Compile()
+                              call javacomplete#server#Terminate()
+                            
+                              let javaviDir = g:JavaComplete_Home. "/libs/javavi/"
+                              if isdirectory(javaviDir. "target/classes") 
+                                if g:IS_WINDOWS
+                                  silent exe '!rmdir \s "'. javaviDir. "target/classes"
+                                else
+                                  silent exe '!rm -r '. javaviDir. "target/classes"
+                                endif
+                              endif
+                            
+                              if executable('mvn')
+                                exe '!'. 'mvn -f "'. javaviDir. '/pom.xml" compile'
+                              else
+                                call mkdir(javaviDir. "target/classes", "p")
+                                exe '!'. javacomplete#server#GetCompiler(). ' -d '. javaviDir. 'target/classes -classpath '. javaviDir. 'target/classes:'. g:JavaComplete_Home. '/libs/javaparser.jar'. g:PATH_SEP .' -sourcepath '. javaviDir. 'src/main/java: -g -nowarn -target 1.8 -source 1.8 -encoding UTF-8 '. javaviDir. 'src/main/java/kg/ash/javavi/Javavi.java'
+                              endif
+                            endfunction
+                            
+                            " Check if Javavi classes exists and return classpath directory.
+                            " If not found, build Javavi library classes with maven or javac.
+    1              0.000007 fu! s:GetJavaviClassPath()
+                              let javaviDir = g:JavaComplete_Home. "/libs/javavi/"
+                              if !isdirectory(javaviDir. "target/classes")
+                                call javacomplete#server#Compile()
+                              endif
+                            
+                              if !empty(javacomplete#GlobPathList(javaviDir. 'target/classes', '**/*.class', 1))
+                                return javaviDir. "target/classes"
+                              else
+                                echo "No Javavi library classes found, it means that we couldn't compile it. Do you have JDK7+ installed?"
+                              endif
+                            endfu
+                            
+                            " Function for server communication						{{{2
+    1              0.000012 function! javacomplete#server#Communicate(option, args, log)
+                              if !s:Poll()
+                                call javacomplete#server#Start()
+                              endif
+                            
+                              if s:Poll()
+                                let args = substitute(a:args, '"', '\\"', 'g')
+                                let cmd = a:option. ' "'. args. '"'
+                                call javacomplete#logger#Log("Communicate: ". cmd. " [". a:log. "]")
+                                let result = ""
+                            JavacompletePy << EOPC
+                            vim.command('let result = "%s"' % bridgeState.send(vim.eval("cmd")))
+                            EOPC
+                                return result
+                              endif
+                            
+                              return ""
+                            endfunction
+                            
+    1              0.000008 function! javacomplete#server#GetClassPath()
+                              let jars = s:GetExtraPath()
+                              let path = s:GetJavaviClassPath() . g:PATH_SEP. s:GetJavaParserClassPath(). g:PATH_SEP
+                              let path = path . join(jars, g:PATH_SEP) . g:PATH_SEP
+                            
+                              if &ft == 'jsp'
+                                let path .= s:GetClassPathOfJsp()
+                              endif
+                            
+                              if exists('b:classpath') && b:classpath !~ '^\s*$'
+                                call javacomplete#logger#Log(b:classpath)
+                                return path . b:classpath
+                              endif
+                            
+                              if exists('s:classpath')
+                                call javacomplete#logger#Log(s:classpath)
+                                return path . javacomplete#GetClassPath()
+                              endif
+                            
+                              if exists('g:java_classpath') && g:java_classpath !~ '^\s*$'
+                                call javacomplete#logger#Log(g:java_classpath)
+                                return path . g:java_classpath
+                              endif
+                            
+                              if empty($CLASSPATH)
+                                if g:JAVA_HOME == ''
+                                  let java = javacomplete#server#GetJVMLauncher()
+                                  let javaSettings = split(s:System(java. " -XshowSettings", "Get java settings"), '\n')
+                                  for line in javaSettings
+                                    if line =~ 'java\.home'
+                                      let g:JAVA_HOME = split(line, ' = ')[1]
+                                    endif
+                                  endfor
+                                endif
+                                return path. g:JAVA_HOME. '/lib'
+                              endif
+                            
+                              return path . $CLASSPATH
+                            endfunction
+                            
+    1              0.000009 function! s:ExpandAllPaths(path)
+                                let result = ''
+                                let list = s:_uniq(sort(split(a:path, g:PATH_SEP)))
+                                for l in list
+                                  let result = result. substitute(expand(l), '\\', '/', 'g') . g:PATH_SEP
+                                endfor
+                                return result
+                            endfunction
+                            
+    1              0.000007 function! s:GetJavaParserClassPath()
+                              let path = g:JavaComplete_JavaParserJar . g:PATH_SEP
+                              if exists('b:classpath') && b:classpath !~ '^\s*$'
+                                return path . b:classpath
+                              endif
+                            
+                              if exists('s:classpath')
+                                return path . s:GetClassPath()
+                              endif
+                            
+                              if exists('g:java_classpath') && g:java_classpath !~ '^\s*$'
+                                return path . g:java_classpath
+                              endif
+                            
+                              return path
+                            endfunction
+                            
+    1              0.000006 function! s:GetExtraPath()
+                              let jars = []
+                              let extrapath = ''
+                              if exists('g:JavaComplete_LibsPath')
+                                let paths = split(g:JavaComplete_LibsPath, g:PATH_SEP)
+                                for path in paths
+                                  let exp = s:ExpandPathToJars(path)
+                                  if empty(exp)
+                                    " ex: target/classes
+                                    call extend(jars, [path])
+                                  else
+                                    call extend(jars, exp)
+                                  endif
+                                endfor
+                              endif
+                            
+                              return jars
+                            endfunction
+                            
+    1              0.000008 function! s:ExpandPathToJars(path, ...)
+                              if isdirectory(a:path)
+                                return javacomplete#GlobPathList(a:path, "**5/*.jar", 1)
+                                \ + javacomplete#GlobPathList(a:path, "**5/*.zip", 1)
+                              elseif index(['zip', 'jar'], fnamemodify(a:path, ':e')) != -1
+                                return [a:path]
+                              endif
+                              return []
+                            endfunction
+                            
+    1              0.000007 fu! s:GetClassPathOfJsp()
+                              if exists('b:classpath_jsp')
+                                return b:classpath_jsp
+                              endif
+                            
+                              let b:classpath_jsp = ''
+                              let path = expand('%:p:h')
+                              while 1
+                                if isdirectory(path . '/WEB-INF' )
+                                  if isdirectory(path . '/WEB-INF/classes')
+                                    let b:classpath_jsp .= g:PATH_SEP . path . '/WEB-INF/classes'
+                                  endif
+                                  if isdirectory(path . '/WEB-INF/lib')
+                                    let b:classpath_jsp .= g:PATH_SEP . path . '/WEB-INF/lib/*.jar'
+                                    endif
+                                  endif
+                                  return b:classpath_jsp
+                                endif
+                            
+                                let prev = path
+                                let path = fnamemodify(path, ":p:h:h")
+                                if path == prev
+                                  break
+                                endif
+                              endwhile
+                              return ''
+                            endfu
+                            
+    1              0.000019 function! s:GetClassPath()
+                              return exists('s:classpath') ? join(s:classpath, g:PATH_SEP) : ''
+                            endfu
+                            
+                            " vim:set fdm=marker sw=2 nowrap:
+
+FUNCTION  javacomplete#server#Start()
+Called 1 time
+Total time:   0.238217
+ Self time:   0.005750
+
+count  total (s)   self (s)
+    1   0.000428   0.000017   if s:Poll() == 0
+    1   0.000048   0.000024     call javacomplete#logger#Log("Start server")
+                            
+    1   0.231983   0.000022     let classpath = javacomplete#server#GetClassPath()
+    1              0.000002     let sources = ''
+    1              0.000004     if exists('g:JavaComplete_SourcesPath')
+    1   0.000075   0.000012       let sources = '-sources "'. s:ExpandAllPaths(g:JavaComplete_SourcesPath). '" '
+    1              0.000001     endif
+                            
+    1              0.000002     let args = ' kg.ash.javavi.Javavi '. sources
+    1              0.000003     if exists('g:JavaComplete_ServerAutoShutdownTime')
+    1              0.000004       let args .= ' -t '. g:JavaComplete_ServerAutoShutdownTime
+    1              0.000001     endif
+    1              0.000002     let args .= ' -D '
+                            
+    1              0.000003     let file = g:JavaComplete_Home. "/autoload/javavibridge.py"
+    1              0.001066     execute "JavacompletePyfile ". file
+                            
+    1              0.000028     JavacompletePy import vim
+    1              0.000025     JavacompletePy bridgeState = JavaviBridge()
+    1   0.004521   0.004513     JavacompletePy bridgeState.setupServer(vim.eval('javacomplete#server#GetJVMLauncher()'), vim.eval('args'), vim.eval('classpath'))
+                            
+    1              0.000007   endif
+
+FUNCTION  javacomplete#server#Communicate()
+Called 0 times
+Total time:   0.000000
+ Self time:   0.000000
+
+count  total (s)   self (s)
+                              if !s:Poll()
+                                call javacomplete#server#Start()
+                              endif
+                            
+                              if s:Poll()
+                                let args = substitute(a:args, '"', '\\"', 'g')
+                                let cmd = a:option. ' "'. args. '"'
+                                call javacomplete#logger#Log("Communicate: ". cmd. " [". a:log. "]")
+                                let result = ""
+                            JavacompletePy << EOPC
+                            vim.command('let result = "%s"' % bridgeState.send(vim.eval("cmd")))
+                            EOPC
+                                return result
+                              endif
+                            
+                              return ""
+
+FUNCTION  javacomplete#server#SetCompiler()
+Called 0 times
+Total time:   0.000000
+ Self time:   0.000000
+
+count  total (s)   self (s)
+                              let g:JavaComplete_JavaCompiler = a:compiler
+
+FUNCTION  javacomplete#logger#Log()
+Called 4 times
+Total time:   0.000047
+ Self time:   0.000047
+
+count  total (s)   self (s)
+    4              0.000019     if 0 >= s:loglevel
+                                    call add(s:log, a:key)
+                                endif
+
+FUNCTION  <SNR>180_ExpandPathToJars()
+Called 1 time
+Total time:   0.000285
+ Self time:   0.000053
+
+count  total (s)   self (s)
+    1              0.000015   if isdirectory(a:path)
+    1   0.000267   0.000035     return javacomplete#GlobPathList(a:path, "**5/*.jar", 1) + javacomplete#GlobPathList(a:path, "**5/*.zip", 1)
+                              elseif index(['zip', 'jar'], fnamemodify(a:path, ':e')) != -1
+                                return [a:path]
+                              endif
+                              return []
+
+FUNCTION  <SNR>180_Poll()
+Called 2 times
+Total time:   0.000605
+ Self time:   0.000605
+
+count  total (s)   self (s)
+    2              0.000017   let value = 0
+    2              0.000030 JavacompletePy << EOPC
+                            try:
+                              vim.command("let value = '%d'" % bridgeState.poll())
+                            except:
+                              # we'll get here if the bridgeState variable was not defined or if it's None.
+                              # In this case we stop the processing and return the default 0 value.
+                              pass
+                            EOPC
+    2              0.000015   return value
+
+FUNCTION  <SNR>178_GenerateGradleClassPath()
+Called 1 time
+Total time:  35.592184
+ Self time:   0.000517
+
+count  total (s)   self (s)
+    1              0.000001   try
+    1              0.000003     let f = tempname()
+    1              0.000001     let gradle = ''
+    1              0.000004     if executable('./gradlew')
+    1              0.000005       if has("win32") || has("win16")
+                                    let gradle = 'gradle.bat'
+                                  else
+    1              0.000001         let gradle = './gradlew'
+    1              0.000000       endif
+    1              0.000001     else
+                                  let gradle = 'gradle'
+                                endif
+    1              0.000064     call writefile(["allprojects{apply from: '" . g:JavaComplete_Home . "/classpath.gradle'}"], f)
+    1  35.591954   0.000287     let ret = system(gradle . ' -q -i ' . shellescape(f) . ' classpath' )
+    1              0.000021     if v:shell_error == 0
+                                  let cp = filter(split(ret, "\n"), 'v:val =~ "^CLASSPATH:"')[0][10:]
+                                  call writefile([cp], a:path)
+                                  return cp
+                                endif
+    1              0.000003   catch
+                              finally
+    1              0.000059     call delete(f)
+    1              0.000006   endtry
+    1              0.000008   return '.'
+
+FUNCTION  javacomplete#Start()
+Called 1 time
+Total time:   0.241368
+ Self time:   0.001848
+
+count  total (s)   self (s)
+    1   0.241366   0.001846   call javacomplete#server#Start()
+
+FUNCTION  javacomplete#logger#Disable()
+Called 0 times
+Total time:   0.000000
+ Self time:   0.000000
+
+count  total (s)   self (s)
+                                let s:loglevel = 1
+
+FUNCTION  <SNR>180_ExpandAllPaths()
+Called 1 time
+Total time:   0.000063
+ Self time:   0.000058
+
+count  total (s)   self (s)
+    1              0.000002     let result = ''
+    1   0.000014   0.000009     let list = s:_uniq(sort(split(a:path, g:PATH_SEP)))
+    2              0.000004     for l in list
+    1              0.000035       let result = result. substitute(expand(l), '\\', '/', 'g') . g:PATH_SEP
+    1              0.000001     endfor
+    1              0.000001     return result
+
+FUNCTION  <SNR>180_GetExtraPath()
+Called 1 time
+Total time:   0.000449
+ Self time:   0.000164
+
+count  total (s)   self (s)
+    1              0.000007   let jars = []
+    1              0.000006   let extrapath = ''
+    1              0.000011   if exists('g:JavaComplete_LibsPath')
+    1              0.000024     let paths = split(g:JavaComplete_LibsPath, g:PATH_SEP)
+    2              0.000013     for path in paths
+    1   0.000308   0.000023       let exp = s:ExpandPathToJars(path)
+    1              0.000008       if empty(exp)
+                                    " ex: target/classes
+    1              0.000013         call extend(jars, [path])
+    1              0.000003       else
+                                    call extend(jars, exp)
+                                  endif
+    1              0.000003     endfor
+    1              0.000003   endif
+                            
+    1              0.000004   return jars
+
+FUNCTION  <SNR>178_GetCurrentFileKey()
+Called 0 times
+Total time:   0.000000
+ Self time:   0.000000
+
+count  total (s)   self (s)
+                              return has("autocmd") ? s:curfilekey : empty(expand('%')) ? bufnr('%') : expand('%:p')
+
+FUNCTION  javacomplete#server#GetJVMLauncher()
+Called 2 times
+Total time:   0.000021
+ Self time:   0.000021
+
+count  total (s)   self (s)
+    2              0.000019   return exists('g:JavaComplete_JvmLauncher') && g:JavaComplete_JvmLauncher !~  '^\s*$' ? g:JavaComplete_JvmLauncher : 'java'
+
+FUNCTION  <SNR>180_GetClassPathOfJsp()
+Called 0 times
+Total time:   0.000000
+ Self time:   0.000000
+
+count  total (s)   self (s)
+                              if exists('b:classpath_jsp')
+                                return b:classpath_jsp
+                              endif
+                            
+                              let b:classpath_jsp = ''
+                              let path = expand('%:p:h')
+                              while 1
+                                if isdirectory(path . '/WEB-INF' )
+                                  if isdirectory(path . '/WEB-INF/classes')
+                                    let b:classpath_jsp .= g:PATH_SEP . path . '/WEB-INF/classes'
+                                  endif
+                                  if isdirectory(path . '/WEB-INF/lib')
+                                    let b:classpath_jsp .= g:PATH_SEP . path . '/WEB-INF/lib/*.jar'
+                                    endif
+                                  endif
+                                  return b:classpath_jsp
+                                endif
+                            
+                                let prev = path
+                                let path = fnamemodify(path, ":p:h:h")
+                                if path == prev
+                                  break
+                                endif
+                              endwhile
+                              return ''
+
+FUNCTION  <SNR>178_GlobPathList()
+Called 7 times
+Total time:   0.006664
+ Self time:   0.006664
+
+count  total (s)   self (s)
+    7              0.000060   if has("patch-7.4.279")
+    7              0.006591     return globpath(a:path, a:pattern, a:suf, 1)
+                              else
+                                return split(globpath(a:path, a:pattern, a:suf), "\n")
+                              endif
+
+FUNCTION  javacomplete#server#GetClassPath()
+Called 1 time
+Total time:   0.231961
+ Self time:   0.001410
+
+count  total (s)   self (s)
+    1   0.000465   0.000016   let jars = s:GetExtraPath()
+    1   0.006267   0.000043   let path = s:GetJavaviClassPath() . g:PATH_SEP. s:GetJavaParserClassPath(). g:PATH_SEP
+    1              0.000015   let path = path . join(jars, g:PATH_SEP) . g:PATH_SEP
+                            
+    1              0.000015   if &ft == 'jsp'
+                                let path .= s:GetClassPathOfJsp()
+                              endif
+                            
+    1              0.000007   if exists('b:classpath') && b:classpath !~ '^\s*$'
+                                call javacomplete#logger#Log(b:classpath)
+                                return path . b:classpath
+                              endif
+                            
+    1              0.000005   if exists('s:classpath')
+                                call javacomplete#logger#Log(s:classpath)
+                                return path . javacomplete#GetClassPath()
+                              endif
+                            
+    1              0.000006   if exists('g:java_classpath') && g:java_classpath !~ '^\s*$'
+                                call javacomplete#logger#Log(g:java_classpath)
+                                return path . g:java_classpath
+                              endif
+                            
+    1              0.000011   if empty($CLASSPATH)
+    1              0.000004     if g:JAVA_HOME == ''
+    1   0.000028   0.000015       let java = javacomplete#server#GetJVMLauncher()
+    1   0.223945   0.000080       let javaSettings = split(s:System(java. " -XshowSettings", "Get java settings"), '\n')
+  154              0.000149       for line in javaSettings
+  153              0.000466         if line =~ 'java\.home'
+    1              0.000009           let g:JAVA_HOME = split(line, ' = ')[1]
+    1              0.000001         endif
+  153              0.000115       endfor
+    1              0.000001     endif
+    1              0.000005     return path. g:JAVA_HOME. '/lib'
+                              endif
+                            
+                              return path . $CLASSPATH
+
+FUNCTION  <SNR>180_GetJavaParserClassPath()
+Called 1 time
+Total time:   0.000061
+ Self time:   0.000061
+
+count  total (s)   self (s)
+    1              0.000012   let path = g:JavaComplete_JavaParserJar . g:PATH_SEP
+    1              0.000009   if exists('b:classpath') && b:classpath !~ '^\s*$'
+                                return path . b:classpath
+                              endif
+                            
+    1              0.000005   if exists('s:classpath')
+                                return path . s:GetClassPath()
+                              endif
+                            
+    1              0.000007   if exists('g:java_classpath') && g:java_classpath !~ '^\s*$'
+                                return path . g:java_classpath
+                              endif
+                            
+    1              0.000003   return path
+
+FUNCTION  javacomplete#server#Compile()
+Called 0 times
+Total time:   0.000000
+ Self time:   0.000000
+
+count  total (s)   self (s)
+                              call javacomplete#server#Terminate()
+                            
+                              let javaviDir = g:JavaComplete_Home. "/libs/javavi/"
+                              if isdirectory(javaviDir. "target/classes") 
+                                if g:IS_WINDOWS
+                                  silent exe '!rmdir \s "'. javaviDir. "target/classes"
+                                else
+                                  silent exe '!rm -r '. javaviDir. "target/classes"
+                                endif
+                              endif
+                            
+                              if executable('mvn')
+                                exe '!'. 'mvn -f "'. javaviDir. '/pom.xml" compile'
+                              else
+                                call mkdir(javaviDir. "target/classes", "p")
+                                exe '!'. javacomplete#server#GetCompiler(). ' -d '. javaviDir. 'target/classes -classpath '. javaviDir. 'target/classes:'. g:JavaComplete_Home. '/libs/javaparser.jar'. g:PATH_SEP .' -sourcepath '. javaviDir. 'src/main/java: -g -nowarn -target 1.8 -source 1.8 -encoding UTF-8 '. javaviDir. 'src/main/java/kg/ash/javavi/Javavi.java'
+                              endif
+
+FUNCTION  <SNR>84_nop()
+Called 0 times
+Total time:   0.000000
+ Self time:   0.000000
+
+count  total (s)   self (s)
+                              return ''
+
+FUNCTION  <SNR>180_GetJavaviClassPath()
+Called 1 time
+Total time:   0.006163
+ Self time:   0.000082
+
+count  total (s)   self (s)
+    1              0.000011   let javaviDir = g:JavaComplete_Home. "/libs/javavi/"
+    1              0.000019   if !isdirectory(javaviDir. "target/classes")
+                                call javacomplete#server#Compile()
+                              endif
+                            
+    1   0.006109   0.000028   if !empty(javacomplete#GlobPathList(javaviDir. 'target/classes', '**/*.class', 1))
+    1              0.000012     return javaviDir. "target/classes"
+                              else
+                                echo "No Javavi library classes found, it means that we couldn't compile it. Do you have JDK7+ installed?"
+                              endif
+
+FUNCTION  <SNR>178_GetBase()
+Called 1 time
+Total time:   0.000027
+ Self time:   0.000027
+
+count  total (s)   self (s)
+    1              0.000019   let base = expand("~/.javacomplete2/". a:extra)
+    1              0.000004   if !isdirectory(base)
+                                call mkdir(base, "p")
+                              endif
+                            
+    1              0.000002   return base
+
+FUNCTION  <SNR>180_System()
+Called 1 time
+Total time:   0.223865
+ Self time:   0.000191
+
+count  total (s)   self (s)
+    1              0.000009   let t = reltime()
+    1   0.223799   0.000136   let res = system(a:cmd)
+    1   0.000048   0.000037   call javacomplete#logger#Log(reltimestr(reltime(t)) . 's to exec "' . a:cmd . '" by ' . a:caller)
+    1              0.000006   return res
+
+FUNCTION  <SNR>180__uniq()
+Called 1 time
+Total time:   0.000005
+ Self time:   0.000005
+
+count  total (s)   self (s)
+    1              0.000002     return uniq(a:list)
+
+FUNCTION  <SNR>178_SetCurrentFileKey()
+Called 2 times
+Total time:   0.000041
+ Self time:   0.000041
+
+count  total (s)   self (s)
+    2              0.000040   let s:curfilekey = empty(expand('%')) ? bufnr('%') : expand('%:p')
+
+FUNCTION  <SNR>178_ReadClassPathFile()
+Called 0 times
+Total time:   0.000000
+ Self time:   0.000000
+
+count  total (s)   self (s)
+                              let cp = ''
+                              let file = g:JavaComplete_Home. "/autoload/classpath.py"
+                              execute "JavacompletePyfile" file
+                              JavacompletePy import vim
+                              JavacompletePy vim.command("let cp = '%s'" % os.pathsep.join(ReadClasspathFile(vim.eval('a:classpath_file'))).replace('\\', '/'))
+                              return cp
+
+FUNCTION  javacomplete#ClearCache()
+Called 0 times
+Total time:   0.000000
+ Self time:   0.000000
+
+count  total (s)   self (s)
+                              let g:JavaComplete_Cache = {}
+                              let g:JavaComplete_Files = {}
+
+FUNCTION  SScope()
+Called 0 times
+Total time:   0.000000
+ Self time:   0.000000
+
+count  total (s)   self (s)
+                              return s:
+
+FUNCTION  javacomplete#server#ShowPort()
+Called 0 times
+Total time:   0.000000
+ Self time:   0.000000
+
+count  total (s)   self (s)
+                              if s:Poll()
+                                JavacompletePy vim.command('echo "Javavi port: %d"' % bridgeState.port())
+                              endif
+
+FUNCTION  javacomplete#server#ShowPID()
+Called 0 times
+Total time:   0.000000
+ Self time:   0.000000
+
+count  total (s)   self (s)
+                              if s:Poll()
+                                JavacompletePy vim.command('echo "Javavi pid: %d"' % bridgeState.pid())
+                              endif
+
+FUNCTION  javacomplete#server#SetJVMLauncher()
+Called 0 times
+Total time:   0.000000
+ Self time:   0.000000
+
+count  total (s)   self (s)
+                              if javacomplete#server#GetJVMLauncher() != a:interpreter
+                                let g:JavaComplete_Cache = {}
+                              endif
+                              let g:JavaComplete_JvmLauncher = a:interpreter
+
+FUNCTION  <SNR>178_FindClassPath()
+Called 1 time
+Total time:  35.592635
+ Self time:   0.000424
+
+count  total (s)   self (s)
+    1              0.000004   if has('python') || has('python3')
+    1              0.000297     let classpath_file = fnamemodify(findfile('.classpath', escape(expand('.'), '*[]?{}, ') . ';'), ':p')
+    1              0.000005     if !empty(classpath_file) && filereadable(classpath_file)
+                                  let cp = s:ReadClassPathFile(classpath_file)
+                                  if !empty(cp)
+                                    return cp
+                                  endif
+                                endif
+    1              0.000001   endif
+                            
+    1   0.000033   0.000006   let base = s:GetBase("classpath/")
+                            
+    1              0.000018   if executable('mvn') && g:JavaComplete_PomPath != ""
+                                let key = substitute(g:JavaComplete_PomPath, '[\\/:;]', '_', 'g')
+                                let path = base . key
+                            
+                                if filereadable(path)
+                                  if getftime(path) >= getftime(g:JavaComplete_PomPath)
+                                    return join(readfile(path), '')
+                                  endif
+                                endif
+                                return s:GenerateMavenClassPath(path, g:JavaComplete_PomPath)
+                              endif
+                            
+    1              0.000007   if executable('gradle') || executable('gradlew')
+    1              0.000002     if g:JavaComplete_GradlePath != ""
+    1              0.000020       let key = substitute(g:JavaComplete_GradlePath, '[\\/:;]', '_', 'g')
+    1              0.000003       let path = base . key
+                            
+    1              0.000005       if filereadable(path)
+                                    if getftime(path) >= getftime(g:JavaComplete_GradlePath)
+                                      return join(readfile(path), '')
+                                    endif
+                                  endif
+    1  35.592209   0.000025       return s:GenerateGradleClassPath(path, g:JavaComplete_GradlePath)
+                                endif
+                              endif
+                            
+                              return '.'
+
+FUNCTION  <SNR>178_HandleInsertLeave()
+Called 0 times
+Total time:   0.000000
+ Self time:   0.000000
+
+count  total (s)   self (s)
+                              if exists('g:JC_DeclarationCompletedFlag') && g:JC_DeclarationCompletedFlag
+                                let g:JC_DeclarationCompletedFlag = 0
+                              endif
+                              if exists('g:JC_ClassnameCompletedFlag') && g:JC_ClassnameCompletedFlag
+                                let g:JC_ClassnameCompletedFlag = 0
+                              endif
+
+FUNCTION  javacomplete#GetCurrentFileKey()
+Called 0 times
+Total time:   0.000000
+ Self time:   0.000000
+
+count  total (s)   self (s)
+                              return s:GetCurrentFileKey()
+
+FUNCTION  javacomplete#server#GetCompiler()
+Called 0 times
+Total time:   0.000000
+ Self time:   0.000000
+
+count  total (s)   self (s)
+                              return exists('g:JavaComplete_JavaCompiler') && g:JavaComplete_JavaCompiler !~  '^\s*$' ? g:JavaComplete_JavaCompiler : 'javac'
+
+FUNCTION  javacomplete#server#Terminate()
+Called 1 time
+Total time:   0.000292
+ Self time:   0.000098
+
+count  total (s)   self (s)
+    1   0.000204   0.000010   if s:Poll() != 0
+    1              0.000079     JavacompletePy bridgeState.terminateServer()
+    1              0.000005   endif
+
+FUNCTION  <SNR>178_GenerateMavenClassPath()
+Called 0 times
+Total time:   0.000000
+ Self time:   0.000000
+
+count  total (s)   self (s)
+                              let lines = split(system('mvn --file ' . a:pom . ' dependency:build-classpath -DincludeScope=test'), "\n")
+                              for i in range(len(lines))
+                                if lines[i] =~ 'Dependencies classpath:'
+                                  let cp = lines[i+1] . g:PATH_SEP . join([fnamemodify(a:pom, ':h'), 'target', 'classes'], g:FILE_SEP)
+                                  call writefile([cp], a:path)
+                                  return cp
+                                endif
+                              endfor
+                              return '.'
+
+FUNCTION  <SNR>178_RemoveCurrentFromCache()
+Called 0 times
+Total time:   0.000000
+ Self time:   0.000000
+
+count  total (s)   self (s)
+                              let package = javacomplete#complete#complete#GetPackageName()
+                              let classname = split(expand('%:t'), '\.')[0]
+                              let fqn = package. '.'. classname
+                              if has_key(g:JavaComplete_Cache, fqn)
+                                call remove(g:JavaComplete_Cache, fqn)
+                              endif
+                              call javacomplete#server#Communicate('-clear-from-cache', fqn, 's:RemoveCurrentFromCache')
+
+FUNCTION  javacomplete#Complete()
+Called 0 times
+Total time:   0.000000
+ Self time:   0.000000
+
+count  total (s)   self (s)
+                              return javacomplete#complete#complete#Complete(a:findstart, a:base)
+
+FUNCTION  javacomplete#logger#GetContent()
+Called 0 times
+Total time:   0.000000
+ Self time:   0.000000
+
+count  total (s)   self (s)
+                                new
+                                put =s:log
+
+FUNCTION  <SNR>180_GetClassPath()
+Called 0 times
+Total time:   0.000000
+ Self time:   0.000000
+
+count  total (s)   self (s)
+                              return exists('s:classpath') ? join(s:classpath, g:PATH_SEP) : ''
+
+FUNCTION  javacomplete#logger#Enable()
+Called 0 times
+Total time:   0.000000
+ Self time:   0.000000
+
+count  total (s)   self (s)
+                                let s:loglevel = 0
+
+FUNCTION  <SNR>178_HandleTextChangedI()
+Called 0 times
+Total time:   0.000000
+ Self time:   0.000000
+
+count  total (s)   self (s)
+                              if exists('g:JC_ClassnameCompletedFlag') && g:JC_ClassnameCompletedFlag
+                                let g:JC_ClassnameCompletedFlag = 0
+                                call javacomplete#imports#Add()
+                              endif
+                            
+                              if exists('g:JC_DeclarationCompletedFlag') && g:JC_DeclarationCompletedFlag
+                                let g:JC_DeclarationCompletedFlag = 0
+                                if empty(javacomplete#util#Trim(getline('.')))
+                                  call feedkeys("}\eO", "n")
+                                else
+                                  call feedkeys("\b\r}\eO", "n")
+                                endif
+                              endif
+
+FUNCTION  javacomplete#UseFQN()
+Called 0 times
+Total time:   0.000000
+ Self time:   0.000000
+
+count  total (s)   self (s)
+                              if exists('g:JavaComplete_UseFQN') && g:JavaComplete_UseFQN
+                                return 1
+                              endif
+                              return 0
+
+FUNCTION  javacomplete#GlobPathList()
+Called 3 times
+Total time:   0.006313
+ Self time:   0.000057
+
+count  total (s)   self (s)
+    3   0.006308   0.000052   return s:GlobPathList(a:path, a:pattern, a:suf)
+
+FUNCTIONS SORTED ON TOTAL TIME
+count  total (s)   self (s)  function
+    1  35.592635   0.000424  <SNR>178_FindClassPath()
+    1  35.592184   0.000517  <SNR>178_GenerateGradleClassPath()
+    1   0.241368   0.001848  javacomplete#Start()
+    1   0.238217   0.005750  javacomplete#server#Start()
+    1   0.231961   0.001410  javacomplete#server#GetClassPath()
+    1   0.223865   0.000191  <SNR>180_System()
+    7   0.006664             <SNR>178_GlobPathList()
+    3   0.006313   0.000057  javacomplete#GlobPathList()
+    1   0.006163   0.000082  <SNR>180_GetJavaviClassPath()
+    2   0.000605             <SNR>180_Poll()
+    1   0.000449   0.000164  <SNR>180_GetExtraPath()
+    1   0.000292   0.000098  javacomplete#server#Terminate()
+    1   0.000285   0.000053  <SNR>180_ExpandPathToJars()
+    1   0.000063   0.000058  <SNR>180_ExpandAllPaths()
+    1   0.000061             <SNR>180_GetJavaParserClassPath()
+    4   0.000047             javacomplete#logger#Log()
+    2   0.000041             <SNR>178_SetCurrentFileKey()
+    1   0.000027             <SNR>178_GetBase()
+    2   0.000021             javacomplete#server#GetJVMLauncher()
+    1   0.000005             <SNR>180__uniq()
+
+FUNCTIONS SORTED ON SELF TIME
+count  total (s)   self (s)  function
+    7              0.006664  <SNR>178_GlobPathList()
+    1   0.238217   0.005750  javacomplete#server#Start()
+    1   0.241368   0.001848  javacomplete#Start()
+    1   0.231961   0.001410  javacomplete#server#GetClassPath()
+    2              0.000605  <SNR>180_Poll()
+    1  35.592184   0.000517  <SNR>178_GenerateGradleClassPath()
+    1  35.592635   0.000424  <SNR>178_FindClassPath()
+    1   0.223865   0.000191  <SNR>180_System()
+    1   0.000449   0.000164  <SNR>180_GetExtraPath()
+    1   0.000292   0.000098  javacomplete#server#Terminate()
+    1   0.006163   0.000082  <SNR>180_GetJavaviClassPath()
+    1              0.000061  <SNR>180_GetJavaParserClassPath()
+    1   0.000063   0.000058  <SNR>180_ExpandAllPaths()
+    3   0.006313   0.000057  javacomplete#GlobPathList()
+    1   0.000285   0.000053  <SNR>180_ExpandPathToJars()
+    4              0.000047  javacomplete#logger#Log()
+    2              0.000041  <SNR>178_SetCurrentFileKey()
+    1              0.000027  <SNR>178_GetBase()
+    2              0.000021  javacomplete#server#GetJVMLauncher()
+    1              0.000005  <SNR>180__uniq()
+

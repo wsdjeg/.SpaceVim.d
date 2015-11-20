@@ -25,7 +25,6 @@ else
         silent exec 'language en_US.utf8'
     endif
 endif
-
 "vim settings {{{
 "initialize default settings
 let s:settings = {}
@@ -186,7 +185,7 @@ if count(s:settings.plugin_groups, 'unite') "{{{
     let g:unite_enable_ignore_case = 1
     let g:unite_enable_smart_case = 1
     let g:unite_data_directory='~/.cache/unite'
-    let g:unite_enable_start_insert=1
+    "let g:unite_enable_start_insert=1
     let g:unite_source_history_yank_enable=1
     let g:unite_prompt='>> '
     let g:unite_split_rule = 'botright'
@@ -498,12 +497,14 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
     NeoBundle 'honza/vim-snippets'
     if s:settings.autocomplete_method == 'ycm' "{{{
         NeoBundle 'Valloric/YouCompleteMe'
-        NeoBundle 'SirVer/ultisnips'
-        let g:UltiSnipsExpandTrigger="<tab>"
-        let g:UltiSnipsJumpForwardTrigger="<tab>"
-        let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
-
-        let g:ycm_server_log_level = 'debug'
+        "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+        "let g:ycm_confirm_extra_conf = 0
+        let g:ycm_collect_identifiers_from_tags_files = 1
+        let g:ycm_collect_identifiers_from_comments_and_strings = 1
+        let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
+        let g:ycm_key_list_previous_completion = ['<C-S-TAB>','<Up>']
+        let g:ycm_seed_identifiers_with_syntax = 1
+        let g:ycm_key_invoke_completion = '<leader><tab>'
         let g:ycm_semantic_triggers =  {
                     \   'c' : ['->', '.'],
                     \   'objc' : ['->', '.'],
@@ -518,38 +519,21 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
                     \   'lua' : ['.', ':'],
                     \   'erlang' : [':'],
                     \ }
-
-        "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-        let g:ycm_confirm_extra_conf = 0
-        let g:ycm_collect_identifiers_from_tags_files = 1
-        let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
-        let g:ycm_key_list_previous_completion = ['<C-S-TAB>','<Up>']
-        let g:SuperTabDefaultCompletionType = '<C-n>'
-        let g:ycm_seed_identifiers_with_syntax = 1
-        let g:ycm_add_preview_to_completeopt = 1
-        let g:ycm_min_num_of_chars_for_completion = 2
+        NeoBundle 'SirVer/ultisnips'
+        let g:UltiSnipsExpandTrigger="<tab>"
+        let g:UltiSnipsJumpForwardTrigger="<tab>"
+        let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
+        let g:UltiSnipsSnippetsDir='~/DotFiles/snippets'
+        NeoBundle 'ervandew/supertab'
         let g:SuperTabContextDefaultCompletionType = "<c-n>"
-        let g:ycm_max_diagnostics_to_display = 30
-        "let g:ycm_key_invoke_completion = '<C-Space>'
+        let g:SuperTabDefaultCompletionType = '<C-n>'
         inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
         inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
         inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
         inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
         autocmd InsertLeave * if pumvisible() == 0|pclose|endif
         inoremap <silent> <buffer> <CR> <C-r>=MyEnterfunc()<Cr>
-        function MyEnterfunc()
-            if pumvisible()
-                return "\<esc>a"
-            else
-                return "\<Enter>"
-            endif
-        endf
         let g:neobundle#install_process_timeout = 1500
-
-        "}}}
-        "}}}
-        let g:UltiSnipsSnippetsDir='~/.vim/snippets'
-        "}}}
     else
         NeoBundle 'Shougo/neosnippet-snippets'
         NeoBundle 'Shougo/neosnippet.vim' "{{{
@@ -560,7 +544,6 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
         smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
         imap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
         smap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
-        "}}}
     endif "}}}
     if s:settings.autocomplete_method == 'neocomplete' "{{{
         "NeoBundleLazy 'Shougo/neocomplete.vim', {'autoload':{'insert':1}, 'vim_version':'7.3.885'} "{{{
@@ -684,7 +667,7 @@ NeoBundleLazy 'othree/html5.vim', {'autoload':{'filetypes':['html']}}
 NeoBundleLazy 'wavded/vim-stylus', {'autoload':{'filetypes':['styl']}}
 NeoBundleLazy 'digitaltoad/vim-jade', {'autoload':{'filetypes':['jade']}}
 NeoBundleLazy 'juvenn/mustache.vim', {'autoload':{'filetypes':['mustache']}}
-NeoBundleLazy 'gregsexton/MatchTag', {'autoload':{'filetypes':['html','xml']}}
+"NeoBundleLazy 'gregsexton/MatchTag', {'autoload':{'filetypes':['html','xml']}}
 
 "javascript plugins
 
@@ -717,9 +700,10 @@ let g:JavaComplete_MavenRepositoryDisable = 0
 "NeoBundle 'VJDE/VJDE'
 NeoBundle 'wsdjeg/vim-dict'
 NeoBundle 'wsdjeg/java_getset.vim'
+NeoBundle 'wsdjeg/JavaUnit.vim'
+let g:JavaUnit_key = "<leader>ooo"
 NeoBundle 'JalaiAmitahl/maven-compiler.vim'
 autocmd Filetype pom compiler mvn
-NeoBundle 'ervandew/supertab'
 NeoBundle 'vim-jp/vim-java'
 NeoBundle 'bling/vim-airline'
 let g:Powerline_sybols = 'unicode'
@@ -735,11 +719,11 @@ let g:user_emmet_settings = {
             \  },
             \}
 " use this two command to find how long the plugin take!
-"profile start syntastic.log
-"profile! file */syntastic/*
+"profile start vim-javacomplete2.log
+"profile! file */vim-javacomplete2/*
 NeoBundle 'scrooloose/syntastic'
 let g:syntastic_java_javac_delete_output = 0
-let g:syntastic_java_javac_config_file_enabled = 0
+let g:syntastic_java_javac_config_file_enabled = 1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
@@ -844,7 +828,7 @@ let g:tagbar_left = 1
 let g:NERDTreeWinPos='right'
 let g:NERDTreeWinSize=31
 let g:NERDTreeChDirMode=1
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let g:Tlist_Ctags_Cmd = '/usr/bin/ctags'  "设置ctags执行路径
 let g:Tlist_Auto_Update=1
 let g:Tlist_Auto_Open =0
@@ -863,9 +847,6 @@ endfunction
 "}}}
 
 NeoBundle 'wsdjeg/MarkDown.pl'
-autocmd filetype markdown nmap md :!~/.config/nvim/bundle/MarkDown.pl/markdown.pl % > %.html<cr><cr>
-autocmd filetype markdown nmap fi :!firefox %.html & <CR><CR>
-autocmd filetype html nmap fi :!firefox % &
 NeoBundle 'wsdjeg/matchit.zip'
 NeoBundle 'tomasr/molokai'
 NeoBundle 'sjl/gundo.vim'
@@ -881,7 +862,7 @@ noremap <leader>yd :Yde<CR>
 
 call neobundle#end()
 filetype plugin indent on
-syntax enable
+syntax on
 if count(s:settings.plugin_groups, 'colorscheme') "{{{
     set background=dark
     exec 'colorscheme '.s:settings.colorscheme
@@ -892,7 +873,6 @@ NeoBundleCheck
 autocmd FileType jsp call JspFileTypeInit()
 autocmd FileType html,css,jsp EmmetInstall
 autocmd FileType java call JavaFileTypeInit()
-autocmd FileType xml call XmlFileTypeInit()
 autocmd BufEnter,WinEnter,InsertLeave * set cursorline
 autocmd BufLeave,WinLeave,InsertEnter * set nocursorline
 au BufReadPost *
@@ -906,7 +886,7 @@ au FileType text setlocal textwidth=78 " for all text files set 'textwidth' to 7
 au FileType c,cpp,cs,swig set nomodeline " this will avoid bug in my project with namespace ex, the vim will tree ex:: as modeline.
 au FileType c,cpp,java,javascript set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,f://
 au FileType cs set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,f:///,f://
-au FileType xml set comments=s:<!--,m:\ \ \ \ \ ,e:-->
+"au FileType xml set comments=s:<!--,m:\ \ \ \ \ ,e:-->
 "au FileType pom set comments=s:<!--,m:\ \ \ \ \ ,e:-->
 au FileType vim set comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",f:\"
 au FileType lua set comments=f:--
@@ -1024,6 +1004,14 @@ nnoremap goi :OpenBrowserSmartSearch http://www.iciba.com/<C-R>=expand("<cword>"
 " basic vim settiing
 "{{{
 "显示相对行号
+if has("gui_running")
+set guioptions-=m " 隐藏菜单栏
+set guioptions-=T " 隐藏工具栏
+set guioptions-=L " 隐藏左侧滚动条
+set guioptions-=r " 隐藏右侧滚动条
+set guioptions-=b " 隐藏底部滚动条
+set showtabline=0 " 隐藏Tab栏
+endif 
 set relativenumber
 " 显示行号
 set number
@@ -1157,7 +1145,7 @@ autocmd FileType vim setlocal foldmethod=marker
 "omnifunc
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd Filetype html setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType xml call XmlFileTypeInit()
 autocmd FileType unite call s:unite_my_settings()
 "}}}
 
@@ -1258,6 +1246,7 @@ function! BracketsFunc()
     endif
 endf
 function! XmlFileTypeInit()
+    set omnifunc=xmlcomplete#CompleteTags
     if filereadable("AndroidManifest.xml")
         set dict+=~/.vim/bundle/vim-dict/dict/android_xml.dic
     endif
@@ -1294,14 +1283,13 @@ function! JavaFileTypeInit()
     "nnoremap <leader>[ :tp
     inoremap <silent> <buffer> { <C-r>=BracketsFunc()<cr>
     inoremap <silent> <buffer> } <C-r>=JavaCloseBracket()<cr>
-    inoremap <silent> <buffer> <CR> <C-r>=MyEnterfunc()<Cr>
     inoremap <silent> <buffer> <leader>UU <esc>bgUwea
     inoremap <silent> <buffer> <leader>uu <esc>bguwea
     inoremap <silent> <buffer> <leader>ua <esc>bgulea
     inoremap <silent> <buffer> <leader>Ua <esc>bgUlea
     nnoremap <silent> <buffer> <leader>test :Unite -log -wrap output/shellcmd:mvn\ test\|ag\ '^[^[]'<cr><esc>
-    nnoremap <F4> :JCimportAdd<cr>
-    inoremap <F4> <esc>:JCimportAddI<cr>
+    nmap <silent><buffer> <F4> <Plug>(JavaComplete-Imports-Add)
+    imap <silent><buffer> <F4> <Plug>(JavaComplete-Imports-Add)
     "inoremap <silent> <buffer> . <C-r>=MyDotfunc()<Cr>
     "inoremap <silent> <buffer>  .  <C-r>=WSDAutoComplete('.')<CR>
     "inoremap <silent> <buffer>  A  <C-r>=WSDAutoComplete('A')<CR>
@@ -1332,10 +1320,13 @@ function! JavaFileTypeInit()
     "inoremap <silent> <buffer>  Z  <C-r>=WSDAutoComplete('Z')<CR>
     compiler mvn
     if !filereadable("pom.xml")&&!filereadable(".classpath")
-        inoremap <F5> <esc>:w<CR>:!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
-        nnoremap <F5> :!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
-        nnoremap <F6> :!java -cp classes/ -Djava.ext.dirs=lib/ com.wsdjeg.util.TestMethod
-        let g:JavaComplete_LibsPath = 'classes/:lib/:/home/wsdjeg/tools/apache-tomcat-8.0.24/lib'
+        "inoremap <F5> <esc>:w<CR>:!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
+        "nnoremap <F5> :!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
+        "nnoremap <F6> :!java -cp classes/ -Djava.ext.dirs=lib/ com.wsdjeg.util.TestMethod
+        "let g:JavaComplete_LibsPath = 'classes/:lib/:/home/wsdjeg/tools/apache-tomcat-8.0.24/lib'
+        let g:syntastic_java_javac_options = '-d bin'
+        let g:syntastic_java_javac_classpath="bin"
+        let g:syntastic_java_javac_autoload_maven_classpath=0
     elseif !filereadable("pom.xml")&&filereadable(".classpath")
         let g:syntastic_java_javac_options = '-d bin'
         let g:syntastic_java_javac_classpath="bin"
@@ -1479,4 +1470,13 @@ function! s:check_if_expand_tab()
         " we use original vim setting
     endif
 endfunction
-"}}}
+function MyEnterfunc()
+    if pumvisible()
+        return "\<esc>a"
+    else
+    if getline('.')[col('.') - 2]=="{"&&getline('.')[col('.')-1]=="}"
+        return "\<Enter>\<esc>ko"
+    else
+        return "\<Enter>"
+    endif
+endf
