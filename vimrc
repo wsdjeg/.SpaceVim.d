@@ -149,6 +149,9 @@ if count(s:settings.plugin_groups, 'unite') "{{{
     NeoBundle 'ujihisa/unite-font'
     NeoBundle 't9md/vim-unite-ack'
     NeoBundle 'mileszs/ack.vim'
+    NeoBundle 'rking/ag.vim'
+    let g:ag_prg="ag  --vimgrep"
+    let g:ag_working_path_mode="r"
     NeoBundle 'dyng/ctrlsf.vim'
     NeoBundle 'daisuzu/unite-adb'
     NeoBundle 'osyo-manga/unite-airline_themes'
@@ -166,7 +169,7 @@ if count(s:settings.plugin_groups, 'unite') "{{{
     "NeoBundle 'mopp/googlesuggest-source.vim'
     NeoBundle 'ujihisa/unite-colorscheme'
     NeoBundle 'mattn/unite-gist'
-    NeoBundle 'klen/unite-radio.vim'
+    "NeoBundle 'klen/unite-radio.vim'
     NeoBundle 'tacroe/unite-mark'
     NeoBundle 'tacroe/unite-alias'
     "NeoBundle 'ujihisa/quicklearn'
@@ -489,10 +492,6 @@ if count(s:settings.plugin_groups, 'ctrlp') "{{{
 endif "}}}
 
 
-NeoBundle 'rking/ag.vim'
-let g:agprg="ag  --vimgrep"
-let g:ag_working_path_mode="r"
-
 if count(s:settings.plugin_groups, 'autocomplete') "{{{
     NeoBundle 'honza/vim-snippets'
     if s:settings.autocomplete_method == 'ycm' "{{{
@@ -763,7 +762,6 @@ NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'itchyny/calendar.vim'
 "配合fcitx输入框架,在离开插入模式时自动切换到英文,在同一个缓冲区再次进入插入模式时回复到原来的输入状态
 NeoBundle 'lilydjwg/fcitx.vim'
-"NeoBundle 'mileszs/ack.vim'
 NeoBundle 'junegunn/goyo.vim'
 function! s:goyo_enter()
     silent !tmux set status off

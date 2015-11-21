@@ -116,7 +116,7 @@ if ! shopt -oq posix; then
   fi
 fi
 GIT_PROMPT_ONLY_IN_REPO=1
-GIT_PROMPT_THEME=Solarized
+GIT_PROMPT_THEME=Single_line_Solarized
 source ~/.bash-git-prompt/gitprompt.sh
 
 if [[ $- == *i* ]]
