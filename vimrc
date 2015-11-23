@@ -531,7 +531,7 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
         inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
         inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
         autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-        inoremap <silent> <buffer> <CR> <C-r>=MyEnterfunc()<Cr>
+        inoremap <silent> <CR> <C-r>=MyEnterfunc()<Cr>
         let g:neobundle#install_process_timeout = 1500
     else
         NeoBundle 'Shougo/neosnippet-snippets'
@@ -667,6 +667,7 @@ NeoBundleLazy 'wavded/vim-stylus', {'autoload':{'filetypes':['styl']}}
 NeoBundleLazy 'digitaltoad/vim-jade', {'autoload':{'filetypes':['jade']}}
 NeoBundleLazy 'juvenn/mustache.vim', {'autoload':{'filetypes':['mustache']}}
 "NeoBundleLazy 'gregsexton/MatchTag', {'autoload':{'filetypes':['html','xml']}}
+NeoBundle 'Valloric/MatchTagAlways'
 
 "javascript plugins
 

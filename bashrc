@@ -124,3 +124,5 @@ then
     bind '"\e[A": history-search-backward'
     bind '"\e[B": history-search-forward'
 fi
+export ANDROID_HOME="$HOME/tools/android-sdk-linux"
+export PATH="$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH"
