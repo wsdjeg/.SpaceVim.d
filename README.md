@@ -4,6 +4,8 @@
 
 ![check](https://github.com/wsdjeg/DotFiles/blob/master/pic/check.png)
 
+![import](https://github.com/wsdjeg/DotFiles/blob/master/pic/import.png)
+
 # Getting Started
 
 ## INSTALL
@@ -15,7 +17,8 @@
 
 install vim with lua e.g.
 ```shell
-$ sudo apt-get install vim-nox
+$ sudo apt-get install vim-gnome
+# by install gvim you also can use vim in command
 ```
 
 configration for vim

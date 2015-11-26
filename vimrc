@@ -720,16 +720,14 @@ let g:user_emmet_settings = {
 "profile start vim-javacomplete2.log
 "profile! file */vim-javacomplete2/*
 NeoBundle 'scrooloose/syntastic'
-let g:syntastic_java_javac_delete_output = 0
 let g:syntastic_java_javac_config_file_enabled = 1
+if filereadable('pom.xml')
+    let g:syntastic_java_javac_delete_output = 0
+endif
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
-let g:syntastic_error_symbol = '✗'
-let g:syntastic_style_error_symbol = '✠'
-let g:syntastic_warning_symbol = '∆'
-let g:syntastic_style_warning_symbol = '≈'
 NeoBundle 'syngan/vim-vimlint', {
             \ 'depends' : 'ynkdir/vim-vimlparser'}
 let g:syntastic_vimlint_options = {
@@ -1266,43 +1264,15 @@ function! JavaFileTypeInit()
                 \ "    return %varname%;\n" .
                 \ "}"
     execute "source ~/.vim/bundle/java_getset.vim/java_getset.vim"
-    "add openjdk-8-src tags
-    set tags+=/home/wsdjeg/others/openjdk-8-src/tags
     set omnifunc=javacomplete#Complete
-    "add android16 tags
-    if filereadable("AndroidManifest.xml")
-        set tags+=/home/wsdjeg/others/android-sources-6.0r1/tags
-        let g:JavaComplete_SourcesPath = "target/generated-sources/r"
-    endif
     inoremap <silent> <buffer> { <C-r>=BracketsFunc()<cr>
     inoremap <silent> <buffer> } <C-r>=JavaCloseBracket()<cr>
     inoremap <silent> <buffer> <leader>UU <esc>bgUwea
     inoremap <silent> <buffer> <leader>uu <esc>bguwea
     inoremap <silent> <buffer> <leader>ua <esc>bgulea
     inoremap <silent> <buffer> <leader>Ua <esc>bgUlea
-    nnoremap <silent> <buffer> <leader>test :Unite -log -wrap output/shellcmd:mvn\ test\|ag\ '^[^[]'<cr><esc>
     nmap <silent><buffer> <F4> <Plug>(JavaComplete-Imports-Add)
     imap <silent><buffer> <F4> <Plug>(JavaComplete-Imports-Add)
-    if !filereadable("pom.xml")&&!filereadable(".classpath")
-        "inoremap <F5> <esc>:w<CR>:!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
-        "nnoremap <F5> :!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
-        "nnoremap <F6> :!java -cp classes/ -Djava.ext.dirs=lib/ com.wsdjeg.util.TestMethod
-        "let g:JavaComplete_LibsPath = 'classes/:lib/:/home/wsdjeg/tools/apache-tomcat-8.0.24/lib'
-        let g:syntastic_java_javac_options = '-d bin'
-        let g:syntastic_java_javac_classpath="bin"
-        let g:syntastic_java_javac_autoload_maven_classpath=0
-    elseif !filereadable("pom.xml")&&filereadable(".classpath")
-        let g:syntastic_java_javac_options = '-d bin'
-        let g:syntastic_java_javac_classpath="bin"
-        let g:syntastic_java_javac_autoload_maven_classpath=0
-    else
-        "add struts2-core tags
-        set tags+=/home/wsdjeg/others/struts/core/tags
-        "add tomcat70 tags
-        set tags+=/home/wsdjeg/others/tomcat70/tags
-        "add hibernate-core tags
-        set tags+=/home/wsdjeg/others/hibernate-orm/hibernate-core/src/main/java/tags
-    endif
 endf
 function! WSDAutoComplete(char)
     if(getline(".")=~?'^\s*.*\/\/')==0
