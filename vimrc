@@ -164,6 +164,7 @@ if count(s:settings.plugin_groups, 'unite') "{{{
     NeoBundle 'Shougo/unite-session'
     NeoBundle 'osyo-manga/unite-quickfix'
     NeoBundle 'Shougo/vimfiler.vim'
+
     "NeoBundle 'mattn/webapi-vim'
     "NeoBundle 'mattn/googlesuggest-complete-vim'
     "NeoBundle 'mopp/googlesuggest-source.vim'
@@ -701,6 +702,7 @@ let g:JavaComplete_MavenRepositoryDisable = 0
 NeoBundle 'wsdjeg/vim-dict'
 NeoBundle 'wsdjeg/java_getset.vim'
 NeoBundle 'wsdjeg/JavaUnit.vim'
+NeoBundle 'wsdjeg/Mysql.vim'
 let g:JavaUnit_key = "<leader>ooo"
 NeoBundle 'vim-jp/vim-java'
 NeoBundle 'bling/vim-airline'
@@ -719,11 +721,9 @@ let g:user_emmet_settings = {
 " use this two command to find how long the plugin take!
 "profile start vim-javacomplete2.log
 "profile! file */vim-javacomplete2/*
-NeoBundle 'scrooloose/syntastic'
+NeoBundle 'wsdjeg/syntastic'
 let g:syntastic_java_javac_config_file_enabled = 1
-if filereadable('pom.xml')
-    let g:syntastic_java_javac_delete_output = 0
-endif
+let g:syntastic_java_javac_delete_output = 0
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
@@ -747,7 +747,7 @@ NeoBundle 'easymotion/vim-easymotion'
 NeoBundle 'MarcWeber/vim-addon-mw-utils'
 "NeoBundle 'tomtom/tlib_vim'
 NeoBundle 'airblade/vim-rooter'
-let g:rooter_patterns = ['Rakefile' , 'pom.xml' , 'web.xml' , '.git/']
+"let g:rooter_patterns = ['Rakefile' , 'pom.xml' , 'web.xml' , '.git/']
 NeoBundle 'Yggdroot/indentLine'
 let g:indentLine_color_term = 239
 let g:indentLine_color_gui = '#09AA08'
@@ -998,12 +998,12 @@ nnoremap goi :OpenBrowserSmartSearch http://www.iciba.com/<C-R>=expand("<cword>"
 "{{{
 "显示相对行号
 if has("gui_running")
-set guioptions-=m " 隐藏菜单栏
-set guioptions-=T " 隐藏工具栏
-set guioptions-=L " 隐藏左侧滚动条
-set guioptions-=r " 隐藏右侧滚动条
-set guioptions-=b " 隐藏底部滚动条
-set showtabline=0 " 隐藏Tab栏
+    set guioptions-=m " 隐藏菜单栏
+    set guioptions-=T " 隐藏工具栏
+    set guioptions-=L " 隐藏左侧滚动条
+    set guioptions-=r " 隐藏右侧滚动条
+    set guioptions-=b " 隐藏底部滚动条
+    set showtabline=0 " 隐藏Tab栏
 endif 
 set relativenumber
 " 显示行号
@@ -1107,7 +1107,7 @@ vnoremap <C-S-Up> :m '<-2<CR>gv=gv
 inoremap ( ()<Esc>i
 inoremap [ []<Esc>i
 inoremap { {}<Esc>i
-autocmd Syntax html,vim inoremap < <lt>><Esc>i| inoremap > <c-r>=ClosePair('>')<CR> |inoremap " "
+autocmd Syntax html,vim inoremap <buffer> < <lt>><Esc>i| inoremap <buffer>  > <c-r>=ClosePair('>')<CR> |inoremap <buffer>  " "
 inoremap ) <c-r>=ClosePair(')')<CR>
 inoremap ] <c-r>=ClosePair(']')<CR>
 inoremap } <c-r>=ClosePair('}')<CR>
@@ -1351,17 +1351,6 @@ function! JspFileTypeInit()
     inoremap . <c-r>=OnmiConfigForJsp()<cr>
     nnoremap <F4> :JCimportAdd<cr>
     inoremap <F4> <esc>:JCimportAddI<cr>
-    compiler mvn
-    if !filereadable("pom.xml")&&!filereadable(".classpath")
-        inoremap <F5> <esc>:w<CR>:!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
-        nnoremap <F5> :!javac -cp classes/ -Djava.ext.dirs=lib/ -d classes/ % <CR>
-        nnoremap <F6> :!java -cp classes/ -Djava.ext.dirs=lib/ com.wsdjeg.util.TestMethod
-        let g:JavaComplete_LibsPath = 'classes/:lib/:/home/wsdjeg/tools/apache-tomcat-8.0.24/lib'
-    else
-        no <F9> :make clean<CR><CR>
-        no <F5> <up>:wa<CR> :make clean compile<CR><CR>
-        no <F6> :make exec:exec<CR>
-    endif
 endfunction
 function! s:check_if_expand_tab()
     let has_noexpandtab = search('^\t','wn')
