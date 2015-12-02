@@ -163,7 +163,7 @@ if count(s:settings.plugin_groups, 'unite') "{{{
     NeoBundle 'voi/unite-ctags'
     NeoBundle 'Shougo/unite-session'
     NeoBundle 'osyo-manga/unite-quickfix'
-    NeoBundle 'Shougo/vimfiler.vim'
+    NeoBundle 'Shougo/vimfiler'
 
     "NeoBundle 'mattn/webapi-vim'
     "NeoBundle 'mattn/googlesuggest-complete-vim'
@@ -883,15 +883,8 @@ au FileType c,cpp,java,javascript set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:
 au FileType cs set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,f:///,f://
 au FileType vim set comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",f:\"
 au FileType lua set comments=f:--
-
-" if edit python scripts, check if have \t. ( python said: the programme can only use \t or not, but can't use them together )
 au FileType python,coffee call s:check_if_expand_tab()
 
-
-"for vimfiler {{{
-let g:vimfiler_as_default_explorer = 1
-
-"}}}
 
 
 "for buftabs {{{
