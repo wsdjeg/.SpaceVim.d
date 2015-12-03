@@ -247,11 +247,6 @@ if count(s:settings.plugin_groups, 'unite') "{{{
                 \'Gcd'],
                 \]
 
-    if executable('jvgrep')
-        let g:unite_source_grep_command = 'jvgrep'
-        let g:unite_source_grep_default_opts = '-i --exclude ''\.(git|svn|hg|bzr)'''
-        let g:unite_source_grep_recursive_opt = '-R'
-    endif
 
     let g:unite_source_grep_max_candidates = 200
 
@@ -270,12 +265,14 @@ if count(s:settings.plugin_groups, 'unite') "{{{
         let g:unite_source_grep_default_opts =
                     \ '-i --no-heading --no-color -k -H'
         let g:unite_source_grep_recursive_opt = ''
-    endif
-
-    if executable('ack')
+    elseif executable('ack')
         let g:unite_source_grep_command = 'ack'
         let g:unite_source_grep_default_opts = '-i --no-heading --no-color -k -H'
         let g:unite_source_grep_recursive_opt = ''
+    elseif executable('jvgrep')
+        let g:unite_source_grep_command = 'jvgrep'
+        let g:unite_source_grep_default_opts = '-i --exclude ''\.(git|svn|hg|bzr)'''
+        let g:unite_source_grep_recursive_opt = '-R'
     endif
 
     nnoremap <leader>gd :execute 'Unite  -auto-preview -start-insert -no-split  gtags/def:'.expand('<cword>')<CR>
@@ -546,17 +543,14 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
         smap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
     endif "}}}
     if s:settings.autocomplete_method == 'neocomplete' "{{{
-        "NeoBundleLazy 'Shougo/neocomplete.vim', {'autoload':{'insert':1}, 'vim_version':'7.3.885'} "{{{
-        "let g:neocomplete#enable_at_startup=1
-        "let g:neocomplete#data_directory=s:get_cache_dir('neocomplete')
         NeoBundle 'Shougo/neocomplete'
-        "Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
-        " Disable AutoComplPop.
+        let g:neocomplete#data_directory='~/.cache/neocomplete'
         let g:acp_enableAtStartup = 0
-        " Use neocomplete.
         let g:neocomplete#enable_at_startup = 1
         " Use smartcase.
         let g:neocomplete#enable_smart_case = 1
+        let g:neocomplete#enable_camel_case = 1
+        let g:neocomplete#enable_fuzzy_completion = 1
         " Set minimum syntax keyword length.
         let g:neocomplete#sources#syntax#min_keyword_length = 3
         let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
@@ -595,7 +589,7 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
         "inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
 
         " AutoComplPop like behavior.
-        "let g:neocomplete#enable_auto_select = 1
+        let g:neocomplete#enable_auto_select = 1
 
         " Shell like behavior(not recommended).
         "set completeopt+=longest
@@ -604,11 +598,11 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
         "inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
 
         " Enable omni completion.
-        "autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-        "autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-        "autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-        "autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-        "autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+        autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+        autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+        autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+        autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+        autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
         " Enable heavy omni completion.
         if !exists('g:neocomplete#sources#omni#input_patterns')
@@ -621,6 +615,11 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
         " For perlomni.vim setting.
         " https://github.com/c9s/perlomni.vim
         let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+        let g:neocomplete#sources#omni#input_patterns.java=
+            \ '[^. *\t]\.\w*\|\h\w*::'
+        let g:neocomplete#force_omni_input_patterns = {}
+        let g:neocomplete#force_omni_input_patterns.java =
+            \ '[^. *\t]\.\w*\|\h\w*::'
 
 
         "}}}
