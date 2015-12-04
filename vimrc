@@ -720,13 +720,13 @@ let g:user_emmet_settings = {
 " use this two command to find how long the plugin take!
 "profile start vim-javacomplete2.log
 "profile! file */vim-javacomplete2/*
-NeoBundle 'wsdjeg/syntastic'
+NeoBundle 'scrooloose/syntastic'
 let g:syntastic_java_javac_config_file_enabled = 1
 let g:syntastic_java_javac_delete_output = 0
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_wq = 0 
 NeoBundle 'syngan/vim-vimlint', {
             \ 'depends' : 'ynkdir/vim-vimlparser'}
 let g:syntastic_vimlint_options = {
