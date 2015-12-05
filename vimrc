@@ -30,17 +30,19 @@ endif
 let s:settings = {}
 let s:settings.default_indent = 2
 let s:settings.max_column = 120
-let s:settings.autocomplete_method = 'ycm'
+let s:settings.autocomplete_method = ''
 let s:settings.enable_cursorcolumn = 0
 let s:settings.enable_cursorline = 0
 let s:settings.use_colorscheme=0
 let s:settings.vim_help_language='en'
 let s:settings.colorscheme = 'solarized'
 
-if s:settings.autocomplete_method == 'ycm'
-    let s:settings.autocomplete_method = 'ycm'
-elseif has('lua')
+if has('lua')
     let s:settings.autocomplete_method = 'neocomplete'
+elseif s:settings.autocomplete_method == 'ycm'
+    let s:settings.autocomplete_method = 'ycm'
+else
+    let s:settings.autocomplete_method = 'neocomplcache'
 endif
 let s:settings.plugin_groups = []
 
@@ -492,6 +494,21 @@ endif "}}}
 
 if count(s:settings.plugin_groups, 'autocomplete') "{{{
     NeoBundle 'honza/vim-snippets'
+    NeoBundle 'SirVer/ultisnips'
+    let g:UltiSnipsExpandTrigger="<tab>"
+    let g:UltiSnipsJumpForwardTrigger="<tab>"
+    let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
+    let g:UltiSnipsSnippetsDir='~/DotFiles/snippets'
+    NeoBundle 'ervandew/supertab'
+    let g:SuperTabContextDefaultCompletionType = "<c-n>"
+    let g:SuperTabDefaultCompletionType = '<C-n>'
+    inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
+    inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
+    inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
+    inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
+    autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+    inoremap <silent> <CR> <C-r>=MyEnterfunc()<Cr>
+    let g:neobundle#install_process_timeout = 1500
     if s:settings.autocomplete_method == 'ycm' "{{{
         NeoBundle 'Valloric/YouCompleteMe'
         "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
@@ -516,33 +533,7 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
                     \   'lua' : ['.', ':'],
                     \   'erlang' : [':'],
                     \ }
-        NeoBundle 'SirVer/ultisnips'
-        let g:UltiSnipsExpandTrigger="<tab>"
-        let g:UltiSnipsJumpForwardTrigger="<tab>"
-        let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
-        let g:UltiSnipsSnippetsDir='~/DotFiles/snippets'
-        NeoBundle 'ervandew/supertab'
-        let g:SuperTabContextDefaultCompletionType = "<c-n>"
-        let g:SuperTabDefaultCompletionType = '<C-n>'
-        inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
-        inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-        inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
-        inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
-        autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-        inoremap <silent> <CR> <C-r>=MyEnterfunc()<Cr>
-        let g:neobundle#install_process_timeout = 1500
-    else
-        NeoBundle 'Shougo/neosnippet-snippets'
-        NeoBundle 'Shougo/neosnippet.vim' "{{{
-        let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets,~/.vim/snippets'
-        let g:neosnippet#enable_snipmate_compatibility=1
-
-        imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ? "\<C-n>" : "\<TAB>")
-        smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-        imap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
-        smap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
-    endif "}}}
-    if s:settings.autocomplete_method == 'neocomplete' "{{{
+    elseif s:settings.autocomplete_method == 'neocomplete' "{{{
         NeoBundle 'Shougo/neocomplete'
         let g:neocomplete#data_directory='~/.cache/neocomplete'
         let g:acp_enableAtStartup = 0
@@ -568,70 +559,41 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
         endif
         let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
-        " Plugin key-mappings.
-        inoremap <expr><C-g>     neocomplete#undo_completion()
-        inoremap <expr><C-l>     neocomplete#complete_common_string()
 
-        " Recommended key-mappings.
-        " <CR>: close popup and save indent.
-        inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-        function! s:my_cr_function()
-            return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-            " For no inserting <CR> key.
-            "return pumvisible() ? "\<C-y>" : "\<CR>"
-        endfunction
-        " <TAB>: completion.
+        " AutoComplPop like behavior.
+        let g:neocomplete#enable_auto_select = 0
+
+        if !exists('g:neocomplete#sources#omni#input_patterns')
+            let g:neocomplete#sources#omni#input_patterns = {}
+        endif
+
+        let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+        let g:neocomplete#sources#omni#input_patterns.java = '[^. *\t]\.\w*\|\h\w*::'
+        let g:neocomplete#force_omni_input_patterns = {}
+        "let g:neocomplete#force_omni_input_patterns.java = '^\s*'
         inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
         " <C-h>, <BS>: close popup and delete backword char.
         inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
         inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-        " Close popup by <Space>.
-        "inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+        inoremap <expr><C-y>  neocomplete#close_popup()
+        inoremap <expr><C-e>  neocomplete#cancel_popup()
 
-        " AutoComplPop like behavior.
-        let g:neocomplete#enable_auto_select = 1
+        NeoBundle 'Shougo/neosnippet-snippets'
+        NeoBundle 'Shougo/neosnippet.vim' "{{{
+        let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets,~/.vim/snippets'
+        let g:neosnippet#enable_snipmate_compatibility=1
 
-        " Shell like behavior(not recommended).
-        "set completeopt+=longest
-        "let g:neocomplete#enable_auto_select = 1
-        "let g:neocomplete#disable_auto_complete = 1
-        "inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-
-        " Enable omni completion.
-        autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-        autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-        autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-        autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-        autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-        " Enable heavy omni completion.
-        if !exists('g:neocomplete#sources#omni#input_patterns')
-            let g:neocomplete#sources#omni#input_patterns = {}
-        endif
-        "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-        "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-        "let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
-        " For perlomni.vim setting.
-        " https://github.com/c9s/perlomni.vim
-        let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-        let g:neocomplete#sources#omni#input_patterns.java=
-            \ '[^. *\t]\.\w*\|\h\w*::'
-        let g:neocomplete#force_omni_input_patterns = {}
-        let g:neocomplete#force_omni_input_patterns.java =
-            \ '[^. *\t]\.\w*\|\h\w*::'
-
-
-        "}}}
-    endif "}}}
-    if s:settings.autocomplete_method == 'neocomplcache' "{{{
+        imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ? "\<C-n>" : "\<TAB>")
+        smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+        imap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
+        smap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
+    elseif s:settings.autocomplete_method == 'neocomplcache' "{{{
         NeoBundleLazy 'Shougo/neocomplcache.vim', {'autoload':{'insert':1}} "{{{
         let g:neocomplcache_enable_at_startup=1
         let g:neocomplcache_temporary_dir=s:get_cache_dir('neocomplcache')
         let g:neocomplcache_enable_fuzzy_completion=1
         "}}}
     endif "}}}
-
 endif "}}}
 
 if count(s:settings.plugin_groups, 'colorscheme') "{{{
@@ -864,25 +826,6 @@ endif
 NeoBundleCheck
 
 "}}}
-autocmd FileType jsp call JspFileTypeInit()
-autocmd FileType html,css,jsp EmmetInstall
-autocmd FileType java call JavaFileTypeInit()
-autocmd BufEnter,WinEnter,InsertLeave * set cursorline
-autocmd BufLeave,WinLeave,InsertEnter * set nocursorline
-au BufReadPost *
-            \ if line("'\"") > 0 && line("'\"") <= line("$") |
-            \   exe "normal g`\"" |
-            \ endif
-au BufNewFile,BufEnter * set cpoptions+=d " NOTE: ctags find the tags file from the current path instead of the path of currect file
-au BufEnter * :syntax sync fromstart " ensure every file does syntax highlighting (full)
-au BufNewFile,BufRead *.avs set syntax=avs " for avs syntax file.
-au FileType text setlocal textwidth=78 " for all text files set 'textwidth' to 78 characters.
-au FileType c,cpp,cs,swig set nomodeline " this will avoid bug in my project with namespace ex, the vim will tree ex:: as modeline.
-au FileType c,cpp,java,javascript set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,f://
-au FileType cs set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,f:///,f://
-au FileType vim set comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",f:\"
-au FileType lua set comments=f:--
-au FileType python,coffee call s:check_if_expand_tab()
 
 
 
@@ -1126,12 +1069,35 @@ noremap <silent><leader>nu :call ToggleNumber()<CR>
 
 
 "autocmds
+autocmd FileType jsp call JspFileTypeInit()
+autocmd FileType html,css,jsp EmmetInstall
+autocmd FileType java call JavaFileTypeInit()
+autocmd BufEnter,WinEnter,InsertLeave * set cursorline
+autocmd BufLeave,WinLeave,InsertEnter * set nocursorline
+autocmd BufReadPost *
+            \ if line("'\"") > 0 && line("'\"") <= line("$") |
+            \   exe "normal g`\"" |
+            \ endif
+autocmd BufNewFile,BufEnter * set cpoptions+=d " NOTE: ctags find the tags file from the current path instead of the path of currect file
+autocmd BufEnter * :syntax sync fromstart " ensure every file does syntax highlighting (full)
+autocmd BufNewFile,BufRead *.avs set syntax=avs " for avs syntax file.
+autocmd FileType text setlocal textwidth=78 " for all text files set 'textwidth' to 78 characters.
+autocmd FileType c,cpp,cs,swig set nomodeline " this will avoid bug in my project with namespace ex, the vim will tree ex:: as modeline.
+autocmd FileType c,cpp,java,javascript set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,f://
+autocmd FileType cs set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,f:///,f://
+autocmd FileType vim set comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",f:\"
+autocmd FileType lua set comments=f:--
+autocmd FileType python,coffee call s:check_if_expand_tab()
 autocmd FileType vim setlocal foldmethod=marker
-"omnifunc
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd Filetype html setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType xml call XmlFileTypeInit()
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType unite call s:unite_my_settings()
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 "}}}
 
 "functions
@@ -1384,7 +1350,11 @@ function! s:check_if_expand_tab()
 endfunction
 function MyEnterfunc()
     if pumvisible()
-        return "\<esc>a"
+        if s:settings.autocomplete_method == 'neocomplete'
+            return "\<C-y>"
+        else
+            return "\<esc>a"
+        endif
     elseif getline('.')[col('.') - 2]=="{"&&getline('.')[col('.')-1]=="}"
         return "\<Enter>\<esc>ko"
     else
