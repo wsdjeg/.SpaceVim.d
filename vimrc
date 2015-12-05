@@ -535,6 +535,11 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
                     \ }
     elseif s:settings.autocomplete_method == 'neocomplete' "{{{
         NeoBundle 'Shougo/neocomplete'
+        NeoBundle 'Shougo/neco-syntax'
+        NeoBundle 'Shougo/context_filetype.vim'
+        NeoBundle 'Shougo/neoinclude.vim'
+        NeoBundle 'Shougo/neopairs.vim'
+        "NeoBundle 'skeept/Ultisnips-neocomplete-unite'
         let g:neocomplete#data_directory='~/.cache/neocomplete'
         let g:acp_enableAtStartup = 0
         let g:neocomplete#enable_at_startup = 1
@@ -581,7 +586,7 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
 
         NeoBundle 'Shougo/neosnippet-snippets'
         NeoBundle 'Shougo/neosnippet.vim' "{{{
-        let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets,~/.vim/snippets'
+        let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
         let g:neosnippet#enable_snipmate_compatibility=1
 
         imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ? "\<C-n>" : "\<TAB>")
