@@ -436,18 +436,13 @@ if count(s:settings.plugin_groups, 'ctrlp') "{{{
     let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
     "let g:ctrlp_map = ',,'
     "let g:ctrlp_open_multiple_files = 'v'
-    set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class
+    set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class,tags
     let g:ctrlp_custom_ignore = {
                 \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-                \ 'file': '\v\.(exe|so|dll)$',
+                \ 'file': '\v\.(exe|so|dll|ttf|png)$',
                 \ 'link': 'some_bad_symbolic_links',
                 \ }
-    let g:ctrlp_user_command = {
-                \ 'types': {
-                \ 1: ['.git', 'cd %s && git ls-files'],
-                \ 2: ['.hg', 'hg --cwd %s locate -I .'],
-                \ },
-                \ 'fallback': 'ag %s -i --nocolor --nogroup --hidden
+    let g:ctrlp_user_command = ['ag %s -i --nocolor --nogroup --hidden
                 \ --ignore out
                 \ --ignore .git
                 \ --ignore .svn
@@ -455,7 +450,7 @@ if count(s:settings.plugin_groups, 'ctrlp') "{{{
                 \ --ignore .DS_Store
                 \ --ignore "**/*.pyc"
                 \ -g ""'
-                \ }
+                \ ]
 
     let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch'  }
 
