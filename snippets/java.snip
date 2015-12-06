@@ -1,0 +1,15 @@
+snippet pmain
+	public static void main (String[] args) {
+		${0}
+	}
+
+snippet pl
+	System.out.println(${0});
+
+snippet syso
+    System.out.println(${0});
+
+snippet cl
+    class ${1:`expand('%:t:r')`} {
+        ${0}
+    }

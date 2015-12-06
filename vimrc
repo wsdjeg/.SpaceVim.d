@@ -586,7 +586,7 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
 
         NeoBundle 'Shougo/neosnippet-snippets'
         NeoBundle 'Shougo/neosnippet.vim' "{{{
-        let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
+        let g:neosnippet#snippets_directory='~/DotFiles/snippets'
         let g:neosnippet#enable_snipmate_compatibility=1
 
         imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ? "\<C-n>" : "\<TAB>")
