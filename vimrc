@@ -1229,6 +1229,7 @@ function! JavaFileTypeInit()
                 \ "}"
     execute "source ~/.vim/bundle/java_getset.vim/java_getset.vim"
     set omnifunc=javacomplete#Complete
+    set tags +=~/others/openjdk_8_src/java/tags
     inoremap <silent> <buffer> { <C-r>=BracketsFunc()<cr>
     inoremap <silent> <buffer> } <C-r>=JavaCloseBracket()<cr>
     inoremap <silent> <buffer> <leader>UU <esc>bgUwea
