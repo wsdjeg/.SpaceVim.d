@@ -438,7 +438,7 @@ if count(s:settings.plugin_groups, 'ctrlp') "{{{
     "let g:ctrlp_open_multiple_files = 'v'
     set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class,tags
     let g:ctrlp_custom_ignore = {
-                \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+                \ 'dir':  '\v[\/]\.(git|hg|svn)$|target',
                 \ 'file': '\v\.(exe|so|dll|ttf|png)$',
                 \ 'link': 'some_bad_symbolic_links',
                 \ }
@@ -494,22 +494,22 @@ endif "}}}
 
 if count(s:settings.plugin_groups, 'autocomplete') "{{{
     NeoBundle 'honza/vim-snippets'
-    NeoBundle 'SirVer/ultisnips'
-    let g:UltiSnipsExpandTrigger="<tab>"
-    let g:UltiSnipsJumpForwardTrigger="<tab>"
-    let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
-    let g:UltiSnipsSnippetsDir='~/DotFiles/snippets'
-    NeoBundle 'ervandew/supertab'
-    let g:SuperTabContextDefaultCompletionType = "<c-n>"
-    let g:SuperTabDefaultCompletionType = '<C-n>'
+    inoremap <silent> <CR> <C-r>=MyEnterfunc()<Cr>
     inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
     inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
     inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
     inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
-    autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-    inoremap <silent> <CR> <C-r>=MyEnterfunc()<Cr>
-    let g:neobundle#install_process_timeout = 1500
     if s:settings.autocomplete_method == 'ycm' "{{{
+        NeoBundle 'SirVer/ultisnips'
+        let g:UltiSnipsExpandTrigger="<tab>"
+        let g:UltiSnipsJumpForwardTrigger="<tab>"
+        let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
+        let g:UltiSnipsSnippetsDir='~/DotFiles/snippets'
+        NeoBundle 'ervandew/supertab'
+        let g:SuperTabContextDefaultCompletionType = "<c-n>"
+        let g:SuperTabDefaultCompletionType = '<C-n>'
+        autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+        let g:neobundle#install_process_timeout = 1500
         NeoBundle 'Valloric/YouCompleteMe'
         "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
         "let g:ycm_confirm_extra_conf = 0
