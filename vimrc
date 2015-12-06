@@ -310,10 +310,14 @@ if count(s:settings.plugin_groups, 'unite') "{{{
     nnoremap <silent><leader>u  :<C-u>Unite -start-insert mapping<CR>
 
     "" Execute help.
-    nnoremap <silent><leader>h  :Unite -start-insert -no-split help<CR>
+    nnoremap <C-h>  :<C-u>Unite -start-insert help<CR>
     " Execute help by cursor keyword.
     nnoremap <silent> g<C-h>  :<C-u>UniteWithCursorWord help<CR>
     "" Tag search
+    autocmd BufEnter *
+                \   if empty(&buftype)
+                \|      nnoremap <buffer> <C-]> :<C-u>UniteWithCursorWord -immediately tag<CR>
+                \|  endif
 
     """ For searching the word in the cursor in tag file
     nnoremap <silent><leader>f :Unite -no-split tag/include:<C-R><C-w><CR>
@@ -419,6 +423,7 @@ if count(s:settings.plugin_groups, 'ctrlp') "{{{
     NeoBundle 'sgur/ctrlp-extensions.vim'
     NeoBundle 'FelikZ/ctrlp-py-matcher'
     NeoBundle 'JazzCore/ctrlp-cmatcher'
+    NeoBundle 'ompugao/ctrlp-z'
     let g:ctrlp_map = '<c-p>'
     let g:ctrlp_cmd = 'CtrlP'
     let g:ctrlp_working_path_mode = 'ra'
@@ -688,13 +693,13 @@ let g:user_emmet_settings = {
 " use this two command to find how long the plugin take!
 "profile start vim-javacomplete2.log
 "profile! file */vim-javacomplete2/*
-NeoBundle 'scrooloose/syntastic'
+NeoBundle 'wsdjeg/syntastic'
 let g:syntastic_java_javac_config_file_enabled = 1
 let g:syntastic_java_javac_delete_output = 0
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0 
+let g:syntastic_check_on_wq = 0
 NeoBundle 'syngan/vim-vimlint', {
             \ 'depends' : 'ynkdir/vim-vimlparser'}
 let g:syntastic_vimlint_options = {
@@ -821,7 +826,7 @@ NeoBundle 'ianva/vim-youdao-translater'
 vnoremap <silent> <C-l> <Esc>:Ydv<CR>
 nnoremap <silent> <C-l> <Esc>:Ydc<CR>
 noremap <leader>yd :Yde<CR>
-
+NeoBundle 'junegunn/vim-plug'
 call neobundle#end()
 filetype plugin indent on
 syntax on
@@ -1055,9 +1060,6 @@ inoremap } <c-r>=ClosePair('}')<CR>
 autocmd Syntax java inoremap } <c-r>=CloseBracket()<CR>
 inoremap " <c-r>=QuoteDelim('"')<CR>
 inoremap ' <c-r>=QuoteDelim("'")<CR>
-"for fzf
-set rtp+=~/.fzf
-nnoremap <Leader>fz :FZF<CR>
 
 "for vim-fasd.vim
 nnoremap <Leader>z :Z<CR>
@@ -1368,3 +1370,8 @@ function MyEnterfunc()
         return "\<Enter>"
     endif
 endf
+call plug#begin('~/.vim/plugged')
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+"for fzf
+nnoremap <Leader>fz :FZF<CR>
+call plug#end()
