@@ -37,7 +37,9 @@ let s:settings.use_colorscheme=0
 let s:settings.vim_help_language='en'
 let s:settings.colorscheme = 'solarized'
 
-if has('lua')
+if has('nvim')
+    let s:settings.autocomplete_method = 'deoplete'
+elseif has('lua')
     let s:settings.autocomplete_method = 'neocomplete'
 elseif s:settings.autocomplete_method == 'ycm'
     let s:settings.autocomplete_method = 'ycm'
@@ -535,10 +537,6 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
                     \ }
     elseif s:settings.autocomplete_method == 'neocomplete' "{{{
         NeoBundle 'Shougo/neocomplete'
-        NeoBundle 'Shougo/neco-syntax'
-        NeoBundle 'Shougo/context_filetype.vim'
-        NeoBundle 'Shougo/neoinclude.vim'
-        NeoBundle 'Shougo/neopairs.vim'
         "NeoBundle 'skeept/Ultisnips-neocomplete-unite'
         let g:neocomplete#data_directory='~/.cache/neocomplete'
         let g:acp_enableAtStartup = 0
@@ -584,22 +582,35 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
         inoremap <expr><C-y>  neocomplete#close_popup()
         inoremap <expr><C-e>  neocomplete#cancel_popup()
 
-        NeoBundle 'Shougo/neosnippet-snippets'
-        NeoBundle 'Shougo/neosnippet.vim' "{{{
-        let g:neosnippet#snippets_directory='~/DotFiles/snippets'
-        let g:neosnippet#enable_snipmate_compatibility=1
-
-        imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ? "\<C-n>" : "\<TAB>")
-        smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-        imap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
-        smap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
     elseif s:settings.autocomplete_method == 'neocomplcache' "{{{
         NeoBundleLazy 'Shougo/neocomplcache.vim', {'autoload':{'insert':1}} "{{{
         let g:neocomplcache_enable_at_startup=1
         let g:neocomplcache_temporary_dir=s:get_cache_dir('neocomplcache')
         let g:neocomplcache_enable_fuzzy_completion=1
-        "}}}
+    elseif s:settings.autocomplete_method == 'deoplete'
+        NeoBundle 'Shougo/deoplete.nvim'
+        let g:deoplete#enable_at_startup = 1
+        let g:deoplete#enable_ignore_case = 1
+        let g:deoplete#enable_smart_case = 1
+        let g:deoplete#enable_fuzzy_completion = 1
+		let g:deoplete#omni_patterns = {}
+		let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
+        inoremap <expr><C-h> deolete#mappings#smart_close_popup()."\<C-h>"
+        inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
     endif "}}}
+    NeoBundle 'Shougo/neco-syntax'
+    NeoBundle 'Shougo/context_filetype.vim'
+    NeoBundle 'Shougo/neoinclude.vim'
+    NeoBundle 'Shougo/neopairs.vim'
+    NeoBundle 'Shougo/neosnippet-snippets'
+    NeoBundle 'Shougo/neosnippet.vim' "{{{
+    let g:neosnippet#snippets_directory='~/DotFiles/snippets'
+    let g:neosnippet#enable_snipmate_compatibility=1
+
+    imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ? "\<C-n>" : "\<TAB>")
+    smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+    imap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
+    smap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
 endif "}}}
 
 if count(s:settings.plugin_groups, 'colorscheme') "{{{
@@ -811,7 +822,7 @@ endfunction
 NeoBundle 'wsdjeg/MarkDown.pl'
 NeoBundle 'wsdjeg/matchit.zip'
 NeoBundle 'tomasr/molokai'
-NeoBundle 'sjl/gundo.vim'
+NeoBundle 'simnalamburt/vim-mundo'
 nnoremap <silent> <F7> :GundoToggle<CR>
 NeoBundle 'nerdtree-ack'
 NeoBundle 'L9'
