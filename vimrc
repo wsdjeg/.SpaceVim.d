@@ -537,51 +537,51 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
                     \ }
     elseif s:settings.autocomplete_method == 'neocomplete' "{{{
         NeoBundle 'Shougo/neocomplete'
-        "NeoBundle 'skeept/Ultisnips-neocomplete-unite'
-        let g:neocomplete#data_directory='~/.cache/neocomplete'
-        let g:acp_enableAtStartup = 0
-        let g:neocomplete#enable_at_startup = 1
-        " Use smartcase.
-        let g:neocomplete#enable_smart_case = 1
-        let g:neocomplete#enable_camel_case = 1
-        let g:neocomplete#enable_ignore_case = 1
-        let g:neocomplete#enable_fuzzy_completion = 1
-        " Set minimum syntax keyword length.
-        let g:neocomplete#sources#syntax#min_keyword_length = 3
-        let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+        let s:hooks = neobundle#get_hooks("neocomplete")
+        function! s:hooks.on_source(bundle) abort
+            let g:neocomplete#data_directory='~/.cache/neocomplete'
+            let g:acp_enableAtStartup = 0
+            let g:neocomplete#enable_at_startup = 1
+            " Use smartcase.
+            let g:neocomplete#enable_smart_case = 1
+            let g:neocomplete#enable_camel_case = 1
+            let g:neocomplete#enable_ignore_case = 1
+            let g:neocomplete#enable_fuzzy_completion = 1
+            " Set minimum syntax keyword length.
+            let g:neocomplete#sources#syntax#min_keyword_length = 3
+            let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
-        " Define dictionary.
-        let g:neocomplete#sources#dictionary#dictionaries = {
-                    \ 'default' : '',
-                    \ 'vimshell' : $HOME.'/.vimshell_hist',
-                    \ 'scheme' : $HOME.'/.gosh_completions'
-                    \ }
+            " Define dictionary.
+            let g:neocomplete#sources#dictionary#dictionaries = {
+                        \ 'default' : '',
+                        \ 'vimshell' : $HOME.'/.vimshell_hist',
+                        \ 'scheme' : $HOME.'/.gosh_completions'
+                        \ }
 
-        " Define keyword.
-        if !exists('g:neocomplete#keyword_patterns')
-            let g:neocomplete#keyword_patterns = {}
-        endif
-        let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+            " Define keyword.
+            if !exists('g:neocomplete#keyword_patterns')
+                let g:neocomplete#keyword_patterns = {}
+            endif
+            let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
 
-        " AutoComplPop like behavior.
-        let g:neocomplete#enable_auto_select = 0
+            " AutoComplPop like behavior.
+            let g:neocomplete#enable_auto_select = 0
 
-        if !exists('g:neocomplete#sources#omni#input_patterns')
-            let g:neocomplete#sources#omni#input_patterns = {}
-        endif
+            if !exists('g:neocomplete#sources#omni#input_patterns')
+                let g:neocomplete#sources#omni#input_patterns = {}
+            endif
 
-        let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-        let g:neocomplete#sources#omni#input_patterns.java = '[^. *\t]\.\w*\|\h\w*::'
-        let g:neocomplete#force_omni_input_patterns = {}
-        "let g:neocomplete#force_omni_input_patterns.java = '^\s*'
-        inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-        " <C-h>, <BS>: close popup and delete backword char.
-        inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-        inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-        inoremap <expr><C-y>  neocomplete#close_popup()
-        inoremap <expr><C-e>  neocomplete#cancel_popup()
-
+            let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+            let g:neocomplete#sources#omni#input_patterns.java = '[^. *\t]\.\w*\|\h\w*::'
+            let g:neocomplete#force_omni_input_patterns = {}
+            "let g:neocomplete#force_omni_input_patterns.java = '^\s*'
+            " <C-h>, <BS>: close popup and delete backword char.
+            inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+            inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+            inoremap <expr><C-y>  neocomplete#close_popup()
+            inoremap <expr><C-e>  neocomplete#cancel_popup()
+        endfunction
     elseif s:settings.autocomplete_method == 'neocomplcache' "{{{
         NeoBundleLazy 'Shougo/neocomplcache.vim', {'autoload':{'insert':1}} "{{{
         let g:neocomplcache_enable_at_startup=1
@@ -589,14 +589,17 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
         let g:neocomplcache_enable_fuzzy_completion=1
     elseif s:settings.autocomplete_method == 'deoplete'
         NeoBundle 'Shougo/deoplete.nvim'
-        let g:deoplete#enable_at_startup = 1
-        let g:deoplete#enable_ignore_case = 1
-        let g:deoplete#enable_smart_case = 1
-        let g:deoplete#enable_fuzzy_completion = 1
-		let g:deoplete#omni_patterns = {}
-		let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
-        inoremap <expr><C-h> deolete#mappings#smart_close_popup()."\<C-h>"
-        inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
+        let s:hooks = neobundle#get_hooks("deoplete.nvim")
+        function! s:hooks.on_source(bundle)
+            let g:deoplete#enable_at_startup = 1
+            let g:deoplete#enable_ignore_case = 1
+            let g:deoplete#enable_smart_case = 1
+            let g:deoplete#enable_fuzzy_completion = 1
+            let g:deoplete#omni_patterns = {}
+            let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
+            inoremap <expr><C-h> deolete#mappings#smart_close_popup()."\<C-h>"
+            inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
+        endfunction
     endif "}}}
     NeoBundle 'Shougo/neco-syntax'
     NeoBundle 'Shougo/context_filetype.vim'
