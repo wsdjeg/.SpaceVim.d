@@ -253,18 +253,29 @@ if count(s:settings.plugin_groups, 'unite') "{{{
 
 
     let g:unite_source_grep_max_candidates = 200
-
-    if executable('ag')
+    if executable('hw')
+        " Use hw (highway)
+        " https://github.com/tkengo/highway
+        let g:unite_source_grep_command = 'hw'
+        let g:unite_source_grep_default_opts = '--no-group --no-color'
+        let g:unite_source_grep_recursive_opt = ''
+    elseif executable('ag')
+        " Use ag (the silver searcher)
+        " https://github.com/ggreer/the_silver_searcher
         let g:unite_source_grep_command = 'ag'
         let g:unite_source_grep_default_opts =
                     \ '-i --line-numbers --nocolor --nogroup --hidden --ignore ' .
                     \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
         let g:unite_source_grep_recursive_opt = ''
     elseif executable('pt')
+        " Use pt (the platinum searcher)
+        " https://github.com/monochromegane/the_platinum_searcher
         let g:unite_source_grep_command = 'pt'
         let g:unite_source_grep_default_opts = '--nogroup --nocolor'
         let g:unite_source_grep_recursive_opt = ''
     elseif executable('ack-grep')
+        " Use ack
+        " http://beyondgrep.com/
         let g:unite_source_grep_command = 'ack-grep'
         let g:unite_source_grep_default_opts =
                     \ '-i --no-heading --no-color -k -H'
@@ -274,6 +285,8 @@ if count(s:settings.plugin_groups, 'unite') "{{{
         let g:unite_source_grep_default_opts = '-i --no-heading --no-color -k -H'
         let g:unite_source_grep_recursive_opt = ''
     elseif executable('jvgrep')
+        " Use jvgrep
+        " https://github.com/mattn/jvgrep
         let g:unite_source_grep_command = 'jvgrep'
         let g:unite_source_grep_default_opts = '-i --exclude ''\.(git|svn|hg|bzr)'''
         let g:unite_source_grep_recursive_opt = '-R'
@@ -596,7 +609,10 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
             let g:deoplete#enable_smart_case = 1
             let g:deoplete#enable_fuzzy_completion = 1
             let g:deoplete#omni_patterns = {}
-            let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
+            "let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
+            let g:deoplete#omni#input_patterns = {}
+            "let g:deoplete#omni#input_patterns.java = '[^. *\t]\.\w*\|\h\w*::'
+            let g:deoplete#omni#input_patterns.java = ['[^. \t0-9]\.\w*','[^. \t0-9]\->\w*','[^. \t0-9]\::\w*']
             inoremap <expr><C-h> deolete#mappings#smart_close_popup()."\<C-h>"
             inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
         endfunction
@@ -682,6 +698,10 @@ let g:JavaComplete_MavenRepositoryDisable = 0
 "NeoBundle 'VJDE/VJDE'
 NeoBundle 'wsdjeg/vim-dict'
 NeoBundle 'wsdjeg/java_getset.vim'
+let s:hooks = neobundle#get_hooks('java_getset.vim')
+function! s:hooks.on_source(bundle)
+    let g:java_getset_disable_map = 1
+endfunction
 NeoBundle 'wsdjeg/JavaUnit.vim'
 NeoBundle 'wsdjeg/Mysql.vim'
 let g:JavaUnit_key = "<leader>ooo"
@@ -1367,7 +1387,7 @@ function! s:check_if_expand_tab()
 endfunction
 function MyEnterfunc()
     if pumvisible()
-        if s:settings.autocomplete_method == 'neocomplete'
+        if s:settings.autocomplete_method == 'neocomplete'||s:settings.autocomplete_method == 'deoplete'
             return "\<C-y>"
         else
             return "\<esc>a"
