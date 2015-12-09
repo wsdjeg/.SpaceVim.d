@@ -610,9 +610,13 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
             let g:deoplete#enable_fuzzy_completion = 1
             let g:deoplete#omni_patterns = {}
             "let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
-            let g:deoplete#omni#input_patterns = {}
-            "let g:deoplete#omni#input_patterns.java = '[^. *\t]\.\w*\|\h\w*::'
-            let g:deoplete#omni#input_patterns.java = ['[^. \t0-9]\.\w*','[^. \t0-9]\->\w*','[^. \t0-9]\::\w*']
+            let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
+            let g:deoplete#omni#input_patterns.java = [
+                        \'[^. \t0-9]\.\w*',
+                        \'[^. \t0-9]\->\w*',
+                        \'[^. \t0-9]\::\w*',
+                        \'\s[A-Z][a-z]'
+                        \]
             inoremap <expr><C-h> deolete#mappings#smart_close_popup()."\<C-h>"
             inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
         endfunction
