@@ -1044,9 +1044,15 @@ set backup
 set undofile
 set undolevels=1000
 let g:data_dir = $HOME.'/.data/'
-let g:backup_dir = g:data_dir . 'backup'
-let g:swap_dir = g:data_dir . 'swap'
-let g:undo_dir = g:data_dir . 'undofile'
+if has('nvim')
+    let g:backup_dir = g:data_dir . 'nvimbackup'
+    let g:swap_dir = g:data_dir . 'nvimswap'
+    let g:undo_dir = g:data_dir . 'nvimundofile'
+else
+    let g:backup_dir = g:data_dir . 'backup'
+    let g:swap_dir = g:data_dir . 'swap'
+    let g:undo_dir = g:data_dir . 'undofile'
+endif
 if finddir(g:data_dir) == ''
     silent call mkdir(g:data_dir)
 endif
