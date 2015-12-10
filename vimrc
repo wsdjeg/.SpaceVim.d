@@ -192,17 +192,28 @@ if count(s:settings.plugin_groups, 'unite') "{{{
         endif
 
         call vimfiler#custom#profile('default', 'context', {
-                    \  'safe': 0,
-                    \  'winwidth': 35,
-                    \  'explorer': 1,
-                    \  'auto_expand': 1,
-                    \  'no_quit': 1,
-                    \  'direction' : 'rightbelow',
-                    \  'force_hide': 1,
-                    \  'parent': 0,
-                    \  'split': 1,
-                    \  'toggle': 1,
+                    \ 'explorer' : 1,
+                    \ 'winwidth' : 30,
+                    \ 'winminwidth' : 30,
+                    \ 'toggle' : 1,
+                    \ 'columns' : 'type',
+                    \ 'auto_expand': 1,
+                    \ 'direction' : 'rightbelow',
+                    \ 'parent': 0,
+                    \ 'explorer_columns' : 'type',
+                    \ 'status' : 1,
+                    \ 'safe' : 0,
+                    \ 'split' : 1,
+                    \ 'no_quit' : 1,
+                    \ 'force_hide' : 0,
                     \ })
+        autocmd FileType vimfiler call s:vimfilerinit()
+        autocmd BufEnter * if (winnr('$') == 1 && &filetype ==# 'vimfiler') |
+                    \ q | endif
+        function! s:vimfilerinit()
+            set nonumber
+            set norelativenumber
+        endf
     endfunction
     "NeoBundle 'mattn/webapi-vim'
     "NeoBundle 'mattn/googlesuggest-complete-vim'
@@ -824,7 +835,7 @@ autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 "vim Wimdows config
 "{{{
-NeoBundle 'scrooloose/nerdtree'
+"NeoBundle 'scrooloose/nerdtree'
 " Alternate Files quickly use :A change between main and test files
 NeoBundle 'tpope/vim-projectionist'
 NeoBundle 'Xuyuanp/nerdtree-git-plugin'
@@ -857,8 +868,8 @@ let g:Tlist_File_Fold_Auto_Close=1
 let g:Tlist_Exit_OnlyWindow=1
 let g:Tlist_Show_Menu=1
 noremap <silent> <F8> :TlistToggle<CR>
-noremap <silent> <F3> :NERDTreeToggle<CR>
-"noremap <silent> <F3> :VimFiler<CR>
+"noremap <silent> <F3> :NERDTreeToggle<CR>
+noremap <silent> <F3> :VimFilerExplorer<CR>
 autocmd FileType nerdtree nnoremap <silent><Space> :call OpenOrCloseNERDTree()<cr>
 noremap <silent> <F2> :TagbarToggle<CR>
 function! OpenOrCloseNERDTree()
@@ -871,7 +882,7 @@ NeoBundle 'wsdjeg/matchit.zip'
 NeoBundle 'tomasr/molokai'
 NeoBundle 'simnalamburt/vim-mundo'
 nnoremap <silent> <F7> :GundoToggle<CR>
-NeoBundle 'nerdtree-ack'
+"NeoBundle 'nerdtree-ack'
 NeoBundle 'L9'
 NeoBundle 'TaskList.vim'
 map <unique> <Leader>td <Plug>TaskList
@@ -1077,7 +1088,7 @@ set incsearch
 set autowrite
 set hlsearch
 set laststatus=2
-set t_Co=256
+"set t_Co=256
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
