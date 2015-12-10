@@ -168,7 +168,42 @@ if count(s:settings.plugin_groups, 'unite') "{{{
     NeoBundle 'Shougo/unite-session'
     NeoBundle 'osyo-manga/unite-quickfix'
     NeoBundle 'Shougo/vimfiler'
+    let s:hooks = neobundle#get_hooks("vimfiler")
+    function! s:hooks.on_source(bundle) abort
+        let g:vimfiler_as_default_explorer = 1
+        let g:vimfiler_restore_alternate_file = 1
+        let g:vimfiler_tree_indentation = 1
+        let g:vimfiler_tree_leaf_icon = '¦'
+        let g:vimfiler_tree_opened_icon = '▼'
+        let g:vimfiler_tree_closed_icon = '▷'
+        let g:vimfiler_file_icon = ' '
+        let g:vimfiler_readonly_file_icon = '*'
+        let g:vimfiler_marked_file_icon = '√'
+        "let g:vimfiler_preview_action = 'auto_preview'
+        let g:vimfiler_ignore_pattern =
+                    \ '^\%(\.git\|\.idea\|\.DS_Store\|\.vagrant\|.stversions'
+                    \ .'\|node_modules\|.*\.pyc\)$'
 
+        if has('mac')
+            let g:vimfiler_quick_look_command =
+                        \ '/Applications//Sublime\ Text.app/Contents/MacOS/Sublime\ Text'
+        else
+            let g:vimfiler_quick_look_command = 'gloobus-preview'
+        endif
+
+        call vimfiler#custom#profile('default', 'context', {
+                    \  'safe': 0,
+                    \  'winwidth': 35,
+                    \  'explorer': 1,
+                    \  'auto_expand': 1,
+                    \  'no_quit': 1,
+                    \  'direction' : 'rightbelow',
+                    \  'force_hide': 1,
+                    \  'parent': 0,
+                    \  'split': 1,
+                    \  'toggle': 1,
+                    \ })
+    endfunction
     "NeoBundle 'mattn/webapi-vim'
     "NeoBundle 'mattn/googlesuggest-complete-vim'
     "NeoBundle 'mopp/googlesuggest-source.vim'
@@ -838,7 +873,8 @@ let g:Tlist_File_Fold_Auto_Close=1
 let g:Tlist_Exit_OnlyWindow=1
 let g:Tlist_Show_Menu=1
 noremap <silent> <F8> :TlistToggle<CR>
-noremap <silent> <F3> :NERDTreeToggle<CR>
+"noremap <silent> <F3> :NERDTreeToggle<CR>
+noremap <silent> <F3> :VimFiler<CR>
 autocmd FileType nerdtree nnoremap <silent><Space> :call OpenOrCloseNERDTree()<cr>
 noremap <silent> <F2> :TagbarToggle<CR>
 function! OpenOrCloseNERDTree()
