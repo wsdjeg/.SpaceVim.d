@@ -671,7 +671,7 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
     NeoBundle 'Shougo/neco-syntax'
     NeoBundle 'Shougo/context_filetype.vim'
     NeoBundle 'Shougo/neoinclude.vim'
-    "NeoBundle 'Shougo/neopairs.vim'
+    NeoBundle 'Shougo/neopairs.vim'
     NeoBundle 'Shougo/neosnippet-snippets'
     NeoBundle 'Shougo/neosnippet.vim' "{{{
     let g:neosnippet#snippets_directory='~/DotFiles/snippets'
