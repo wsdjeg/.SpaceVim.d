@@ -33,9 +33,9 @@ let s:settings.max_column = 120
 let s:settings.autocomplete_method = ''
 let s:settings.enable_cursorcolumn = 0
 let s:settings.enable_cursorline = 0
-let s:settings.use_colorscheme=0
+let s:settings.use_colorscheme = 1
 let s:settings.vim_help_language='en'
-let s:settings.colorscheme = 'solarized'
+let s:settings.colorscheme = ''
 
 if has('nvim')
     let s:settings.autocomplete_method = 'deoplete'
@@ -204,6 +204,7 @@ if count(s:settings.plugin_groups, 'unite') "{{{
                     \ 'status' : 1,
                     \ 'safe' : 0,
                     \ 'split' : 1,
+                    \ 'hidden': 1,
                     \ 'no_quit' : 1,
                     \ 'force_hide' : 0,
                     \ })
@@ -654,15 +655,15 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
             let g:deoplete#enable_ignore_case = 1
             let g:deoplete#enable_smart_case = 1
             let g:deoplete#enable_fuzzy_completion = 1
-            let g:deoplete#omni_patterns = {}
-            "let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
             let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
             let g:deoplete#omni#input_patterns.java = [
                         \'[^. \t0-9]\.\w*',
                         \'[^. \t0-9]\->\w*',
                         \'[^. \t0-9]\::\w*',
-                        \'\s[A-Z][a-z]'
+                        \'\s[A-Z][a-z]',
+                        \'^\s*@[A-Z][a-z]'
                         \]
+            let g:deoplete#omni#input_patterns.jsp = ['[^. \t0-9]\.\w*']
             inoremap <expr><C-h> deolete#mappings#smart_close_popup()."\<C-h>"
             inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
         endfunction
@@ -670,7 +671,7 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
     NeoBundle 'Shougo/neco-syntax'
     NeoBundle 'Shougo/context_filetype.vim'
     NeoBundle 'Shougo/neoinclude.vim'
-    NeoBundle 'Shougo/neopairs.vim'
+    "NeoBundle 'Shougo/neopairs.vim'
     NeoBundle 'Shougo/neosnippet-snippets'
     NeoBundle 'Shougo/neosnippet.vim' "{{{
     let g:neosnippet#snippets_directory='~/DotFiles/snippets'
@@ -687,6 +688,7 @@ if count(s:settings.plugin_groups, 'colorscheme') "{{{
     NeoBundle 'morhetz/gruvbox'
     NeoBundle 'nanotech/jellybeans.vim'
     NeoBundle 'altercation/vim-colors-solarized'
+    NeoBundle 'kristijanhusak/vim-hybrid-material'
 endif
 
 if count(s:settings.plugin_groups, 'chinese') "{{{
@@ -894,7 +896,7 @@ NeoBundle 'junegunn/vim-plug'
 call neobundle#end()
 filetype plugin indent on
 syntax on
-if count(s:settings.plugin_groups, 'colorscheme') "{{{
+if count(s:settings.plugin_groups, 'colorscheme')&&s:settings.colorscheme!='' "{{{
     set background=dark
     exec 'colorscheme '.s:settings.colorscheme
 endif
@@ -1064,9 +1066,15 @@ unlet g:backup_dir
 unlet g:swap_dir
 unlet g:data_dir
 unlet g:undo_dir
-set undodir=$HOME/.data/undofile
-set backupdir=$HOME/.data/backup
-set directory=$HOME/.data/swap
+if has('nvim')
+    set undodir=$HOME/.data/nvimundofile
+    set backupdir=$HOME/.data/nvimbackup
+    set directory=$HOME/.data/nvimswap
+else
+    set undodir=$HOME/.data/undofile
+    set backupdir=$HOME/.data/backup
+    set directory=$HOME/.data/swap
+endif
 set nofoldenable                "关闭自动折叠 折叠按键 'za'
 set nowritebackup
 set matchtime=0
@@ -1120,16 +1128,6 @@ inoremap <C-S-Up> <Esc>:m .-2<CR>==gi
 "上下移动选中的行
 vnoremap <C-S-Down> :m '>+1<CR>gv=gv
 vnoremap <C-S-Up> :m '<-2<CR>gv=gv
-inoremap ( ()<Esc>i
-inoremap [ []<Esc>i
-inoremap { {}<Esc>i
-autocmd Syntax html,vim inoremap <buffer> < <lt>><Esc>i| inoremap <buffer>  > <c-r>=ClosePair('>')<CR> |inoremap <buffer>  " "
-inoremap ) <c-r>=ClosePair(')')<CR>
-inoremap ] <c-r>=ClosePair(']')<CR>
-inoremap } <c-r>=ClosePair('}')<CR>
-autocmd Syntax java inoremap } <c-r>=CloseBracket()<CR>
-inoremap " <c-r>=QuoteDelim('"')<CR>
-inoremap ' <c-r>=QuoteDelim("'")<CR>
 
 "for vim-fasd.vim
 nnoremap <Leader>z :Z<CR>

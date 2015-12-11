@@ -20,6 +20,12 @@ alias       pa
 options     head
     package ${0}
 
+snippet     pcl
+abbr        class
+options     head
+    public class ${1:`expand('%:t:r')`} {
+        ${0}
+    }
 
 snippet     voi
 abbr        void
@@ -30,3 +36,10 @@ snippet     str
 abbr        str
     String ${0}
 
+snippet     cle
+abbr        cle
+alias       class
+options     head
+    public class ${1:`expand('%:t:r')`} ${2:extends ${3:parentClass\}} ${4:implements ${5:interfaces\}} {
+        ${0}
+    }
