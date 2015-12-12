@@ -557,6 +557,7 @@ endif "}}}
 if count(s:settings.plugin_groups, 'autocomplete') "{{{
     NeoBundle 'honza/vim-snippets'
     inoremap <silent> <CR> <C-r>=MyEnterfunc()<Cr>
+    inoremap <silent> <Leader><Tab> <C-r>=MyLeaderTabfunc()<CR>
     inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
     inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
     inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
@@ -1434,10 +1435,17 @@ function! s:check_if_expand_tab()
         " we use original vim setting
     endif
 endfunction
+
 function MyEnterfunc()
     if pumvisible()
         if s:settings.autocomplete_method == 'neocomplete'||s:settings.autocomplete_method == 'deoplete'
-            return "\<C-y>"
+            let g:javacomplete_neosnippet_Toggler = get(g:, 'g:javacomplete_neosnippet_Toggler',0)
+            if exists('g:javacomplete_neosnippet_Toggler')&&g:javacomplete_neosnippet_Toggler == 1
+                return "\<C-y>"
+            else
+                let g:neosnippet#enable_complete_done = 1
+                return "\<C-y>"
+            endif
         else
             return "\<esc>a"
         endif
@@ -1447,6 +1455,13 @@ function MyEnterfunc()
         return "\<Enter>"
     endif
 endf
+
+function! MyLeaderTabfunc() abort
+    let g:javacomplete_neosnippet_Toggler = 1
+    let g:neosnippet#enable_complete_done = 0
+    return "\<c-x>\<c-o>\<c-p>"
+endfunction
+
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 "for fzf
