@@ -4,7 +4,7 @@ snippet pmain
 	}
 
 snippet pl
-	System.out.println(${0});
+	System.out.println(${1});${0}
 
 snippet syso
     System.out.println(${0});
@@ -51,3 +51,9 @@ options     head
     ${1:public} ${2:void} ${3:testMethod} {
         ${0}
     }
+
+
+snippet     (
+options     '\(^out\)'
+    (${1:output})${0}
+

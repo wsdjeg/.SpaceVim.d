@@ -682,8 +682,7 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
     NeoBundle 'Shougo/neosnippet.vim' "{{{
     let g:neosnippet#snippets_directory='~/DotFiles/snippets'
     let g:neosnippet#enable_snipmate_compatibility=1
-    "let g:neosnippet#enable_complete_done = 1
-
+    let g:neosnippet#enable_complete_done = 1
     imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ? "\<C-n>" : "\<TAB>")
     smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
     imap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
@@ -1108,6 +1107,10 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 set completeopt=longest,menu
+if has('conceal')
+    set conceallevel=2
+    set concealcursor=niv
+endif
 
 "mapping
 "{{{
