@@ -556,6 +556,8 @@ endif "}}}
 
 if count(s:settings.plugin_groups, 'autocomplete') "{{{
     NeoBundle 'honza/vim-snippets'
+    imap <silent><expr><TAB> MyTabfunc()
+    smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
     inoremap <silent> <CR> <C-r>=MyEnterfunc()<Cr>
     inoremap <silent> <Leader><Tab> <C-r>=MyLeaderTabfunc()<CR>
     inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
@@ -684,8 +686,6 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
     let g:neosnippet#snippets_directory='~/DotFiles/snippets'
     let g:neosnippet#enable_snipmate_compatibility=1
     let g:neosnippet#enable_complete_done = 1
-    imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ? "\<C-n>" : "\<TAB>")
-    smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
     imap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
     smap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
 endif "}}}
@@ -1460,11 +1460,14 @@ function! MyLeaderTabfunc() abort
 endfunction
 
 function! MyTabfunc() abort
-    if neosnippet#mappings#expandable_or_jumpable()
+    if neosnippet#mappings#expandable_or_jumpable() && getline('.')[col('.')-2] != "("
         return "\<Plug>(neosnippet_expand_or_jump)"
-
+    elseif pumvisible()
+        return "\<C-n>"
+    else
+        return "\<tab>"
+    endif
 endfunction
-    "imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ? "\<C-n>" : "\<TAB>")
 
 
 
