@@ -1433,7 +1433,7 @@ function! s:check_if_expand_tab()
     endif
 endfunction
 
-function MyEnterfunc()
+function MyEnterfunc() abort
     if pumvisible()
         if s:settings.autocomplete_method == 'neocomplete'||s:settings.autocomplete_method == 'deoplete'
             let g:javacomplete_neosnippet_Toggler = get(g:, 'g:javacomplete_neosnippet_Toggler',0)
@@ -1458,6 +1458,16 @@ function! MyLeaderTabfunc() abort
     let g:neosnippet#enable_complete_done = 0
     return "\<c-x>\<c-o>\<c-p>"
 endfunction
+
+function! MyTabfunc() abort
+    
+endfunction
+
+
+
+
+
+"============> plug.vim
 
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
