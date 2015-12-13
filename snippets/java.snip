@@ -51,20 +51,20 @@ options     head
 snippet     m
 abbr        method
 options     head
-    ${1:public} ${2:void} ${3:testMethod} {
+    ${1:public} ${2:void} ${3:testMethod(${4:args\})} {
         ${0}
     }
 
 
-snippet     (
+snippet     ((
 options     word
     (${1:#:output})${0}
 
-snippet     [
+snippet     [[
 options     word
     [${1:#:output}]${0}
 
-snippet     {
+snippet     {{
 options     word
     {
         ${0:#:output}

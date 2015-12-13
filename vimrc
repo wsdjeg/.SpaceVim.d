@@ -1460,9 +1460,7 @@ function! MyLeaderTabfunc() abort
 endfunction
 
 function! MyTabfunc() abort
-    if neosnippet#mappings#expandable_or_jumpable() && getline('.')[col('.')-2] != "("
-        return "\<Plug>(neosnippet_expand_or_jump)"
-    elseif !pumvisible() && neosnippet#mappings#expandable_or_jumpable()
+    if neosnippet#mappings#expandable_or_jumpable()
         return "\<Plug>(neosnippet_expand_or_jump)"
     elseif pumvisible()
         return "\<C-n>"
