@@ -1460,8 +1460,11 @@ function! MyLeaderTabfunc() abort
 endfunction
 
 function! MyTabfunc() abort
-    
+    if neosnippet#mappings#expandable_or_jumpable()
+        return "\<Plug>(neosnippet_expand_or_jump)"
+
 endfunction
+    "imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ? "\<C-n>" : "\<TAB>")
 
 
 
