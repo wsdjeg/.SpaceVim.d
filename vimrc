@@ -812,6 +812,8 @@ NeoBundle 'Yggdroot/indentLine'
 let g:indentLine_color_term = 239
 let g:indentLine_color_gui = '#09AA08'
 let g:indentLine_char = '¦'
+let g:indentLine_concealcursor = 'niv' " (default 'inc')
+let g:indentLine_conceallevel = 2  " (default 2)
 NeoBundle 'godlygeek/tabular'
 NeoBundle 'benizi/vim-automkdir'
 "[c  ]c  jump between prev or next hunk
@@ -858,7 +860,7 @@ augroup rainbow_lisp
   autocmd FileType lisp,clojure,scheme,java RainbowParentheses
 augroup END
 let g:rainbow#max_level = 16
-let g:rainbow#pairs = [['(', ')'], ['[', ']']]
+let g:rainbow#pairs = [['(', ')'], ['[', ']'],['{','}']]
 " List of colors that you do not want. ANSI code or #RRGGBB
 let g:rainbow#blacklist = [233, 234]
 NeoBundle 'majutsushi/tagbar'
@@ -1108,10 +1110,6 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 set completeopt=longest,menu
-if has('conceal')
-    set conceallevel=2
-    set concealcursor=niv
-endif
 
 "mapping
 "{{{
@@ -1310,7 +1308,6 @@ function! JavaFileTypeInit()
                 \ "}"
     set omnifunc=javacomplete#Complete
     set tags +=~/others/openjdk_8_src/java/tags
-    inoremap <silent> <buffer> { <C-r>=BracketsFunc()<cr>
     inoremap <silent> <buffer> } <C-r>=JavaCloseBracket()<cr>
     inoremap <silent> <buffer> <leader>UU <esc>bgUwea
     inoremap <silent> <buffer> <leader>uu <esc>bguwea

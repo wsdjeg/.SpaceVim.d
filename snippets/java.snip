@@ -4,9 +4,11 @@ snippet pmain
 	}
 
 snippet pl
+options head
 	System.out.println(${1});${0}
 
 snippet syso
+options head
     System.out.println(${0});
 
 snippet cl
@@ -34,6 +36,7 @@ alias       vo
 
 snippet     str
 abbr        str
+options     word
     String ${0}
 
 snippet     cle
@@ -54,6 +57,15 @@ options     head
 
 
 snippet     (
-options     '\(^out\)'
-    (${1:output})${0}
+options     word
+    (${1:#:output})${0}
 
+snippet     [
+options     word
+    [${1:#:output}]${0}
+
+snippet     {
+options     word
+    {
+        ${0:#:output}
+    }
