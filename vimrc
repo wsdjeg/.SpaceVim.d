@@ -153,7 +153,7 @@ if count(s:settings.plugin_groups, 'unite') "{{{
     NeoBundle 'ujihisa/unite-font'
     NeoBundle 't9md/vim-unite-ack'
     NeoBundle 'mileszs/ack.vim'
-    NeoBundle 'rking/ag.vim'
+    NeoBundle 'albfan/ag.vim'
     let g:ag_prg="ag  --vimgrep"
     let g:ag_working_path_mode="r"
     NeoBundle 'dyng/ctrlsf.vim'
