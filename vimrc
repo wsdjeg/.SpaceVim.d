@@ -902,6 +902,7 @@ vnoremap <silent> <C-l> <Esc>:Ydv<CR>
 nnoremap <silent> <C-l> <Esc>:Ydc<CR>
 noremap <leader>yd :Yde<CR>
 NeoBundle 'junegunn/vim-plug'
+NeoBundle 'elixir-lang/vim-elixir'
 call neobundle#end()
 filetype plugin indent on
 syntax on
