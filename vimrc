@@ -209,6 +209,7 @@ if count(s:settings.plugin_groups, 'unite') "{{{
                     \ 'force_hide' : 0,
                     \ })
         autocmd FileType vimfiler call s:vimfilerinit()
+        autocmd VimEnter * if !argc() | VimFiler | endif
         autocmd BufEnter * if (winnr('$') == 1 && &filetype ==# 'vimfiler') |
                     \ q | endif
         function! s:vimfilerinit()
