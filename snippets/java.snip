@@ -48,7 +48,7 @@ options     head
 snippet     m
 abbr        method
 options     head
-    ${1:public ${2:static\}} ${3:void} ${4:methodName(${5:#:args\})} {
+    ${1:public ${2:static\}} ${3:void} ${4:methodName}(${5:#:args}) {
         ${6}
     }
 
@@ -73,4 +73,9 @@ alias       wh,wil
 options     head
     while (${1:#:true}) {
         ${2}
+    }
+
+snippet     interface
+    interfaces `expand('%:t:r')` ${1:extends ${2:parent\}} {
+        ${3}
     }
