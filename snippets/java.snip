@@ -1,15 +1,12 @@
 snippet pmain
 	public static void main (String[] args) {
-		${0}
+		${1}
 	}
 
 snippet pl
+alias   syso
 options head
-	System.out.println(${1:#:output});${0}
-
-snippet syso
-options head
-    System.out.println(${0});
+	System.out.println(${1:#:output});${2}
 
 snippet cl
     class ${1:`expand('%:t:r')`} {
@@ -20,54 +17,54 @@ snippet     pac
 abbr        package
 alias       pa
 options     head
-    package ${0}
+    package ${1}
 
 snippet     pcl
 abbr        class
 options     head
     public class ${1:`expand('%:t:r')`} {
-        ${0}
+        ${1}
     }
 
 snippet     voi
 abbr        void
 alias       vo
-    void ${0}
+    void ${1}
 
 snippet     str
 abbr        str
 options     word
-    String ${0}
+    String ${1}
 
 snippet     cle
 abbr        cle
 alias       class
 options     head
     public class ${1:`expand('%:t:r')`} ${2:extends ${3:parentClass\}} ${4:implements ${5:interfaces\}} {
-        ${0}
+        ${6}
     }
 
 
 snippet     m
 abbr        method
 options     head
-    ${1:public} ${2:void} ${3:testMethod(${4:args\})} {
-        ${0}
+    ${1:public ${2:static\}} ${3:void} ${4:methodName(${5:#:args\})} {
+        ${6}
     }
 
 
 snippet     (
 options     word
-    (${1:#:output})${0}
+    (${1:#:output})${2}
 
 snippet     [
 options     word
-    [${1:#:output}]${0}
+    [${1:#:output}]${2}
 
 snippet     {
 options     word
     {
-        ${0:#:output}
+        ${1:#:output}
     }
 
 snippet     while
@@ -75,5 +72,5 @@ abbr        while
 alias       wh,wil
 options     head
     while (${1:#:true}) {
-        ${0}
+        ${2}
     }

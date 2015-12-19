@@ -665,8 +665,6 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
                         \'[^. \t0-9]\.\w*',
                         \'[^. \t0-9]\->\w*',
                         \'[^. \t0-9]\::\w*',
-                        \'\s[A-Z][a-z]',
-                        \'^\s*@[A-Z][a-z]'
                         \]
             let g:deoplete#omni#input_patterns.jsp = ['[^. \t0-9]\.\w*']
             inoremap <expr><C-h> deolete#mappings#smart_close_popup()."\<C-h>"
@@ -809,6 +807,7 @@ NeoBundle 'MarcWeber/vim-addon-mw-utils'
 "NeoBundle 'tomtom/tlib_vim'
 NeoBundle 'airblade/vim-rooter'
 "let g:rooter_patterns = ['Rakefile' , 'pom.xml' , 'web.xml' , '.git/']
+let g:rooter_silent_chdir = 1
 NeoBundle 'Yggdroot/indentLine'
 let g:indentLine_color_term = 239
 let g:indentLine_color_gui = '#09AA08'
