@@ -487,7 +487,7 @@ if count(s:settings.plugin_groups, 'ctrlp') "{{{
     NeoBundle 'FelikZ/ctrlp-py-matcher'
     NeoBundle 'JazzCore/ctrlp-cmatcher'
     NeoBundle 'ompugao/ctrlp-z'
-    let g:ctrlp_map = '<c-p>'
+    let g:ctrlp_map = '<s-f>'
     let g:ctrlp_cmd = 'CtrlP'
     let g:ctrlp_working_path_mode = 'ra'
     let g:ctrlp_root_markers = 'pom.xml'
@@ -796,6 +796,8 @@ let g:syntastic_vimlint_options = {
             \'EVL105': 1 ,
             \}
 NeoBundle 'ynkdir/vim-vimlparser'
+NeoBundle 'todesking/vint-syntastic'
+"let g:syntastic_vim_checkers = ['vint']
 NeoBundle 'gcmt/wildfire.vim'
 noremap <SPACE> <Plug>(wildfire-fuel)
 vnoremap <C-SPACE> <Plug>(wildfire-water)
