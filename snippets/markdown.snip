@@ -1,0 +1,9 @@
+snippet     link
+abbr        [linkname](url)
+    [${0}](`getreg('+')=='' ? '<\`0\`>' : getreg('+')`)
+
+
+snippet NeoBundle
+alias   neobundle
+abbr NeoBundle ''
+    NeoBundle '`getreg('+')=='' ? '<\`0\`>' : getreg('+')`'${0}

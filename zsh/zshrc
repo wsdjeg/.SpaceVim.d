@@ -51,11 +51,11 @@ ZSH_THEME="wedisagree"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git mvn z sudo adb gradle git-extras)
-#plugins+=(zsh-completions)
-#autoload -U compinit && compinit
+plugins+=(zsh-completions)
+autoload -U compinit && compinit
 
 # User configuration
-export ANDROID_HOME="$HOME/others/android-sdk-linux"
+export ANDROID_HOME="$HOME/tools/android-sdk-linux"
 export PATH="$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -86,6 +86,10 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+export FZF_COMPLETION_TRIGGER='~~'
+
 unset JAVA_TOOL_OPTIONS
 setopt nonomatch
 alias gvim='vim'
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
