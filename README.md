@@ -13,7 +13,7 @@
 
 ## Requirements
 
-1. jdk 1.8  `sudo apt-get install openjdk-8-jdk`
+1. jdk 1.8  `sudo apt-get install openjdk-8-jdk openjdk-8-doc openjdk-8-source`
 2. Vim 7.3.885+ compiled with lua. If :echo has("lua") returns 1, then you're done; otherwise, see below.
 
 install vim with lua e.g.
