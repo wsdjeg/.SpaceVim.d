@@ -20,26 +20,40 @@ Java不只是一中语言，而是一个完整的平台，有一个庞大的库�
 
 #### Java 发展简史
 
+```
 1991 Green
-
-↓
-
+    ↓
 1992 * 7
-
-↓
-
+    ↓
 1993 First Person
-
-↓
-
+    ↓
 1994
-
-↓
-
+    ↓
 1995 HotJava applet
-
-↓
-
+    ↓
 1996 - 今 Java
+```
 
 #### 关于Java的常见误解
+
+### 第二章 Java程序设计环境
+
+- *JDK*
+```shell
+sudo apt-get install openjdk-8-jdk
+sudo apt-get install openjdk-8-doc
+sudo apt-get install openjdk-8-source
+```
+
+- *VIM*or*NEOVIM*
+
+[vimrc](https://github.com/wsdjeg/DotFiles/blob/master/vimrc)
+
+### 第三章 Java的基本程序设计结构
+访问修饰符 access modifier
+骆驼命名 CamelCase
+
+关于字符串，应先判断是否为null，否则调用方法是会出现运行时异常；
+
+![2015-12-27 20-43-36](https://cloud.githubusercontent.com/assets/13142418/12010282/d2764e7c-acda-11e5-9a6e-b4892820daff.png)
+
