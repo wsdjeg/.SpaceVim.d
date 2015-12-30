@@ -57,3 +57,8 @@ sudo apt-get install openjdk-8-source
 
 ![2015-12-27 20-43-36](https://cloud.githubusercontent.com/assets/13142418/12010282/d2764e7c-acda-11e5-9a6e-b4892820daff.png)
 
+### 第五章 继承(inheritance)
+
+一个对象变量可以指示多种实际类型的现象被称为多态(polymorphism)。在运行时能够自动地选择调用哪个方法的现象被称为动态绑定(dynamic bingding)。
+
+
