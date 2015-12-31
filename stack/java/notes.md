@@ -61,4 +61,11 @@ sudo apt-get install openjdk-8-source
 
 一个对象变量可以指示多种实际类型的现象被称为多态(polymorphism)。在运行时能够自动地选择调用哪个方法的现象被称为动态绑定(dynamic bingding)。
 
+Java语言规范要求euqals方法具有下面的特征：
+
+1. 自反性：对于任何非空引用x，x.equals(x)应该返回true
+2. 对称性：对于任何引用x和y，当且仅当y.equals(x)返回true时，x.equals(y)也应当返回true
+3. 传递性：对于任何引用x,y和z，如果x.equals(y)返回true，y.equals(z)返回true，那么x.equals(z)也应该返回true
+4. 一致性
+5. 对于任意非空引用x，x.equals(null)应该返回false
 
