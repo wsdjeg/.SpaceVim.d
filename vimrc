@@ -681,7 +681,7 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
     NeoBundle 'Shougo/context_filetype.vim'
     NeoBundle 'Shougo/neoinclude.vim'
     NeoBundle 'Shougo/neosnippet-snippets'
-    NeoBundle 'Shougo/neosnippet.vim' "{{{
+    NeoBundle 'wsdjeg/neosnippet.vim' "{{{
     let g:neosnippet#snippets_directory='~/DotFiles/snippets'
     let g:neosnippet#enable_snipmate_compatibility=1
     let g:neosnippet#enable_complete_done = 1
