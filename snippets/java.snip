@@ -8,6 +8,11 @@ alias   syso
 options head
 	System.out.println(${1:#:output});${2}
 
+snippet prt
+options head
+	System.out.print(${1:#:output});${2}
+
+
 snippet cl
     class ${1:`expand('%:t:r')`} {
         ${0}

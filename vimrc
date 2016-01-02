@@ -781,6 +781,9 @@ let g:user_emmet_settings = {
 "profile start vim-javacomplete2.log
 "profile! file */vim-javacomplete2/*
 NeoBundle 'wsdjeg/syntastic'
+if !filereadable('pom.xml')&&!filereadable('build.gradle')
+    let g:syntastic_java_javac_options = '-d bin'
+endif
 let g:syntastic_java_javac_config_file_enabled = 1
 let g:syntastic_java_javac_delete_output = 0
 let g:syntastic_always_populate_loc_list = 1
