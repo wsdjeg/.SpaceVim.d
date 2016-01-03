@@ -37,20 +37,8 @@ or
 
 Command run `vim +NeoBundleInstall +qall`
 
-##Plugins
+## Dark powered Plugins
 
-* [neobundle](https://github.com/Shougo/neobundle.vim)
+- [deoplete.nvim](https://github.com/Shougo/deoplete.nvim)
 
-* [unite](https://github.com/Shougo/unite.vim)
-
-* [ctrlp](https://github.com/ctrlpvim/ctrlp.vim)
-
-* [javacomplete2](https://github.com/artur-shaik/vim-javacomplete2)
-
-* [youcompleteme](https://github.com/Valloric/YouCompleteMe)
-
-* [syntastic](https://github.com/scrooloose/syntastic)
-
-* [nerdtree](https://github.com/scrooloose/nerdtree)
-
-* [tabular](https://github.com/godlygeek/tabular)
+> Dark powered asynchronous completion framework for neovim
