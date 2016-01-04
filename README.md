@@ -28,14 +28,35 @@ configration for vim
 $ mkdir -p ~/.vim/bundle
 $ git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
 $ git clone git@github.com:wsdjeg/DotFiles.git ~/DotFiles
-$ cp .vimrc vimrc.bak
-$ cp DotFiles/vimrc .vimrc
+$ mv ~/.vimrc ~/.vimrc.bak
+$ ln -s ~/DotFiles/vimrc ~/.vimrc
+$ ln -s ~/DotFiles/vimrc ~/.config/nvim/init.vim
 ```
 Launch `vim`, run `:NeoBundleInstall`
 
 or
 
 Command run `vim +NeoBundleInstall +qall`
+
+## For bash
+
+```shell
+$ cd ~
+$ git clone https://github.com/magicmonty/bash-git-prompt.git .bash-git-prompt
+$ mv ~/.bashrc ~/.bashrc.backup
+$ ln -s ~/DotFiles/bash/bashrc ~/.bashrc
+$ ln -s ~/DotFiles/bash/inputrc ~/.inputrc
+
+```
+
+### For neovim
+
+```shell
+sudo apt-get install neovim
+sudo apt-get install python python3 python-dev python3-dev python-pip python3-pip
+pip2 install --user neovim
+pip3 install --user neovim
+```
 
 ## Dark powered Plugins
 
