@@ -22,6 +22,15 @@ $ sudo apt-get install vim-gnome
 # by install gvim you also can use vim in command
 ```
 
+install android sdk
+```shell
+cd ~
+mkdir tools
+cd tools
+wget https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
+tar -zxvf android-sdk_r24.4.1-linux.tgz
+```
+
 configration for vim
 
 ```shell
@@ -46,7 +55,18 @@ $ git clone https://github.com/magicmonty/bash-git-prompt.git .bash-git-prompt
 $ mv ~/.bashrc ~/.bashrc.backup
 $ ln -s ~/DotFiles/bash/bashrc ~/.bashrc
 $ ln -s ~/DotFiles/bash/inputrc ~/.inputrc
+```
 
+## For zsh
+```shell
+ln -s ~/DotFiles/zsh/zshrc ~/.zshrc
+```
+
+## For fzf
+
+```shell
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
 ```
 
 ### For neovim
