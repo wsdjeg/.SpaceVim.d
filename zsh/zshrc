@@ -90,7 +90,5 @@ export FZF_COMPLETION_TRIGGER='~~'
 
 unset JAVA_TOOL_OPTIONS
 setopt nonomatch
-alias gvim='vim'
-alias vim='nvim'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
