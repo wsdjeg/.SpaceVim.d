@@ -602,7 +602,6 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
                     \ }
     elseif s:settings.autocomplete_method == 'neocomplete' "{{{
         NeoBundle 'Shougo/neocomplete'
-        NeoBundle 'Shougo/neopairs.vim'
         let s:hooks = neobundle#get_hooks("neocomplete")
         function! s:hooks.on_source(bundle) abort
             let g:neocomplete#data_directory='~/.cache/neocomplete'
@@ -686,6 +685,10 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
     let g:neosnippet#snippets_directory='~/DotFiles/snippets'
     let g:neosnippet#enable_snipmate_compatibility=1
     let g:neosnippet#enable_complete_done = 1
+    NeoBundle 'Shougo/neopairs.vim'
+    if g:neosnippet#enable_complete_done
+        let g:neopairs#enable = 0
+    endif
     imap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
     smap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
 endif "}}}
