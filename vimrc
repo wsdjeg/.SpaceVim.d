@@ -1482,7 +1482,7 @@ endfunction
 function! MyTabfunc() abort
     if neosnippet#expandable() && getline('.')[col('.')-2] =='(' && !pumvisible()
         return "\<Plug>(neosnippet_expand)"
-    elseif neosnippet#jumpable() && getline('.')[col('.')-2] =='(' && !pumvisible()
+    elseif neosnippet#jumpable() && getline('.')[col('.')-2] =='(' && !pumvisible() && !neosnippet#expandable()
         return "\<plug>(neosnippet_jump)"
     elseif neosnippet#expandable_or_jumpable() && getline('.')[col('.')-2] !='('
         return "\<plug>(neosnippet_expand_or_jump)"
