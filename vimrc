@@ -821,6 +821,9 @@ NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'easymotion/vim-easymotion'
 NeoBundle 'MarcWeber/vim-addon-mw-utils'
 "NeoBundle 'tomtom/tlib_vim'
+NeoBundle 'mhinz/vim-startify'
+NeoBundle 'mhinz/vim-signify'
+let g:signify_disable_by_default = 1
 NeoBundle 'airblade/vim-rooter'
 "let g:rooter_patterns = ['Rakefile' , 'pom.xml' , 'web.xml' , '.git/']
 let g:rooter_silent_chdir = 1
@@ -1500,4 +1503,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 "for fzf
 nnoremap <Leader>fz :FZF<CR>
+if !has('nvim')
+    Plug 'junegunn/vim-github-dashboard'
+endif
 call plug#end()

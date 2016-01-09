@@ -1,9 +1,5 @@
 snippet     link
 abbr        [linkname](url)
-    [${0}](`getreg('+')=='' ? '<\`0\`>' : getreg('+')`)
+    [${1:linkwords}](`getreg('+')=='' ? '<\`0\`>' : getreg('+')`)${2}
 
 
-snippet NeoBundle
-alias   neobundle
-abbr NeoBundle ''
-    NeoBundle '`getreg('+')=='' ? '<\`0\`>' : getreg('+')`'${0}
