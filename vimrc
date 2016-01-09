@@ -32,6 +32,7 @@ let s:settings.default_indent = 2
 let s:settings.max_column = 120
 let s:settings.autocomplete_method = ''
 let s:settings.enable_cursorcolumn = 0
+let s:settings.enable_neomake = 0
 let s:settings.enable_cursorline = 0
 let s:settings.use_colorscheme = 1
 let s:settings.vim_help_language='en'
@@ -780,7 +781,11 @@ let g:user_emmet_settings = {
 " use this two command to find how long the plugin take!
 "profile start vim-javacomplete2.log
 "profile! file */vim-javacomplete2/*
-NeoBundle 'wsdjeg/syntastic'
+if has('nvim') && s:settings.enable_neomake
+    NeoBundle 'wsdjeg/neomake'
+else
+    NeoBundle 'wsdjeg/syntastic'
+endif
 if !filereadable('pom.xml')&&!filereadable('build.gradle')
     let g:syntastic_java_javac_options = '-d bin'
 endif
@@ -790,6 +795,9 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
+"let g:syntastic_error_symbol = '✖'
+"let g:syntastic_warning_symbol = '⚠'
+"let g:syntastic_warning_symbol = '➤'
 NeoBundle 'syngan/vim-vimlint', {
             \ 'depends' : 'ynkdir/vim-vimlparser'}
 let g:syntastic_vimlint_options = {
