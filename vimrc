@@ -488,7 +488,7 @@ if count(s:settings.plugin_groups, 'ctrlp') "{{{
     NeoBundle 'FelikZ/ctrlp-py-matcher'
     NeoBundle 'JazzCore/ctrlp-cmatcher'
     NeoBundle 'ompugao/ctrlp-z'
-    let g:ctrlp_map = '<s-f>'
+    let g:ctrlp_map = '<c-p>'
     let g:ctrlp_cmd = 'CtrlP'
     let g:ctrlp_working_path_mode = 'ra'
     let g:ctrlp_root_markers = 'pom.xml'
