@@ -1333,7 +1333,6 @@ function! JavaFileTypeInit()
     set omnifunc=javacomplete#Complete
     set tags +=~/others/openjdksrc/java/tags
     set tags +=~/others/openjdksrc/javax/tags
-    inoremap <silent> <buffer> } <C-r>=JavaCloseBracket()<cr>
     inoremap <silent> <buffer> <leader>UU <esc>bgUwea
     inoremap <silent> <buffer> <leader>uu <esc>bguwea
     inoremap <silent> <buffer> <leader>ua <esc>bgulea
@@ -1377,21 +1376,6 @@ endf
 
 function CloseBracket()
     if match(getline(line('.') + 1), '\s*}') < 0
-        return "\<CR>}"
-    else
-        return "\<Esc>j0f}a"
-    endif
-endf
-function JavaCloseBracket()
-    let line = getline('.')
-    let col = col('.')
-    if line[col - 2] == "\\"
-        "Inserting a quoted quotation mark into the string
-        return "}"
-    elseif line[col - 1] == "}"
-        "Escaping out of the string
-        return "\<Right>"
-    elseif match(getline(line('.') + 1), '\s*}') < 0
         return "\<CR>}"
     else
         return "\<Esc>j0f}a"
