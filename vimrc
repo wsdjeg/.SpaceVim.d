@@ -36,7 +36,7 @@ let s:settings.enable_neomake = 0
 let s:settings.enable_cursorline = 0
 let s:settings.use_colorscheme = 1
 let s:settings.vim_help_language='en'
-let s:settings.colorscheme = 'jellybeans'
+let s:settings.colorscheme = 'default'
 
 if has('nvim')
     let s:settings.autocomplete_method = 'deoplete'
