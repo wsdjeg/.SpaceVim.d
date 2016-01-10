@@ -627,7 +627,7 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
             if !exists('g:neocomplete#keyword_patterns')
                 let g:neocomplete#keyword_patterns = {}
             endif
-            let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+            "let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
 
             " AutoComplPop like behavior.
