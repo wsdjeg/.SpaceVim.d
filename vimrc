@@ -99,9 +99,9 @@ if has('vim_starting')
     if &compatible
         set nocompatible
     endif
-    set runtimepath+=~/DotFiles/neobundle.vim/
+    set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
-call neobundle#begin(expand('~/.cache/vim/bundle/'))
+call neobundle#begin(expand('~/.vim/bundle/'))
 scriptencoding utf-8
 NeoBundleFetch 'Shougo/neobundle.vim'
 "}}}
@@ -1503,7 +1503,7 @@ endfunction
 
 "============> plug.vim
 
-call plug#begin('~/.cache/vim/plugged')
+call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 "for fzf
 nnoremap <Leader>fz :FZF<CR>
