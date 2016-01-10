@@ -610,7 +610,7 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
             " Use smartcase.
             let g:neocomplete#enable_smart_case = 1
             let g:neocomplete#enable_camel_case = 1
-            let g:neocomplete#enable_ignore_case = 1
+            "let g:neocomplete#enable_ignore_case = 1
             let g:neocomplete#enable_fuzzy_completion = 1
             " Set minimum syntax keyword length.
             let g:neocomplete#sources#syntax#min_keyword_length = 3
@@ -619,15 +619,19 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
             " Define dictionary.
             let g:neocomplete#sources#dictionary#dictionaries = {
                         \ 'default' : '',
-                        \ 'vimshell' : $HOME.'/.vimshell_hist',
-                        \ 'scheme' : $HOME.'/.gosh_completions'
+                        \ 'vimshell' : $CACHE.'/vimshell/command-history',
+                        \ 'java' : '~/.vim/dict/java.dict',
+                        \ 'ruby' : '~/.vim/dict/ruby.dict',
+                        \ 'scala' : '~/.vim/dict/scala.dict',
                         \ }
+
+            let g:neocomplete#enable_auto_delimiter = 1
 
             " Define keyword.
             if !exists('g:neocomplete#keyword_patterns')
                 let g:neocomplete#keyword_patterns = {}
             endif
-            "let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+            let g:neocomplete#keyword_patterns._ = '\h\k*(\?'
 
 
             " AutoComplPop like behavior.
