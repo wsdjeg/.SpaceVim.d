@@ -1,0 +1,1 @@
+/home/wsdjeg/DotFiles/vim-plug/plug.vim

@@ -1,0 +1,6 @@
+[submodule "neobundle.vim"]
+	path = neobundle.vim
+	url = git@github.com:Shougo/neobundle.vim.git
+[submodule "vim-plug"]
+	path = vim-plug
+	url = git@github.com:junegunn/vim-plug.git
