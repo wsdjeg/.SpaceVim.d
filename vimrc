@@ -36,7 +36,7 @@ let s:settings.enable_neomake = 0
 let s:settings.enable_cursorline = 0
 let s:settings.use_colorscheme = 1
 let s:settings.vim_help_language='en'
-let s:settings.colorscheme = ''
+let s:settings.colorscheme = 'jellybeans'
 
 if has('nvim')
     let s:settings.autocomplete_method = 'deoplete'
@@ -1332,6 +1332,7 @@ function! JavaFileTypeInit()
                 \ "}"
     set omnifunc=javacomplete#Complete
     set tags +=~/others/openjdksrc/java/tags
+    set tags +=~/others/openjdksrc/javax/tags
     inoremap <silent> <buffer> } <C-r>=JavaCloseBracket()<cr>
     inoremap <silent> <buffer> <leader>UU <esc>bgUwea
     inoremap <silent> <buffer> <leader>uu <esc>bguwea
