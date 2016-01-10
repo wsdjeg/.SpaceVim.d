@@ -99,7 +99,7 @@ if has('vim_starting')
     if &compatible
         set nocompatible
     endif
-    set runtimepath+=~/.cache/vim/bundle/neobundle.vim/
+    set runtimepath+=~/DotFiles/neobundle.vim/
 endif
 call neobundle#begin(expand('~/.cache/vim/bundle/'))
 scriptencoding utf-8
