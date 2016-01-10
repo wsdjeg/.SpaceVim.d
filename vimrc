@@ -1327,7 +1327,7 @@ function! JavaFileTypeInit()
                 \ "    return %varname%;\n" .
                 \ "}"
     set omnifunc=javacomplete#Complete
-    set tags +=~/others/openjdksrc/tags
+    set tags +=~/others/openjdksrc/java/tags
     inoremap <silent> <buffer> } <C-r>=JavaCloseBracket()<cr>
     inoremap <silent> <buffer> <leader>UU <esc>bgUwea
     inoremap <silent> <buffer> <leader>uu <esc>bguwea
