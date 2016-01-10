@@ -1496,3 +1496,5 @@ if !has('nvim')
     Plug 'junegunn/vim-github-dashboard'
 endif
 call plug#end()
+
+set mouse=
