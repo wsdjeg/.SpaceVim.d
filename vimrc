@@ -671,6 +671,8 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
                         \'[^. \t0-9]\::\w*',
                         \]
             let g:deoplete#omni#input_patterns.jsp = ['[^. \t0-9]\.\w*']
+            let g:deoplete#ignore_sources = get(g:,'deoplete#ignore_sources',{})
+            let g:deoplete#ignore_sources.java = ['tag']
             inoremap <expr><C-h> deoplete#mappings#smart_close_popup()."\<C-h>"
             inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
         endfunction
@@ -914,7 +916,7 @@ endfunction
 NeoBundle 'wsdjeg/MarkDown.pl'
 NeoBundle 'wsdjeg/matchit.zip'
 NeoBundle 'tomasr/molokai'
-NeoBundle 'simnalamburt/vim-mundo'
+NeoBundle 'wsdjeg/vim-mundo'
 nnoremap <silent> <F7> :GundoToggle<CR>
 "NeoBundle 'nerdtree-ack'
 NeoBundle 'L9'
