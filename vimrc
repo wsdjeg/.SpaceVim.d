@@ -905,7 +905,7 @@ let g:Tlist_Exit_OnlyWindow=1
 let g:Tlist_Show_Menu=1
 noremap <silent> <F8> :TlistToggle<CR>
 "noremap <silent> <F3> :NERDTreeToggle<CR>
-noremap <silent> <F3> :VimFilerExplorer<CR>
+noremap <silent> <F3> :VimFiler<CR>
 autocmd FileType nerdtree nnoremap <silent><Space> :call OpenOrCloseNERDTree()<cr>
 noremap <silent> <F2> :TagbarToggle<CR>
 function! OpenOrCloseNERDTree()
