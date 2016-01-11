@@ -380,7 +380,8 @@ if count(s:settings.plugin_groups, 'unite') "{{{
     "" Tag search
     autocmd BufEnter *
                 \   if empty(&buftype)
-                \|      nnoremap <buffer> <C-]> :<C-u>UniteWithCursorWord -immediately tag<CR>
+                \|      nnoremap <silent><buffer> <C-]> :call MyTagfunc()<CR>
+                \|      nnoremap <silent><buffer> <C-[> :call MyTagfunc()<CR>
                 \|  endif
 
     """ For searching the word in the cursor in tag file
@@ -1153,7 +1154,18 @@ nnoremap <C-Right> <C-W><Right>
 nnoremap <C-Left> <C-W><Left>
 nnoremap <C-Up> <C-W><Up>
 nnoremap <C-Down> <C-W><Down>
+
+"Quickly add empty lines
+
+nnoremap [<space>  :put! =''<cr>
+nnoremap ]<space>  :put =''<cr>
+
 inoremap jk <esc>
+
+"]e or [e move current line ,count can be useed
+
+nnoremap [e  :<c-u>execute 'move -1-'. v:count1<cr>
+nnoremap ]e  :<c-u>execute 'move +'. v:count1<cr>
 
 "Ctrl+Shift+上下移动当前行
 nnoremap <C-S-Down> :m .+1<CR>==
@@ -1442,6 +1454,11 @@ function! s:check_if_expand_tab()
         " it may be a new file
         " we use original vim setting
     endif
+endfunction
+
+function! MyTagfunc() abort
+    mark H
+    UniteWithCursorWord -immediately tag
 endfunction
 
 function MyEnterfunc() abort
