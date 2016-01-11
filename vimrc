@@ -381,7 +381,7 @@ if count(s:settings.plugin_groups, 'unite') "{{{
     autocmd BufEnter *
                 \   if empty(&buftype)
                 \|      nnoremap <silent><buffer> <C-]> :call MyTagfunc()<CR>
-                \|      nnoremap <silent><buffer> <C-[> :call MyTagfunc()<CR>
+                \|      nnoremap <silent><buffer> <C-[> :call MyTagfuncBack()<CR>
                 \|  endif
 
     """ For searching the word in the cursor in tag file
@@ -1458,7 +1458,15 @@ endfunction
 
 function! MyTagfunc() abort
     mark H
+    let s:MyTagfunc_flag = 1
     UniteWithCursorWord -immediately tag
+endfunction
+
+function! MyTagfuncBack() abort
+    if s:MyTagfunc_flag
+        exe "normal! `H"
+        let s:MyTagfunc_flag =0
+    endif
 endfunction
 
 function MyEnterfunc() abort
