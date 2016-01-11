@@ -36,7 +36,7 @@ let s:settings.enable_neomake = 0
 let s:settings.enable_cursorline = 0
 let s:settings.use_colorscheme = 1
 let s:settings.vim_help_language='en'
-let s:settings.colorscheme = 'default'
+let s:settings.colorscheme = 'gruvbox'
 
 if has('nvim')
     let s:settings.autocomplete_method = 'deoplete'
@@ -830,7 +830,8 @@ NeoBundle 'MarcWeber/vim-addon-mw-utils'
 "NeoBundle 'tomtom/tlib_vim'
 NeoBundle 'mhinz/vim-startify'
 NeoBundle 'mhinz/vim-signify'
-let g:signify_disable_by_default = 1
+let g:signify_disable_by_default = 0
+let g:signify_line_highlight = 0
 NeoBundle 'airblade/vim-rooter'
 "let g:rooter_patterns = ['Rakefile' , 'pom.xml' , 'web.xml' , '.git/']
 let g:rooter_silent_chdir = 1
@@ -1525,3 +1526,5 @@ endif
 call plug#end()
 
 set mouse=
+:let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
