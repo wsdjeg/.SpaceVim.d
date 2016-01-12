@@ -664,7 +664,6 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
             let g:deoplete#enable_at_startup = 1
             let g:deoplete#enable_ignore_case = 1
             let g:deoplete#enable_smart_case = 1
-            let g:deoplete#enable_fuzzy_completion = 1
             let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
             let g:deoplete#omni#input_patterns.java = [
                         \'[^. \t0-9]\.\w*',
@@ -672,8 +671,6 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
                         \'[^. \t0-9]\::\w*',
                         \]
             let g:deoplete#omni#input_patterns.jsp = ['[^. \t0-9]\.\w*']
-            let g:deoplete#ignore_sources = get(g:,'deoplete#ignore_sources',{})
-            let g:deoplete#ignore_sources.java = ['tag']
             inoremap <expr><C-h> deoplete#mappings#smart_close_popup()."\<C-h>"
             inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
         endfunction
