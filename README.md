@@ -83,3 +83,13 @@ pip3 install --user neovim
 - [deoplete.nvim](https://github.com/Shougo/deoplete.nvim)
 
 > Dark powered asynchronous completion framework for neovim
+
+
+## Other tools
+
+Screen catch
+
+Kazam
+```shell
+sudo apt-get install kazam
+```
