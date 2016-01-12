@@ -379,9 +379,12 @@ if count(s:settings.plugin_groups, 'unite') "{{{
     nnoremap <silent> g<C-h>  :<C-u>UniteWithCursorWord help<CR>
     "" Tag search
     autocmd BufEnter *
-                \   if empty(&buftype)
+                \   if empty(&buftype)&&has('nvim')
                 \|      nnoremap <silent><buffer> <C-]> :call MyTagfunc()<CR>
                 \|      nnoremap <silent><buffer> <C-[> :call MyTagfuncBack()<CR>
+                \|  else
+                \|      nnoremap <silent><buffer> <leader>] :call MyTagfunc()<CR>
+                \|      nnoremap <silent><buffer> <leader>[ :call MyTagfuncBack()<CR>
                 \|  endif
 
     """ For searching the word in the cursor in tag file
@@ -1523,4 +1526,5 @@ endif
 call plug#end()
 
 set mouse=
+set hidden
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
