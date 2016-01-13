@@ -36,7 +36,7 @@ let s:settings.enable_neomake = 0
 let s:settings.enable_cursorline = 0
 let s:settings.use_colorscheme = 1
 let s:settings.vim_help_language='en'
-let s:settings.colorscheme = 'gruvbox'
+let s:settings.colorscheme = 'solarized'
 
 if has('nvim')
     let s:settings.autocomplete_method = 'deoplete'
@@ -1527,4 +1527,4 @@ call plug#end()
 
 set mouse=
 set hidden
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+"let $NVIM_TUI_ENABLE_TRUE_COLOR=1
