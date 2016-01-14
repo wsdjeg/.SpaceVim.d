@@ -36,7 +36,7 @@ let s:settings.enable_neomake = 0
 let s:settings.enable_cursorline = 0
 let s:settings.use_colorscheme = 1
 let s:settings.vim_help_language='en'
-let s:settings.colorscheme = 'solarized'
+let s:settings.colorscheme = 'gruvbox'
 
 if has('nvim')
     let s:settings.autocomplete_method = 'deoplete'
@@ -1053,7 +1053,7 @@ if has("gui_running")
     set guioptions-=r " 隐藏右侧滚动条
     set guioptions-=b " 隐藏底部滚动条
     set showtabline=0 " 隐藏Tab栏
-endif 
+endif
 set relativenumber
 " 显示行号
 set number
@@ -1527,4 +1527,6 @@ call plug#end()
 
 set mouse=
 set hidden
-"let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+if has('nvim')
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
