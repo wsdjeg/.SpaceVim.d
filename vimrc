@@ -1518,6 +1518,7 @@ endfunction
 
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/gv.vim'
 "for fzf
 nnoremap <Leader>fz :FZF<CR>
 if !has('nvim')
