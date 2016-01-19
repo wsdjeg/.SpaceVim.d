@@ -78,6 +78,15 @@ pip2 install --user neovim
 pip3 install --user neovim
 ```
 
+### true color terminal in ubuntu 14.04
+```
+sudo add-apt-repository ppa:gnome3-team/gnome3-staging
+sudo apt-get update
+sudo apt-get install gnome-terminal
+sudo add-apt-repository -r ppa:gnome3-team/gnome3-staging
+
+```
+
 ## Dark powered Plugins
 
 - [deoplete.nvim](https://github.com/Shougo/deoplete.nvim)
