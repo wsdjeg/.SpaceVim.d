@@ -1082,15 +1082,9 @@ set backup
 set undofile
 set undolevels=1000
 let g:data_dir = $HOME.'/.data/'
-if has('nvim')
-    let g:backup_dir = g:data_dir . 'nvimbackup'
-    let g:swap_dir = g:data_dir . 'nvimswap'
-    let g:undo_dir = g:data_dir . 'nvimundofile'
-else
-    let g:backup_dir = g:data_dir . 'backup'
-    let g:swap_dir = g:data_dir . 'swap'
-    let g:undo_dir = g:data_dir . 'undofile'
-endif
+let g:backup_dir = g:data_dir . 'backup'
+let g:swap_dir = g:data_dir . 'swap'
+let g:undo_dir = g:data_dir . 'undofile'
 if finddir(g:data_dir) == ''
     silent call mkdir(g:data_dir)
 endif
@@ -1107,15 +1101,9 @@ unlet g:backup_dir
 unlet g:swap_dir
 unlet g:data_dir
 unlet g:undo_dir
-if has('nvim')
-    set undodir=$HOME/.data/nvimundofile
-    set backupdir=$HOME/.data/nvimbackup
-    set directory=$HOME/.data/nvimswap
-else
-    set undodir=$HOME/.data/undofile
-    set backupdir=$HOME/.data/backup
-    set directory=$HOME/.data/swap
-endif
+set undodir=$HOME/.data/undofile
+set backupdir=$HOME/.data/backup
+set directory=$HOME/.data/swap
 set nofoldenable                "关闭自动折叠 折叠按键 'za'
 set nowritebackup
 set matchtime=0
