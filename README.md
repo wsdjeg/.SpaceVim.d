@@ -87,6 +87,12 @@ sudo add-apt-repository -r ppa:gnome3-team/gnome3-staging
 
 ```
 
+### Install fcitx in ubuntu 14.04
+
+```shell
+sudo apt-get install fcitx fcitx-pinyin
+```
+
 ## Dark powered Plugins
 
 - [deoplete.nvim](https://github.com/Shougo/deoplete.nvim)

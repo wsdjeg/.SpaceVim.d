@@ -857,7 +857,7 @@ NeoBundle 'wsdjeg/vim-automkdir'
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'itchyny/calendar.vim'
 "配合fcitx输入框架,在离开插入模式时自动切换到英文,在同一个缓冲区再次进入插入模式时回复到原来的输入状态
-"NeoBundle 'lilydjwg/fcitx.vim'
+NeoBundle 'lilydjwg/fcitx.vim'
 NeoBundle 'junegunn/goyo.vim'
 function! s:goyo_enter()
     silent !tmux set status off
