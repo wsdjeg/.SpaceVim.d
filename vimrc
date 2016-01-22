@@ -682,6 +682,8 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
                         \'[^. \t0-9]\::\w*',
                         \]
             let g:deoplete#omni#input_patterns.jsp = ['[^. \t0-9]\.\w*']
+            let g:deoplete#ignore_sources = {}
+            let g:deoplete#ignore_sources._ = ['javacomplete2']
             inoremap <expr><C-h> deoplete#mappings#smart_close_popup()."\<C-h>"
             inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
         endfunction
