@@ -93,6 +93,15 @@ sudo add-apt-repository -r ppa:gnome3-team/gnome3-staging
 sudo apt-get install fcitx fcitx-pinyin
 ```
 
+### Fix mysql chinese support
+add into my.cnf(/etc/mysql/my.cnf)
+```
+[mysql]
+default-character-set=utf8
+[mysqld]
+character-set-server=utf8
+```
+
 ## Dark powered Plugins
 
 - [deoplete.nvim](https://github.com/Shougo/deoplete.nvim)
