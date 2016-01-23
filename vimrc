@@ -385,14 +385,6 @@ if count(s:settings.plugin_groups, 'unite') "{{{
         " Execute help by cursor keyword.
         nnoremap <silent> g<C-h>  :<C-u>UniteWithCursorWord help<CR>
         "" Tag search
-        autocmd BufEnter *
-                    \   if empty(&buftype)&&has('nvim')
-                    \|      nnoremap <silent><buffer> <C-]> :call MyTagfunc()<CR>
-                    \|      nnoremap <silent><buffer> <C-[> :call MyTagfuncBack()<CR>
-                    \|  else
-                        \|      nnoremap <silent><buffer> <leader>] :call MyTagfunc()<CR>
-                        \|      nnoremap <silent><buffer> <leader>[ :call MyTagfuncBack()<CR>
-                        \|  endif
 
         """ For searching the word in the cursor in tag file
         nnoremap <silent><leader>f :Unite -no-split tag/include:<C-R><C-w><CR>
@@ -1220,6 +1212,14 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType unite call s:unite_my_settings()
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd BufEnter *
+            \   if empty(&buftype)&&has('nvim')
+            \|      nnoremap <silent><buffer> <C-]> :call MyTagfunc()<CR>
+            \|      nnoremap <silent><buffer> <C-[> :call MyTagfuncBack()<CR>
+            \|  else
+                \|      nnoremap <silent><buffer> <leader>] :call MyTagfunc()<CR>
+                \|      nnoremap <silent><buffer> <leader>[ :call MyTagfuncBack()<CR>
+                \|  endif
 "}}}
 
 "functions
