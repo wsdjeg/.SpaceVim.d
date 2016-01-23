@@ -1491,7 +1491,7 @@ endf
 function! MyLeaderTabfunc() abort
     let g:javacomplete_neosnippet_Toggler = 1
     let g:neosnippet#enable_complete_done = 0
-    return "\<c-x>\<c-o>\<c-p>"
+    return "\<c-x>\<c-o>\<c-n>\<c-p>"
 endfunction
 
 function! MyTabfunc() abort
