@@ -844,7 +844,7 @@ let g:indentLine_char = '¦'
 let g:indentLine_concealcursor = 'niv' " (default 'inc')
 let g:indentLine_conceallevel = 2  " (default 2)
 NeoBundle 'godlygeek/tabular'
-NeoBundle 'wsdjeg/vim-automkdir'
+NeoBundle 'benizi/vim-automkdir'
 "[c  ]c  jump between prev or next hunk
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'itchyny/calendar.vim'
