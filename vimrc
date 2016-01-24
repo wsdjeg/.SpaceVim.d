@@ -921,7 +921,7 @@ NeoBundle 'wsdjeg/MarkDown.pl'
 NeoBundle 'wsdjeg/matchit.zip'
 NeoBundle 'tomasr/molokai'
 NeoBundle 'wsdjeg/vim-mundo'
-nnoremap <silent> <F7> :GundoToggle<CR>
+nnoremap <silent> <F7> :MundoToggle<CR>
 "NeoBundle 'nerdtree-ack'
 NeoBundle 'L9'
 NeoBundle 'TaskList.vim'
