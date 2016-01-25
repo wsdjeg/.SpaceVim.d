@@ -36,7 +36,7 @@ let s:settings.default_indent = 2
 let s:settings.max_column = 120
 let s:settings.autocomplete_method = ''
 let s:settings.enable_cursorcolumn = 0
-let s:settings.enable_neomake = 0
+let s:settings.enable_neomake = 1
 let s:settings.enable_cursorline = 0
 let s:settings.use_colorscheme = 1
 let s:settings.vim_help_language='en'
@@ -764,7 +764,7 @@ NeoBundleLazy 'othree/javascript-libraries-syntax.vim', {'autoload':{'filetypes'
 
 
 
-NeoBundle 'wsdjeg/vim-javacomplete2'
+NeoBundle 'artur-shaik/vim-javacomplete2'
 let g:JavaComplete_UseFQN = 1
 let g:JavaComplete_ServerAutoShutdownTime = 300
 let g:JavaComplete_MavenRepositoryDisable = 0
@@ -796,7 +796,7 @@ let g:user_emmet_settings = {
 "profile start vim-javacomplete2.log
 "profile! file */vim-javacomplete2/*
 if has('nvim') && s:settings.enable_neomake
-    NeoBundle 'wsdjeg/neomake'
+    NeoBundle 'benekastah/neomake'
 else
     NeoBundle 'wsdjeg/syntastic'
 endif
@@ -922,7 +922,7 @@ endfunction
 NeoBundle 'wsdjeg/MarkDown.pl'
 NeoBundle 'wsdjeg/matchit.zip'
 NeoBundle 'tomasr/molokai'
-NeoBundle 'wsdjeg/vim-mundo'
+NeoBundle 'simnalamburt/vim-mundo'
 nnoremap <silent> <F7> :MundoToggle<CR>
 "NeoBundle 'nerdtree-ack'
 NeoBundle 'L9'
