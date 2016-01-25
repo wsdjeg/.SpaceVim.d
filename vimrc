@@ -1497,6 +1497,9 @@ function! MyLeaderTabfunc() abort
 endfunction
 
 function! MyTabfunc() abort
+    if getline('.')[col('.')-2] =='{'&& pumvisible()
+        return "\<C-n>"
+    endif
     if neosnippet#expandable() && getline('.')[col('.')-2] =='(' && !pumvisible()
         return "\<Plug>(neosnippet_expand)"
     elseif neosnippet#jumpable() && getline('.')[col('.')-2] =='(' && !pumvisible() && !neosnippet#expandable()
