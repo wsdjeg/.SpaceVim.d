@@ -676,6 +676,7 @@ if count(s:settings.plugin_groups, 'autocomplete') "{{{
             let g:deoplete#omni#input_patterns.jsp = ['[^. \t0-9]\.\w*']
             let g:deoplete#ignore_sources = {}
             let g:deoplete#ignore_sources._ = ['javacomplete2']
+            call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
             inoremap <expr><C-h> deoplete#mappings#smart_close_popup()."\<C-h>"
             inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
         endfunction
@@ -1472,14 +1473,10 @@ endfunction
 
 function MyEnterfunc() abort
     if pumvisible()
-        if s:settings.autocomplete_method == 'neocomplete'||s:settings.autocomplete_method == 'deoplete'
-            let g:javacomplete_neosnippet_Toggler = get(g:, 'g:javacomplete_neosnippet_Toggler',0)
-            if exists('g:javacomplete_neosnippet_Toggler')&&g:javacomplete_neosnippet_Toggler == 1
-                return "\<C-y>"
-            else
-                let g:neosnippet#enable_complete_done = 1
-                return "\<C-y>"
-            endif
+        if getline('.')[col('.') - 2]=="{"
+            return "\<Enter>"
+        elseif s:settings.autocomplete_method == 'neocomplete'||s:settings.autocomplete_method == 'deoplete'
+            return "\<C-y>"
         else
             return "\<esc>a"
         endif
@@ -1491,9 +1488,11 @@ function MyEnterfunc() abort
 endf
 
 function! MyLeaderTabfunc() abort
-    let g:javacomplete_neosnippet_Toggler = 1
-    let g:neosnippet#enable_complete_done = 0
-    return "\<c-x>\<c-o>\<c-n>\<c-p>"
+    if s:settings.autocomplete_method == 'deoplete'
+        return deoplete#mappings#manual_complete(['omni'])
+    elseif s:settings.autocomplete_method == 'neocomplete'
+        return neocomplete#start_manual_complete(['omni'])
+    endif
 endfunction
 
 function! MyTabfunc() abort
