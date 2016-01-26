@@ -11,3 +11,9 @@
 	tool = vimdiff
 [difftool]
 	prompt = false
+[color]
+	ui = true
+	branch = auto
+	status = auto
+[core]
+	editor = vim
