@@ -1,17 +1,10 @@
-# vim configuration for happy java coding
+# awesome-dotfiles
 
+## Getting Started
 
-![conplete](https://github.com/wsdjeg/DotFiles/blob/master/pic/complete.png)
+### INSTALL
 
-![check](https://github.com/wsdjeg/DotFiles/blob/master/pic/check.png)
-
-![import](https://github.com/wsdjeg/DotFiles/blob/master/pic/import.png)
-
-# Getting Started
-
-## INSTALL
-
-## Requirements
+### Requirements
 
 1. jdk 1.8  `sudo apt-get install openjdk-8-jdk openjdk-8-doc openjdk-8-source`
 2. Vim 7.3.885+ compiled with lua. If :echo has("lua") returns 1, then you're done; otherwise, see below.
@@ -117,3 +110,10 @@ Kazam
 ```shell
 sudo apt-get install kazam
 ```
+
+## Screenshots
+![conplete](https://github.com/wsdjeg/DotFiles/blob/master/pic/complete.png)
+
+![check](https://github.com/wsdjeg/DotFiles/blob/master/pic/check.png)
+
+![import](https://github.com/wsdjeg/DotFiles/blob/master/pic/import.png)
