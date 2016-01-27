@@ -34,6 +34,9 @@ endif
 let s:settings = {}
 let s:settings.default_indent = 2
 let s:settings.max_column = 120
+let s:settings.auto_download_neobundle = 0
+let s:settings.neobundle_installed = 0
+let s:settings.plugin_bundle_dir = '~/.vim/bundle/'
 let s:settings.autocomplete_method = ''
 let s:settings.enable_cursorcolumn = 0
 let s:settings.enable_neomake = 0
@@ -41,18 +44,12 @@ let s:settings.enable_cursorline = 0
 let s:settings.use_colorscheme = 1
 let s:settings.vim_help_language='en'
 let s:settings.colorscheme = 'gruvbox'
+let s:settings.filemanager = 'vimfiler'
+let s:settings.plugin_groups_exclude = []
 
-if has('nvim')
-    let s:settings.autocomplete_method = 'deoplete'
-elseif has('lua')
-    let s:settings.autocomplete_method = 'neocomplete'
-elseif s:settings.autocomplete_method == 'ycm'
-    let s:settings.autocomplete_method = 'ycm'
-else
-    let s:settings.autocomplete_method = 'neocomplcache'
-endif
+
+"core vimrc
 let s:settings.plugin_groups = []
-
 call add(s:settings.plugin_groups, 'web')
 call add(s:settings.plugin_groups, 'javascript')
 call add(s:settings.plugin_groups, 'ruby')
@@ -69,6 +66,8 @@ call add(s:settings.plugin_groups, 'core')
 call add(s:settings.plugin_groups, 'unite')
 call add(s:settings.plugin_groups, 'ctrlp')
 call add(s:settings.plugin_groups, 'autocomplete')
+
+
 if s:settings.vim_help_language == 'cn'
     call add(s:settings.plugin_groups, 'chinese')
 endif
@@ -85,7 +84,15 @@ if LINUX()
     call add(s:settings.plugin_groups, 'linux')
 endif
 
-let s:settings.plugin_groups_exclude = []
+if has('nvim')
+    let s:settings.autocomplete_method = 'deoplete'
+elseif has('lua')
+    let s:settings.autocomplete_method = 'neocomplete'
+elseif s:settings.autocomplete_method == 'ycm'
+    let s:settings.autocomplete_method = 'ycm'
+else
+    let s:settings.autocomplete_method = 'neocomplcache'
+endif
 
 for s:group in s:settings.plugin_groups_exclude
     let s:i = index(s:settings.plugin_groups, s:group)
@@ -99,851 +106,843 @@ let g:python_host_prog = '/usr/bin/python'
 let g:python3_host_prog = '/usr/bin/python3'
 
 "setup & neobundle {{{
-if has('vim_starting')
-    if &compatible
-        set nocompatible
-    endif
-    set runtimepath+=~/.vim/bundle/neobundle.vim/
+if filereadable(expand(s:settings.plugin_bundle_dir) . 'neobundle.vim/README.md')
+    let s:settings.neobundle_installed = 1
 endif
-call neobundle#begin(expand('~/.vim/bundle/'))
-scriptencoding utf-8
-NeoBundleFetch 'Shougo/neobundle.vim'
-"}}}
-
-" plugin/mapping configuration {{{
-if count(s:settings.plugin_groups, 'core') "{{{
-    NeoBundle 'Shougo/vimproc.vim', {
-                \ 'build' : {
-                \     'windows' : 'tools\\update-dll-mingw',
-                \     'cygwin' : 'make -f make_cygwin.mak',
-                \     'mac' : 'make -f make_mac.mak',
-                \     'linux' : 'make',
-                \     'unix' : 'gmake',
-                \    },
-                \ }
-endif "}}}
-
-if count(s:settings.plugin_groups, 'unite') "{{{
-    NeoBundle 'Shougo/unite.vim'
-    NeoBundle 'Shougo/neoyank.vim'
-    NeoBundle 'soh335/unite-qflist'
-    NeoBundle 'ujihisa/unite-equery'
-    NeoBundle 'm2mdas/unite-file-vcs'
-    NeoBundle 'Shougo/neomru.vim'
-    NeoBundle 'kmnk/vim-unite-svn'
-    NeoBundle 'basyura/unite-rails'
-    NeoBundle 'nobeans/unite-grails'
-    NeoBundle 'choplin/unite-vim_hacks'
-    NeoBundle 'mattn/webapi-vim'
-    NeoBundle 'mattn/wwwrenderer-vim'
-    NeoBundle 'thinca/vim-openbuf'
-    NeoBundle 'ujihisa/unite-haskellimport'
-    NeoBundle 'oppara/vim-unite-cake'
-    "NeoBundle 'Sixeight/unite-grep'
-    "NeoBundle 't9md/vim-unite-lines'
-    NeoBundle 'thinca/vim-ref'
-    NeoBundle 'heavenshell/unite-zf'
-    NeoBundle 'heavenshell/unite-sf2'
-    NeoBundle 'Shougo/unite-outline'
-    NeoBundle 'hewes/unite-gtags'
-    NeoBundle 'tsukkee/unite-tag'
-    NeoBundle 'ujihisa/unite-launch'
-    NeoBundle 'ujihisa/unite-gem'
-    NeoBundle 'osyo-manga/unite-filetype'
-    NeoBundle 'thinca/vim-unite-history'
-    NeoBundle 'Shougo/neobundle-vim-recipes'
-    NeoBundle 'Shougo/unite-help'
-    NeoBundle 'ujihisa/unite-locate'
-    NeoBundle 'kmnk/vim-unite-giti'
-    NeoBundle 'ujihisa/unite-font'
-    NeoBundle 't9md/vim-unite-ack'
-    NeoBundle 'mileszs/ack.vim'
-    NeoBundle 'albfan/ag.vim'
-    let g:ag_prg="ag  --vimgrep"
-    let g:ag_working_path_mode="r"
-    NeoBundle 'dyng/ctrlsf.vim'
-    NeoBundle 'daisuzu/unite-adb'
-    NeoBundle 'osyo-manga/unite-airline_themes'
-    NeoBundle 'mattn/unite-vim_advent-calendar'
-    NeoBundle 'mattn/unite-remotefile'
-    NeoBundle 'sgur/unite-everything'
-    NeoBundle 'kannokanno/unite-dwm'
-    NeoBundle 'raw1z/unite-projects'
-    NeoBundle 'voi/unite-ctags'
-    NeoBundle 'Shougo/unite-session'
-    NeoBundle 'osyo-manga/unite-quickfix'
-    NeoBundle 'Shougo/vimfiler'
-    if neobundle#tap('vimfiler')
-        let s:hooks = neobundle#get_hooks("vimfiler")
-        function! s:hooks.on_source(bundle) abort
-            let g:vimfiler_as_default_explorer = 1
-            let g:vimfiler_restore_alternate_file = 1
-            let g:vimfiler_tree_indentation = 1
-            let g:vimfiler_tree_leaf_icon = ''
-            let g:vimfiler_tree_opened_icon = '▼'
-            let g:vimfiler_tree_closed_icon = '▷'
-            let g:vimfiler_file_icon = ''
-            let g:vimfiler_readonly_file_icon = '*'
-            let g:vimfiler_marked_file_icon = '√'
-            "let g:vimfiler_preview_action = 'auto_preview'
-            let g:vimfiler_ignore_pattern =
-                        \ '^\%(\.git\|\.idea\|\.DS_Store\|\.vagrant\|.stversions'
-                        \ .'\|node_modules\|.*\.pyc\)$'
-
-            if has('mac')
-                let g:vimfiler_quick_look_command =
-                            \ '/Applications//Sublime\ Text.app/Contents/MacOS/Sublime\ Text'
-            else
-                let g:vimfiler_quick_look_command = 'gloobus-preview'
-            endif
-
-            call vimfiler#custom#profile('default', 'context', {
-                        \ 'explorer' : 1,
-                        \ 'winwidth' : 30,
-                        \ 'winminwidth' : 30,
-                        \ 'toggle' : 1,
-                        \ 'columns' : 'type',
-                        \ 'auto_expand': 1,
-                        \ 'direction' : 'rightbelow',
-                        \ 'parent': 0,
-                        \ 'explorer_columns' : 'type',
-                        \ 'status' : 1,
-                        \ 'safe' : 0,
-                        \ 'split' : 1,
-                        \ 'hidden': 1,
-                        \ 'no_quit' : 1,
-                        \ 'force_hide' : 0,
-                        \ })
-            autocmd FileType vimfiler call s:vimfilerinit()
-            autocmd VimEnter * if !argc() | VimFiler | endif
-            autocmd BufEnter * if (winnr('$') == 1 && &filetype ==# 'vimfiler') |
-                        \ q | endif
-            function! s:vimfilerinit()
-                set nonumber
-                set norelativenumber
-            endf
-        endfunction
-    endif
-    "NeoBundle 'mattn/webapi-vim'
-    "NeoBundle 'mattn/googlesuggest-complete-vim'
-    "NeoBundle 'mopp/googlesuggest-source.vim'
-    NeoBundle 'ujihisa/unite-colorscheme'
-    NeoBundle 'mattn/unite-gist'
-    "NeoBundle 'klen/unite-radio.vim'
-    NeoBundle 'tacroe/unite-mark'
-    NeoBundle 'tacroe/unite-alias'
-    "NeoBundle 'ujihisa/quicklearn'
-    NeoBundle 'tex/vim-unite-id'
-    NeoBundle 'sgur/unite-qf'
-    if neobundle#tap('unite.vim')
-        "" Unite: {{{
-
-        "call unite#filters#matcher_default#use(['matcher_fuzzy'])
-        "call unite#filters#sorter_default#use(['sorter_rank'])
-        "call unite#custom#profile('default', 'context', {'no_split':1, 'resize':0})
-
-        let g:unite_source_file_mru_time_format = "%m/%d %T "
-        let g:unite_source_directory_mru_limit = 80
-        let g:unite_source_directory_mru_time_format = "%m/%d %T "
-        let g:unite_source_file_rec_max_depth = 6
-        let g:unite_enable_ignore_case = 1
-        let g:unite_enable_smart_case = 1
-        let g:unite_data_directory='~/.cache/unite'
-        "let g:unite_enable_start_insert=1
-        let g:unite_source_history_yank_enable=1
-        let g:unite_prompt='>> '
-        let g:unite_split_rule = 'botright'
-        let g:unite_winheight=25
-        let g:unite_source_grep_default_opts = "-iRHn"
-                    \ . " --exclude='tags'"
-                    \ . " --exclude='cscope*'"
-                    \ . " --exclude='*.svn*'"
-                    \ . " --exclude='*.log*'"
-                    \ . " --exclude='*tmp*'"
-                    \ . " --exclude-dir='**/tmp'"
-                    \ . " --exclude-dir='CVS'"
-                    \ . " --exclude-dir='.svn'"
-                    \ . " --exclude-dir='.git'"
-                    \ . " --exclude-dir='node_modules'"
-
-        let g:unite_launch_apps = [
-                    \ 'rake',
-                    \ 'make',
-                    \ 'git pull',
-                    \ 'git push']
-        let g:unite_source_menu_menus = {}
-        let g:unite_source_menu_menus.git = {
-                    \ 'description' : '            gestionar repositorios git
-                    \                            ⌘ [espacio]g',
-                    \}
-        let g:unite_source_menu_menus.git.command_candidates = [
-                    \['▷ tig                                                        ⌘ ,gt',
-                    \'normal ,gt'],
-                    \['▷ git status       (Fugitive)                                ⌘ ,gs',
-                    \'Gstatus'],
-                    \['▷ git diff         (Fugitive)                                ⌘ ,gd',
-                    \'Gdiff'],
-                    \['▷ git commit       (Fugitive)                                ⌘ ,gc',
-                    \'Gcommit'],
-                    \['▷ git log          (Fugitive)                                ⌘ ,gl',
-                    \'exe "silent Glog | Unite quickfix"'],
-                    \['▷ git blame        (Fugitive)                                ⌘ ,gb',
-                    \'Gblame'],
-                    \['▷ git stage        (Fugitive)                                ⌘ ,gw',
-                    \'Gwrite'],
-                    \['▷ git checkout     (Fugitive)                                ⌘ ,go',
-                    \'Gread'],
-                    \['▷ git rm           (Fugitive)                                ⌘ ,gr',
-                    \'Gremove'],
-                    \['▷ git mv           (Fugitive)                                ⌘ ,gm',
-                    \'exe "Gmove " input("destino: ")'],
-                    \['▷ git push         (Fugitive, salida por buffer)             ⌘ ,gp',
-                    \'Git! push'],
-                    \['▷ git pull         (Fugitive, salida por buffer)             ⌘ ,gP',
-                    \'Git! pull'],
-                    \['▷ git prompt       (Fugitive, salida por buffer)             ⌘ ,gi',
-                    \'exe "Git! " input("comando git: ")'],
-                    \['▷ git cd           (Fugitive)',
-                    \'Gcd'],
-                    \]
-
-
-        let g:unite_source_grep_max_candidates = 200
-        if executable('hw')
-            " Use hw (highway)
-            " https://github.com/tkengo/highway
-            let g:unite_source_grep_command = 'hw'
-            let g:unite_source_grep_default_opts = '--no-group --no-color'
-            let g:unite_source_grep_recursive_opt = ''
-        elseif executable('ag')
-            " Use ag (the silver searcher)
-            " https://github.com/ggreer/the_silver_searcher
-            let g:unite_source_grep_command = 'ag'
-            let g:unite_source_grep_default_opts =
-                        \ '-i --line-numbers --nocolor --nogroup --hidden --ignore ' .
-                        \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
-            let g:unite_source_grep_recursive_opt = ''
-        elseif executable('pt')
-            " Use pt (the platinum searcher)
-            " https://github.com/monochromegane/the_platinum_searcher
-            let g:unite_source_grep_command = 'pt'
-            let g:unite_source_grep_default_opts = '--nogroup --nocolor'
-            let g:unite_source_grep_recursive_opt = ''
-        elseif executable('ack-grep')
-            " Use ack
-            " http://beyondgrep.com/
-            let g:unite_source_grep_command = 'ack-grep'
-            let g:unite_source_grep_default_opts =
-                        \ '-i --no-heading --no-color -k -H'
-            let g:unite_source_grep_recursive_opt = ''
-        elseif executable('ack')
-            let g:unite_source_grep_command = 'ack'
-            let g:unite_source_grep_default_opts = '-i --no-heading --no-color -k -H'
-            let g:unite_source_grep_recursive_opt = ''
-        elseif executable('jvgrep')
-            " Use jvgrep
-            " https://github.com/mattn/jvgrep
-            let g:unite_source_grep_command = 'jvgrep'
-            let g:unite_source_grep_default_opts = '-i --exclude ''\.(git|svn|hg|bzr)'''
-            let g:unite_source_grep_recursive_opt = '-R'
+if s:settings.neobundle_installed
+    if has('vim_starting')
+        if &compatible
+            set nocompatible
         endif
-
-        nnoremap <leader>gd :execute 'Unite  -auto-preview -start-insert -no-split  gtags/def:'.expand('<cword>')<CR>
-        nnoremap <leader>gc :execute 'Unite  -auto-preview -start-insert -no-split gtags/context'<CR>
-        nnoremap <leader>gr :execute 'Unite  -auto-preview -start-insert -no-split gtags/ref'<CR>
-        nnoremap <leader>gg :execute 'Unite  -auto-preview -start-insert -no-split gtags/grep'<CR>
-        nnoremap <leader>gp :execute 'Unite  -auto-preview -start-insert -no-split gtags/completion'<CR>
-        vnoremap <leader>gd <ESC>:execute 'Unite -auto-preview -start-insert -no-split gtags/def:'.GetVisualSelection()<CR>
-
-        let g:unite_source_gtags_project_config = {
-                    \ '_':                   { 'treelize': 0 }
-                    \ }
-        "" File search
-        "Ctrlsf
-        nmap <C-F>f <Plug>CtrlSFPrompt
-        vmap <C-F>f <Plug>CtrlSFVwordPath
-        vmap <C-F>F <Plug>CtrlSFVwordExec
-        nmap <C-F>n <Plug>CtrlSFCwordPath
-        nmap <C-F>p <Plug>CtrlSFPwordPath
-        nnoremap <C-F>o :CtrlSFOpen<CR>
-        nnoremap <C-F>t :CtrlSFToggle<CR>
-        inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
-
-        "nnoremap <leader>mm :Unite -auto-resize file file_mru file_rec<cr>
-        nnoremap <leader>mm :Unite   -no-split -start-insert   file file_mru file_rec buffer<cr>
-        nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
-        nnoremap <leader>tf :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
-        nnoremap <leader>mr :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
-        nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
-        nnoremap <leader>tb :<C-u>Unite -no-split -buffer-name=buffer_tab  buffer_tab<cr>
-
-        "" shortcup for key mapping
-        nnoremap <silent><leader>u  :<C-u>Unite -start-insert mapping<CR>
-
-        "" Execute help.
-        nnoremap <C-h>  :<C-u>Unite -start-insert help<CR>
-        " Execute help by cursor keyword.
-        nnoremap <silent> g<C-h>  :<C-u>UniteWithCursorWord help<CR>
-        "" Tag search
-
-        """ For searching the word in the cursor in tag file
-        nnoremap <silent><leader>f :Unite -no-split tag/include:<C-R><C-w><CR>
-
-        nnoremap <silent><leader>ff :Unite tag/include -start-insert -no-split<CR>
-
-        "" grep dictionay
-
-        """ For searching the word in the cursor in the current directory
-        nnoremap <silent><leader>v :Unite -auto-preview -no-split grep:.::<C-R><C-w><CR>
-
-        nnoremap <space>/ :Unite -auto-preview grep:.<cr>
-
-        """ For searching the word handin
-        nnoremap <silent><leader>vs :Unite -auto-preview -no-split grep:.<CR>
-
-        """ For searching the word in the cursor in the current buffer
-        noremap <silent><leader>vf :Unite -auto-preview -no-split grep:%::<C-r><C-w><CR>
-
-        """ For searching the word in the cursor in all opened buffer
-        noremap <silent><leader>va :Unite -auto-preview -no-split grep:$buffers::<C-r><C-w><CR>
-
-
-        "" outline
-        "nnoremap <leader>o :Unite -start-insert -no-split outline<CR>
-
-        nnoremap <leader>o :<C-u>Unite -buffer-name=outline   -start-insert -auto-preview -no-split outline<cr>
-        "" Line search
-        nnoremap <leader>l :Unite line -start-insert  -auto-preview -no-split<CR>
-
-        "" Yank history
-        nnoremap <leader>y :<C-u>Unite -no-split -auto-preview -buffer-name=yank history/yank<cr>
-        "nnoremap <space>y :Unite history/yank<cr>
-
-
-        " search plugin
-        " :Unite neobundle/search
-
-
-
-        nnoremap <space>s :Unite -quick-match -auto-preview buffer<cr>
-
-
-        "for Unite menu{
-
-        nnoremap <silent>[menu]g :Unite -silent -start-insert menu:git<CR>
-        " The prefix key.
-        nnoremap    [unite]   <Nop>
-        nmap    f [unite]
-        nnoremap <space>/ :Unite grep:.<cr>
-        nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files -start-insert file<cr>
-        nnoremap <leader>m :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
-        nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
-        nnoremap <silent> <C-b> :<C-u>Unite -start-insert -buffer-name=buffer buffer<cr>
-
-        nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir
-                    \ -buffer-name=files buffer bookmark file<CR>
-        nnoremap <silent> [unite]b  :<C-u>UniteWithBufferDir
-                    \ -buffer-name=files -prompt=%\  buffer bookmark file<CR>
-        nnoremap <silent> [unite]r  :<C-u>Unite
-                    \ -buffer-name=register register<CR>
-        nnoremap <silent> [unite]o  :<C-u>Unite outline<CR>
-
-        nnoremap <silent> [unite]s  :<C-u>Unite session<CR>
-        nnoremap <silent> [unite]n  :<C-u>Unite session/new<CR>
-
-
-        nnoremap <silent> [unite]fr
-                    \ :<C-u>Unite -buffer-name=resume resume<CR>
-        nnoremap <silent> [unite]ma
-                    \ :<C-u>Unite mapping<CR>
-        nnoremap <silent> [unite]me
-                    \ :<C-u>Unite output:message<CR>
-        nnoremap  [unite]f  :<C-u>Unite source<CR>
-
-        nnoremap <silent> [unite]w
-                    \ :<C-u>Unite -buffer-name=files -no-split
-                    \ jump_point file_point buffer_tab
-                    \ file_rec:! file file/new<CR>
+        set runtimepath+=~/.vim/bundle/neobundle.vim/
     endif
-endif "}}}
-
-
-"{{{ctrlpvim settings
-if count(s:settings.plugin_groups, 'ctrlp') "{{{
-
-    NeoBundle 'ctrlpvim/ctrlp.vim'
-    NeoBundle 'tyru/open-browser.vim'
-    NeoBundle 'felixSchl/ctrlp-unity3d-docs'
-    NeoBundle 'voronkovich/ctrlp-nerdtree.vim'
-    NeoBundle 'elentok/ctrlp-objects.vim'
-    NeoBundle 'h14i/vim-ctrlp-buftab'
-    NeoBundle 'vim-scripts/ctrlp-cmdpalette'
-    NeoBundle 'mattn/ctrlp-windowselector'
-    NeoBundle 'the9ball/ctrlp-gtags'
-    NeoBundle 'thiderman/ctrlp-project'
-    NeoBundle 'mattn/ctrlp-google'
-    NeoBundle 'ompugao/ctrlp-history'
-    NeoBundle 'pielgrzym/ctrlp-sessions'
-    NeoBundle 'tacahiroy/ctrlp-funky'
-    NeoBundle 'brookhong/k.vim'
-    NeoBundle 'mattn/ctrlp-launcher'
-    NeoBundle 'sgur/ctrlp-extensions.vim'
-    NeoBundle 'FelikZ/ctrlp-py-matcher'
-    NeoBundle 'JazzCore/ctrlp-cmatcher'
-    NeoBundle 'ompugao/ctrlp-z'
-    let g:ctrlp_map = '<c-p>'
-    let g:ctrlp_cmd = 'CtrlP'
-    let g:ctrlp_working_path_mode = 'ra'
-    let g:ctrlp_root_markers = 'pom.xml'
-    let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:25,results:25'
-    let g:ctrlp_show_hidden = 1
-    "for caching
-    let g:ctrlp_use_caching = 1
-    let g:ctrlp_clear_cache_on_exit = 0
-    let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
-    "let g:ctrlp_map = ',,'
-    "let g:ctrlp_open_multiple_files = 'v'
-    set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class,tags
-    let g:ctrlp_custom_ignore = {
-                \ 'dir':  '\v[\/]\.(git|hg|svn)$|target',
-                \ 'file': '\v\.(exe|so|dll|ttf|png)$',
-                \ 'link': 'some_bad_symbolic_links',
-                \ }
-    let g:ctrlp_user_command = ['ag %s -i --nocolor --nogroup --hidden
-                \ --ignore out
-                \ --ignore .git
-                \ --ignore .svn
-                \ --ignore .hg
-                \ --ignore .DS_Store
-                \ --ignore "**/*.pyc"
-                \ -g ""'
-                \ ]
-
-    let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch'  }
-
-
-    "nnoremap <Leader>kk :CtrlPMixed<Cr>
-
-
-    " comment for ctrlp-funky {{{
-    nnoremap <Leader>fu :CtrlPFunky<Cr>
-    " narrow the list down with a word under cursor
-    nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
-    let g:ctrlp_funky_syntax_highlight = 1
-    " }}}
-
-    "for ctrlp_nerdtree {{{
-    let g:ctrlp_nerdtree_show_hidden = 1
+    call neobundle#begin(expand('~/.vim/bundle/'))
+    scriptencoding utf-8
+    NeoBundleFetch 'Shougo/neobundle.vim'
     "}}}
 
-    "for ctrlp_sessions{{{
-    let g:ctrlp_extensions = ['funky', 'sessions' , 'k' , 'tag', 'mixed', 'quickfix', 'undo', 'line', 'changes', 'cmdline', 'menu']
-    "}}}
-
-
-    "for k.vim {{{
-    nnoremap <silent> <leader>qe :CtrlPK<CR>
-    "}}}
-
-    " for ctrlp-launcher {{{
-    nnoremap <Leader>pl :<c-u>CtrlPLauncher<cr>
-    "}}}
-
-    ""for ctrlp-cmatcher {{{
-
-    "let g:ctrlp_max_files = 0
-    "let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
-
-    ""}}}
-
-endif "}}}
-
-
-if count(s:settings.plugin_groups, 'autocomplete') "{{{
-    NeoBundle 'honza/vim-snippets'
-    imap <silent><expr><TAB> MyTabfunc()
-    smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-    inoremap <silent> <CR> <C-r>=MyEnterfunc()<Cr>
-    inoremap <silent> <Leader><Tab> <C-r>=MyLeaderTabfunc()<CR>
-    inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
-    inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-    inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
-    inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
-    if s:settings.autocomplete_method == 'ycm' "{{{
-        NeoBundle 'SirVer/ultisnips'
-        let g:UltiSnipsExpandTrigger="<tab>"
-        let g:UltiSnipsJumpForwardTrigger="<tab>"
-        let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
-        let g:UltiSnipsSnippetsDir='~/DotFiles/snippets'
-        NeoBundle 'ervandew/supertab'
-        let g:SuperTabContextDefaultCompletionType = "<c-n>"
-        let g:SuperTabDefaultCompletionType = '<C-n>'
-        autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-        let g:neobundle#install_process_timeout = 1500
-        NeoBundle 'Valloric/YouCompleteMe'
-        "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-        "let g:ycm_confirm_extra_conf = 0
-        let g:ycm_collect_identifiers_from_tags_files = 1
-        let g:ycm_collect_identifiers_from_comments_and_strings = 1
-        let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
-        let g:ycm_key_list_previous_completion = ['<C-S-TAB>','<Up>']
-        let g:ycm_seed_identifiers_with_syntax = 1
-        let g:ycm_key_invoke_completion = '<leader><tab>'
-        let g:ycm_semantic_triggers =  {
-                    \   'c' : ['->', '.'],
-                    \   'objc' : ['->', '.'],
-                    \   'ocaml' : ['.', '#'],
-                    \   'cpp,objcpp' : ['->', '.', '::'],
-                    \   'perl' : ['->'],
-                    \   'php' : ['->', '::'],
-                    \   'cs,javascript,d,python,perl6,scala,vb,elixir,go' : ['.'],
-                    \   'java,jsp' : ['.'],
-                    \   'vim' : ['re![_a-zA-Z]+[_\w]*\.'],
-                    \   'ruby' : ['.', '::'],
-                    \   'lua' : ['.', ':'],
-                    \   'erlang' : [':'],
+    " plugin/mapping configuration {{{
+    if count(s:settings.plugin_groups, 'core') "{{{
+        NeoBundle 'Shougo/vimproc.vim', {
+                    \ 'build' : {
+                    \     'windows' : 'tools\\update-dll-mingw',
+                    \     'cygwin' : 'make -f make_cygwin.mak',
+                    \     'mac' : 'make -f make_mac.mak',
+                    \     'linux' : 'make',
+                    \     'unix' : 'gmake',
+                    \    },
                     \ }
-    elseif s:settings.autocomplete_method == 'neocomplete' "{{{
-        NeoBundle 'Shougo/neocomplete'
-        let s:hooks = neobundle#get_hooks("neocomplete")
-        function! s:hooks.on_source(bundle) abort
-            let g:neocomplete#data_directory='~/.cache/neocomplete'
-            let g:acp_enableAtStartup = 0
-            let g:neocomplete#enable_at_startup = 1
-            " Use smartcase.
-            let g:neocomplete#enable_smart_case = 1
-            let g:neocomplete#enable_camel_case = 1
-            "let g:neocomplete#enable_ignore_case = 1
-            let g:neocomplete#enable_fuzzy_completion = 1
-            " Set minimum syntax keyword length.
-            let g:neocomplete#sources#syntax#min_keyword_length = 3
-            let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-            " Define dictionary.
-            let g:neocomplete#sources#dictionary#dictionaries = {
-                        \ 'default' : '',
-                        \ 'vimshell' : $CACHE.'/vimshell/command-history',
-                        \ 'java' : '~/.vim/dict/java.dict',
-                        \ 'ruby' : '~/.vim/dict/ruby.dict',
-                        \ 'scala' : '~/.vim/dict/scala.dict',
-                        \ }
-
-            let g:neocomplete#enable_auto_delimiter = 1
-
-            " Define keyword.
-            if !exists('g:neocomplete#keyword_patterns')
-                let g:neocomplete#keyword_patterns = {}
-            endif
-            let g:neocomplete#keyword_patterns._ = '\h\k*(\?'
-
-
-            " AutoComplPop like behavior.
-            let g:neocomplete#enable_auto_select = 0
-
-            if !exists('g:neocomplete#sources#omni#input_patterns')
-                let g:neocomplete#sources#omni#input_patterns = {}
-            endif
-
-            let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-            let g:neocomplete#sources#omni#input_patterns.java = '[^. *\t]\.\w*\|\h\w*::'
-            let g:neocomplete#force_omni_input_patterns = {}
-            "let g:neocomplete#force_omni_input_patterns.java = '^\s*'
-            " <C-h>, <BS>: close popup and delete backword char.
-            inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-            inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-            inoremap <expr><C-y>  neocomplete#close_popup()
-            inoremap <expr><C-e>  neocomplete#cancel_popup()
-        endfunction
-    elseif s:settings.autocomplete_method == 'neocomplcache' "{{{
-        NeoBundleLazy 'Shougo/neocomplcache.vim', {'autoload':{'insert':1}} "{{{
-        let g:neocomplcache_enable_at_startup=1
-        let g:neocomplcache_temporary_dir=s:get_cache_dir('neocomplcache')
-        let g:neocomplcache_enable_fuzzy_completion=1
-    elseif s:settings.autocomplete_method == 'deoplete'
-        NeoBundle 'Shougo/deoplete.nvim'
-        let s:hooks = neobundle#get_hooks("deoplete.nvim")
-        function! s:hooks.on_source(bundle)
-            let g:deoplete#enable_at_startup = 1
-            let g:deoplete#enable_ignore_case = 1
-            let g:deoplete#enable_smart_case = 1
-            let g:deoplete#enable_refresh_always = 1
-            let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
-            let g:deoplete#omni#input_patterns.java = [
-                        \'[^. \t0-9]\.\w*',
-                        \'[^. \t0-9]\->\w*',
-                        \'[^. \t0-9]\::\w*',
-                        \]
-            let g:deoplete#omni#input_patterns.jsp = ['[^. \t0-9]\.\w*']
-            let g:deoplete#ignore_sources = {}
-            let g:deoplete#ignore_sources._ = ['javacomplete2']
-            call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
-            inoremap <expr><C-h> deoplete#mappings#smart_close_popup()."\<C-h>"
-            inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
-        endfunction
     endif "}}}
-    NeoBundle 'Shougo/neco-syntax'
-    NeoBundle 'Shougo/neco-vim'
-    if !exists('g:necovim#complete_functions')
-        let g:necovim#complete_functions = {}
+
+    if count(s:settings.plugin_groups, 'unite') "{{{
+        NeoBundle 'Shougo/unite.vim'
+        NeoBundle 'Shougo/neoyank.vim'
+        NeoBundle 'soh335/unite-qflist'
+        NeoBundle 'ujihisa/unite-equery'
+        NeoBundle 'm2mdas/unite-file-vcs'
+        NeoBundle 'Shougo/neomru.vim'
+        NeoBundle 'kmnk/vim-unite-svn'
+        NeoBundle 'basyura/unite-rails'
+        NeoBundle 'nobeans/unite-grails'
+        NeoBundle 'choplin/unite-vim_hacks'
+        NeoBundle 'mattn/webapi-vim'
+        NeoBundle 'mattn/wwwrenderer-vim'
+        NeoBundle 'thinca/vim-openbuf'
+        NeoBundle 'ujihisa/unite-haskellimport'
+        NeoBundle 'oppara/vim-unite-cake'
+        "NeoBundle 'Sixeight/unite-grep'
+        "NeoBundle 't9md/vim-unite-lines'
+        NeoBundle 'thinca/vim-ref'
+        NeoBundle 'heavenshell/unite-zf'
+        NeoBundle 'heavenshell/unite-sf2'
+        NeoBundle 'Shougo/unite-outline'
+        NeoBundle 'hewes/unite-gtags'
+        NeoBundle 'tsukkee/unite-tag'
+        NeoBundle 'ujihisa/unite-launch'
+        NeoBundle 'ujihisa/unite-gem'
+        NeoBundle 'osyo-manga/unite-filetype'
+        NeoBundle 'thinca/vim-unite-history'
+        NeoBundle 'Shougo/neobundle-vim-recipes'
+        NeoBundle 'Shougo/unite-help'
+        NeoBundle 'ujihisa/unite-locate'
+        NeoBundle 'kmnk/vim-unite-giti'
+        NeoBundle 'ujihisa/unite-font'
+        NeoBundle 't9md/vim-unite-ack'
+        NeoBundle 'mileszs/ack.vim'
+        NeoBundle 'albfan/ag.vim'
+        let g:ag_prg="ag  --vimgrep"
+        let g:ag_working_path_mode="r"
+        NeoBundle 'dyng/ctrlsf.vim'
+        NeoBundle 'daisuzu/unite-adb'
+        NeoBundle 'osyo-manga/unite-airline_themes'
+        NeoBundle 'mattn/unite-vim_advent-calendar'
+        NeoBundle 'mattn/unite-remotefile'
+        NeoBundle 'sgur/unite-everything'
+        NeoBundle 'kannokanno/unite-dwm'
+        NeoBundle 'raw1z/unite-projects'
+        NeoBundle 'voi/unite-ctags'
+        NeoBundle 'Shougo/unite-session'
+        NeoBundle 'osyo-manga/unite-quickfix'
+        NeoBundle 'Shougo/vimfiler'
+        if neobundle#tap('vimfiler')
+            let s:hooks = neobundle#get_hooks("vimfiler")
+            function! s:hooks.on_source(bundle) abort
+                let g:vimfiler_as_default_explorer = 1
+                let g:vimfiler_restore_alternate_file = 1
+                let g:vimfiler_tree_indentation = 1
+                let g:vimfiler_tree_leaf_icon = ''
+                let g:vimfiler_tree_opened_icon = '▼'
+                let g:vimfiler_tree_closed_icon = '▷'
+                let g:vimfiler_file_icon = ''
+                let g:vimfiler_readonly_file_icon = '*'
+                let g:vimfiler_marked_file_icon = '√'
+                "let g:vimfiler_preview_action = 'auto_preview'
+                let g:vimfiler_ignore_pattern =
+                            \ '^\%(\.git\|\.idea\|\.DS_Store\|\.vagrant\|.stversions'
+                            \ .'\|node_modules\|.*\.pyc\)$'
+
+                if has('mac')
+                    let g:vimfiler_quick_look_command =
+                                \ '/Applications//Sublime\ Text.app/Contents/MacOS/Sublime\ Text'
+                else
+                    let g:vimfiler_quick_look_command = 'gloobus-preview'
+                endif
+
+                call vimfiler#custom#profile('default', 'context', {
+                            \ 'explorer' : 1,
+                            \ 'winwidth' : 30,
+                            \ 'winminwidth' : 30,
+                            \ 'toggle' : 1,
+                            \ 'columns' : 'type',
+                            \ 'auto_expand': 1,
+                            \ 'direction' : 'rightbelow',
+                            \ 'parent': 0,
+                            \ 'explorer_columns' : 'type',
+                            \ 'status' : 1,
+                            \ 'safe' : 0,
+                            \ 'split' : 1,
+                            \ 'hidden': 1,
+                            \ 'no_quit' : 1,
+                            \ 'force_hide' : 0,
+                            \ })
+                autocmd FileType vimfiler call s:vimfilerinit()
+                autocmd VimEnter * if !argc() | VimFiler | endif
+                autocmd BufEnter * if (winnr('$') == 1 && &filetype ==# 'vimfiler') |
+                            \ q | endif
+                function! s:vimfilerinit()
+                    set nonumber
+                    set norelativenumber
+                endf
+            endfunction
+        endif
+        "NeoBundle 'mattn/webapi-vim'
+        "NeoBundle 'mattn/googlesuggest-complete-vim'
+        "NeoBundle 'mopp/googlesuggest-source.vim'
+        NeoBundle 'ujihisa/unite-colorscheme'
+        NeoBundle 'mattn/unite-gist'
+        "NeoBundle 'klen/unite-radio.vim'
+        NeoBundle 'tacroe/unite-mark'
+        NeoBundle 'tacroe/unite-alias'
+        "NeoBundle 'ujihisa/quicklearn'
+        NeoBundle 'tex/vim-unite-id'
+        NeoBundle 'sgur/unite-qf'
+        if neobundle#tap('unite.vim')
+            "" Unite: {{{
+
+            "call unite#filters#matcher_default#use(['matcher_fuzzy'])
+            "call unite#filters#sorter_default#use(['sorter_rank'])
+            "call unite#custom#profile('default', 'context', {'no_split':1, 'resize':0})
+
+            let g:unite_source_file_mru_time_format = "%m/%d %T "
+            let g:unite_source_directory_mru_limit = 80
+            let g:unite_source_directory_mru_time_format = "%m/%d %T "
+            let g:unite_source_file_rec_max_depth = 6
+            let g:unite_enable_ignore_case = 1
+            let g:unite_enable_smart_case = 1
+            let g:unite_data_directory='~/.cache/unite'
+            "let g:unite_enable_start_insert=1
+            let g:unite_source_history_yank_enable=1
+            let g:unite_prompt='>> '
+            let g:unite_split_rule = 'botright'
+            let g:unite_winheight=25
+            let g:unite_source_grep_default_opts = "-iRHn"
+                        \ . " --exclude='tags'"
+                        \ . " --exclude='cscope*'"
+                        \ . " --exclude='*.svn*'"
+                        \ . " --exclude='*.log*'"
+                        \ . " --exclude='*tmp*'"
+                        \ . " --exclude-dir='**/tmp'"
+                        \ . " --exclude-dir='CVS'"
+                        \ . " --exclude-dir='.svn'"
+                        \ . " --exclude-dir='.git'"
+                        \ . " --exclude-dir='node_modules'"
+
+            let g:unite_launch_apps = [
+                        \ 'rake',
+                        \ 'make',
+                        \ 'git pull',
+                        \ 'git push']
+            let g:unite_source_menu_menus = {}
+            let g:unite_source_menu_menus.git = {
+                        \ 'description' : '            gestionar repositorios git
+                        \                            ⌘ [espacio]g',
+                        \}
+            let g:unite_source_menu_menus.git.command_candidates = [
+                        \['▷ tig                                                        ⌘ ,gt',
+                        \'normal ,gt'],
+                        \['▷ git status       (Fugitive)                                ⌘ ,gs',
+                        \'Gstatus'],
+                        \['▷ git diff         (Fugitive)                                ⌘ ,gd',
+                        \'Gdiff'],
+                        \['▷ git commit       (Fugitive)                                ⌘ ,gc',
+                        \'Gcommit'],
+                        \['▷ git log          (Fugitive)                                ⌘ ,gl',
+                        \'exe "silent Glog | Unite quickfix"'],
+                        \['▷ git blame        (Fugitive)                                ⌘ ,gb',
+                        \'Gblame'],
+                        \['▷ git stage        (Fugitive)                                ⌘ ,gw',
+                        \'Gwrite'],
+                        \['▷ git checkout     (Fugitive)                                ⌘ ,go',
+                        \'Gread'],
+                        \['▷ git rm           (Fugitive)                                ⌘ ,gr',
+                        \'Gremove'],
+                        \['▷ git mv           (Fugitive)                                ⌘ ,gm',
+                        \'exe "Gmove " input("destino: ")'],
+                        \['▷ git push         (Fugitive, salida por buffer)             ⌘ ,gp',
+                        \'Git! push'],
+                        \['▷ git pull         (Fugitive, salida por buffer)             ⌘ ,gP',
+                        \'Git! pull'],
+                        \['▷ git prompt       (Fugitive, salida por buffer)             ⌘ ,gi',
+                        \'exe "Git! " input("comando git: ")'],
+                        \['▷ git cd           (Fugitive)',
+                        \'Gcd'],
+                        \]
+
+
+            let g:unite_source_grep_max_candidates = 200
+            if executable('hw')
+                " Use hw (highway)
+                " https://github.com/tkengo/highway
+                let g:unite_source_grep_command = 'hw'
+                let g:unite_source_grep_default_opts = '--no-group --no-color'
+                let g:unite_source_grep_recursive_opt = ''
+            elseif executable('ag')
+                " Use ag (the silver searcher)
+                " https://github.com/ggreer/the_silver_searcher
+                let g:unite_source_grep_command = 'ag'
+                let g:unite_source_grep_default_opts =
+                            \ '-i --line-numbers --nocolor --nogroup --hidden --ignore ' .
+                            \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+                let g:unite_source_grep_recursive_opt = ''
+            elseif executable('pt')
+                " Use pt (the platinum searcher)
+                " https://github.com/monochromegane/the_platinum_searcher
+                let g:unite_source_grep_command = 'pt'
+                let g:unite_source_grep_default_opts = '--nogroup --nocolor'
+                let g:unite_source_grep_recursive_opt = ''
+            elseif executable('ack-grep')
+                " Use ack
+                " http://beyondgrep.com/
+                let g:unite_source_grep_command = 'ack-grep'
+                let g:unite_source_grep_default_opts =
+                            \ '-i --no-heading --no-color -k -H'
+                let g:unite_source_grep_recursive_opt = ''
+            elseif executable('ack')
+                let g:unite_source_grep_command = 'ack'
+                let g:unite_source_grep_default_opts = '-i --no-heading --no-color -k -H'
+                let g:unite_source_grep_recursive_opt = ''
+            elseif executable('jvgrep')
+                " Use jvgrep
+                " https://github.com/mattn/jvgrep
+                let g:unite_source_grep_command = 'jvgrep'
+                let g:unite_source_grep_default_opts = '-i --exclude ''\.(git|svn|hg|bzr)'''
+                let g:unite_source_grep_recursive_opt = '-R'
+            endif
+
+            nnoremap <leader>gd :execute 'Unite  -auto-preview -start-insert -no-split  gtags/def:'.expand('<cword>')<CR>
+            nnoremap <leader>gc :execute 'Unite  -auto-preview -start-insert -no-split gtags/context'<CR>
+            nnoremap <leader>gr :execute 'Unite  -auto-preview -start-insert -no-split gtags/ref'<CR>
+            nnoremap <leader>gg :execute 'Unite  -auto-preview -start-insert -no-split gtags/grep'<CR>
+            nnoremap <leader>gp :execute 'Unite  -auto-preview -start-insert -no-split gtags/completion'<CR>
+            vnoremap <leader>gd <ESC>:execute 'Unite -auto-preview -start-insert -no-split gtags/def:'.GetVisualSelection()<CR>
+
+            let g:unite_source_gtags_project_config = {
+                        \ '_':                   { 'treelize': 0 }
+                        \ }
+            "" File search
+            "Ctrlsf
+            nmap <C-F>f <Plug>CtrlSFPrompt
+            vmap <C-F>f <Plug>CtrlSFVwordPath
+            vmap <C-F>F <Plug>CtrlSFVwordExec
+            nmap <C-F>n <Plug>CtrlSFCwordPath
+            nmap <C-F>p <Plug>CtrlSFPwordPath
+            nnoremap <C-F>o :CtrlSFOpen<CR>
+            nnoremap <C-F>t :CtrlSFToggle<CR>
+            inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
+
+            "nnoremap <leader>mm :Unite -auto-resize file file_mru file_rec<cr>
+            nnoremap <leader>mm :Unite   -no-split -start-insert   file file_mru file_rec buffer<cr>
+            nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
+            nnoremap <leader>tf :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
+            nnoremap <leader>mr :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
+            nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
+            nnoremap <leader>tb :<C-u>Unite -no-split -buffer-name=buffer_tab  buffer_tab<cr>
+
+            "" shortcup for key mapping
+            nnoremap <silent><leader>u  :<C-u>Unite -start-insert mapping<CR>
+
+            "" Execute help.
+            nnoremap <C-h>  :<C-u>Unite -start-insert help<CR>
+            " Execute help by cursor keyword.
+            nnoremap <silent> g<C-h>  :<C-u>UniteWithCursorWord help<CR>
+            "" Tag search
+
+            """ For searching the word in the cursor in tag file
+            nnoremap <silent><leader>f :Unite -no-split tag/include:<C-R><C-w><CR>
+
+            nnoremap <silent><leader>ff :Unite tag/include -start-insert -no-split<CR>
+
+            "" grep dictionay
+
+            """ For searching the word in the cursor in the current directory
+            nnoremap <silent><leader>v :Unite -auto-preview -no-split grep:.::<C-R><C-w><CR>
+
+            nnoremap <space>/ :Unite -auto-preview grep:.<cr>
+
+            """ For searching the word handin
+            nnoremap <silent><leader>vs :Unite -auto-preview -no-split grep:.<CR>
+
+            """ For searching the word in the cursor in the current buffer
+            noremap <silent><leader>vf :Unite -auto-preview -no-split grep:%::<C-r><C-w><CR>
+
+            """ For searching the word in the cursor in all opened buffer
+            noremap <silent><leader>va :Unite -auto-preview -no-split grep:$buffers::<C-r><C-w><CR>
+
+
+            "" outline
+            "nnoremap <leader>o :Unite -start-insert -no-split outline<CR>
+
+            nnoremap <leader>o :<C-u>Unite -buffer-name=outline   -start-insert -auto-preview -no-split outline<cr>
+            "" Line search
+            nnoremap <leader>l :Unite line -start-insert  -auto-preview -no-split<CR>
+
+            "" Yank history
+            nnoremap <leader>y :<C-u>Unite -no-split -auto-preview -buffer-name=yank history/yank<cr>
+            "nnoremap <space>y :Unite history/yank<cr>
+
+
+            " search plugin
+            " :Unite neobundle/search
+
+
+
+            nnoremap <space>s :Unite -quick-match -auto-preview buffer<cr>
+
+
+            "for Unite menu{
+
+            nnoremap <silent>[menu]g :Unite -silent -start-insert menu:git<CR>
+            " The prefix key.
+            nnoremap    [unite]   <Nop>
+            nmap    f [unite]
+            nnoremap <space>/ :Unite grep:.<cr>
+            nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files -start-insert file<cr>
+            nnoremap <leader>m :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
+            nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
+            nnoremap <silent> <C-b> :<C-u>Unite -start-insert -buffer-name=buffer buffer<cr>
+
+            nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir
+                        \ -buffer-name=files buffer bookmark file<CR>
+            nnoremap <silent> [unite]b  :<C-u>UniteWithBufferDir
+                        \ -buffer-name=files -prompt=%\  buffer bookmark file<CR>
+            nnoremap <silent> [unite]r  :<C-u>Unite
+                        \ -buffer-name=register register<CR>
+            nnoremap <silent> [unite]o  :<C-u>Unite outline<CR>
+
+            nnoremap <silent> [unite]s  :<C-u>Unite session<CR>
+            nnoremap <silent> [unite]n  :<C-u>Unite session/new<CR>
+
+
+            nnoremap <silent> [unite]fr
+                        \ :<C-u>Unite -buffer-name=resume resume<CR>
+            nnoremap <silent> [unite]ma
+                        \ :<C-u>Unite mapping<CR>
+            nnoremap <silent> [unite]me
+                        \ :<C-u>Unite output:message<CR>
+            nnoremap  [unite]f  :<C-u>Unite source<CR>
+
+            nnoremap <silent> [unite]w
+                        \ :<C-u>Unite -buffer-name=files -no-split
+                        \ jump_point file_point buffer_tab
+                        \ file_rec:! file file/new<CR>
+        endif
+    endif "}}}
+
+
+    "{{{ctrlpvim settings
+    if count(s:settings.plugin_groups, 'ctrlp') "{{{
+
+        NeoBundle 'ctrlpvim/ctrlp.vim'
+        NeoBundle 'tyru/open-browser.vim'
+        NeoBundle 'felixSchl/ctrlp-unity3d-docs'
+        NeoBundle 'voronkovich/ctrlp-nerdtree.vim'
+        NeoBundle 'elentok/ctrlp-objects.vim'
+        NeoBundle 'h14i/vim-ctrlp-buftab'
+        NeoBundle 'vim-scripts/ctrlp-cmdpalette'
+        NeoBundle 'mattn/ctrlp-windowselector'
+        NeoBundle 'the9ball/ctrlp-gtags'
+        NeoBundle 'thiderman/ctrlp-project'
+        NeoBundle 'mattn/ctrlp-google'
+        NeoBundle 'ompugao/ctrlp-history'
+        NeoBundle 'pielgrzym/ctrlp-sessions'
+        NeoBundle 'tacahiroy/ctrlp-funky'
+        NeoBundle 'brookhong/k.vim'
+        NeoBundle 'mattn/ctrlp-launcher'
+        NeoBundle 'sgur/ctrlp-extensions.vim'
+        NeoBundle 'FelikZ/ctrlp-py-matcher'
+        NeoBundle 'JazzCore/ctrlp-cmatcher'
+        NeoBundle 'ompugao/ctrlp-z'
+        let g:ctrlp_map = '<c-p>'
+        let g:ctrlp_cmd = 'CtrlP'
+        let g:ctrlp_working_path_mode = 'ra'
+        let g:ctrlp_root_markers = 'pom.xml'
+        let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:25,results:25'
+        let g:ctrlp_show_hidden = 1
+        "for caching
+        let g:ctrlp_use_caching = 1
+        let g:ctrlp_clear_cache_on_exit = 0
+        let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
+        "let g:ctrlp_map = ',,'
+        "let g:ctrlp_open_multiple_files = 'v'
+        set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class,tags
+        let g:ctrlp_custom_ignore = {
+                    \ 'dir':  '\v[\/]\.(git|hg|svn)$|target',
+                    \ 'file': '\v\.(exe|so|dll|ttf|png)$',
+                    \ 'link': 'some_bad_symbolic_links',
+                    \ }
+        let g:ctrlp_user_command = ['ag %s -i --nocolor --nogroup --hidden
+                    \ --ignore out
+                    \ --ignore .git
+                    \ --ignore .svn
+                    \ --ignore .hg
+                    \ --ignore .DS_Store
+                    \ --ignore "**/*.pyc"
+                    \ -g ""'
+                    \ ]
+
+        let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch'  }
+
+
+        "nnoremap <Leader>kk :CtrlPMixed<Cr>
+
+
+        " comment for ctrlp-funky {{{
+        nnoremap <Leader>fu :CtrlPFunky<Cr>
+        " narrow the list down with a word under cursor
+        nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+        let g:ctrlp_funky_syntax_highlight = 1
+        " }}}
+
+        "for ctrlp_nerdtree {{{
+        let g:ctrlp_nerdtree_show_hidden = 1
+        "}}}
+
+        "for ctrlp_sessions{{{
+        let g:ctrlp_extensions = ['funky', 'sessions' , 'k' , 'tag', 'mixed', 'quickfix', 'undo', 'line', 'changes', 'cmdline', 'menu']
+        "}}}
+
+
+        "for k.vim {{{
+        nnoremap <silent> <leader>qe :CtrlPK<CR>
+        "}}}
+
+        " for ctrlp-launcher {{{
+        nnoremap <Leader>pl :<c-u>CtrlPLauncher<cr>
+        "}}}
+
+        ""for ctrlp-cmatcher {{{
+
+        "let g:ctrlp_max_files = 0
+        "let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
+
+        ""}}}
+
+    endif "}}}
+
+
+    if count(s:settings.plugin_groups, 'autocomplete') "{{{
+        NeoBundle 'honza/vim-snippets'
+        imap <silent><expr><TAB> MyTabfunc()
+        smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+        inoremap <silent> <CR> <C-r>=MyEnterfunc()<Cr>
+        inoremap <silent> <Leader><Tab> <C-r>=MyLeaderTabfunc()<CR>
+        inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
+        inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
+        inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
+        inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
+        if s:settings.autocomplete_method == 'ycm' "{{{
+            NeoBundle 'SirVer/ultisnips'
+            let g:UltiSnipsExpandTrigger="<tab>"
+            let g:UltiSnipsJumpForwardTrigger="<tab>"
+            let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
+            let g:UltiSnipsSnippetsDir='~/DotFiles/snippets'
+            NeoBundle 'ervandew/supertab'
+            let g:SuperTabContextDefaultCompletionType = "<c-n>"
+            let g:SuperTabDefaultCompletionType = '<C-n>'
+            autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+            let g:neobundle#install_process_timeout = 1500
+            NeoBundle 'Valloric/YouCompleteMe'
+            "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+            "let g:ycm_confirm_extra_conf = 0
+            let g:ycm_collect_identifiers_from_tags_files = 1
+            let g:ycm_collect_identifiers_from_comments_and_strings = 1
+            let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
+            let g:ycm_key_list_previous_completion = ['<C-S-TAB>','<Up>']
+            let g:ycm_seed_identifiers_with_syntax = 1
+            let g:ycm_key_invoke_completion = '<leader><tab>'
+            let g:ycm_semantic_triggers =  {
+                        \   'c' : ['->', '.'],
+                        \   'objc' : ['->', '.'],
+                        \   'ocaml' : ['.', '#'],
+                        \   'cpp,objcpp' : ['->', '.', '::'],
+                        \   'perl' : ['->'],
+                        \   'php' : ['->', '::'],
+                        \   'cs,javascript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+                        \   'java,jsp' : ['.'],
+                        \   'vim' : ['re![_a-zA-Z]+[_\w]*\.'],
+                        \   'ruby' : ['.', '::'],
+                        \   'lua' : ['.', ':'],
+                        \   'erlang' : [':'],
+                        \ }
+        elseif s:settings.autocomplete_method == 'neocomplete' "{{{
+            NeoBundle 'Shougo/neocomplete'
+            let s:hooks = neobundle#get_hooks("neocomplete")
+            function! s:hooks.on_source(bundle) abort
+                let g:neocomplete#data_directory='~/.cache/neocomplete'
+                let g:acp_enableAtStartup = 0
+                let g:neocomplete#enable_at_startup = 1
+                " Use smartcase.
+                let g:neocomplete#enable_smart_case = 1
+                let g:neocomplete#enable_camel_case = 1
+                "let g:neocomplete#enable_ignore_case = 1
+                let g:neocomplete#enable_fuzzy_completion = 1
+                " Set minimum syntax keyword length.
+                let g:neocomplete#sources#syntax#min_keyword_length = 3
+                let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+                " Define dictionary.
+                let g:neocomplete#sources#dictionary#dictionaries = {
+                            \ 'default' : '',
+                            \ 'vimshell' : $CACHE.'/vimshell/command-history',
+                            \ 'java' : '~/.vim/dict/java.dict',
+                            \ 'ruby' : '~/.vim/dict/ruby.dict',
+                            \ 'scala' : '~/.vim/dict/scala.dict',
+                            \ }
+
+                let g:neocomplete#enable_auto_delimiter = 1
+
+                " Define keyword.
+                if !exists('g:neocomplete#keyword_patterns')
+                    let g:neocomplete#keyword_patterns = {}
+                endif
+                let g:neocomplete#keyword_patterns._ = '\h\k*(\?'
+
+
+                " AutoComplPop like behavior.
+                let g:neocomplete#enable_auto_select = 0
+
+                if !exists('g:neocomplete#sources#omni#input_patterns')
+                    let g:neocomplete#sources#omni#input_patterns = {}
+                endif
+
+                let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+                let g:neocomplete#sources#omni#input_patterns.java = '[^. *\t]\.\w*\|\h\w*::'
+                let g:neocomplete#force_omni_input_patterns = {}
+                "let g:neocomplete#force_omni_input_patterns.java = '^\s*'
+                " <C-h>, <BS>: close popup and delete backword char.
+                inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+                inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+                inoremap <expr><C-y>  neocomplete#close_popup()
+                inoremap <expr><C-e>  neocomplete#cancel_popup()
+            endfunction
+        elseif s:settings.autocomplete_method == 'neocomplcache' "{{{
+            NeoBundleLazy 'Shougo/neocomplcache.vim', {'autoload':{'insert':1}} "{{{
+            let g:neocomplcache_enable_at_startup=1
+            let g:neocomplcache_temporary_dir=s:get_cache_dir('neocomplcache')
+            let g:neocomplcache_enable_fuzzy_completion=1
+        elseif s:settings.autocomplete_method == 'deoplete'
+            NeoBundle 'Shougo/deoplete.nvim'
+            let s:hooks = neobundle#get_hooks("deoplete.nvim")
+            function! s:hooks.on_source(bundle)
+                let g:deoplete#enable_at_startup = 1
+                let g:deoplete#enable_ignore_case = 1
+                let g:deoplete#enable_smart_case = 1
+                let g:deoplete#enable_refresh_always = 1
+                let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
+                let g:deoplete#omni#input_patterns.java = [
+                            \'[^. \t0-9]\.\w*',
+                            \'[^. \t0-9]\->\w*',
+                            \'[^. \t0-9]\::\w*',
+                            \]
+                let g:deoplete#omni#input_patterns.jsp = ['[^. \t0-9]\.\w*']
+                let g:deoplete#ignore_sources = {}
+                let g:deoplete#ignore_sources._ = ['javacomplete2']
+                call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
+                inoremap <expr><C-h> deoplete#mappings#smart_close_popup()."\<C-h>"
+                inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
+            endfunction
+        endif "}}}
+        NeoBundle 'Shougo/neco-syntax'
+        NeoBundle 'Shougo/neco-vim'
+        if !exists('g:necovim#complete_functions')
+            let g:necovim#complete_functions = {}
+        endif
+        let g:necovim#complete_functions.Ref =
+                    \ 'ref#complete'
+        NeoBundle 'Shougo/context_filetype.vim'
+        NeoBundle 'Shougo/neoinclude.vim'
+        NeoBundle 'Shougo/neosnippet-snippets'
+        NeoBundle 'Shougo/neosnippet.vim' "{{{
+        let g:neosnippet#snippets_directory='~/DotFiles/snippets'
+        let g:neosnippet#enable_snipmate_compatibility=1
+        let g:neosnippet#enable_complete_done = 1
+        let g:neosnippet#completed_pairs= {}
+        let g:neosnippet#completed_pairs.java = {'(' : ')'}
+        NeoBundle 'Shougo/neopairs.vim'
+        if g:neosnippet#enable_complete_done
+            let g:neopairs#enable = 0
+        endif
+        imap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
+        smap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
+    endif "}}}
+
+    if count(s:settings.plugin_groups, 'colorscheme') "{{{
+        "colorscheme
+        NeoBundle 'morhetz/gruvbox'
+        NeoBundle 'nanotech/jellybeans.vim'
+        NeoBundle 'altercation/vim-colors-solarized'
+        NeoBundle 'kristijanhusak/vim-hybrid-material'
     endif
-    let g:necovim#complete_functions.Ref =
-                \ 'ref#complete'
-    NeoBundle 'Shougo/context_filetype.vim'
-    NeoBundle 'Shougo/neoinclude.vim'
-    NeoBundle 'Shougo/neosnippet-snippets'
-    NeoBundle 'Shougo/neosnippet.vim' "{{{
-    let g:neosnippet#snippets_directory='~/DotFiles/snippets'
-    let g:neosnippet#enable_snipmate_compatibility=1
-    let g:neosnippet#enable_complete_done = 1
-    let g:neosnippet#completed_pairs= {}
-    let g:neosnippet#completed_pairs.java = {'(' : ')'}
-    NeoBundle 'Shougo/neopairs.vim'
-    if g:neosnippet#enable_complete_done
-        let g:neopairs#enable = 0
+
+    if count(s:settings.plugin_groups, 'chinese') "{{{
+        NeoBundle "vimcn/vimcdoc"
     endif
-    imap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
-    smap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
-endif "}}}
+    NeoBundle 'tpope/vim-scriptease'
+    NeoBundle 'tpope/vim-fugitive'
+    NeoBundle 'tpope/vim-surround'
+    NeoBundle 'terryma/vim-multiple-cursors'
+    let g:multi_cursor_next_key='<C-j>'
+    let g:multi_cursor_prev_key='<C-k>'
+    let g:multi_cursor_skip_key='<C-x>'
+    let g:multi_cursor_quit_key='<Esc>'
 
-if count(s:settings.plugin_groups, 'colorscheme') "{{{
-    "colorscheme
-    NeoBundle 'morhetz/gruvbox'
-    NeoBundle 'nanotech/jellybeans.vim'
-    NeoBundle 'altercation/vim-colors-solarized'
-    NeoBundle 'kristijanhusak/vim-hybrid-material'
+    "web plugins
+
+    NeoBundleLazy 'groenewege/vim-less', {'autoload':{'filetypes':['less']}}
+    NeoBundleLazy 'cakebaker/scss-syntax.vim', {'autoload':{'filetypes':['scss','sass']}}
+    NeoBundleLazy 'hail2u/vim-css3-syntax', {'autoload':{'filetypes':['css','scss','sass']}}
+    NeoBundleLazy 'ap/vim-css-color', {'autoload':{'filetypes':['css','scss','sass','less','styl']}}
+    NeoBundleLazy 'othree/html5.vim', {'autoload':{'filetypes':['html']}}
+    NeoBundleLazy 'wavded/vim-stylus', {'autoload':{'filetypes':['styl']}}
+    NeoBundleLazy 'digitaltoad/vim-jade', {'autoload':{'filetypes':['jade']}}
+    NeoBundleLazy 'juvenn/mustache.vim', {'autoload':{'filetypes':['mustache']}}
+    NeoBundle 'Valloric/MatchTagAlways'
+
+    "javascript plugins
+
+    "NeoBundleLazy 'marijnh/tern_for_vim', {
+    "\ 'autoload': { 'filetypes': ['javascript'] },
+    "\ 'build': {
+    "\ 'mac': 'npm install',
+    "\ 'unix': 'npm install',
+    "\ 'cygwin': 'npm install',
+    "\ 'windows': 'npm install',
+    "\ },
+    "\ }
+    NeoBundleLazy 'pangloss/vim-javascript', {'autoload':{'filetypes':['javascript']}}
+    NeoBundleLazy 'maksimr/vim-jsbeautify', {'autoload':{'filetypes':['javascript']}} "{{{
+    nnoremap <leader>fjs :call JsBeautify()<cr>
+    "}}}
+    NeoBundleLazy 'leafgarland/typescript-vim', {'autoload':{'filetypes':['typescript']}}
+    NeoBundleLazy 'kchmck/vim-coffee-script', {'autoload':{'filetypes':['coffee']}}
+    NeoBundleLazy 'mmalecki/vim-node.js', {'autoload':{'filetypes':['javascript']}}
+    NeoBundleLazy 'leshill/vim-json', {'autoload':{'filetypes':['javascript','json']}}
+    NeoBundleLazy 'othree/javascript-libraries-syntax.vim', {'autoload':{'filetypes':['javascript','coffee','ls','typescript']}}
+
+
+
+
+    NeoBundle 'artur-shaik/vim-javacomplete2'
+    let g:JavaComplete_UseFQN = 1
+    let g:JavaComplete_ServerAutoShutdownTime = 300
+    let g:JavaComplete_MavenRepositoryDisable = 0
+    NeoBundle 'wsdjeg/vim-dict'
+    NeoBundle 'wsdjeg/java_getset.vim'
+    let s:hooks = neobundle#get_hooks('java_getset.vim')
+    function! s:hooks.on_source(bundle)
+        let g:java_getset_disable_map = 1
+    endfunction
+    NeoBundle 'wsdjeg/JavaUnit.vim'
+    NeoBundle 'wsdjeg/Mysql.vim'
+    let g:JavaUnit_key = "<leader>ooo"
+    NeoBundle 'vim-jp/vim-java'
+    NeoBundle 'bling/vim-airline'
+    let g:Powerline_sybols = 'unicode'
+    let g:airline#extensions#tabline#enabled = 1
+    let g:airline#extensions#tmuxline#enabled = 0
+    NeoBundle 'mattn/emmet-vim'
+    let g:user_emmet_install_global = 0
+    let g:user_emmet_leader_key='<C-e>'
+    let g:user_emmet_mode='a'
+    let g:user_emmet_settings = {
+                \  'jsp' : {
+                \      'extends' : 'html',
+                \  },
+                \}
+    " use this two command to find how long the plugin take!
+    "profile start vim-javacomplete2.log
+    "profile! file */vim-javacomplete2/*
+    if has('nvim') && s:settings.enable_neomake
+        NeoBundle 'benekastah/neomake'
+    else
+        NeoBundle 'wsdjeg/syntastic'
+    endif
+    if !filereadable('pom.xml')&&!filereadable('build.gradle')
+        let g:syntastic_java_javac_options = '-d bin'
+    endif
+    let g:syntastic_java_javac_config_file_enabled = 1
+    let g:syntastic_java_javac_delete_output = 0
+    let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_auto_loc_list = 1
+    let g:syntastic_check_on_open = 0
+    let g:syntastic_check_on_wq = 0
+    let g:syntastic_error_symbol = '✖'
+    let g:syntastic_warning_symbol = '⚠'
+    let g:syntastic_warning_symbol = '➤'
+    NeoBundle 'syngan/vim-vimlint', {
+                \ 'depends' : 'ynkdir/vim-vimlparser'}
+    let g:syntastic_vimlint_options = {
+                \'EVL102': 1 ,
+                \'EVL103': 1 ,
+                \'EVL205': 1 ,
+                \'EVL105': 1 ,
+                \}
+    NeoBundle 'ynkdir/vim-vimlparser'
+    NeoBundle 'todesking/vint-syntastic'
+    "let g:syntastic_vim_checkers = ['vint']
+    NeoBundle 'gcmt/wildfire.vim'
+    noremap <SPACE> <Plug>(wildfire-fuel)
+    vnoremap <C-SPACE> <Plug>(wildfire-water)
+    let g:wildfire_objects = ["i'", 'i"', "i)", "i]", "i}", "ip", "it"]
+
+    NeoBundle 'scrooloose/nerdcommenter'
+    NeoBundle 'easymotion/vim-easymotion'
+    NeoBundle 'MarcWeber/vim-addon-mw-utils'
+    "NeoBundle 'tomtom/tlib_vim'
+    NeoBundle 'mhinz/vim-startify'
+    NeoBundle 'mhinz/vim-signify'
+    let g:signify_disable_by_default = 0
+    let g:signify_line_highlight = 0
+    NeoBundle 'airblade/vim-rooter'
+    let g:rooter_silent_chdir = 1
+    NeoBundle 'Yggdroot/indentLine'
+    let g:indentLine_color_term = 239
+    let g:indentLine_color_gui = '#09AA08'
+    let g:indentLine_char = '¦'
+    let g:indentLine_concealcursor = 'niv' " (default 'inc')
+    let g:indentLine_conceallevel = 2  " (default 2)
+    NeoBundle 'godlygeek/tabular'
+    NeoBundle 'benizi/vim-automkdir'
+    "[c  ]c  jump between prev or next hunk
+    NeoBundle 'airblade/vim-gitgutter'
+    NeoBundle 'itchyny/calendar.vim'
+    "配合fcitx输入框架,在离开插入模式时自动切换到英文,在同一个缓冲区再次进入插入模式时回复到原来的输入状态
+    NeoBundle 'lilydjwg/fcitx.vim'
+    NeoBundle 'junegunn/goyo.vim'
+    function! s:goyo_enter()
+        silent !tmux set status off
+        set noshowmode
+        set noshowcmd
+        set scrolloff=999
+        Limelight
+    endfunction
+
+    function! s:goyo_leave()
+        silent !tmux set status on
+        set showmode
+        set showcmd
+        set scrolloff=5
+    endfunction
+
+    autocmd! User GoyoEnter nested call <SID>goyo_enter()
+    autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
+
+    "vim Wimdows config
+    "NeoBundle 'scrooloose/nerdtree'
+    NeoBundle 'tpope/vim-projectionist'
+    NeoBundle 'Xuyuanp/nerdtree-git-plugin'
+    NeoBundle 'taglist.vim'
+    NeoBundle 'ntpeters/vim-better-whitespace'
+    NeoBundle 'junegunn/rainbow_parentheses.vim'
+    augroup rainbow_lisp
+        autocmd!
+        autocmd FileType lisp,clojure,scheme,java RainbowParentheses
+    augroup END
+    let g:rainbow#max_level = 16
+    let g:rainbow#pairs = [['(', ')'], ['[', ']'],['{','}']]
+    " List of colors that you do not want. ANSI code or #RRGGBB
+    let g:rainbow#blacklist = [233, 234]
+    NeoBundle 'majutsushi/tagbar'
+    let g:tagbar_width=30
+    let g:tagbar_left = 1
+    let g:NERDTreeWinPos='right'
+    let g:NERDTreeWinSize=31
+    let g:NERDTreeChDirMode=1
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+    let g:Tlist_Ctags_Cmd = '/usr/bin/ctags'  "设置ctags执行路径
+    let g:Tlist_Auto_Update=1
+    let g:Tlist_Auto_Open =0
+    let g:Tlist_Use_Right_Window=1
+    let g:Tlist_Show_One_File=0
+    let g:Tlist_File_Fold_Auto_Close=1
+    let g:Tlist_Exit_OnlyWindow=1
+    let g:Tlist_Show_Menu=1
+    noremap <silent> <F8> :TlistToggle<CR>
+    "noremap <silent> <F3> :NERDTreeToggle<CR>
+    noremap <silent> <F3> :VimFiler<CR>
+    autocmd FileType nerdtree nnoremap <silent><Space> :call OpenOrCloseNERDTree()<cr>
+    noremap <silent> <F2> :TagbarToggle<CR>
+    function! OpenOrCloseNERDTree()
+        exec "normal A"
+    endfunction
+    "}}}
+
+    NeoBundle 'wsdjeg/MarkDown.pl'
+    NeoBundle 'wsdjeg/matchit.zip'
+    NeoBundle 'tomasr/molokai'
+    NeoBundle 'simnalamburt/vim-mundo'
+    nnoremap <silent> <F7> :MundoToggle<CR>
+    "NeoBundle 'nerdtree-ack'
+    NeoBundle 'L9'
+    NeoBundle 'TaskList.vim'
+    map <unique> <Leader>td <Plug>TaskList
+    NeoBundle 'ianva/vim-youdao-translater'
+    vnoremap <silent> <C-l> <Esc>:Ydv<CR>
+    nnoremap <silent> <C-l> <Esc>:Ydc<CR>
+    noremap <leader>yd :Yde<CR>
+    NeoBundle 'junegunn/vim-plug'
+    NeoBundle 'elixir-lang/vim-elixir'
+    call neobundle#end()
+    filetype plugin indent on
+    syntax on
+    if count(s:settings.plugin_groups, 'colorscheme')&&s:settings.colorscheme!='' "{{{
+        set background=dark
+        exec 'colorscheme '.s:settings.colorscheme
+    endif
+    NeoBundleCheck
+
 endif
-
-if count(s:settings.plugin_groups, 'chinese') "{{{
-    "NeoBundle 'vimchina/vimcdoc'
-    NeoBundle "vimcn/vimcdoc"
-endif
-NeoBundle 'tpope/vim-scriptease'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'terryma/vim-multiple-cursors'
-"let g:multi_cursor_use_default_mapping=0
-"let g:multi_cursor_start_key='<C-h>'
-let g:multi_cursor_next_key='<C-j>'
-let g:multi_cursor_prev_key='<C-k>'
-let g:multi_cursor_skip_key='<C-x>'
-let g:multi_cursor_quit_key='<Esc>'
-
-"web plugins
-
-NeoBundleLazy 'groenewege/vim-less', {'autoload':{'filetypes':['less']}}
-NeoBundleLazy 'cakebaker/scss-syntax.vim', {'autoload':{'filetypes':['scss','sass']}}
-NeoBundleLazy 'hail2u/vim-css3-syntax', {'autoload':{'filetypes':['css','scss','sass']}}
-NeoBundleLazy 'ap/vim-css-color', {'autoload':{'filetypes':['css','scss','sass','less','styl']}}
-NeoBundleLazy 'othree/html5.vim', {'autoload':{'filetypes':['html']}}
-NeoBundleLazy 'wavded/vim-stylus', {'autoload':{'filetypes':['styl']}}
-NeoBundleLazy 'digitaltoad/vim-jade', {'autoload':{'filetypes':['jade']}}
-NeoBundleLazy 'juvenn/mustache.vim', {'autoload':{'filetypes':['mustache']}}
-"NeoBundleLazy 'gregsexton/MatchTag', {'autoload':{'filetypes':['html','xml']}}
-NeoBundle 'Valloric/MatchTagAlways'
-
-"javascript plugins
-
-"NeoBundleLazy 'marijnh/tern_for_vim', {
-"\ 'autoload': { 'filetypes': ['javascript'] },
-"\ 'build': {
-"\ 'mac': 'npm install',
-"\ 'unix': 'npm install',
-"\ 'cygwin': 'npm install',
-"\ 'windows': 'npm install',
-"\ },
-"\ }
-NeoBundleLazy 'pangloss/vim-javascript', {'autoload':{'filetypes':['javascript']}}
-NeoBundleLazy 'maksimr/vim-jsbeautify', {'autoload':{'filetypes':['javascript']}} "{{{
-nnoremap <leader>fjs :call JsBeautify()<cr>
-"}}}
-NeoBundleLazy 'leafgarland/typescript-vim', {'autoload':{'filetypes':['typescript']}}
-NeoBundleLazy 'kchmck/vim-coffee-script', {'autoload':{'filetypes':['coffee']}}
-NeoBundleLazy 'mmalecki/vim-node.js', {'autoload':{'filetypes':['javascript']}}
-NeoBundleLazy 'leshill/vim-json', {'autoload':{'filetypes':['javascript','json']}}
-NeoBundleLazy 'othree/javascript-libraries-syntax.vim', {'autoload':{'filetypes':['javascript','coffee','ls','typescript']}}
-
-
-
-
-NeoBundle 'artur-shaik/vim-javacomplete2'
-let g:JavaComplete_UseFQN = 1
-let g:JavaComplete_ServerAutoShutdownTime = 300
-let g:JavaComplete_MavenRepositoryDisable = 0
-"NeoBundle 'VJDE/VJDE'
-NeoBundle 'wsdjeg/vim-dict'
-NeoBundle 'wsdjeg/java_getset.vim'
-let s:hooks = neobundle#get_hooks('java_getset.vim')
-function! s:hooks.on_source(bundle)
-    let g:java_getset_disable_map = 1
-endfunction
-NeoBundle 'wsdjeg/JavaUnit.vim'
-NeoBundle 'wsdjeg/Mysql.vim'
-let g:JavaUnit_key = "<leader>ooo"
-NeoBundle 'vim-jp/vim-java'
-NeoBundle 'bling/vim-airline'
-let g:Powerline_sybols = 'unicode'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tmuxline#enabled = 0
-NeoBundle 'mattn/emmet-vim'
-let g:user_emmet_install_global = 0
-let g:user_emmet_leader_key='<C-e>'
-let g:user_emmet_mode='a'
-let g:user_emmet_settings = {
-            \  'jsp' : {
-            \      'extends' : 'html',
-            \  },
-            \}
-" use this two command to find how long the plugin take!
-"profile start vim-javacomplete2.log
-"profile! file */vim-javacomplete2/*
-if has('nvim') && s:settings.enable_neomake
-    NeoBundle 'benekastah/neomake'
-else
-    NeoBundle 'wsdjeg/syntastic'
-endif
-if !filereadable('pom.xml')&&!filereadable('build.gradle')
-    let g:syntastic_java_javac_options = '-d bin'
-endif
-let g:syntastic_java_javac_config_file_enabled = 1
-let g:syntastic_java_javac_delete_output = 0
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-"let g:syntastic_error_symbol = '✖'
-"let g:syntastic_warning_symbol = '⚠'
-"let g:syntastic_warning_symbol = '➤'
-NeoBundle 'syngan/vim-vimlint', {
-            \ 'depends' : 'ynkdir/vim-vimlparser'}
-let g:syntastic_vimlint_options = {
-            \'EVL102': 1 ,
-            \'EVL103': 1 ,
-            \'EVL205': 1 ,
-            \'EVL105': 1 ,
-            \}
-NeoBundle 'ynkdir/vim-vimlparser'
-NeoBundle 'todesking/vint-syntastic'
-"let g:syntastic_vim_checkers = ['vint']
-NeoBundle 'gcmt/wildfire.vim'
-noremap <SPACE> <Plug>(wildfire-fuel)
-vnoremap <C-SPACE> <Plug>(wildfire-water)
-let g:wildfire_objects = ["i'", 'i"', "i)", "i]", "i}", "ip", "it"]
-
-NeoBundle 'scrooloose/nerdcommenter'
-NeoBundle 'easymotion/vim-easymotion'
-NeoBundle 'MarcWeber/vim-addon-mw-utils'
-"NeoBundle 'tomtom/tlib_vim'
-NeoBundle 'mhinz/vim-startify'
-NeoBundle 'mhinz/vim-signify'
-let g:signify_disable_by_default = 0
-let g:signify_line_highlight = 0
-NeoBundle 'airblade/vim-rooter'
-"let g:rooter_patterns = ['Rakefile' , 'pom.xml' , 'web.xml' , '.git/']
-let g:rooter_silent_chdir = 1
-NeoBundle 'Yggdroot/indentLine'
-let g:indentLine_color_term = 239
-let g:indentLine_color_gui = '#09AA08'
-let g:indentLine_char = '¦'
-let g:indentLine_concealcursor = 'niv' " (default 'inc')
-let g:indentLine_conceallevel = 2  " (default 2)
-NeoBundle 'godlygeek/tabular'
-NeoBundle 'benizi/vim-automkdir'
-"[c  ]c  jump between prev or next hunk
-NeoBundle 'airblade/vim-gitgutter'
-NeoBundle 'itchyny/calendar.vim'
-"配合fcitx输入框架,在离开插入模式时自动切换到英文,在同一个缓冲区再次进入插入模式时回复到原来的输入状态
-NeoBundle 'lilydjwg/fcitx.vim'
-NeoBundle 'junegunn/goyo.vim'
-function! s:goyo_enter()
-    silent !tmux set status off
-    set noshowmode
-    set noshowcmd
-    set scrolloff=999
-    Limelight
-    " ...
-endfunction
-
-function! s:goyo_leave()
-    silent !tmux set status on
-    set showmode
-    set showcmd
-    set scrolloff=5
-    "Limelight!
-    " ...
-endfunction
-
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
-autocmd! User GoyoLeave nested call <SID>goyo_leave()
-
-
-"vim Wimdows config
-"{{{
-"NeoBundle 'scrooloose/nerdtree'
-" Alternate Files quickly use :A change between main and test files
-NeoBundle 'tpope/vim-projectionist'
-NeoBundle 'Xuyuanp/nerdtree-git-plugin'
-NeoBundle 'taglist.vim'
-"FixWhitespace
-"NeoBundle 'bronson/vim-trailing-whitespace'
-NeoBundle 'ntpeters/vim-better-whitespace'
-NeoBundle 'junegunn/rainbow_parentheses.vim'
-augroup rainbow_lisp
-    autocmd!
-    autocmd FileType lisp,clojure,scheme,java RainbowParentheses
-augroup END
-let g:rainbow#max_level = 16
-let g:rainbow#pairs = [['(', ')'], ['[', ']'],['{','}']]
-" List of colors that you do not want. ANSI code or #RRGGBB
-let g:rainbow#blacklist = [233, 234]
-NeoBundle 'majutsushi/tagbar'
-let g:tagbar_width=30
-let g:tagbar_left = 1
-let g:NERDTreeWinPos='right'
-let g:NERDTreeWinSize=31
-let g:NERDTreeChDirMode=1
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-let g:Tlist_Ctags_Cmd = '/usr/bin/ctags'  "设置ctags执行路径
-let g:Tlist_Auto_Update=1
-let g:Tlist_Auto_Open =0
-let g:Tlist_Use_Right_Window=1
-let g:Tlist_Show_One_File=0
-let g:Tlist_File_Fold_Auto_Close=1
-let g:Tlist_Exit_OnlyWindow=1
-let g:Tlist_Show_Menu=1
-noremap <silent> <F8> :TlistToggle<CR>
-"noremap <silent> <F3> :NERDTreeToggle<CR>
-noremap <silent> <F3> :VimFiler<CR>
-autocmd FileType nerdtree nnoremap <silent><Space> :call OpenOrCloseNERDTree()<cr>
-noremap <silent> <F2> :TagbarToggle<CR>
-function! OpenOrCloseNERDTree()
-    exec "normal A"
-endfunction
-"}}}
-
-NeoBundle 'wsdjeg/MarkDown.pl'
-NeoBundle 'wsdjeg/matchit.zip'
-NeoBundle 'tomasr/molokai'
-NeoBundle 'simnalamburt/vim-mundo'
-nnoremap <silent> <F7> :MundoToggle<CR>
-"NeoBundle 'nerdtree-ack'
-NeoBundle 'L9'
-NeoBundle 'TaskList.vim'
-map <unique> <Leader>td <Plug>TaskList
-NeoBundle 'ianva/vim-youdao-translater'
-vnoremap <silent> <C-l> <Esc>:Ydv<CR>
-nnoremap <silent> <C-l> <Esc>:Ydc<CR>
-noremap <leader>yd :Yde<CR>
-NeoBundle 'junegunn/vim-plug'
-NeoBundle 'elixir-lang/vim-elixir'
-call neobundle#end()
-filetype plugin indent on
-syntax on
-if count(s:settings.plugin_groups, 'colorscheme')&&s:settings.colorscheme!='' "{{{
-    set background=dark
-    exec 'colorscheme '.s:settings.colorscheme
-endif
-NeoBundleCheck
-
 "}}}
 
 
