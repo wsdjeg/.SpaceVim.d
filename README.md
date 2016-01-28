@@ -1,13 +1,20 @@
 # awesome-dotfiles
 
-## Getting Started
-
 ### INSTALL
 
 ### Requirements
-
 1. jdk 1.8  `sudo apt-get install openjdk-8-jdk openjdk-8-doc openjdk-8-source`
 2. Vim 7.3.885+ compiled with lua. If :echo has("lua") returns 1, then you're done; otherwise, see below.
+3. recommend to use neovim(please see how to install below)
+
+### For neovim
+
+```shell
+sudo apt-get install neovim
+sudo apt-get install python python3 python-dev python3-dev python-pip python3-pip
+pip2 install --user neovim
+pip3 install --user neovim
+```
 
 install vim with lua e.g.
 ```shell
@@ -62,14 +69,6 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install
 ```
 
-### For neovim
-
-```shell
-sudo apt-get install neovim
-sudo apt-get install python python3 python-dev python3-dev python-pip python3-pip
-pip2 install --user neovim
-pip3 install --user neovim
-```
 
 ### true color terminal in ubuntu 14.04
 ```
@@ -101,6 +100,13 @@ character-set-server=utf8
 
 > Dark powered asynchronous completion framework for neovim
 
+- [javacomplete2](https://github.com/artur-shaik/vim-javacomplete2)
+
+> Updated javacomplete plugin for vim
+
+- [neosnippet.vim](https://github.com/Shougo/neosnippet.vim)
+
+> neo-snippet plugin contains neocomplcache snippets source
 
 ## Other tools
 
