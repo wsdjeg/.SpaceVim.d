@@ -136,6 +136,243 @@ if s:settings.neobundle_installed
 
     if count(s:settings.plugin_groups, 'unite') "{{{
         NeoBundle 'Shougo/unite.vim'
+        if neobundle#tap('unite.vim')
+            let s:hooks = neobundle#get_hooks('unite.vim')
+            func! s:hooks.on_source(bundle) abort
+                " for codesearch{{{
+                " Make search case insensitive
+                let g:unite_source_codesearch_ignore_case = 1
+                call unite#custom#source('codesearch', 'max_candidates', 30)
+                "" Unite: {{{
+
+                "call unite#filters#matcher_default#use(['matcher_fuzzy'])
+                "call unite#filters#sorter_default#use(['sorter_rank'])
+                "call unite#custom#profile('default', 'context', {'no_split':1, 'resize':0})
+
+                let g:unite_source_file_mru_time_format = "%m/%d %T "
+                let g:unite_source_directory_mru_limit = 80
+                let g:unite_source_directory_mru_time_format = "%m/%d %T "
+                let g:unite_source_file_rec_max_depth = 6
+                let g:unite_enable_ignore_case = 1
+                let g:unite_enable_smart_case = 1
+                let g:unite_data_directory='~/.cache/unite'
+                "let g:unite_enable_start_insert=1
+                let g:unite_source_history_yank_enable=1
+                let g:unite_prompt='>> '
+                let g:unite_split_rule = 'botright'
+                let g:unite_winheight=25
+                let g:unite_source_grep_default_opts = "-iRHn"
+                            \ . " --exclude='tags'"
+                            \ . " --exclude='cscope*'"
+                            \ . " --exclude='*.svn*'"
+                            \ . " --exclude='*.log*'"
+                            \ . " --exclude='*tmp*'"
+                            \ . " --exclude-dir='**/tmp'"
+                            \ . " --exclude-dir='CVS'"
+                            \ . " --exclude-dir='.svn'"
+                            \ . " --exclude-dir='.git'"
+                            \ . " --exclude-dir='node_modules'"
+
+                let g:unite_launch_apps = [
+                            \ 'rake',
+                            \ 'make',
+                            \ 'git pull',
+                            \ 'git push']
+                let g:unite_source_menu_menus = {}
+                let g:unite_source_menu_menus.git = {
+                            \ 'description' : '            gestionar repositorios git
+                            \                            ⌘ [espacio]g',
+                            \}
+                let g:unite_source_menu_menus.git.command_candidates = [
+                            \['▷ tig                                                        ⌘ ,gt',
+                            \'normal ,gt'],
+                            \['▷ git status       (Fugitive)                                ⌘ ,gs',
+                            \'Gstatus'],
+                            \['▷ git diff         (Fugitive)                                ⌘ ,gd',
+                            \'Gdiff'],
+                            \['▷ git commit       (Fugitive)                                ⌘ ,gc',
+                            \'Gcommit'],
+                            \['▷ git log          (Fugitive)                                ⌘ ,gl',
+                            \'exe "silent Glog | Unite quickfix"'],
+                            \['▷ git blame        (Fugitive)                                ⌘ ,gb',
+                            \'Gblame'],
+                            \['▷ git stage        (Fugitive)                                ⌘ ,gw',
+                            \'Gwrite'],
+                            \['▷ git checkout     (Fugitive)                                ⌘ ,go',
+                            \'Gread'],
+                            \['▷ git rm           (Fugitive)                                ⌘ ,gr',
+                            \'Gremove'],
+                            \['▷ git mv           (Fugitive)                                ⌘ ,gm',
+                            \'exe "Gmove " input("destino: ")'],
+                            \['▷ git push         (Fugitive, salida por buffer)             ⌘ ,gp',
+                            \'Git! push'],
+                            \['▷ git pull         (Fugitive, salida por buffer)             ⌘ ,gP',
+                            \'Git! pull'],
+                            \['▷ git prompt       (Fugitive, salida por buffer)             ⌘ ,gi',
+                            \'exe "Git! " input("comando git: ")'],
+                            \['▷ git cd           (Fugitive)',
+                            \'Gcd'],
+                            \]
+
+
+                let g:unite_source_grep_max_candidates = 200
+                if executable('hw')
+                    " Use hw (highway)
+                    " https://github.com/tkengo/highway
+                    let g:unite_source_grep_command = 'hw'
+                    let g:unite_source_grep_default_opts = '--no-group --no-color'
+                    let g:unite_source_grep_recursive_opt = ''
+                elseif executable('ag')
+                    " Use ag (the silver searcher)
+                    " https://github.com/ggreer/the_silver_searcher
+                    let g:unite_source_grep_command = 'ag'
+                    let g:unite_source_grep_default_opts =
+                                \ '-i --line-numbers --nocolor --nogroup --hidden --ignore ' .
+                                \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+                    let g:unite_source_grep_recursive_opt = ''
+                elseif executable('pt')
+                    " Use pt (the platinum searcher)
+                    " https://github.com/monochromegane/the_platinum_searcher
+                    let g:unite_source_grep_command = 'pt'
+                    let g:unite_source_grep_default_opts = '--nogroup --nocolor'
+                    let g:unite_source_grep_recursive_opt = ''
+                elseif executable('ack-grep')
+                    " Use ack
+                    " http://beyondgrep.com/
+                    let g:unite_source_grep_command = 'ack-grep'
+                    let g:unite_source_grep_default_opts =
+                                \ '-i --no-heading --no-color -k -H'
+                    let g:unite_source_grep_recursive_opt = ''
+                elseif executable('ack')
+                    let g:unite_source_grep_command = 'ack'
+                    let g:unite_source_grep_default_opts = '-i --no-heading --no-color -k -H'
+                    let g:unite_source_grep_recursive_opt = ''
+                elseif executable('jvgrep')
+                    " Use jvgrep
+                    " https://github.com/mattn/jvgrep
+                    let g:unite_source_grep_command = 'jvgrep'
+                    let g:unite_source_grep_default_opts = '-i --exclude ''\.(git|svn|hg|bzr)'''
+                    let g:unite_source_grep_recursive_opt = '-R'
+                endif
+
+                nnoremap <leader>gd :execute 'Unite  -auto-preview -start-insert -no-split  gtags/def:'.expand('<cword>')<CR>
+                nnoremap <leader>gc :execute 'Unite  -auto-preview -start-insert -no-split gtags/context'<CR>
+                nnoremap <leader>gr :execute 'Unite  -auto-preview -start-insert -no-split gtags/ref'<CR>
+                nnoremap <leader>gg :execute 'Unite  -auto-preview -start-insert -no-split gtags/grep'<CR>
+                nnoremap <leader>gp :execute 'Unite  -auto-preview -start-insert -no-split gtags/completion'<CR>
+                vnoremap <leader>gd <ESC>:execute 'Unite -auto-preview -start-insert -no-split gtags/def:'.GetVisualSelection()<CR>
+
+                let g:unite_source_gtags_project_config = {
+                            \ '_':                   { 'treelize': 0 }
+                            \ }
+                "" File search
+                "Ctrlsf
+                nmap <C-F>f <Plug>CtrlSFPrompt
+                vmap <C-F>f <Plug>CtrlSFVwordPath
+                vmap <C-F>F <Plug>CtrlSFVwordExec
+                nmap <C-F>n <Plug>CtrlSFCwordPath
+                nmap <C-F>p <Plug>CtrlSFPwordPath
+                nnoremap <C-F>o :CtrlSFOpen<CR>
+                nnoremap <C-F>t :CtrlSFToggle<CR>
+                inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
+
+                "nnoremap <leader>mm :Unite -auto-resize file file_mru file_rec<cr>
+                nnoremap <leader>mm :Unite   -no-split -start-insert   file file_mru file_rec buffer<cr>
+                nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
+                nnoremap <leader>tf :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
+                nnoremap <leader>mr :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
+                nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
+                nnoremap <leader>tb :<C-u>Unite -no-split -buffer-name=buffer_tab  buffer_tab<cr>
+
+                "" shortcup for key mapping
+                nnoremap <silent><leader>u  :<C-u>Unite -start-insert mapping<CR>
+
+                "" Execute help.
+                nnoremap <C-h>  :<C-u>Unite -start-insert help<CR>
+                " Execute help by cursor keyword.
+                nnoremap <silent> g<C-h>  :<C-u>UniteWithCursorWord help<CR>
+                "" Tag search
+
+                """ For searching the word in the cursor in tag file
+                nnoremap <silent><leader>f :Unite -no-split tag/include:<C-R><C-w><CR>
+
+                nnoremap <silent><leader>ff :Unite tag/include -start-insert -no-split<CR>
+
+                "" grep dictionay
+
+                """ For searching the word in the cursor in the current directory
+                nnoremap <silent><leader>v :Unite -auto-preview -no-split grep:.::<C-R><C-w><CR>
+
+                nnoremap <space>/ :Unite -auto-preview grep:.<cr>
+
+                """ For searching the word handin
+                nnoremap <silent><leader>vs :Unite -auto-preview -no-split grep:.<CR>
+
+                """ For searching the word in the cursor in the current buffer
+                noremap <silent><leader>vf :Unite -auto-preview -no-split grep:%::<C-r><C-w><CR>
+
+                """ For searching the word in the cursor in all opened buffer
+                noremap <silent><leader>va :Unite -auto-preview -no-split grep:$buffers::<C-r><C-w><CR>
+
+
+                "" outline
+                "nnoremap <leader>o :Unite -start-insert -no-split outline<CR>
+
+                nnoremap <leader>o :<C-u>Unite -buffer-name=outline   -start-insert -auto-preview -no-split outline<cr>
+                "" Line search
+                nnoremap <leader>l :Unite line -start-insert  -auto-preview -no-split<CR>
+
+                "" Yank history
+                nnoremap <leader>y :<C-u>Unite -no-split -auto-preview -buffer-name=yank history/yank<cr>
+                "nnoremap <space>y :Unite history/yank<cr>
+
+
+                " search plugin
+                " :Unite neobundle/search
+
+
+
+                nnoremap <space>s :Unite -quick-match -auto-preview buffer<cr>
+
+
+                "for Unite menu{
+
+                nnoremap <silent>[menu]g :Unite -silent -start-insert menu:git<CR>
+                " The prefix key.
+                nnoremap    [unite]   <Nop>
+                nmap    f [unite]
+                nnoremap <space>/ :Unite grep:.<cr>
+                nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files -start-insert file<cr>
+                nnoremap <leader>m :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
+                nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
+                nnoremap <silent> <C-b> :<C-u>Unite -start-insert -buffer-name=buffer buffer<cr>
+
+                nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir
+                            \ -buffer-name=files buffer bookmark file<CR>
+                nnoremap <silent> [unite]b  :<C-u>UniteWithBufferDir
+                            \ -buffer-name=files -prompt=%\  buffer bookmark file<CR>
+                nnoremap <silent> [unite]r  :<C-u>Unite
+                            \ -buffer-name=register register<CR>
+                nnoremap <silent> [unite]o  :<C-u>Unite outline<CR>
+
+                nnoremap <silent> [unite]s  :<C-u>Unite session<CR>
+                nnoremap <silent> [unite]n  :<C-u>Unite session/new<CR>
+
+
+                nnoremap <silent> [unite]fr
+                            \ :<C-u>Unite -buffer-name=resume resume<CR>
+                nnoremap <silent> [unite]ma
+                            \ :<C-u>Unite mapping<CR>
+                nnoremap <silent> [unite]me
+                            \ :<C-u>Unite output:message<CR>
+                nnoremap  [unite]f  :<C-u>Unite source<CR>
+
+                nnoremap <silent> [unite]w
+                            \ :<C-u>Unite -buffer-name=files -no-split
+                            \ jump_point file_point buffer_tab
+                            \ file_rec:! file file/new<CR>
+            endf
+        endif
         NeoBundle 'Shougo/neoyank.vim'
         NeoBundle 'soh335/unite-qflist'
         NeoBundle 'ujihisa/unite-equery'
@@ -153,6 +390,47 @@ if s:settings.neobundle_installed
         "NeoBundle 'Sixeight/unite-grep'
         "NeoBundle 't9md/vim-unite-lines'
         NeoBundle 'thinca/vim-ref'
+        if neobundle#tap('vim-ref')
+            let s:hooks = neobundle#get_hooks('vim-ref')
+            func! s:hooks.on_source(bundle) abort
+                "webdictサイトの設定
+                let g:ref_source_webdict_sites = {
+                            \   'je': {
+                            \     'url': 'http://dictionary.infoseek.ne.jp/jeword/%s',
+                            \   },
+                            \   'ej': {
+                            \     'url': 'http://dictionary.infoseek.ne.jp/ejword/%s',
+                            \   },
+                            \   'wiki': {
+                            \     'url': 'http://ja.wikipedia.org/wiki/%s',
+                            \   },
+                            \   'cn': {
+                            \     'url': 'http://www.iciba.com/%s',
+                            \   },
+                            \   'wikipedia:en':{'url': 'http://en.wikipedia.org/wiki/%s',  },
+                            \   'bing':{'url': 'http://cn.bing.com/search?q=%s', },
+                            \ }
+                "Default site
+                let g:ref_source_webdict_sites.default = 'cn'
+                "let g:ref_source_webdict_cmd='lynx -dump -nonumbers %s'
+                "let g:ref_source_webdict_cmd='w3m -dump %s'
+                "The filter on the output. Remove the first few lines
+                function! g:ref_source_webdict_sites.je.filter(output)
+                    return join(split(a:output, "\n")[15 :], "\n")
+                endfunction
+                function! g:ref_source_webdict_sites.ej.filter(output)
+                    return join(split(a:output, "\n")[15 :], "\n")
+                endfunction
+                function! g:ref_source_webdict_sites.wiki.filter(output)
+                    return join(split(a:output, "\n")[17 :], "\n")
+                endfunction
+                nnoremap <Leader>rj :<C-u>Ref webdict je<Space>
+                nnoremap <Leader>re :<C-u>Ref webdict ej<Space>
+                nnoremap <Leader>rc :<C-u>Ref webdict cn<Space>
+                nnoremap <Leader>rw :<C-u>Ref webdict wikipedia:en<Space>
+                nnoremap <Leader>rb :<C-u>Ref webdict bing<Space>
+            endf
+        endif
         NeoBundle 'heavenshell/unite-zf'
         NeoBundle 'heavenshell/unite-sf2'
         NeoBundle 'Shougo/unite-outline'
@@ -247,234 +525,6 @@ if s:settings.neobundle_installed
         NeoBundle 'tex/vim-unite-id'
         NeoBundle 'sgur/unite-qf'
         if neobundle#tap('unite.vim')
-            "" Unite: {{{
-
-            "call unite#filters#matcher_default#use(['matcher_fuzzy'])
-            "call unite#filters#sorter_default#use(['sorter_rank'])
-            "call unite#custom#profile('default', 'context', {'no_split':1, 'resize':0})
-
-            let g:unite_source_file_mru_time_format = "%m/%d %T "
-            let g:unite_source_directory_mru_limit = 80
-            let g:unite_source_directory_mru_time_format = "%m/%d %T "
-            let g:unite_source_file_rec_max_depth = 6
-            let g:unite_enable_ignore_case = 1
-            let g:unite_enable_smart_case = 1
-            let g:unite_data_directory='~/.cache/unite'
-            "let g:unite_enable_start_insert=1
-            let g:unite_source_history_yank_enable=1
-            let g:unite_prompt='>> '
-            let g:unite_split_rule = 'botright'
-            let g:unite_winheight=25
-            let g:unite_source_grep_default_opts = "-iRHn"
-                        \ . " --exclude='tags'"
-                        \ . " --exclude='cscope*'"
-                        \ . " --exclude='*.svn*'"
-                        \ . " --exclude='*.log*'"
-                        \ . " --exclude='*tmp*'"
-                        \ . " --exclude-dir='**/tmp'"
-                        \ . " --exclude-dir='CVS'"
-                        \ . " --exclude-dir='.svn'"
-                        \ . " --exclude-dir='.git'"
-                        \ . " --exclude-dir='node_modules'"
-
-            let g:unite_launch_apps = [
-                        \ 'rake',
-                        \ 'make',
-                        \ 'git pull',
-                        \ 'git push']
-            let g:unite_source_menu_menus = {}
-            let g:unite_source_menu_menus.git = {
-                        \ 'description' : '            gestionar repositorios git
-                        \                            ⌘ [espacio]g',
-                        \}
-            let g:unite_source_menu_menus.git.command_candidates = [
-                        \['▷ tig                                                        ⌘ ,gt',
-                        \'normal ,gt'],
-                        \['▷ git status       (Fugitive)                                ⌘ ,gs',
-                        \'Gstatus'],
-                        \['▷ git diff         (Fugitive)                                ⌘ ,gd',
-                        \'Gdiff'],
-                        \['▷ git commit       (Fugitive)                                ⌘ ,gc',
-                        \'Gcommit'],
-                        \['▷ git log          (Fugitive)                                ⌘ ,gl',
-                        \'exe "silent Glog | Unite quickfix"'],
-                        \['▷ git blame        (Fugitive)                                ⌘ ,gb',
-                        \'Gblame'],
-                        \['▷ git stage        (Fugitive)                                ⌘ ,gw',
-                        \'Gwrite'],
-                        \['▷ git checkout     (Fugitive)                                ⌘ ,go',
-                        \'Gread'],
-                        \['▷ git rm           (Fugitive)                                ⌘ ,gr',
-                        \'Gremove'],
-                        \['▷ git mv           (Fugitive)                                ⌘ ,gm',
-                        \'exe "Gmove " input("destino: ")'],
-                        \['▷ git push         (Fugitive, salida por buffer)             ⌘ ,gp',
-                        \'Git! push'],
-                        \['▷ git pull         (Fugitive, salida por buffer)             ⌘ ,gP',
-                        \'Git! pull'],
-                        \['▷ git prompt       (Fugitive, salida por buffer)             ⌘ ,gi',
-                        \'exe "Git! " input("comando git: ")'],
-                        \['▷ git cd           (Fugitive)',
-                        \'Gcd'],
-                        \]
-
-
-            let g:unite_source_grep_max_candidates = 200
-            if executable('hw')
-                " Use hw (highway)
-                " https://github.com/tkengo/highway
-                let g:unite_source_grep_command = 'hw'
-                let g:unite_source_grep_default_opts = '--no-group --no-color'
-                let g:unite_source_grep_recursive_opt = ''
-            elseif executable('ag')
-                " Use ag (the silver searcher)
-                " https://github.com/ggreer/the_silver_searcher
-                let g:unite_source_grep_command = 'ag'
-                let g:unite_source_grep_default_opts =
-                            \ '-i --line-numbers --nocolor --nogroup --hidden --ignore ' .
-                            \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
-                let g:unite_source_grep_recursive_opt = ''
-            elseif executable('pt')
-                " Use pt (the platinum searcher)
-                " https://github.com/monochromegane/the_platinum_searcher
-                let g:unite_source_grep_command = 'pt'
-                let g:unite_source_grep_default_opts = '--nogroup --nocolor'
-                let g:unite_source_grep_recursive_opt = ''
-            elseif executable('ack-grep')
-                " Use ack
-                " http://beyondgrep.com/
-                let g:unite_source_grep_command = 'ack-grep'
-                let g:unite_source_grep_default_opts =
-                            \ '-i --no-heading --no-color -k -H'
-                let g:unite_source_grep_recursive_opt = ''
-            elseif executable('ack')
-                let g:unite_source_grep_command = 'ack'
-                let g:unite_source_grep_default_opts = '-i --no-heading --no-color -k -H'
-                let g:unite_source_grep_recursive_opt = ''
-            elseif executable('jvgrep')
-                " Use jvgrep
-                " https://github.com/mattn/jvgrep
-                let g:unite_source_grep_command = 'jvgrep'
-                let g:unite_source_grep_default_opts = '-i --exclude ''\.(git|svn|hg|bzr)'''
-                let g:unite_source_grep_recursive_opt = '-R'
-            endif
-
-            nnoremap <leader>gd :execute 'Unite  -auto-preview -start-insert -no-split  gtags/def:'.expand('<cword>')<CR>
-            nnoremap <leader>gc :execute 'Unite  -auto-preview -start-insert -no-split gtags/context'<CR>
-            nnoremap <leader>gr :execute 'Unite  -auto-preview -start-insert -no-split gtags/ref'<CR>
-            nnoremap <leader>gg :execute 'Unite  -auto-preview -start-insert -no-split gtags/grep'<CR>
-            nnoremap <leader>gp :execute 'Unite  -auto-preview -start-insert -no-split gtags/completion'<CR>
-            vnoremap <leader>gd <ESC>:execute 'Unite -auto-preview -start-insert -no-split gtags/def:'.GetVisualSelection()<CR>
-
-            let g:unite_source_gtags_project_config = {
-                        \ '_':                   { 'treelize': 0 }
-                        \ }
-            "" File search
-            "Ctrlsf
-            nmap <C-F>f <Plug>CtrlSFPrompt
-            vmap <C-F>f <Plug>CtrlSFVwordPath
-            vmap <C-F>F <Plug>CtrlSFVwordExec
-            nmap <C-F>n <Plug>CtrlSFCwordPath
-            nmap <C-F>p <Plug>CtrlSFPwordPath
-            nnoremap <C-F>o :CtrlSFOpen<CR>
-            nnoremap <C-F>t :CtrlSFToggle<CR>
-            inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
-
-            "nnoremap <leader>mm :Unite -auto-resize file file_mru file_rec<cr>
-            nnoremap <leader>mm :Unite   -no-split -start-insert   file file_mru file_rec buffer<cr>
-            nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
-            nnoremap <leader>tf :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
-            nnoremap <leader>mr :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
-            nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
-            nnoremap <leader>tb :<C-u>Unite -no-split -buffer-name=buffer_tab  buffer_tab<cr>
-
-            "" shortcup for key mapping
-            nnoremap <silent><leader>u  :<C-u>Unite -start-insert mapping<CR>
-
-            "" Execute help.
-            nnoremap <C-h>  :<C-u>Unite -start-insert help<CR>
-            " Execute help by cursor keyword.
-            nnoremap <silent> g<C-h>  :<C-u>UniteWithCursorWord help<CR>
-            "" Tag search
-
-            """ For searching the word in the cursor in tag file
-            nnoremap <silent><leader>f :Unite -no-split tag/include:<C-R><C-w><CR>
-
-            nnoremap <silent><leader>ff :Unite tag/include -start-insert -no-split<CR>
-
-            "" grep dictionay
-
-            """ For searching the word in the cursor in the current directory
-            nnoremap <silent><leader>v :Unite -auto-preview -no-split grep:.::<C-R><C-w><CR>
-
-            nnoremap <space>/ :Unite -auto-preview grep:.<cr>
-
-            """ For searching the word handin
-            nnoremap <silent><leader>vs :Unite -auto-preview -no-split grep:.<CR>
-
-            """ For searching the word in the cursor in the current buffer
-            noremap <silent><leader>vf :Unite -auto-preview -no-split grep:%::<C-r><C-w><CR>
-
-            """ For searching the word in the cursor in all opened buffer
-            noremap <silent><leader>va :Unite -auto-preview -no-split grep:$buffers::<C-r><C-w><CR>
-
-
-            "" outline
-            "nnoremap <leader>o :Unite -start-insert -no-split outline<CR>
-
-            nnoremap <leader>o :<C-u>Unite -buffer-name=outline   -start-insert -auto-preview -no-split outline<cr>
-            "" Line search
-            nnoremap <leader>l :Unite line -start-insert  -auto-preview -no-split<CR>
-
-            "" Yank history
-            nnoremap <leader>y :<C-u>Unite -no-split -auto-preview -buffer-name=yank history/yank<cr>
-            "nnoremap <space>y :Unite history/yank<cr>
-
-
-            " search plugin
-            " :Unite neobundle/search
-
-
-
-            nnoremap <space>s :Unite -quick-match -auto-preview buffer<cr>
-
-
-            "for Unite menu{
-
-            nnoremap <silent>[menu]g :Unite -silent -start-insert menu:git<CR>
-            " The prefix key.
-            nnoremap    [unite]   <Nop>
-            nmap    f [unite]
-            nnoremap <space>/ :Unite grep:.<cr>
-            nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files -start-insert file<cr>
-            nnoremap <leader>m :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
-            nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
-            nnoremap <silent> <C-b> :<C-u>Unite -start-insert -buffer-name=buffer buffer<cr>
-
-            nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir
-                        \ -buffer-name=files buffer bookmark file<CR>
-            nnoremap <silent> [unite]b  :<C-u>UniteWithBufferDir
-                        \ -buffer-name=files -prompt=%\  buffer bookmark file<CR>
-            nnoremap <silent> [unite]r  :<C-u>Unite
-                        \ -buffer-name=register register<CR>
-            nnoremap <silent> [unite]o  :<C-u>Unite outline<CR>
-
-            nnoremap <silent> [unite]s  :<C-u>Unite session<CR>
-            nnoremap <silent> [unite]n  :<C-u>Unite session/new<CR>
-
-
-            nnoremap <silent> [unite]fr
-                        \ :<C-u>Unite -buffer-name=resume resume<CR>
-            nnoremap <silent> [unite]ma
-                        \ :<C-u>Unite mapping<CR>
-            nnoremap <silent> [unite]me
-                        \ :<C-u>Unite output:message<CR>
-            nnoremap  [unite]f  :<C-u>Unite source<CR>
-
-            nnoremap <silent> [unite]w
-                        \ :<C-u>Unite -buffer-name=files -no-split
-                        \ jump_point file_point buffer_tab
-                        \ file_rec:! file file/new<CR>
         endif
     endif "}}}
 
@@ -483,7 +533,6 @@ if s:settings.neobundle_installed
     if count(s:settings.plugin_groups, 'ctrlp') "{{{
 
         NeoBundle 'ctrlpvim/ctrlp.vim'
-        NeoBundle 'tyru/open-browser.vim'
         NeoBundle 'felixSchl/ctrlp-unity3d-docs'
         NeoBundle 'voronkovich/ctrlp-nerdtree.vim'
         NeoBundle 'elentok/ctrlp-objects.vim'
@@ -933,6 +982,43 @@ if s:settings.neobundle_installed
     noremap <leader>yd :Yde<CR>
     NeoBundle 'junegunn/vim-plug'
     NeoBundle 'elixir-lang/vim-elixir'
+    NeoBundle 'tyru/open-browser.vim'
+    if neobundle#tap('open-brower.vim')
+        let s:hooks = neobundle#get_hooks("open-brower.vim")
+        function! s:hooks.on_source(bundle)
+            "for open-browser {{{
+            " This is my setting.
+            let g:netrw_nogx = 1 " disable netrw's gx mapping.
+            "nmap gx <Plug>(openbrowser-smart-search)
+            "vmap gx <Plug>(openbrowser-smart-search)
+            "" Open URI under cursor.
+            nnoremap go <Plug>(openbrowser-open)
+            "" Open selected URI.
+            vnoremap go <Plug>(openbrowser-open)
+            " Search word under cursor.
+            nnoremap gs <Plug>(openbrowser-search)
+            " Search selected word.
+            vnoremap gs <Plug>(openbrowser-search)
+            " If it looks like URI, Open URI under cursor.
+            " Otherwise, Search word under cursor.
+            nnoremap gx <Plug>(openbrowser-smart-search)
+            " If it looks like URI, Open selected URI.
+            " Otherwise, Search selected word.
+            vnoremap gx <Plug>(openbrowser-smart-search)
+            vnoremap gob :OpenBrowser http://www.baidu.com/s?wd=<C-R>=expand("<cword>")<cr><cr>
+            nnoremap gob :OpenBrowser http://www.baidu.com/s?wd=<C-R>=expand("<cword>")<cr><cr>
+            vnoremap gog :OpenBrowser http://www.google.com/?#newwindow=1&q=<C-R>=expand("<cword>")<cr><cr>
+            nnoremap gog :OpenBrowser http://www.google.com/?#newwindow=1&q=<C-R>=expand("<cword>")<cr><cr>
+            vnoremap goi :OpenBrowserSmartSearch http://www.iciba.com/<C-R>=expand("<cword>")<cr><cr>
+            nnoremap goi :OpenBrowserSmartSearch http://www.iciba.com/<C-R>=expand("<cword>")<cr><cr>
+            " In command-line
+            ":OpenBrowser http://google.com/
+            ":OpenBrowserSearch ggrks
+            ":OpenBrowserSmartSearch http://google.com/
+            ":OpenBrowserSmartSearch ggrks
+            "}}}
+        endf
+    endif
     call neobundle#end()
     filetype plugin indent on
     syntax on
@@ -947,108 +1033,7 @@ endif
 
 
 
-"for buftabs {{{
-noremap <Leader>bp :bprev<CR>
-noremap <Leader>bn :bnext<CR>
-"}}}
-
-
-
-
-" for codesearch{{{
-" Make search case insensitive
-let g:unite_source_codesearch_ignore_case = 1
-call unite#custom#source('codesearch', 'max_candidates', 30)
-
-"}}}
-
-"webdictサイトの設定
-let g:ref_source_webdict_sites = {
-            \   'je': {
-            \     'url': 'http://dictionary.infoseek.ne.jp/jeword/%s',
-            \   },
-            \   'ej': {
-            \     'url': 'http://dictionary.infoseek.ne.jp/ejword/%s',
-            \   },
-            \   'wiki': {
-            \     'url': 'http://ja.wikipedia.org/wiki/%s',
-            \   },
-            \   'cn': {
-            \     'url': 'http://www.iciba.com/%s',
-            \   },
-            \   'wikipedia:en':{'url': 'http://en.wikipedia.org/wiki/%s',  },
-            \   'bing':{'url': 'http://cn.bing.com/search?q=%s', },
-            \ }
-
-
-"デフォルトサイト
-let g:ref_source_webdict_sites.default = 'cn'
-"let g:ref_source_webdict_cmd='lynx -dump -nonumbers %s'
-"let g:ref_source_webdict_cmd='w3m -dump %s'
-"出力に対するフィルタ。最初の数行を削除
-function! g:ref_source_webdict_sites.je.filter(output)
-    return join(split(a:output, "\n")[15 :], "\n")
-endfunction
-function! g:ref_source_webdict_sites.ej.filter(output)
-    return join(split(a:output, "\n")[15 :], "\n")
-endfunction
-function! g:ref_source_webdict_sites.wiki.filter(output)
-    return join(split(a:output, "\n")[17 :], "\n")
-endfunction
-
-nnoremap <Leader>rj :<C-u>Ref webdict je<Space>
-nnoremap <Leader>re :<C-u>Ref webdict ej<Space>
-nnoremap <Leader>rc :<C-u>Ref webdict cn<Space>
-nnoremap <Leader>rw :<C-u>Ref webdict wikipedia:en<Space>
-nnoremap <Leader>rb :<C-u>Ref webdict bing<Space>
-
-"}}}
-" Man.vim {{{
-source $VIMRUNTIME/ftplugin/man.vim
-nnoremap <C-K> :Man 3 <C-R>=expand("<cword>")<CR><CR>
-inoremap <C-K> <ESC>:Man 3 <C-R>=expand("<cword>")<CR><CR>
-"}}}
-"for open-browser {{{
-" This is my setting.
-let g:netrw_nogx = 1 " disable netrw's gx mapping.
-"nmap gx <Plug>(openbrowser-smart-search)
-"vmap gx <Plug>(openbrowser-smart-search)
-
-
-"" Open URI under cursor.
-nnoremap go <Plug>(openbrowser-open)
-"" Open selected URI.
-vnoremap go <Plug>(openbrowser-open)
-
-" Search word under cursor.
-nnoremap gs <Plug>(openbrowser-search)
-" Search selected word.
-vnoremap gs <Plug>(openbrowser-search)
-
-" If it looks like URI, Open URI under cursor.
-" Otherwise, Search word under cursor.
-nnoremap gx <Plug>(openbrowser-smart-search)
-" If it looks like URI, Open selected URI.
-" Otherwise, Search selected word.
-vnoremap gx <Plug>(openbrowser-smart-search)
-
-vnoremap gob :OpenBrowser http://www.baidu.com/s?wd=<C-R>=expand("<cword>")<cr><cr>
-nnoremap gob :OpenBrowser http://www.baidu.com/s?wd=<C-R>=expand("<cword>")<cr><cr>
-
-vnoremap gog :OpenBrowser http://www.google.com/?#newwindow=1&q=<C-R>=expand("<cword>")<cr><cr>
-nnoremap gog :OpenBrowser http://www.google.com/?#newwindow=1&q=<C-R>=expand("<cword>")<cr><cr>
-
-vnoremap goi :OpenBrowserSmartSearch http://www.iciba.com/<C-R>=expand("<cword>")<cr><cr>
-nnoremap goi :OpenBrowserSmartSearch http://www.iciba.com/<C-R>=expand("<cword>")<cr><cr>
-" In command-line
-":OpenBrowser http://google.com/
-":OpenBrowserSearch ggrks
-":OpenBrowserSmartSearch http://google.com/
-":OpenBrowserSmartSearch ggrks
-"}}}
-
 " basic vim settiing
-"{{{
 "显示相对行号
 if has("gui_running")
     set guioptions-=m " 隐藏菜单栏
@@ -1148,15 +1133,18 @@ nnoremap <C-Left> <C-W><Left>
 nnoremap <C-Up> <C-W><Up>
 nnoremap <C-Down> <C-W><Down>
 
-"Quickly add empty lines
+"for buftabs
+noremap <Leader>bp :bprev<CR>
+noremap <Leader>bn :bnext<CR>
 
+"Quickly add empty lines
 nnoremap [<space>  :put! =''<cr>
 nnoremap ]<space>  :put =''<cr>
 
+"Use jk switch to normal model
 inoremap jk <esc>
 
 "]e or [e move current line ,count can be useed
-
 nnoremap [e  :<c-u>execute 'move -1-'. v:count1<cr>
 nnoremap ]e  :<c-u>execute 'move +'. v:count1<cr>
 
