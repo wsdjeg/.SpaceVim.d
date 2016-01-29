@@ -1150,8 +1150,8 @@ noremap <Leader>bp :bprev<CR>
 noremap <Leader>bn :bnext<CR>
 
 "Quickly add empty lines
-nnoremap [<space>  :put! =''<cr>
-nnoremap ]<space>  :put =''<cr>
+nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>
+nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 
 "Use jk switch to normal model
 inoremap jk <esc>
