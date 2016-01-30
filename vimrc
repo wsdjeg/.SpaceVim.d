@@ -1133,7 +1133,7 @@ nnoremap <C-Right> <C-W><Right>
 nnoremap <C-Left>  <C-W><Left>
 nnoremap <C-Up>    <C-W><Up>
 nnoremap <C-Down>  <C-W><Down>
-if has('vim')
+if has('nvim')
     tnoremap <C-Right> <C-\><C-n><C-w><Right>
     tnoremap <C-Left>  <C-\><C-n><C-w><Left>
     tnoremap <C-Up>    <C-\><C-n><C-w><Up>
