@@ -49,7 +49,7 @@ Command run `vim +NeoBundleInstall +qall`
 
 ## For bash
 
-```shell
+```sh
 $ cd ~
 $ git clone https://github.com/magicmonty/bash-git-prompt.git .bash-git-prompt
 $ mv ~/.bashrc ~/.bashrc.backup
@@ -64,14 +64,14 @@ ln -s ~/DotFiles/zsh/zshrc ~/.zshrc
 
 ## For fzf
 
-```shell
+```sh
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install
 ```
 
 
 ### true color terminal in ubuntu 14.04
-```
+```sh
 sudo add-apt-repository ppa:gnome3-team/gnome3-staging
 sudo apt-get update
 sudo apt-get install gnome-terminal
@@ -81,7 +81,7 @@ sudo add-apt-repository -r ppa:gnome3-team/gnome3-staging
 
 ### Install fcitx in ubuntu 14.04
 
-```shell
+```sh
 sudo apt-get install fcitx fcitx-pinyin
 ```
 

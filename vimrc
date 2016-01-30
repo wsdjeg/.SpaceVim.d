@@ -1127,7 +1127,7 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 set completeopt=longest,menu
-
+let g:markdown_fenced_languages = ['vim', 'java', 'bash=sh', 'sh', 'html', 'python']
 "mapping
 "{{{
 "全局映射
