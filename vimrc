@@ -932,6 +932,7 @@ if s:settings.neobundle_installed
     NeoBundle 'Xuyuanp/nerdtree-git-plugin'
     NeoBundle 'taglist.vim'
     NeoBundle 'ntpeters/vim-better-whitespace'
+    NeoBundle 'Yggdroot/hiPairs'
     NeoBundle 'junegunn/rainbow_parentheses.vim'
     augroup rainbow_lisp
         autocmd!
