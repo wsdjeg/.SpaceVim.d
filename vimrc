@@ -563,7 +563,6 @@ if s:settings.neobundle_installed
         let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
         "let g:ctrlp_map = ',,'
         "let g:ctrlp_open_multiple_files = 'v'
-        set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class,tags
         let g:ctrlp_custom_ignore = {
                     \ 'dir':  '\v[\/]\.(git|hg|svn)$|target',
                     \ 'file': '\v\.(exe|so|dll|ttf|png)$',
@@ -1127,6 +1126,8 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 set completeopt=longest,menu
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class,tags
+set wildignorecase
 let g:markdown_fenced_languages = ['vim', 'java', 'bash=sh', 'sh', 'html', 'python']
 "mapping
 "{{{
