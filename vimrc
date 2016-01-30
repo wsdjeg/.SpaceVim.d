@@ -980,19 +980,6 @@ if s:settings.neobundle_installed
     nnoremap <silent> <C-l> <Esc>:Ydc<CR>
     noremap <leader>yd :Yde<CR>
     NeoBundle 'junegunn/vim-plug'
-    if neobundle#tap('vim-plug')
-        if filereadable(expand('~/.config/nvim/autoload/plug.vim'))
-            call plug#begin('~/.vim/plugged')
-            Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-            Plug 'junegunn/gv.vim'
-            "for fzf
-            nnoremap <Leader>fz :FZF<CR>
-            if !has('nvim')
-                Plug 'junegunn/vim-github-dashboard'
-            endif
-            call plug#end()
-        endif
-    endif
     NeoBundle 'elixir-lang/vim-elixir'
     NeoBundle 'tyru/open-browser.vim'
     if neobundle#tap('open-brower.vim')
@@ -1514,6 +1501,17 @@ endfunction
 
 
 
+if filereadable(expand('~/.config/nvim/autoload/plug.vim'))
+    call plug#begin('~/.vim/plugged')
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+    Plug 'junegunn/gv.vim'
+    "for fzf
+    nnoremap <Leader>fz :FZF<CR>
+    if !has('nvim')
+        Plug 'junegunn/vim-github-dashboard'
+    endif
+    call plug#end()
+endif
 
 
 "============> plug.vim
