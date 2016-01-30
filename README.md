@@ -9,7 +9,7 @@
 
 ### For neovim
 
-```shell
+```sh
 sudo apt-get install neovim
 sudo apt-get install python python3 python-dev python3-dev python-pip python3-pip
 pip2 install --user neovim
@@ -17,13 +17,13 @@ pip3 install --user neovim
 ```
 
 install vim with lua e.g.
-```shell
+```sh
 $ sudo apt-get install vim-gnome
 # by install gvim you also can use vim in command
 ```
 
 install android sdk
-```shell
+```sh
 cd ~
 mkdir tools
 cd tools
@@ -33,7 +33,7 @@ tar -zxvf android-sdk_r24.4.1-linux.tgz
 
 configration for vim
 
-```shell
+```sh
 $ mkdir -p ~/.vim/bundle
 $ git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
 $ git clone git@github.com:wsdjeg/DotFiles.git ~/DotFiles
@@ -58,7 +58,7 @@ $ ln -s ~/DotFiles/bash/inputrc ~/.inputrc
 ```
 
 ## For zsh
-```shell
+```sh
 ln -s ~/DotFiles/zsh/zshrc ~/.zshrc
 ```
 
@@ -113,7 +113,7 @@ character-set-server=utf8
 Screen catch
 
 Kazam
-```shell
+```sh
 sudo apt-get install kazam
 ```
 
