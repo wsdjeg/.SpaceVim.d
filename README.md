@@ -85,6 +85,13 @@ sudo add-apt-repository -r ppa:gnome3-team/gnome3-staging
 sudo apt-get install fcitx fcitx-pinyin
 ```
 
+### Install latest version ag
+```sh
+sudo add-apt-repository ppa:jonathonf/backports
+sudo apt-get update
+sudo apt-get install silversearcher-ag
+```
+
 ### Fix mysql chinese support
 add into my.cnf(/etc/mysql/my.cnf)
 ```
