@@ -1130,9 +1130,16 @@ cnoremap w!! %!sudo tee > /dev/null %
 
 " 映射Ctrl+上下左右来切换窗口
 nnoremap <C-Right> <C-W><Right>
-nnoremap <C-Left> <C-W><Left>
-nnoremap <C-Up> <C-W><Up>
-nnoremap <C-Down> <C-W><Down>
+nnoremap <C-Left>  <C-W><Left>
+nnoremap <C-Up>    <C-W><Up>
+nnoremap <C-Down>  <C-W><Down>
+if has('vim')
+    tnoremap <C-Right> <C-\><C-n><C-w><Right>
+    tnoremap <C-Left>  <C-\><C-n><C-w><Left>
+    tnoremap <C-Up>    <C-\><C-n><C-w><Up>
+    tnoremap <C-Down>  <C-\><C-n><C-w><Down>
+    tnoremap <esc>     <C-\><C-n>
+endif
 
 "for buftabs
 noremap <Leader>bp :bprev<CR>
