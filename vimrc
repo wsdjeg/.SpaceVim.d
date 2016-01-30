@@ -504,7 +504,7 @@ if s:settings.neobundle_installed
                             \ 'force_hide' : 0,
                             \ })
                 autocmd FileType vimfiler call s:vimfilerinit()
-                autocmd VimEnter * if !argc() | VimFiler | endif
+                "autocmd VimEnter * if !argc() | VimFiler | endif
                 autocmd BufEnter * if (winnr('$') == 1 && &filetype ==# 'vimfiler') |
                             \ q | endif
                 function! s:vimfilerinit()
