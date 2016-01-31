@@ -882,7 +882,7 @@ if s:settings.neobundle_installed
     NeoBundle 'gcmt/wildfire.vim'
     noremap <SPACE> <Plug>(wildfire-fuel)
     vnoremap <C-SPACE> <Plug>(wildfire-water)
-    let g:wildfire_objects = ["i'", 'i"', "i)", "i]", "i}", "ip", "it"]
+    let g:wildfire_objects = ["i'", 'i"', 'i)', 'i]', 'i}', 'ip', 'it']
 
     NeoBundle 'scrooloose/nerdcommenter'
     NeoBundle 'easymotion/vim-easymotion'
