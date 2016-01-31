@@ -716,7 +716,6 @@ if s:settings.neobundle_installed
         elseif s:settings.autocomplete_method == 'neocomplcache' "{{{
             NeoBundleLazy 'Shougo/neocomplcache.vim', {'autoload':{'insert':1}} "{{{
             let g:neocomplcache_enable_at_startup=1
-            let g:neocomplcache_temporary_dir=s:get_cache_dir('neocomplcache')
             let g:neocomplcache_enable_fuzzy_completion=1
         elseif s:settings.autocomplete_method == 'deoplete'
             NeoBundle 'Shougo/deoplete.nvim'
