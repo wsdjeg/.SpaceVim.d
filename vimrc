@@ -1,3 +1,8 @@
+if has('vim_starting')
+    if &compatible
+        set nocompatible
+    endif
+endif
 "detect OS {{{
 function! OSX()
     return has('macunix')
@@ -110,12 +115,7 @@ if filereadable(expand(s:settings.plugin_bundle_dir) . 'neobundle.vim/README.md'
     let s:settings.neobundle_installed = 1
 endif
 if s:settings.neobundle_installed
-    if has('vim_starting')
-        if &compatible
-            set nocompatible
-        endif
-        set runtimepath+=~/.vim/bundle/neobundle.vim/
-    endif
+    set runtimepath+=~/.vim/bundle/neobundle.vim/
     call neobundle#begin(expand('~/.vim/bundle/'))
     scriptencoding utf-8
     NeoBundleFetch 'Shougo/neobundle.vim'
@@ -1042,7 +1042,6 @@ function! EditMy_virmc()
 endf
 
 " basic vim settiing
-"显示相对行号
 if has("gui_running")
     set guioptions-=m " 隐藏菜单栏
     set guioptions-=T " 隐藏工具栏
@@ -1051,18 +1050,29 @@ if has("gui_running")
     set guioptions-=b " 隐藏底部滚动条
     set showtabline=0 " 隐藏Tab栏
 endif
+
+" indent use backspace delete indent, eol use backspace delete line at
+" begining start delete the char you just typed in if you do not use set
+" nocompatible ,you need this
+set backspace=indent,eol,start
+
+"显示相对行号
 set relativenumber
+
 " 显示行号
 set number
-" 自动缩进
+
+" 自动缩进,自动智能对齐
 set autoindent
-" 自动智能对齐
 set smartindent
+set cindent
+
 " 状态栏预览命令
 set wildmenu
-set cindent
+
 "整词换行
 set linebreak
+
 "Tab键的宽度
 set tabstop=4
 "用空格来执行tab
