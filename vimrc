@@ -838,6 +838,9 @@ if s:settings.neobundle_installed
     let g:Powerline_sybols = 'unicode'
     let g:airline#extensions#tabline#enabled = 1
     let g:airline#extensions#tmuxline#enabled = 0
+    set statusline+=%#warningmsg#
+    set statusline+=%{SyntasticStatuslineFlag()}
+    set statusline+=%*
     NeoBundle 'mattn/emmet-vim'
     let g:user_emmet_install_global = 0
     let g:user_emmet_leader_key='<C-e>'
@@ -1019,18 +1022,24 @@ if s:settings.neobundle_installed
         endf
     endif
     call neobundle#end()
-    filetype plugin indent on
-    syntax on
-    if count(s:settings.plugin_groups, 'colorscheme')&&s:settings.colorscheme!='' "{{{
-        set background=dark
-        exec 'colorscheme '.s:settings.colorscheme
-    endif
     NeoBundleCheck
-
 endif
+filetype plugin indent on
+syntax on
 "}}}
+if count(s:settings.plugin_groups, 'colorscheme')&&s:settings.colorscheme!='' "{{{
+    set background=dark
+    if s:settings.colorscheme!='' && s:settings.neobundle_installed
+        exec 'colorscheme '.s:settings.colorscheme
+    else
+        colorscheme desert
+    endif
+endif
 
-
+let s:My_vimrc = expand('<sfile>')
+function! EditMy_virmc()
+    exec "edit ".s:My_vimrc
+endf
 
 " basic vim settiing
 "显示相对行号
@@ -1109,9 +1118,6 @@ set incsearch
 set autowrite
 set hlsearch
 set laststatus=2
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
 set completeopt=longest,menu
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class,tags
 set wildignorecase
