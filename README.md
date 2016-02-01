@@ -101,6 +101,17 @@ default-character-set=utf8
 character-set-server=utf8
 ```
 
+### Build vim from source
+> I have enable both py and py3
+```sh
+sudo apt-get build-dep vim
+git clone https://github.com/vim/vim.git
+## make distclean && make clean
+## build script from this repo
+make VIMRUNTIMEDIR=/usr/share/vim/vim74
+sudo make install
+```
+
 ## Dark powered Plugins
 
 - [deoplete.nvim](https://github.com/Shougo/deoplete.nvim)
