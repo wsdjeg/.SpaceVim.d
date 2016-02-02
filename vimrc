@@ -41,10 +41,15 @@ let s:settings.default_indent = 2
 let s:settings.max_column = 120
 let s:settings.auto_download_neobundle = 0
 let s:settings.neobundle_installed = 0
-let s:settings.plugin_bundle_dir = '~/.vim/bundle/'
+if WINDOWS()
+    let s:settings.plugin_bundle_dir = '~\vimfile\bundle\'
+else
+    let s:settings.plugin_bundle_dir = '~/.vim/bundle/'
+endif
 let s:settings.autocomplete_method = ''
 let s:settings.enable_cursorcolumn = 0
 let s:settings.enable_neomake = 0
+let s:settings.enable_ycm = 0
 let s:settings.enable_cursorline = 0
 let s:settings.use_colorscheme = 1
 let s:settings.vim_help_language='en'
@@ -93,10 +98,11 @@ if has('nvim')
     let s:settings.autocomplete_method = 'deoplete'
 elseif has('lua')
     let s:settings.autocomplete_method = 'neocomplete'
-elseif s:settings.autocomplete_method == 'ycm'
-    let s:settings.autocomplete_method = 'ycm'
 else
     let s:settings.autocomplete_method = 'neocomplcache'
+endif
+if s:settings.enable_ycm
+    let s:settings.autocomplete_method = 'ycm'
 endif
 
 for s:group in s:settings.plugin_groups_exclude
