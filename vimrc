@@ -841,11 +841,11 @@ if s:settings.neobundle_installed
     let g:JavaUnit_key = "<leader>ooo"
     NeoBundle 'vim-jp/vim-java'
     NeoBundle 'bling/vim-airline'
+    let g:airline#extensions#tabline#enabled = 1
     if neobundle#tap('vim-airline')
         let s:hooks = neobundle#get_hooks('bling/vim-airline')
         function! s:hooks.on_source(bundle)
             let g:Powerline_sybols = 'unicode'
-            let g:airline#extensions#tabline#enabled = 1
             let g:airline#extensions#tmuxline#enabled = 0
             set statusline+=%#warningmsg#
             set statusline+=%{SyntasticStatuslineFlag()}
@@ -1125,6 +1125,10 @@ set ruler
 set showcmd						"命令行显示输入的命令
 set showmatch					"设置匹配模式,显示匹配的括号
 set showmode					"命令行显示当前vim的模式
+"menuone: show the pupmenu when only one match
+set completeopt=menu,menuone,longest " disable preview scratch window,
+set complete=.,w,b,u,t " h: 'complete'
+set pumheight=15 " limit completion menu height
 set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 set termencoding=utf-8
 set encoding=utf-8
@@ -1552,6 +1556,11 @@ endif
 set mouse=
 set hidden
 if has('nvim')
+    augroup Terminal
+        au!
+        au TermOpen * let g:last_terminal_job_id = b:terminal_job_id
+        au WinEnter term://* startinsert
+    augroup END
     let $NVIM_TUI_ENABLE_TRUE_COLOR=1
     " dark0 + gray
     let g:terminal_color_0 = "#282828"
@@ -1585,3 +1594,28 @@ if has('nvim')
     let g:terminal_color_7 = "#a89984"
     let g:terminal_color_15 = "#ebdbb2"
 endif
+
+function! s:GetVisual()
+  let [lnum1, col1] = getpos("'<")[1:2]
+  let [lnum2, col2] = getpos("'>")[1:2]
+  let lines = getline(lnum1, lnum2)
+  let lines[-1] = lines[-1][:col2 - 2]
+  let lines[0] = lines[0][col1 - 1:]
+  return lines
+endfunction
+
+function! REPLSend(lines)
+  call jobsend(g:last_terminal_job_id, add(a:lines, ''))
+endfunction
+" }}}
+" Commands {{{
+" REPL integration {{{
+command! -range=% REPLSendSelection call REPLSend(s:GetVisual())
+command! REPLSendLine call REPLSend([getline('.')])
+" }}}
+" Convenient command to see the difference between the current buffer and the
+" file it was loaded from, thus the changes you made.  Only define it when not
+" defined already.
+command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+      \ | wincmd p | diffthis
+" }}}
