@@ -869,7 +869,7 @@ if s:settings.neobundle_installed
     else
         NeoBundle 'wsdjeg/syntastic'
     endif
-    if !filereadable('pom.xml')&&!filereadable('build.gradle')
+    if !filereadable('pom.xml') && !filereadable('build.gradle') && isdirectory('bin')
         let g:syntastic_java_javac_options = '-d bin'
     endif
     let g:syntastic_java_javac_config_file_enabled = 1
