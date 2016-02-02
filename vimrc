@@ -841,12 +841,17 @@ if s:settings.neobundle_installed
     let g:JavaUnit_key = "<leader>ooo"
     NeoBundle 'vim-jp/vim-java'
     NeoBundle 'bling/vim-airline'
-    let g:Powerline_sybols = 'unicode'
-    let g:airline#extensions#tabline#enabled = 1
-    let g:airline#extensions#tmuxline#enabled = 0
-    set statusline+=%#warningmsg#
-    set statusline+=%{SyntasticStatuslineFlag()}
-    set statusline+=%*
+    if neobundle#tap('vim-airline')
+        let s:hooks = neobundle#get_hooks('bling/vim-airline')
+        function! s:hooks.on_source(bundle)
+            let g:Powerline_sybols = 'unicode'
+            let g:airline#extensions#tabline#enabled = 1
+            let g:airline#extensions#tmuxline#enabled = 0
+            set statusline+=%#warningmsg#
+            set statusline+=%{SyntasticStatuslineFlag()}
+            set statusline+=%*
+        endfunction
+    endif
     NeoBundle 'mattn/emmet-vim'
     let g:user_emmet_install_global = 0
     let g:user_emmet_leader_key='<C-e>'
