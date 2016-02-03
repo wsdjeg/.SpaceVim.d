@@ -973,7 +973,9 @@ if s:settings.neobundle_installed
     let g:NERDTreeWinSize=31
     let g:NERDTreeChDirMode=1
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-    let g:Tlist_Ctags_Cmd = '/usr/bin/ctags'  "设置ctags执行路径
+    if !executable('ctags')
+        let g:Tlist_Ctags_Cmd = '/usr/bin/ctags'  "设置ctags执行路径
+    endif
     let g:Tlist_Auto_Update=1
     let g:Tlist_Auto_Open =0
     let g:Tlist_Use_Right_Window=1
