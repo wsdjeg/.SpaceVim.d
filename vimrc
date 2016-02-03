@@ -31,6 +31,14 @@ else
     endif
 endif
 
+if WINDOWS()
+    let s:Psep = ';'
+    let s:Fsep = '\'
+else
+    let s:Psep = ':'
+    let s:Fsep = '/'
+endif
+
 if $COLORTERM == 'gnome-terminal'
     set t_Co=256
 endif
@@ -41,11 +49,7 @@ let s:settings.default_indent = 2
 let s:settings.max_column = 120
 let s:settings.auto_download_neobundle = 0
 let s:settings.neobundle_installed = 0
-if WINDOWS()
-    let s:settings.plugin_bundle_dir = '~\vimfile\bundle\'
-else
-    let s:settings.plugin_bundle_dir = '~/.vim/bundle/'
-endif
+let s:settings.plugin_bundle_dir = join([$HOME,'.vim','bundle',''],s:Fsep)
 let s:settings.autocomplete_method = ''
 let s:settings.enable_cursorcolumn = 0
 let s:settings.enable_neomake = 0
@@ -54,6 +58,7 @@ let s:settings.enable_cursorline = 0
 let s:settings.use_colorscheme = 1
 let s:settings.vim_help_language='en'
 let s:settings.colorscheme = 'gruvbox'
+let s:settings.colorscheme_default  = 'desert'
 let s:settings.filemanager = 'vimfiler'
 let s:settings.plugin_groups_exclude = []
 
@@ -117,12 +122,17 @@ let g:python_host_prog = '/usr/bin/python'
 let g:python3_host_prog = '/usr/bin/python3'
 
 "setup & neobundle {{{
-if filereadable(expand(s:settings.plugin_bundle_dir) . 'neobundle.vim/README.md')
+if filereadable(expand(s:settings.plugin_bundle_dir) . 'neobundle.vim'. s:Fsep. 'README.md')
     let s:settings.neobundle_installed = 1
+else
+    if executable('git')
+        exec '!git clone https://github.com/Shougo/neobundle.vim ' . s:settings.plugin_bundle_dir . 'neobundle.vim'
+        let s:settings.neobundle_installed = 1
+    endif
 endif
 if s:settings.neobundle_installed
     set runtimepath+=~/.vim/bundle/neobundle.vim/
-    call neobundle#begin(expand('~/.vim/bundle/'))
+    call neobundle#begin(expand($HOME.'/.vim/bundle/'))
     scriptencoding utf-8
     NeoBundleFetch 'Shougo/neobundle.vim'
     "}}}
@@ -462,7 +472,8 @@ if s:settings.neobundle_installed
         NeoBundle 'mattn/unite-vim_advent-calendar'
         NeoBundle 'mattn/unite-remotefile'
         NeoBundle 'sgur/unite-everything'
-        NeoBundle 'kannokanno/unite-dwm'
+        "NeoBundle 'kannokanno/unite-dwm'
+        NeoBundle 'spolu/dwm.vim'
         NeoBundle 'raw1z/unite-projects'
         NeoBundle 'voi/unite-ctags'
         NeoBundle 'Shougo/unite-session'
@@ -1041,9 +1052,9 @@ syntax on
 if count(s:settings.plugin_groups, 'colorscheme')&&s:settings.colorscheme!='' "{{{
     set background=dark
     if s:settings.colorscheme!='' && s:settings.neobundle_installed
-        exec 'colorscheme '.s:settings.colorscheme
+        exec 'colorscheme '. s:settings.colorscheme
     else
-        colorscheme desert
+        exec 'colorscheme '. s:settings.colorscheme_default
     endif
 endif
 
