@@ -135,6 +135,11 @@ Kazam
 sudo apt-get install kazam
 ```
 
+## make ubuntu usb disk
+
+1. Windows [win32diskimager](https://wiki.ubuntu.com/Win32DiskImager/)  [download](https://sourceforge.net/projects/win32diskimager/files/latest/download?source=navbar)
+2. ubuntu tools from itself
+
 ## Screenshots
 ![conplete](https://github.com/wsdjeg/DotFiles/blob/master/pic/complete.png)
 
