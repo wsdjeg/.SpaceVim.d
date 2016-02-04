@@ -972,7 +972,7 @@ if s:settings.neobundle_installed
         if neobundle#tap('neomake')
             let s:hooks = neobundle#get_hooks('neomake')
             function! s:hooks.on_source(bundle) abort
-                let g:neomake_open_list = 0  " 1 open list and move cursor 2 open list without move cursor
+                let g:neomake_open_list = 2  " 1 open list and move cursor 2 open list without move cursor
                 let g:neomake_verbose = 0
             endfunction
         endif
@@ -1323,6 +1323,13 @@ noremap <silent><leader>nu :call ToggleNumber()<CR>
 
 
 "autocmds
+augroup quick_loc_list
+    au!
+    au! BufWinEnter quickfix nnoremap <silent> <buffer>
+                \	q :cclose<cr>:lclose<cr>
+    au! BufWinEnter quickfix if (winnr('$') == 1 ) |
+                \   q | endif
+augroup END
 autocmd FileType jsp call JspFileTypeInit()
 autocmd FileType html,css,jsp EmmetInstall
 autocmd FileType java call JavaFileTypeInit()
