@@ -54,7 +54,7 @@ let s:settings.autocomplete_method = ''
 let s:settings.enable_cursorcolumn = 0
 let s:settings.enable_neomake = 1
 let s:settings.enable_ycm = 0
-let s:settings.enable_neocomplcache = 1
+let s:settings.enable_neocomplcache = 0
 let s:settings.enable_cursorline = 0
 let s:settings.use_colorscheme = 1
 let s:settings.vim_help_language='en'
@@ -969,6 +969,13 @@ if s:settings.neobundle_installed
     "profile! file */vim-javacomplete2/*
     if has('nvim') && s:settings.enable_neomake
         NeoBundle 'wsdjeg/neomake'
+        if neobundle#tap('neomake')
+            let s:hooks = neobundle#get_hooks('neomake')
+            function! s:hooks.on_source(bundle) abort
+                let g:neomake_open_list = 0  " 1 open list and move cursor 2 open list without move cursor
+                let g:neomake_verbose = 0
+            endfunction
+        endif
     else
         NeoBundle 'wsdjeg/syntastic'
     endif
