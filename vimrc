@@ -1519,7 +1519,7 @@ function! WSDAutoComplete(char)
         endif
     endif
 endf
-function ClosePair(char)
+function! ClosePair(char)
     if getline('.')[col('.') - 1] == a:char
         return "\<Right>"
     else
@@ -1527,7 +1527,7 @@ function ClosePair(char)
     endif
 endf
 
-function CloseBracket()
+function! CloseBracket()
     if match(getline(line('.') + 1), '\s*}') < 0
         return "\<CR>}"
     else
@@ -1535,7 +1535,7 @@ function CloseBracket()
     endif
 endf
 
-function QuoteDelim(char)
+function! QuoteDelim(char)
     let line = getline('.')
     let col = col('.')
     if line[col - 2] == "\\"
@@ -1608,7 +1608,7 @@ function! MyTagfuncBack() abort
     endif
 endfunction
 
-function MyEnterfunc() abort
+function! MyEnterfunc() abort
     if pumvisible()
         if getline('.')[col('.') - 2]=="{"
             return "\<Enter>"
