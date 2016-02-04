@@ -875,7 +875,7 @@ if s:settings.neobundle_installed
     "profile start vim-javacomplete2.log
     "profile! file */vim-javacomplete2/*
     if has('nvim') && s:settings.enable_neomake
-        NeoBundle 'benekastah/neomake'
+        NeoBundle 'wsdjeg/neomake'
     else
         NeoBundle 'wsdjeg/syntastic'
     endif
@@ -1572,6 +1572,10 @@ if has('nvim')
         au!
         au TermOpen * let g:last_terminal_job_id = b:terminal_job_id
         au WinEnter term://* startinsert
+    augroup END
+    augroup Neomake_wsd
+        au!
+        autocmd! BufWritePost * Neomake
     augroup END
     let $NVIM_TUI_ENABLE_TRUE_COLOR=1
     " dark0 + gray
