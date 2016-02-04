@@ -54,7 +54,7 @@ let s:settings.autocomplete_method = ''
 let s:settings.enable_cursorcolumn = 0
 let s:settings.enable_neomake = 1
 let s:settings.enable_ycm = 0
-let s:settings.enable_neocomplcache = 0
+let s:settings.enable_neocomplcache = 1
 let s:settings.enable_cursorline = 0
 let s:settings.use_colorscheme = 1
 let s:settings.vim_help_language='en'
@@ -736,21 +736,21 @@ if s:settings.neobundle_installed
             endfunction
         elseif s:settings.autocomplete_method == 'neocomplcache' "{{{
             NeoBundle 'Shougo/neocomplcache.vim'
-            if neobundle#tap('neocomplcache.vim)
+            if neobundle#tap('neocomplcache.vim')
                 let s:hooks = neobundle#get_hooks("neocomplcache.vim")
                 function! s:hooks.on_source(bundle) abort
                     "---------------------------------------------------------------------------
                     " neocomplache.vim
                     "
-
-                    " Use smartcase.
-                    let g:neocomplcache_enable_smart_case = 0
+                    let g:neocomplcache_enable_at_startup = 1
+                    " Use smartcase
+                    let g:neocomplcache_enable_smart_case = 1
                     " Use camel case completion.
-                    let g:neocomplcache_enable_camel_case_completion = 0
+                    let g:neocomplcache_enable_camel_case_completion = 1
                     " Use underbar completion.
-                    let g:neocomplcache_enable_underbar_completion = 0
+                    let g:neocomplcache_enable_underbar_completion = 1
                     " Use fuzzy completion.
-                    let g:neocomplcache_enable_fuzzy_completion = 0
+                    let g:neocomplcache_enable_fuzzy_completion = 1
 
                     " Set minimum syntax keyword length.
                     let g:neocomplcache_min_syntax_length = 3
@@ -789,6 +789,8 @@ if s:settings.neobundle_installed
                     let g:neocomplcache_enable_auto_close_preview = 1
                     " let g:neocomplcache_force_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
                     let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+                    let g:neocomplcache_omni_patterns.java = '[^. *\t]\.\w*\|\h\w*::'
+                    let g:neocomplcache_force_omni_patterns.java = '[^. *\t]\.\w*\|\h\w*::'
 
                     " For clang_complete.
                     let g:neocomplcache_force_overwrite_completefunc = 1
@@ -926,9 +928,6 @@ if s:settings.neobundle_installed
     NeoBundleLazy 'mmalecki/vim-node.js', {'autoload':{'filetypes':['javascript']}}
     NeoBundleLazy 'leshill/vim-json', {'autoload':{'filetypes':['javascript','json']}}
     NeoBundleLazy 'othree/javascript-libraries-syntax.vim', {'autoload':{'filetypes':['javascript','coffee','ls','typescript']}}
-
-
-
 
     NeoBundle 'artur-shaik/vim-javacomplete2'
     let g:JavaComplete_UseFQN = 1
