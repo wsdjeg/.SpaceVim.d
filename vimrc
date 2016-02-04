@@ -847,7 +847,11 @@ if s:settings.neobundle_installed
         NeoBundle 'Shougo/neoinclude.vim'
         NeoBundle 'Shougo/neosnippet-snippets'
         NeoBundle 'Shougo/neosnippet.vim' "{{{
-        let g:neosnippet#snippets_directory=g:Vimrc_Home .s:Fsep .'snippets'
+        if WINDOWS()
+            let g:neosnippet#snippets_directory=g:Vimrc_Home .s:Fsep .'snippets'
+        else
+            let g:neosnippet#snippets_directory='~/DotFiles/snippets'
+        endif
         let g:neosnippet#enable_snipmate_compatibility=1
         let g:neosnippet#enable_complete_done = 1
         let g:neosnippet#completed_pairs= {}
