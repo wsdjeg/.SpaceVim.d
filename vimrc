@@ -1,3 +1,6 @@
+set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
+set termencoding=utf-8
+set encoding=utf-8
 if has('vim_starting')
     if &compatible
         set nocompatible
@@ -487,7 +490,12 @@ if s:settings.neobundle_installed
                 let g:vimfiler_tree_indentation = 1
                 let g:vimfiler_tree_leaf_icon = ''
                 let g:vimfiler_tree_opened_icon = '▼'
-                let g:vimfiler_tree_closed_icon = '▷'
+                if WINDOWS()
+                    let g:vimfiler_tree_closed_icon = '>'
+                else
+                    let g:vimfiler_tree_closed_icon = '▷'
+
+                endif
                 let g:vimfiler_file_icon = ''
                 let g:vimfiler_readonly_file_icon = '*'
                 let g:vimfiler_marked_file_icon = '√'
@@ -1222,9 +1230,6 @@ set showmode					"命令行显示当前vim的模式
 set completeopt=menu,menuone,longest " disable preview scratch window,
 set complete=.,w,b,u,t " h: 'complete'
 set pumheight=15 " limit completion menu height
-set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
-set termencoding=utf-8
-set encoding=utf-8
 set scrolloff=7               "最低显示行数
 if s:settings.enable_cursorline == 1
     set cursorline					"显示当前行
