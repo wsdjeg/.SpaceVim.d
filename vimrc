@@ -861,6 +861,7 @@ if s:settings.neobundle_installed
             endfunction
         endif "}}}
         NeoBundle 'Shougo/neco-syntax'
+        NeoBundle 'ujihisa/neco-look'
         NeoBundle 'Shougo/neco-vim'
         if !exists('g:necovim#complete_functions')
             let g:necovim#complete_functions = {}
