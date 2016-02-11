@@ -3,12 +3,15 @@ set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 set termencoding=utf-8
 set encoding=utf-8
 scriptencoding utf-8
+
+" Enable nocompatible
 if has('vim_starting')
     if &compatible
         set nocompatible
     endif
 endif
-"detect OS {{{
+
+"Detect OS
 function! OSX()
     return has('macunix')
 endfunction
@@ -18,9 +21,8 @@ endfunction
 function! WINDOWS()
     return (has('win16') || has('win32') || has('win64'))
 endfunction
-"}}}
 
-"use English for anything in vim
+"Use English for anything in vim
 if WINDOWS()
     silent exec 'language english'
 elseif OSX()
@@ -36,6 +38,7 @@ else
     endif
 endif
 
+" Fsep && Psep
 if WINDOWS()
     let s:Psep = ';'
     let s:Fsep = '\'
@@ -44,30 +47,31 @@ else
     let s:Fsep = '/'
 endif
 
+" Enable 256 colors
 if $COLORTERM == 'gnome-terminal'
     set t_Co=256
 endif
-"vim settings {{{
-"initialize default settings
-let s:settings = {}
-let s:settings.default_indent = 2
-let s:settings.max_column = 120
+
+"Vim settings
+let s:settings                         = {}
+let s:settings.default_indent          = 2
+let s:settings.max_column              = 120
 let s:settings.auto_download_neobundle = 0
-let s:settings.neobundle_installed = 0
-let s:settings.plugin_bundle_dir = join([$HOME,'.vim','bundle',''],s:Fsep)
-let s:settings.autocomplete_method = ''
-let s:settings.enable_cursorcolumn = 0
-let s:settings.enable_neomake = 1
-let s:settings.enable_ycm = 0
-let s:settings.enable_neocomplcache = 0
-let s:settings.enable_cursorline = 0
-let s:settings.use_colorscheme = 1
-let s:settings.vim_help_language='en'
-let s:settings.colorscheme = 'gruvbox'
-let s:settings.colorscheme_default  = 'desert'
-let s:settings.filemanager = 'vimfiler'
-let s:settings.plugin_groups_exclude = []
-let g:Vimrc_Home = fnamemodify(expand('<sfile>'), ':p:h:gs?\\?'. s:Fsep. '?')
+let s:settings.neobundle_installed     = 0
+let s:settings.plugin_bundle_dir       = join([$HOME,'.vim','bundle',''],s:Fsep)
+let s:settings.autocomplete_method     = ''
+let s:settings.enable_cursorcolumn     = 0
+let s:settings.enable_neomake          = 1
+let s:settings.enable_ycm              = 0
+let s:settings.enable_neocomplcache    = 0
+let s:settings.enable_cursorline       = 0
+let s:settings.use_colorscheme         = 1
+let s:settings.vim_help_language       = 'en'
+let s:settings.colorscheme             = 'gruvbox'
+let s:settings.colorscheme_default     = 'desert'
+let s:settings.filemanager             = 'vimfiler'
+let s:settings.plugin_groups_exclude   = []
+let g:Vimrc_Home                       = fnamemodify(expand('<sfile>'), ':p:h:gs?\\?'. s:Fsep. '?')
 
 
 "core vimrc
