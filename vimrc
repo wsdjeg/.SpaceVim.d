@@ -1,6 +1,8 @@
+" encoding config
 set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 set termencoding=utf-8
 set encoding=utf-8
+scriptencoding utf-8
 if has('vim_starting')
     if &compatible
         set nocompatible
@@ -141,7 +143,6 @@ endif
 if s:settings.neobundle_installed
     set runtimepath+=~/.vim/bundle/neobundle.vim/
     call neobundle#begin(expand($HOME.'/.vim/bundle/'))
-    scriptencoding utf-8
     NeoBundleFetch 'Shougo/neobundle.vim'
     "}}}
 
