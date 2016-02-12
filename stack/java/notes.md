@@ -69,4 +69,6 @@ Java语言规范要求euqals方法具有下面的特征：
 4. 一致性：如果x和y的引用对象没有发生变化，那么反复调用x.equals(y)应该返回同样的值
 5. 对于任意非空引用x，x.equals(null)应该返回false
 
+### LINKS
 
+[java8-the-missing-tutorial](https://github.com/shekhargulati/java8-the-missing-tutorial)

@@ -61,7 +61,7 @@ let s:settings.neobundle_installed     = 0
 let s:settings.plugin_bundle_dir       = join([$HOME,'.vim','bundle',''],s:Fsep)
 let s:settings.autocomplete_method     = ''
 let s:settings.enable_cursorcolumn     = 0
-let s:settings.enable_neomake          = 1
+let s:settings.enable_neomake          = 0
 let s:settings.enable_ycm              = 0
 let s:settings.enable_neocomplcache    = 0
 let s:settings.enable_cursorline       = 0
@@ -1691,10 +1691,12 @@ if has('nvim')
         au TermOpen * let g:last_terminal_job_id = b:terminal_job_id
         au WinEnter term://* startinsert
     augroup END
-    augroup Neomake_wsd
-        au!
-        autocmd! BufWritePost * Neomake
-    augroup END
+    if s:settings.enable_neomake
+        augroup Neomake_wsd
+            au!
+            autocmd! BufWritePost * Neomake
+        augroup END
+    endif
     let $NVIM_TUI_ENABLE_TRUE_COLOR=1
     " dark0 + gray
     let g:terminal_color_0 = "#282828"
