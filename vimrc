@@ -131,53 +131,46 @@ for s:group in s:settings.plugin_groups_exclude
     endif
 endfor
 
-"}}}
+" python host for neovim
 let g:python_host_prog = '/usr/bin/python'
 let g:python3_host_prog = '/usr/bin/python3'
 
-"setup & neobundle {{{
+"auto install neobundle
 if filereadable(expand(s:settings.plugin_bundle_dir) . 'neobundle.vim'. s:Fsep. 'README.md')
     let s:settings.neobundle_installed = 1
 else
     if executable('git')
         exec '!git clone https://github.com/Shougo/neobundle.vim ' . s:settings.plugin_bundle_dir . 'neobundle.vim'
         let s:settings.neobundle_installed = 1
+    else
+        echohl WarningMsg | echom "You need install git!" | echohl None
     endif
 endif
 if s:settings.neobundle_installed
     set runtimepath+=~/.vim/bundle/neobundle.vim/
     call neobundle#begin(expand($HOME.'/.vim/bundle/'))
     NeoBundleFetch 'Shougo/neobundle.vim'
-    "}}}
-
-    " plugin/mapping configuration {{{
     if count(s:settings.plugin_groups, 'core') "{{{
         NeoBundle 'Shougo/vimproc.vim', {
-                    \ 'build' : {
-                    \     'windows' : 'tools\\update-dll-mingw',
-                    \     'cygwin' : 'make -f make_cygwin.mak',
-                    \     'mac' : 'make -f make_mac.mak',
-                    \     'linux' : 'make',
-                    \     'unix' : 'gmake',
-                    \    },
+                    \ 'build'   : {
+                    \ 'windows' : 'tools\\update-dll-mingw',
+                    \ 'cygwin'  : 'make -f make_cygwin.mak',
+                    \ 'mac'     : 'make -f make_mac.mak',
+                    \ 'linux'   : 'make',
+                    \ 'unix'    : 'gmake',
+                    \ },
                     \ }
-    endif "}}}
-
+    endif
     if count(s:settings.plugin_groups, 'unite') "{{{
         NeoBundle 'Shougo/unite.vim'
         if neobundle#tap('unite.vim')
             let s:hooks = neobundle#get_hooks('unite.vim')
             func! s:hooks.on_source(bundle) abort
-                " for codesearch{{{
-                " Make search case insensitive
                 let g:unite_source_codesearch_ignore_case = 1
                 call unite#custom#source('codesearch', 'max_candidates', 30)
-                "" Unite: {{{
-
                 "call unite#filters#matcher_default#use(['matcher_fuzzy'])
                 "call unite#filters#sorter_default#use(['sorter_rank'])
                 "call unite#custom#profile('default', 'context', {'no_split':1, 'resize':0})
-
                 let g:unite_source_file_mru_time_format = "%m/%d %T "
                 let g:unite_source_directory_mru_limit = 80
                 let g:unite_source_directory_mru_time_format = "%m/%d %T "
@@ -201,7 +194,6 @@ if s:settings.neobundle_installed
                             \ . " --exclude-dir='.svn'"
                             \ . " --exclude-dir='.git'"
                             \ . " --exclude-dir='node_modules'"
-
                 let g:unite_launch_apps = [
                             \ 'rake',
                             \ 'make',
@@ -242,8 +234,6 @@ if s:settings.neobundle_installed
                             \['▷ git cd           (Fugitive)',
                             \'Gcd'],
                             \]
-
-
                 let g:unite_source_grep_max_candidates = 200
                 if executable('hw')
                     " Use hw (highway)
@@ -283,28 +273,6 @@ if s:settings.neobundle_installed
                     let g:unite_source_grep_default_opts = '-i --exclude ''\.(git|svn|hg|bzr)'''
                     let g:unite_source_grep_recursive_opt = '-R'
                 endif
-
-                nnoremap <leader>gd :execute 'Unite  -auto-preview -start-insert -no-split  gtags/def:'.expand('<cword>')<CR>
-                nnoremap <leader>gc :execute 'Unite  -auto-preview -start-insert -no-split gtags/context'<CR>
-                nnoremap <leader>gr :execute 'Unite  -auto-preview -start-insert -no-split gtags/ref'<CR>
-                nnoremap <leader>gg :execute 'Unite  -auto-preview -start-insert -no-split gtags/grep'<CR>
-                nnoremap <leader>gp :execute 'Unite  -auto-preview -start-insert -no-split gtags/completion'<CR>
-                vnoremap <leader>gd <ESC>:execute 'Unite -auto-preview -start-insert -no-split gtags/def:'.GetVisualSelection()<CR>
-
-                let g:unite_source_gtags_project_config = {
-                            \ '_':                   { 'treelize': 0 }
-                            \ }
-                "" File search
-                "Ctrlsf
-                nmap <C-F>f <Plug>CtrlSFPrompt
-                vmap <C-F>f <Plug>CtrlSFVwordPath
-                vmap <C-F>F <Plug>CtrlSFVwordExec
-                nmap <C-F>n <Plug>CtrlSFCwordPath
-                nmap <C-F>p <Plug>CtrlSFPwordPath
-                nnoremap <C-F>o :CtrlSFOpen<CR>
-                nnoremap <C-F>t :CtrlSFToggle<CR>
-                inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
-
                 "nnoremap <leader>mm :Unite -auto-resize file file_mru file_rec<cr>
                 nnoremap <leader>mm :Unite   -no-split -start-insert   file file_mru file_rec buffer<cr>
                 nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
@@ -312,60 +280,38 @@ if s:settings.neobundle_installed
                 nnoremap <leader>mr :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
                 nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
                 nnoremap <leader>tb :<C-u>Unite -no-split -buffer-name=buffer_tab  buffer_tab<cr>
-
                 "" shortcup for key mapping
                 nnoremap <silent><leader>u  :<C-u>Unite -start-insert mapping<CR>
-
                 "" Execute help.
                 nnoremap <C-h>  :<C-u>Unite -start-insert help<CR>
                 " Execute help by cursor keyword.
                 nnoremap <silent> g<C-h>  :<C-u>UniteWithCursorWord help<CR>
                 "" Tag search
-
                 """ For searching the word in the cursor in tag file
                 nnoremap <silent><leader>f :Unite -no-split tag/include:<C-R><C-w><CR>
-
                 nnoremap <silent><leader>ff :Unite tag/include -start-insert -no-split<CR>
-
                 "" grep dictionay
-
                 """ For searching the word in the cursor in the current directory
                 nnoremap <silent><leader>v :Unite -auto-preview -no-split grep:.::<C-R><C-w><CR>
-
                 nnoremap <space>/ :Unite -auto-preview grep:.<cr>
-
                 """ For searching the word handin
                 nnoremap <silent><leader>vs :Unite -auto-preview -no-split grep:.<CR>
-
                 """ For searching the word in the cursor in the current buffer
                 noremap <silent><leader>vf :Unite -auto-preview -no-split grep:%::<C-r><C-w><CR>
-
                 """ For searching the word in the cursor in all opened buffer
                 noremap <silent><leader>va :Unite -auto-preview -no-split grep:$buffers::<C-r><C-w><CR>
-
-
                 "" outline
                 "nnoremap <leader>o :Unite -start-insert -no-split outline<CR>
-
                 nnoremap <leader>o :<C-u>Unite -buffer-name=outline   -start-insert -auto-preview -no-split outline<cr>
                 "" Line search
                 nnoremap <leader>l :Unite line -start-insert  -auto-preview -no-split<CR>
-
                 "" Yank history
                 nnoremap <leader>y :<C-u>Unite -no-split -auto-preview -buffer-name=yank history/yank<cr>
                 "nnoremap <space>y :Unite history/yank<cr>
-
-
                 " search plugin
                 " :Unite neobundle/search
-
-
-
                 nnoremap <space>s :Unite -quick-match -auto-preview buffer<cr>
-
-
                 "for Unite menu{
-
                 nnoremap <silent>[menu]g :Unite -silent -start-insert menu:git<CR>
                 " The prefix key.
                 nnoremap    [unite]   <Nop>
@@ -375,7 +321,6 @@ if s:settings.neobundle_installed
                 nnoremap <leader>m :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
                 nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
                 nnoremap <silent> <C-b> :<C-u>Unite -start-insert -buffer-name=buffer buffer<cr>
-
                 nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir
                             \ -buffer-name=files buffer bookmark file<CR>
                 nnoremap <silent> [unite]b  :<C-u>UniteWithBufferDir
@@ -383,11 +328,8 @@ if s:settings.neobundle_installed
                 nnoremap <silent> [unite]r  :<C-u>Unite
                             \ -buffer-name=register register<CR>
                 nnoremap <silent> [unite]o  :<C-u>Unite outline<CR>
-
                 nnoremap <silent> [unite]s  :<C-u>Unite session<CR>
                 nnoremap <silent> [unite]n  :<C-u>Unite session/new<CR>
-
-
                 nnoremap <silent> [unite]fr
                             \ :<C-u>Unite -buffer-name=resume resume<CR>
                 nnoremap <silent> [unite]ma
@@ -395,7 +337,6 @@ if s:settings.neobundle_installed
                 nnoremap <silent> [unite]me
                             \ :<C-u>Unite output:message<CR>
                 nnoremap  [unite]f  :<C-u>Unite source<CR>
-
                 nnoremap <silent> [unite]w
                             \ :<C-u>Unite -buffer-name=files -no-split
                             \ jump_point file_point buffer_tab
@@ -422,7 +363,6 @@ if s:settings.neobundle_installed
         if neobundle#tap('vim-ref')
             let s:hooks = neobundle#get_hooks('vim-ref')
             func! s:hooks.on_source(bundle) abort
-                "webdictサイトの設定
                 let g:ref_source_webdict_sites = {
                             \   'je': {
                             \     'url': 'http://dictionary.infoseek.ne.jp/jeword/%s',
@@ -439,7 +379,6 @@ if s:settings.neobundle_installed
                             \   'wikipedia:en':{'url': 'http://en.wikipedia.org/wiki/%s',  },
                             \   'bing':{'url': 'http://cn.bing.com/search?q=%s', },
                             \ }
-                "Default site
                 let g:ref_source_webdict_sites.default = 'cn'
                 "let g:ref_source_webdict_cmd='lynx -dump -nonumbers %s'
                 "let g:ref_source_webdict_cmd='w3m -dump %s'
@@ -464,6 +403,20 @@ if s:settings.neobundle_installed
         NeoBundle 'heavenshell/unite-sf2'
         NeoBundle 'Shougo/unite-outline'
         NeoBundle 'hewes/unite-gtags'
+        if neobundle#tap('unite-gtags')
+            let s:hooks = neobundle#get_hooks('unite-gtags')
+            func! s:hooks.on_source(bundle) abort
+                nnoremap <leader>gd :execute 'Unite  -auto-preview -start-insert -no-split gtags/def:'.expand('<cword>')<CR>
+                nnoremap <leader>gc :execute 'Unite  -auto-preview -start-insert -no-split gtags/context'<CR>
+                nnoremap <leader>gr :execute 'Unite  -auto-preview -start-insert -no-split gtags/ref'<CR>
+                nnoremap <leader>gg :execute 'Unite  -auto-preview -start-insert -no-split gtags/grep'<CR>
+                nnoremap <leader>gp :execute 'Unite  -auto-preview -start-insert -no-split gtags/completion'<CR>
+                vnoremap <leader>gd <ESC>:execute 'Unite -auto-preview -start-insert -no-split gtags/def:'.GetVisualSelection()<CR>
+                let g:unite_source_gtags_project_config = {
+                            \ '_':                   { 'treelize': 0 }
+                            \ }
+            endf
+        endif
         NeoBundle 'tsukkee/unite-tag'
         NeoBundle 'ujihisa/unite-launch'
         NeoBundle 'ujihisa/unite-gem'
@@ -480,6 +433,19 @@ if s:settings.neobundle_installed
         let g:ag_prg="ag  --vimgrep"
         let g:ag_working_path_mode="r"
         NeoBundle 'dyng/ctrlsf.vim'
+        if neobundle#tap('ctrlsf.vim')
+            let s:hooks = neobundle#get_hooks('ctrlsf.vim')
+            func! s:hooks.on_source(bundle) abort
+                nmap <leader>sf <Plug>CtrlSFPrompt
+                vmap <leader>sf <Plug>CtrlSFVwordPath
+                vmap <leader>sF <Plug>CtrlSFVwordExec
+                nmap <leader>sn <Plug>CtrlSFCwordPath
+                nmap <leader>sp <Plug>CtrlSFPwordPath
+                nnoremap <leader>so :CtrlSFOpen<CR>
+                nnoremap <leader>st :CtrlSFToggle<CR>
+                inoremap <leader>st <Esc>:CtrlSFToggle<CR>
+            endf
+        endif
         NeoBundle 'daisuzu/unite-adb'
         NeoBundle 'osyo-manga/unite-airline_themes'
         NeoBundle 'mattn/unite-vim_advent-calendar'
