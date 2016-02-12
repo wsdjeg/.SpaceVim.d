@@ -69,6 +69,13 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install
 ```
 
+## For irssi (Get token from irc.gitter.im)
+```sh
+sudo apt-get install irssi
+# /connect -ssl irc.gitter.im 6697 token nick
+# /join neovim/neovim
+```
+
 
 ### true color terminal in ubuntu 14.04
 ```sh
