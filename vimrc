@@ -168,9 +168,9 @@ if s:settings.neobundle_installed
             func! s:hooks.on_source(bundle) abort
                 let g:unite_source_codesearch_ignore_case = 1
                 call unite#custom#source('codesearch', 'max_candidates', 30)
-                "call unite#filters#matcher_default#use(['matcher_fuzzy'])
-                "call unite#filters#sorter_default#use(['sorter_rank'])
-                "call unite#custom#profile('default', 'context', {'no_split':1, 'resize':0})
+                call unite#filters#matcher_default#use(['matcher_fuzzy'])
+                call unite#filters#sorter_default#use(['sorter_rank'])
+                call unite#custom#profile('default', 'context', {'no_split':1, 'resize':0})
                 let g:unite_source_file_mru_time_format = "%m/%d %T "
                 let g:unite_source_directory_mru_limit = 80
                 let g:unite_source_directory_mru_time_format = "%m/%d %T "
@@ -273,18 +273,14 @@ if s:settings.neobundle_installed
                     let g:unite_source_grep_default_opts = '-i --exclude ''\.(git|svn|hg|bzr)'''
                     let g:unite_source_grep_recursive_opt = '-R'
                 endif
-                "nnoremap <leader>mm :Unite -auto-resize file file_mru file_rec<cr>
-                nnoremap <leader>mm :Unite   -no-split -start-insert   file file_mru file_rec buffer<cr>
-                nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
-                nnoremap <leader>tf :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
-                nnoremap <leader>mr :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
-                nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
-                nnoremap <leader>tb :<C-u>Unite -no-split -buffer-name=buffer_tab  buffer_tab<cr>
-                "" shortcup for key mapping
-                nnoremap <silent><leader>u  :<C-u>Unite -start-insert mapping<CR>
-                "" Execute help.
+                nnoremap <silent><leader>ufa :<C-u>Unite -no-split -buffer-name=Mixed -start-insert file file_mru file_rec buffer<cr>
+                nnoremap <silent><leader>ufr :<C-u>Unite -no-split -buffer-name=files -start-insert file_rec/async:!<cr>
+                nnoremap <silent><leader>uf  :<C-u>Unite -no-split -buffer-name=files -start-insert file<cr>
+                nnoremap <silent><leader>ufm :<C-u>Unite -no-split -buffer-name=mru   -start-insert file_mru<cr>
+                nnoremap <silent><leader>ubf :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
+                nnoremap <silent><leader>utb :<C-u>Unite -no-split -buffer-name=buffer_tab  buffer_tab<cr>
+                nnoremap <silent><leader>um  :<C-u>Unite -start-insert mapping<CR>
                 nnoremap <C-h>  :<C-u>Unite -start-insert help<CR>
-                " Execute help by cursor keyword.
                 nnoremap <silent> g<C-h>  :<C-u>UniteWithCursorWord help<CR>
                 "" Tag search
                 """ For searching the word in the cursor in tag file
@@ -357,8 +353,6 @@ if s:settings.neobundle_installed
         NeoBundle 'thinca/vim-openbuf'
         NeoBundle 'ujihisa/unite-haskellimport'
         NeoBundle 'oppara/vim-unite-cake'
-        "NeoBundle 'Sixeight/unite-grep'
-        "NeoBundle 't9md/vim-unite-lines'
         NeoBundle 'thinca/vim-ref'
         if neobundle#tap('vim-ref')
             let s:hooks = neobundle#get_hooks('vim-ref')
@@ -521,11 +515,13 @@ if s:settings.neobundle_installed
         "NeoBundle 'klen/unite-radio.vim'
         NeoBundle 'tacroe/unite-mark'
         NeoBundle 'tacroe/unite-alias'
-        "NeoBundle 'ujihisa/quicklearn'
+        NeoBundle 'ujihisa/quicklearn'
         NeoBundle 'tex/vim-unite-id'
         NeoBundle 'sgur/unite-qf'
-        if neobundle#tap('unite.vim')
-        endif
+        NeoBundleLazy 'lambdalisue/unite-grep-vcs', {
+                    \ 'autoload': {
+                    \    'unite_sources': ['grep/git', 'grep/hg'],
+                    \}}
     endif "}}}
 
 
