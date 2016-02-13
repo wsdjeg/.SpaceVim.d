@@ -167,10 +167,6 @@ if s:settings.neobundle_installed
             let s:hooks = neobundle#get_hooks('unite.vim')
             func! s:hooks.on_source(bundle) abort
                 let g:unite_source_codesearch_ignore_case = 1
-                call unite#custom#source('codesearch', 'max_candidates', 30)
-                call unite#filters#matcher_default#use(['matcher_fuzzy'])
-                call unite#filters#sorter_default#use(['sorter_rank'])
-                call unite#custom#profile('default', 'context', {'no_split':1, 'resize':0})
                 let g:unite_source_file_mru_time_format = "%m/%d %T "
                 let g:unite_source_directory_mru_limit = 80
                 let g:unite_source_directory_mru_time_format = "%m/%d %T "
@@ -296,27 +292,21 @@ if s:settings.neobundle_installed
                 noremap <silent><leader>vf :Unite -auto-preview -no-split grep:%::<C-r><C-w><CR>
                 """ For searching the word in the cursor in all opened buffer
                 noremap <silent><leader>va :Unite -auto-preview -no-split grep:$buffers::<C-r><C-w><CR>
+                nnoremap <silent> <C-b> :<C-u>Unite -start-insert -buffer-name=buffer buffer<cr>
                 "" outline
-                "nnoremap <leader>o :Unite -start-insert -no-split outline<CR>
-                nnoremap <leader>o :<C-u>Unite -buffer-name=outline   -start-insert -auto-preview -no-split outline<cr>
+                nnoremap <silent><leader>o :<C-u>Unite -buffer-name=outline -start-insert -auto-preview -no-split outline<cr>
                 "" Line search
-                nnoremap <leader>l :Unite line -start-insert  -auto-preview -no-split<CR>
+                nnoremap <silent><leader>l :Unite line -start-insert  -auto-preview -no-split<CR>
                 "" Yank history
-                nnoremap <leader>y :<C-u>Unite -no-split -auto-preview -buffer-name=yank history/yank<cr>
-                "nnoremap <space>y :Unite history/yank<cr>
+                nnoremap <silent><leader>y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
                 " search plugin
                 " :Unite neobundle/search
-                nnoremap <space>s :Unite -quick-match -auto-preview buffer<cr>
                 "for Unite menu{
-                nnoremap <silent>[menu]g :Unite -silent -start-insert menu:git<CR>
+                nnoremap <silent><leader>ug :Unite -silent -start-insert menu:git<CR>
+                nnoremap <space>/ :Unite grep:.<cr>
                 " The prefix key.
                 nnoremap    [unite]   <Nop>
                 nmap    f [unite]
-                nnoremap <space>/ :Unite grep:.<cr>
-                nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files -start-insert file<cr>
-                nnoremap <leader>m :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
-                nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
-                nnoremap <silent> <C-b> :<C-u>Unite -start-insert -buffer-name=buffer buffer<cr>
                 nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir
                             \ -buffer-name=files buffer bookmark file<CR>
                 nnoremap <silent> [unite]b  :<C-u>UniteWithBufferDir
