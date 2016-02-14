@@ -107,6 +107,11 @@ default-character-set=utf8
 [mysqld]
 character-set-server=utf8
 ```
+restart server
+```sh
+sudo /etc/init.d/mysql stop
+sudo /etc/init.d/mysql start
+```
 
 ### Build vim from source
 > I have enable both py and py3
