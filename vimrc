@@ -166,6 +166,9 @@ if s:settings.neobundle_installed
         if neobundle#tap('unite.vim')
             let s:hooks = neobundle#get_hooks('unite.vim')
             func! s:hooks.on_source(bundle) abort
+                call unite#custom#source('codesearch', 'max_candidates', 30)
+                call unite#filters#matcher_default#use(['matcher_fuzzy'])
+                call unite#filters#sorter_default#use(['sorter_rank'])
                 let g:unite_source_codesearch_ignore_case = 1
                 let g:unite_source_file_mru_time_format = "%m/%d %T "
                 let g:unite_source_directory_mru_limit = 80
@@ -275,6 +278,7 @@ if s:settings.neobundle_installed
                 nnoremap <silent><leader>ufa :<C-u>Unite -no-split -buffer-name=Mixed -start-insert file file_mru file_rec buffer<cr>
                 nnoremap <silent><leader>ufr :<C-u>Unite -no-split -buffer-name=files -start-insert file_rec/async:!<cr>
                 call unite#custom#source('file_rec/async', 'ignore_globs',['*.png','.git/','*.ttf'])
+                nnoremap <silent><leader>ufg :<C-u>Unite -no-split -buffer-name=git-repo -start-insert file_rec/git<cr>
                 nnoremap <silent><leader>uf  :<C-u>Unite -no-split -buffer-name=files -start-insert file<cr>
                 nnoremap <silent><leader>ufm :<C-u>Unite -no-split -buffer-name=mru   -start-insert file_mru<cr>
                 nnoremap <silent><leader>ubf :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
