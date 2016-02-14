@@ -70,6 +70,7 @@ let s:settings.vim_help_language       = 'en'
 let s:settings.colorscheme             = 'gruvbox'
 let s:settings.colorscheme_default     = 'desert'
 let s:settings.filemanager             = 'vimfiler'
+let s:settings.plugin_manager          = 'neobundle'  " neobundle or dein
 let s:settings.plugin_groups_exclude   = []
 let g:Vimrc_Home                       = fnamemodify(expand('<sfile>'), ':p:h:gs?\\?'. s:Fsep. '?')
 
@@ -135,23 +136,83 @@ endfor
 let g:python_host_prog = '/usr/bin/python'
 let g:python3_host_prog = '/usr/bin/python3'
 
-"auto install neobundle
-if filereadable(expand(s:settings.plugin_bundle_dir) . 'neobundle.vim'. s:Fsep. 'README.md')
-    let s:settings.neobundle_installed = 1
-else
-    if executable('git')
-        exec '!git clone https://github.com/Shougo/neobundle.vim ' . s:settings.plugin_bundle_dir . 'neobundle.vim'
+" auto install plugin manager
+if s:settings.plugin_manager == 'neobundle'
+    "auto install neobundle
+    if filereadable(expand(s:settings.plugin_bundle_dir) . 'neobundle.vim'. s:Fsep. 'README.md')
         let s:settings.neobundle_installed = 1
     else
-        echohl WarningMsg | echom "You need install git!" | echohl None
+        if executable('git')
+            exec '!git clone https://github.com/Shougo/neobundle.vim ' . s:settings.plugin_bundle_dir . 'neobundle.vim'
+            let s:settings.neobundle_installed = 1
+        else
+            echohl WarningMsg | echom "You need install git!" | echohl None
+        endif
     endif
+    exec 'set runtimepath+='.join([$HOME,'.vim','bundle','neobundle.vim',''],s:Fsep)
+elseif s:settings.plugin_manager == 'dein'
+    "auto install dein
+    if filereadable(expand(s:settings.plugin_bundle_dir) . 'dein.vim'. s:Fsep. 'README.md')
+        let s:settings.dein_installed = 1
+    else
+        if executable('git')
+            exec '!git clone https://github.com/Shougo/dein.vim ' . s:settings.plugin_bundle_dir . 'dein.vim'
+            let s:settings.dein_installed = 1
+        else
+            echohl WarningMsg | echom "You need install git!" | echohl None
+        endif
+    endif
+    exec 'set runtimepath+='.join([$HOME,'.vim','bundle','dein.vim',''],s:Fsep)
 endif
-if s:settings.neobundle_installed
-    set runtimepath+=~/.vim/bundle/neobundle.vim/
-    call neobundle#begin(expand($HOME.'/.vim/bundle/'))
+
+"init manager func
+fu! s:begin(path)
+    if s:settings.plugin_manager == 'neobundle'
+        call neobundle#begin(a:path)
+        NeoBundleCheck
+    elseif s:settings.plugin_manager == 'dein'
+        call dein#begin(a:path)
+    endif
+endf
+fu! s:end()
+    if s:settings.plugin_manager == 'neobundle'
+        call neobundle#end()
+    elseif s:settings.plugin_manager == 'dein'
+    endif
+endf
+fu! s:add(repo,...)
+    if s:settings.plugin_manager == 'neobundle'
+        exec 'NeoBundle "'.a:repo.'"'.','.join(a:000,',')
+    elseif s:settings.plugin_manager == 'dein'
+        call dein#add(a:repo)
+    endif
+endf
+fu! s:lazyadd(repo,...)
+    if s:settings.plugin_manager == 'neobundle'
+        exec 'NeoBundleLazy "'.a:repo.'"'.','.join(a:000,',')
+    elseif s:settings.plugin_manager == 'dein'
+        call dein#add(a:repo)
+    endif
+endf
+fu! s:tap(plugin)
+    if s:settings.plugin_manager == 'neobundle'
+        return neobundle#tap(a:plugin)
+    elseif s:settings.plugin_manager == 'dein'
+    endif
+endf
+fu! s:get_hooks(plugin)
+    if s:settings.plugin_manager == 'neobundle'
+        return neobundle#get_hooks(a:plugin)
+    elseif s:settings.plugin_manager == 'dein'
+    endif
+endf
+
+"plugins and config
+if s:settings.neobundle_installed || s:settings.dein_installed
+    call s:begin(s:settings.plugin_bundle_dir)
     NeoBundleFetch 'Shougo/neobundle.vim'
     if count(s:settings.plugin_groups, 'core') "{{{
-        NeoBundle 'Shougo/vimproc.vim', {
+        call s:add('Shougo/vimproc.vim', {
                     \ 'build'   : {
                     \ 'windows' : 'tools\\update-dll-mingw',
                     \ 'cygwin'  : 'make -f make_cygwin.mak',
@@ -159,12 +220,12 @@ if s:settings.neobundle_installed
                     \ 'linux'   : 'make',
                     \ 'unix'    : 'gmake',
                     \ },
-                    \ }
+                    \ })
     endif
     if count(s:settings.plugin_groups, 'unite') "{{{
-        NeoBundle 'Shougo/unite.vim'
-        if neobundle#tap('unite.vim')
-            let s:hooks = neobundle#get_hooks('unite.vim')
+        call s:add('Shougo/unite.vim')
+        if s:tap('unite.vim')
+            let s:hooks = s:get_hooks('unite.vim')
             func! s:hooks.on_source(bundle) abort
                 call unite#custom#source('codesearch', 'max_candidates', 30)
                 call unite#filters#matcher_default#use(['matcher_fuzzy'])
@@ -337,23 +398,23 @@ if s:settings.neobundle_installed
                             \ file_rec:! file file/new<CR>
             endf
         endif
-        NeoBundle 'Shougo/neoyank.vim'
-        NeoBundle 'soh335/unite-qflist'
-        NeoBundle 'ujihisa/unite-equery'
-        NeoBundle 'm2mdas/unite-file-vcs'
-        NeoBundle 'Shougo/neomru.vim'
-        NeoBundle 'kmnk/vim-unite-svn'
-        NeoBundle 'basyura/unite-rails'
-        NeoBundle 'nobeans/unite-grails'
-        NeoBundle 'choplin/unite-vim_hacks'
-        NeoBundle 'mattn/webapi-vim'
-        NeoBundle 'mattn/wwwrenderer-vim'
-        NeoBundle 'thinca/vim-openbuf'
-        NeoBundle 'ujihisa/unite-haskellimport'
-        NeoBundle 'oppara/vim-unite-cake'
-        NeoBundle 'thinca/vim-ref'
-        if neobundle#tap('vim-ref')
-            let s:hooks = neobundle#get_hooks('vim-ref')
+        call s:add('Shougo/neoyank.vim')
+        call s:add('soh335/unite-qflist')
+        call s:add('ujihisa/unite-equery')
+        call s:add('m2mdas/unite-file-vcs')
+        call s:add('Shougo/neomru.vim')
+        call s:add('kmnk/vim-unite-svn')
+        call s:add('basyura/unite-rails')
+        call s:add('nobeans/unite-grails')
+        call s:add('choplin/unite-vim_hacks')
+        call s:add('mattn/webapi-vim')
+        call s:add('mattn/wwwrenderer-vim')
+        call s:add('thinca/vim-openbuf')
+        call s:add('ujihisa/unite-haskellimport')
+        call s:add('oppara/vim-unite-cake')
+        call s:add('thinca/vim-ref')
+        if s:tap('vim-ref')
+            let s:hooks = s:get_hooks('vim-ref')
             func! s:hooks.on_source(bundle) abort
                 let g:ref_source_webdict_sites = {
                             \   'je': {
@@ -391,12 +452,12 @@ if s:settings.neobundle_installed
                 nnoremap <Leader>rb :<C-u>Ref webdict bing<Space>
             endf
         endif
-        NeoBundle 'heavenshell/unite-zf'
-        NeoBundle 'heavenshell/unite-sf2'
-        NeoBundle 'Shougo/unite-outline'
-        NeoBundle 'hewes/unite-gtags'
-        if neobundle#tap('unite-gtags')
-            let s:hooks = neobundle#get_hooks('unite-gtags')
+        call s:add('heavenshell/unite-zf')
+        call s:add('heavenshell/unite-sf2')
+        call s:add('Shougo/unite-outline')
+        call s:add('hewes/unite-gtags')
+        if s:tap('unite-gtags')
+            let s:hooks = s:get_hooks('unite-gtags')
             func! s:hooks.on_source(bundle) abort
                 nnoremap <leader>gd :execute 'Unite  -auto-preview -start-insert -no-split gtags/def:'.expand('<cword>')<CR>
                 nnoremap <leader>gc :execute 'Unite  -auto-preview -start-insert -no-split gtags/context'<CR>
@@ -409,24 +470,24 @@ if s:settings.neobundle_installed
                             \ }
             endf
         endif
-        NeoBundle 'tsukkee/unite-tag'
-        NeoBundle 'ujihisa/unite-launch'
-        NeoBundle 'ujihisa/unite-gem'
-        NeoBundle 'osyo-manga/unite-filetype'
-        NeoBundle 'thinca/vim-unite-history'
-        NeoBundle 'Shougo/neobundle-vim-recipes'
-        NeoBundle 'Shougo/unite-help'
-        NeoBundle 'ujihisa/unite-locate'
-        NeoBundle 'kmnk/vim-unite-giti'
-        NeoBundle 'ujihisa/unite-font'
-        NeoBundle 't9md/vim-unite-ack'
-        NeoBundle 'mileszs/ack.vim'
-        NeoBundle 'albfan/ag.vim'
+        call s:add('tsukkee/unite-tag')
+        call s:add('ujihisa/unite-launch')
+        call s:add('ujihisa/unite-gem')
+        call s:add('osyo-manga/unite-filetype')
+        call s:add('thinca/vim-unite-history')
+        call s:add('Shougo/neobundle-vim-recipes')
+        call s:add('Shougo/unite-help')
+        call s:add('ujihisa/unite-locate')
+        call s:add('kmnk/vim-unite-giti')
+        call s:add('ujihisa/unite-font')
+        call s:add('t9md/vim-unite-ack')
+        call s:add('mileszs/ack.vim')
+        call s:add('albfan/ag.vim')
         let g:ag_prg="ag  --vimgrep"
         let g:ag_working_path_mode="r"
-        NeoBundle 'dyng/ctrlsf.vim'
-        if neobundle#tap('ctrlsf.vim')
-            let s:hooks = neobundle#get_hooks('ctrlsf.vim')
+        call s:add('dyng/ctrlsf.vim')
+        if s:tap('ctrlsf.vim')
+            let s:hooks = s:get_hooks('ctrlsf.vim')
             func! s:hooks.on_source(bundle) abort
                 nmap <leader>sf <Plug>CtrlSFPrompt
                 vmap <leader>sf <Plug>CtrlSFVwordPath
@@ -438,19 +499,19 @@ if s:settings.neobundle_installed
                 inoremap <leader>st <Esc>:CtrlSFToggle<CR>
             endf
         endif
-        NeoBundle 'daisuzu/unite-adb'
-        NeoBundle 'osyo-manga/unite-airline_themes'
-        NeoBundle 'mattn/unite-vim_advent-calendar'
-        NeoBundle 'mattn/unite-remotefile'
-        NeoBundle 'sgur/unite-everything'
-        NeoBundle 'kannokanno/unite-dwm'
-        NeoBundle 'raw1z/unite-projects'
-        NeoBundle 'voi/unite-ctags'
-        NeoBundle 'Shougo/unite-session'
-        NeoBundle 'osyo-manga/unite-quickfix'
-        NeoBundle 'Shougo/vimfiler'
-        if neobundle#tap('vimfiler')
-            let s:hooks = neobundle#get_hooks("vimfiler")
+        call s:add('daisuzu/unite-adb')
+        call s:add('osyo-manga/unite-airline_themes')
+        call s:add('mattn/unite-vim_advent-calendar')
+        call s:add('mattn/unite-remotefile')
+        call s:add('sgur/unite-everything')
+        call s:add('kannokanno/unite-dwm')
+        call s:add('raw1z/unite-projects')
+        call s:add('voi/unite-ctags')
+        call s:add('Shougo/unite-session')
+        call s:add('osyo-manga/unite-quickfix')
+        call s:add('Shougo/vimfiler')
+        if s:tap('vimfiler')
+            let s:hooks = s:get_hooks("vimfiler")
             function! s:hooks.on_source(bundle) abort
                 let g:vimfiler_as_default_explorer = 1
                 let g:vimfiler_restore_alternate_file = 1
@@ -508,43 +569,43 @@ if s:settings.neobundle_installed
         "NeoBundle 'mattn/webapi-vim'
         "NeoBundle 'mattn/googlesuggest-complete-vim'
         "NeoBundle 'mopp/googlesuggest-source.vim'
-        NeoBundle 'ujihisa/unite-colorscheme'
-        NeoBundle 'mattn/unite-gist'
+        call s:add('ujihisa/unite-colorscheme')
+        call s:add('mattn/unite-gist')
         "NeoBundle 'klen/unite-radio.vim'
-        NeoBundle 'tacroe/unite-mark'
-        NeoBundle 'tacroe/unite-alias'
-        NeoBundle 'ujihisa/quicklearn'
-        NeoBundle 'tex/vim-unite-id'
-        NeoBundle 'sgur/unite-qf'
-        NeoBundleLazy 'lambdalisue/unite-grep-vcs', {
+        call s:add('tacroe/unite-mark')
+        call s:add('tacroe/unite-alias')
+        call s:add('ujihisa/quicklearn')
+        call s:add('tex/vim-unite-id')
+        call s:add('sgur/unite-qf')
+        call s:lazyadd('lambdalisue/unite-grep-vcs', {
                     \ 'autoload': {
                     \    'unite_sources': ['grep/git', 'grep/hg'],
-                    \}}
+                    \}})
     endif "}}}
 
 
     "{{{ctrlpvim settings
     if count(s:settings.plugin_groups, 'ctrlp') "{{{
 
-        NeoBundle 'ctrlpvim/ctrlp.vim'
-        NeoBundle 'felixSchl/ctrlp-unity3d-docs'
-        NeoBundle 'voronkovich/ctrlp-nerdtree.vim'
-        NeoBundle 'elentok/ctrlp-objects.vim'
-        NeoBundle 'h14i/vim-ctrlp-buftab'
-        NeoBundle 'vim-scripts/ctrlp-cmdpalette'
-        NeoBundle 'mattn/ctrlp-windowselector'
-        NeoBundle 'the9ball/ctrlp-gtags'
-        NeoBundle 'thiderman/ctrlp-project'
-        NeoBundle 'mattn/ctrlp-google'
-        NeoBundle 'ompugao/ctrlp-history'
-        NeoBundle 'pielgrzym/ctrlp-sessions'
-        NeoBundle 'tacahiroy/ctrlp-funky'
-        NeoBundle 'brookhong/k.vim'
-        NeoBundle 'mattn/ctrlp-launcher'
-        NeoBundle 'sgur/ctrlp-extensions.vim'
-        NeoBundle 'FelikZ/ctrlp-py-matcher'
-        NeoBundle 'JazzCore/ctrlp-cmatcher'
-        NeoBundle 'ompugao/ctrlp-z'
+        call s:add('ctrlpvim/ctrlp.vim')
+        call s:add('felixSchl/ctrlp-unity3d-docs')
+        call s:add('voronkovich/ctrlp-nerdtree.vim')
+        call s:add('elentok/ctrlp-objects.vim')
+        call s:add('h14i/vim-ctrlp-buftab')
+        call s:add('vim-scripts/ctrlp-cmdpalette')
+        call s:add('mattn/ctrlp-windowselector')
+        call s:add('the9ball/ctrlp-gtags')
+        call s:add('thiderman/ctrlp-project')
+        call s:add('mattn/ctrlp-google')
+        call s:add('ompugao/ctrlp-history')
+        call s:add('pielgrzym/ctrlp-sessions')
+        call s:add('tacahiroy/ctrlp-funky')
+        call s:add('brookhong/k.vim')
+        call s:add('mattn/ctrlp-launcher')
+        call s:add('sgur/ctrlp-extensions.vim')
+        call s:add('FelikZ/ctrlp-py-matcher')
+        call s:add('JazzCore/ctrlp-cmatcher')
+        call s:add('ompugao/ctrlp-z')
         let g:ctrlp_map = '<c-p>'
         let g:ctrlp_cmd = 'CtrlP'
         let g:ctrlp_working_path_mode = 'ra'
@@ -613,7 +674,7 @@ if s:settings.neobundle_installed
 
 
     if count(s:settings.plugin_groups, 'autocomplete') "{{{
-        NeoBundle 'honza/vim-snippets'
+        call s:add('honza/vim-snippets')
         imap <silent><expr><TAB> MyTabfunc()
         smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
         inoremap <silent> <CR> <C-r>=MyEnterfunc()<Cr>
@@ -623,17 +684,17 @@ if s:settings.neobundle_installed
         inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
         inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
         if s:settings.autocomplete_method == 'ycm' "{{{
-            NeoBundle 'SirVer/ultisnips'
+            call s:add('SirVer/ultisnips')
             let g:UltiSnipsExpandTrigger="<tab>"
             let g:UltiSnipsJumpForwardTrigger="<tab>"
             let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
             let g:UltiSnipsSnippetsDir='~/DotFiles/snippets'
-            NeoBundle 'ervandew/supertab'
+            call s:add('ervandew/supertab')
             let g:SuperTabContextDefaultCompletionType = "<c-n>"
             let g:SuperTabDefaultCompletionType = '<C-n>'
             autocmd InsertLeave * if pumvisible() == 0|pclose|endif
             let g:neobundle#install_process_timeout = 1500
-            NeoBundle 'Valloric/YouCompleteMe'
+            call s:add('Valloric/YouCompleteMe')
             "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
             "let g:ycm_confirm_extra_conf = 0
             let g:ycm_collect_identifiers_from_tags_files = 1
@@ -657,8 +718,8 @@ if s:settings.neobundle_installed
                         \   'erlang' : [':'],
                         \ }
         elseif s:settings.autocomplete_method == 'neocomplete' "{{{
-            NeoBundle 'Shougo/neocomplete'
-            let s:hooks = neobundle#get_hooks("neocomplete")
+            call s:add('Shougo/neocomplete')
+            let s:hooks = s:get_hooks("neocomplete")
             function! s:hooks.on_source(bundle) abort
                 let g:neocomplete#data_directory='~/.cache/neocomplete'
                 let g:acp_enableAtStartup = 0
@@ -708,9 +769,9 @@ if s:settings.neobundle_installed
                 inoremap <expr><C-e>  neocomplete#cancel_popup()
             endfunction
         elseif s:settings.autocomplete_method == 'neocomplcache' "{{{
-            NeoBundle 'Shougo/neocomplcache.vim'
-            if neobundle#tap('neocomplcache.vim')
-                let s:hooks = neobundle#get_hooks("neocomplcache.vim")
+            call s:add('Shougo/neocomplcache.vim')
+            if s:tap('neocomplcache.vim')
+                let s:hooks = s:get_hooks("neocomplcache.vim")
                 function! s:hooks.on_source(bundle) abort
                     "---------------------------------------------------------------------------
                     " neocomplache.vim
@@ -799,39 +860,41 @@ if s:settings.neobundle_installed
                 endf
             endif
         elseif s:settings.autocomplete_method == 'deoplete'
-            NeoBundle 'Shougo/deoplete.nvim'
-            let s:hooks = neobundle#get_hooks("deoplete.nvim")
-            function! s:hooks.on_source(bundle)
-                let g:deoplete#enable_at_startup = 1
-                let g:deoplete#enable_ignore_case = 1
-                let g:deoplete#enable_smart_case = 1
-                let g:deoplete#enable_refresh_always = 1
-                let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
-                let g:deoplete#omni#input_patterns.java = [
-                            \'[^. \t0-9]\.\w*',
-                            \'[^. \t0-9]\->\w*',
-                            \'[^. \t0-9]\::\w*',
-                            \]
-                let g:deoplete#omni#input_patterns.jsp = ['[^. \t0-9]\.\w*']
-                let g:deoplete#ignore_sources = {}
-                let g:deoplete#ignore_sources._ = ['javacomplete2']
-                call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
-                inoremap <expr><C-h> deoplete#mappings#smart_close_popup()."\<C-h>"
-                inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
-            endfunction
+            call s:add('Shougo/deoplete.nvim')
+            if s:tap('deoplete.nvim')
+                let s:hooks = s:get_hooks("deoplete.nvim")
+                function! s:hooks.on_source(bundle)
+                    let g:deoplete#enable_at_startup = 1
+                    let g:deoplete#enable_ignore_case = 1
+                    let g:deoplete#enable_smart_case = 1
+                    let g:deoplete#enable_refresh_always = 1
+                    let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
+                    let g:deoplete#omni#input_patterns.java = [
+                                \'[^. \t0-9]\.\w*',
+                                \'[^. \t0-9]\->\w*',
+                                \'[^. \t0-9]\::\w*',
+                                \]
+                    let g:deoplete#omni#input_patterns.jsp = ['[^. \t0-9]\.\w*']
+                    let g:deoplete#ignore_sources = {}
+                    let g:deoplete#ignore_sources._ = ['javacomplete2']
+                    call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
+                    inoremap <expr><C-h> deoplete#mappings#smart_close_popup()."\<C-h>"
+                    inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
+                endfunction
+            endif
         endif "}}}
-        NeoBundle 'Shougo/neco-syntax'
-        NeoBundle 'ujihisa/neco-look'
-        NeoBundle 'Shougo/neco-vim'
+        call s:add('Shougo/neco-syntax')
+        call s:add('ujihisa/neco-look')
+        call s:add('Shougo/neco-vim')
         if !exists('g:necovim#complete_functions')
             let g:necovim#complete_functions = {}
         endif
         let g:necovim#complete_functions.Ref =
                     \ 'ref#complete'
-        NeoBundle 'Shougo/context_filetype.vim'
-        NeoBundle 'Shougo/neoinclude.vim'
-        NeoBundle 'Shougo/neosnippet-snippets'
-        NeoBundle 'Shougo/neosnippet.vim' "{{{
+        call s:add('Shougo/context_filetype.vim')
+        call s:add('Shougo/neoinclude.vim')
+        call s:add('Shougo/neosnippet-snippets')
+        call s:add('Shougo/neosnippet.vim')
         if WINDOWS()
             let g:neosnippet#snippets_directory=g:Vimrc_Home .s:Fsep .'snippets'
         else
@@ -841,7 +904,7 @@ if s:settings.neobundle_installed
         let g:neosnippet#enable_complete_done = 1
         let g:neosnippet#completed_pairs= {}
         let g:neosnippet#completed_pairs.java = {'(' : ')'}
-        NeoBundle 'Shougo/neopairs.vim'
+        call s:add('Shougo/neopairs.vim')
         if g:neosnippet#enable_complete_done
             let g:neopairs#enable = 0
         endif
@@ -851,20 +914,20 @@ if s:settings.neobundle_installed
 
     if count(s:settings.plugin_groups, 'colorscheme') "{{{
         "colorscheme
-        NeoBundle 'morhetz/gruvbox'
-        NeoBundle 'mhartington/oceanic-next'
-        NeoBundle 'nanotech/jellybeans.vim'
-        NeoBundle 'altercation/vim-colors-solarized'
-        NeoBundle 'kristijanhusak/vim-hybrid-material'
+        call s:add('morhetz/gruvbox')
+        call s:add('mhartington/oceanic-next')
+        call s:add('nanotech/jellybeans.vim')
+        call s:add('altercation/vim-colors-solarized')
+        call s:add('kristijanhusak/vim-hybrid-material')
     endif
 
     if count(s:settings.plugin_groups, 'chinese') "{{{
-        NeoBundle "vimcn/vimcdoc"
+        call s:add("vimcn/vimcdoc")
     endif
-    NeoBundle 'tpope/vim-scriptease'
-    NeoBundle 'tpope/vim-fugitive'
-    NeoBundle 'tpope/vim-surround'
-    NeoBundle 'terryma/vim-multiple-cursors'
+    call s:add('tpope/vim-scriptease')
+    call s:add('tpope/vim-fugitive')
+    call s:add('tpope/vim-surround')
+    call s:add('terryma/vim-multiple-cursors')
     let g:multi_cursor_next_key='<C-j>'
     let g:multi_cursor_prev_key='<C-k>'
     let g:multi_cursor_skip_key='<C-x>'
@@ -872,19 +935,16 @@ if s:settings.neobundle_installed
 
     "web plugins
 
-    NeoBundleLazy 'groenewege/vim-less', {'autoload':{'filetypes':['less']}}
-    NeoBundleLazy 'cakebaker/scss-syntax.vim', {'autoload':{'filetypes':['scss','sass']}}
-    NeoBundleLazy 'hail2u/vim-css3-syntax', {'autoload':{'filetypes':['css','scss','sass']}}
-    NeoBundleLazy 'ap/vim-css-color', {'autoload':{'filetypes':['css','scss','sass','less','styl']}}
-    NeoBundleLazy 'othree/html5.vim', {'autoload':{'filetypes':['html']}}
-    NeoBundleLazy 'wavded/vim-stylus', {'autoload':{'filetypes':['styl']}}
-    NeoBundleLazy 'digitaltoad/vim-jade', {'autoload':{'filetypes':['jade']}}
-    NeoBundleLazy 'juvenn/mustache.vim', {'autoload':{'filetypes':['mustache']}}
-    NeoBundle 'Valloric/MatchTagAlways'
-
-    "javascript plugins
-
-    "NeoBundleLazy 'marijnh/tern_for_vim', {
+    call s:lazyadd('groenewege/vim-less', {'autoload':{'filetypes':['less']}})
+    call s:lazyadd('cakebaker/scss-syntax.vim', {'autoload':{'filetypes':['scss','sass']}})
+    call s:lazyadd('hail2u/vim-css3-syntax', {'autoload':{'filetypes':['css','scss','sass']}})
+    call s:lazyadd('ap/vim-css-color', {'autoload':{'filetypes':['css','scss','sass','less','styl']}})
+    call s:lazyadd('othree/html5.vim', {'autoload':{'filetypes':['html']}})
+    call s:lazyadd('wavded/vim-stylus', {'autoload':{'filetypes':['styl']}})
+    call s:lazyadd('digitaltoad/vim-jade', {'autoload':{'filetypes':['jade']}})
+    call s:lazyadd('juvenn/mustache.vim', {'autoload':{'filetypes':['mustache']}})
+    call s:add('Valloric/MatchTagAlways')
+    "call s:lazyadd('marijnh/tern_for_vim', {
     "\ 'autoload': { 'filetypes': ['javascript'] },
     "\ 'build': {
     "\ 'mac': 'npm install',
@@ -892,35 +952,34 @@ if s:settings.neobundle_installed
     "\ 'cygwin': 'npm install',
     "\ 'windows': 'npm install',
     "\ },
-    "\ }
-    NeoBundleLazy 'pangloss/vim-javascript', {'autoload':{'filetypes':['javascript']}}
-    NeoBundleLazy 'maksimr/vim-jsbeautify', {'autoload':{'filetypes':['javascript']}} "{{{
+    "\ })
+    call s:lazyadd('pangloss/vim-javascript', {'autoload':{'filetypes':['javascript']}})
+    call s:lazyadd('maksimr/vim-jsbeautify', {'autoload':{'filetypes':['javascript']}})
     nnoremap <leader>fjs :call JsBeautify()<cr>
-    "}}}
-    NeoBundleLazy 'leafgarland/typescript-vim', {'autoload':{'filetypes':['typescript']}}
-    NeoBundleLazy 'kchmck/vim-coffee-script', {'autoload':{'filetypes':['coffee']}}
-    NeoBundleLazy 'mmalecki/vim-node.js', {'autoload':{'filetypes':['javascript']}}
-    NeoBundleLazy 'leshill/vim-json', {'autoload':{'filetypes':['javascript','json']}}
-    NeoBundleLazy 'othree/javascript-libraries-syntax.vim', {'autoload':{'filetypes':['javascript','coffee','ls','typescript']}}
+    call s:lazyadd('leafgarland/typescript-vim', {'autoload':{'filetypes':['typescript']}})
+    call s:lazyadd('kchmck/vim-coffee-script', {'autoload':{'filetypes':['coffee']}})
+    call s:lazyadd('mmalecki/vim-node.js', {'autoload':{'filetypes':['javascript']}})
+    call s:lazyadd('leshill/vim-json', {'autoload':{'filetypes':['javascript','json']}})
+    call s:lazyadd('othree/javascript-libraries-syntax.vim', {'autoload':{'filetypes':['javascript','coffee','ls','typescript']}})
 
-    NeoBundle 'artur-shaik/vim-javacomplete2'
+    call s:add('artur-shaik/vim-javacomplete2')
     let g:JavaComplete_UseFQN = 1
     let g:JavaComplete_ServerAutoShutdownTime = 300
     let g:JavaComplete_MavenRepositoryDisable = 0
-    NeoBundle 'wsdjeg/vim-dict'
-    NeoBundle 'wsdjeg/java_getset.vim'
-    let s:hooks = neobundle#get_hooks('java_getset.vim')
+    call s:add('wsdjeg/vim-dict')
+    call s:add('wsdjeg/java_getset.vim')
+    let s:hooks = s:get_hooks('java_getset.vim')
     function! s:hooks.on_source(bundle)
         let g:java_getset_disable_map = 1
     endfunction
-    NeoBundle 'wsdjeg/JavaUnit.vim'
-    NeoBundle 'wsdjeg/Mysql.vim'
+    call s:add('wsdjeg/JavaUnit.vim')
+    call s:add('wsdjeg/Mysql.vim')
     let g:JavaUnit_key = "<leader>ooo"
-    NeoBundle 'vim-jp/vim-java'
-    NeoBundle 'bling/vim-airline'
+    call s:add('vim-jp/vim-java')
+    call s:add('bling/vim-airline')
     let g:airline#extensions#tabline#enabled = 1
-    if neobundle#tap('vim-airline')
-        let s:hooks = neobundle#get_hooks('bling/vim-airline')
+    if s:tap('vim-airline')
+        let s:hooks = s:get_hooks('bling/vim-airline')
         function! s:hooks.on_source(bundle)
             let g:Powerline_sybols = 'unicode'
             let g:airline#extensions#tmuxline#enabled = 0
@@ -929,7 +988,7 @@ if s:settings.neobundle_installed
             set statusline+=%*
         endfunction
     endif
-    NeoBundle 'mattn/emmet-vim'
+    call s:add('mattn/emmet-vim')
     let g:user_emmet_install_global = 0
     let g:user_emmet_leader_key='<C-e>'
     let g:user_emmet_mode='a'
@@ -942,16 +1001,16 @@ if s:settings.neobundle_installed
     "profile start vim-javacomplete2.log
     "profile! file */vim-javacomplete2/*
     if has('nvim') && s:settings.enable_neomake
-        NeoBundle 'wsdjeg/neomake'
-        if neobundle#tap('neomake')
-            let s:hooks = neobundle#get_hooks('neomake')
+        call s:add('wsdjeg/neomake')
+        if s:tap('neomake')
+            let s:hooks = s:get_hooks('neomake')
             function! s:hooks.on_source(bundle) abort
                 let g:neomake_open_list = 2  " 1 open list and move cursor 2 open list without move cursor
                 let g:neomake_verbose = 0
             endfunction
         endif
     else
-        NeoBundle 'wsdjeg/syntastic'
+        call s:add('wsdjeg/syntastic')
     endif
     if !filereadable('pom.xml') && !filereadable('build.gradle') && isdirectory('bin')
         let g:syntastic_java_javac_options = '-d bin'
@@ -965,46 +1024,46 @@ if s:settings.neobundle_installed
     let g:syntastic_error_symbol = '✖'
     let g:syntastic_warning_symbol = '⚠'
     let g:syntastic_warning_symbol = '➤'
-    NeoBundle 'syngan/vim-vimlint', {
-                \ 'depends' : 'ynkdir/vim-vimlparser'}
+    call s:add('syngan/vim-vimlint', {
+                \ 'depends' : 'ynkdir/vim-vimlparser'})
     let g:syntastic_vimlint_options = {
                 \'EVL102': 1 ,
                 \'EVL103': 1 ,
                 \'EVL205': 1 ,
                 \'EVL105': 1 ,
                 \}
-    NeoBundle 'ynkdir/vim-vimlparser'
-    NeoBundle 'todesking/vint-syntastic'
+    call s:add('ynkdir/vim-vimlparser')
+    call s:add('todesking/vint-syntastic')
     "let g:syntastic_vim_checkers = ['vint']
-    NeoBundle 'gcmt/wildfire.vim'
+    call s:add('gcmt/wildfire.vim')
     noremap <SPACE> <Plug>(wildfire-fuel)
     vnoremap <C-SPACE> <Plug>(wildfire-water)
     let g:wildfire_objects = ["i'", 'i"', 'i)', 'i]', 'i}', 'ip', 'it']
 
-    NeoBundle 'scrooloose/nerdcommenter'
-    NeoBundle 'easymotion/vim-easymotion'
-    NeoBundle 'MarcWeber/vim-addon-mw-utils'
+    call s:add('scrooloose/nerdcommenter')
+    call s:add('easymotion/vim-easymotion')
+    call s:add('MarcWeber/vim-addon-mw-utils')
     "NeoBundle 'tomtom/tlib_vim'
-    NeoBundle 'mhinz/vim-startify'
-    NeoBundle 'mhinz/vim-signify'
+    call s:add('mhinz/vim-startify')
+    call s:add('mhinz/vim-signify')
     let g:signify_disable_by_default = 0
     let g:signify_line_highlight = 0
-    NeoBundle 'airblade/vim-rooter'
+    call s:add('airblade/vim-rooter')
     let g:rooter_silent_chdir = 1
-    NeoBundle 'Yggdroot/indentLine'
+    call s:add('Yggdroot/indentLine')
     let g:indentLine_color_term = 239
     let g:indentLine_color_gui = '#09AA08'
     let g:indentLine_char = '¦'
     let g:indentLine_concealcursor = 'niv' " (default 'inc')
     let g:indentLine_conceallevel = 2  " (default 2)
-    NeoBundle 'godlygeek/tabular'
-    NeoBundle 'benizi/vim-automkdir'
+    call s:add('godlygeek/tabular')
+    call s:add('benizi/vim-automkdir')
     "[c  ]c  jump between prev or next hunk
-    NeoBundle 'airblade/vim-gitgutter'
-    NeoBundle 'itchyny/calendar.vim'
+    call s:add('airblade/vim-gitgutter')
+    call s:add('itchyny/calendar.vim')
     "配合fcitx输入框架,在离开插入模式时自动切换到英文,在同一个缓冲区再次进入插入模式时回复到原来的输入状态
-    NeoBundle 'lilydjwg/fcitx.vim'
-    NeoBundle 'junegunn/goyo.vim'
+    call s:add('lilydjwg/fcitx.vim')
+    call s:add('junegunn/goyo.vim')
     function! s:goyo_enter()
         silent !tmux set status off
         set noshowmode
@@ -1026,11 +1085,11 @@ if s:settings.neobundle_installed
 
     "vim Wimdows config
     "NeoBundle 'scrooloose/nerdtree'
-    NeoBundle 'tpope/vim-projectionist'
-    NeoBundle 'Xuyuanp/nerdtree-git-plugin'
-    NeoBundle 'taglist.vim'
-    NeoBundle 'ntpeters/vim-better-whitespace'
-    NeoBundle 'junegunn/rainbow_parentheses.vim'
+    call s:add('tpope/vim-projectionist')
+    call s:add('Xuyuanp/nerdtree-git-plugin')
+    call s:add('taglist.vim')
+    call s:add('ntpeters/vim-better-whitespace')
+    call s:add('junegunn/rainbow_parentheses.vim')
     augroup rainbow_lisp
         autocmd!
         autocmd FileType lisp,clojure,scheme,java RainbowParentheses
@@ -1039,7 +1098,7 @@ if s:settings.neobundle_installed
     let g:rainbow#pairs = [['(', ')'], ['[', ']'],['{','}']]
     " List of colors that you do not want. ANSI code or #RRGGBB
     let g:rainbow#blacklist = [233, 234]
-    NeoBundle 'majutsushi/tagbar'
+    call s:add('majutsushi/tagbar')
     let g:tagbar_width=30
     let g:tagbar_left = 1
     let g:NERDTreeWinPos='right'
@@ -1066,24 +1125,24 @@ if s:settings.neobundle_installed
     endfunction
     "}}}
 
-    NeoBundle 'wsdjeg/MarkDown.pl'
-    NeoBundle 'wsdjeg/matchit.zip'
-    NeoBundle 'tomasr/molokai'
-    NeoBundle 'simnalamburt/vim-mundo'
+    call s:add('wsdjeg/MarkDown.pl')
+    call s:add('wsdjeg/matchit.zip')
+    call s:add('tomasr/molokai')
+    call s:add('simnalamburt/vim-mundo')
     nnoremap <silent> <F7> :MundoToggle<CR>
-    "NeoBundle 'nerdtree-ack'
-    NeoBundle 'L9'
-    NeoBundle 'TaskList.vim'
+    "call s:add('nerdtree-ack')
+    call s:add('L9')
+    call s:add('TaskList.vim')
     map <unique> <Leader>td <Plug>TaskList
-    NeoBundle 'ianva/vim-youdao-translater'
+    call s:add('ianva/vim-youdao-translater')
     vnoremap <silent> <C-l> <Esc>:Ydv<CR>
     nnoremap <silent> <C-l> <Esc>:Ydc<CR>
     noremap <leader>yd :Yde<CR>
-    NeoBundle 'junegunn/vim-plug'
-    NeoBundle 'elixir-lang/vim-elixir'
-    NeoBundle 'tyru/open-browser.vim'
-    if neobundle#tap('open-brower.vim')
-        let s:hooks = neobundle#get_hooks("open-brower.vim")
+    call s:add('junegunn/vim-plug')
+    call s:add('elixir-lang/vim-elixir')
+    call s:add('tyru/open-browser.vim')
+    if s:tap('open-brower.vim')
+        let s:hooks = s:get_hooks("open-brower.vim")
         function! s:hooks.on_source(bundle)
             "for open-browser {{{
             " This is my setting.
@@ -1118,8 +1177,7 @@ if s:settings.neobundle_installed
             "}}}
         endf
     endif
-    call neobundle#end()
-    NeoBundleCheck
+    call s:end()
 endif
 filetype plugin indent on
 syntax on
