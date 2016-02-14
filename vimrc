@@ -169,7 +169,6 @@ endif
 fu! s:begin(path)
     if s:settings.plugin_manager == 'neobundle'
         call neobundle#begin(a:path)
-        NeoBundleCheck
     elseif s:settings.plugin_manager == 'dein'
         call dein#begin(a:path)
     endif
@@ -177,7 +176,9 @@ endf
 fu! s:end()
     if s:settings.plugin_manager == 'neobundle'
         call neobundle#end()
+        NeoBundleCheck
     elseif s:settings.plugin_manager == 'dein'
+        call dein#end()
     endif
 endf
 fu! s:add(repo,...)
@@ -198,19 +199,28 @@ fu! s:tap(plugin)
     if s:settings.plugin_manager == 'neobundle'
         return neobundle#tap(a:plugin)
     elseif s:settings.plugin_manager == 'dein'
+        return dein#tap(a:plugin)
     endif
 endf
 fu! s:get_hooks(plugin)
     if s:settings.plugin_manager == 'neobundle'
         return neobundle#get_hooks(a:plugin)
     elseif s:settings.plugin_manager == 'dein'
+        return dein#get_hooks(a:plugin)
+    endif
+endf
+fu! s:fetch()
+    if s:settings.plugin_manager == 'neobundle'
+        NeoBundleFetch 'Shougo/neobundle.vim'
+    elseif s:settings.plugin_manager == 'dein'
+        call dein#add('Shougo/dein.vim', {'rtp': ''})
     endif
 endf
 
 "plugins and config
 if s:settings.neobundle_installed || s:settings.dein_installed
     call s:begin(s:settings.plugin_bundle_dir)
-    NeoBundleFetch 'Shougo/neobundle.vim'
+    call s:fetch()
     if count(s:settings.plugin_groups, 'core') "{{{
         call s:add('Shougo/vimproc.vim', {
                     \ 'build'   : {
