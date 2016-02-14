@@ -359,8 +359,8 @@ if s:settings.neobundle_installed || s:settings.dein_installed
                 nnoremap <silent> g<C-h>  :<C-u>UniteWithCursorWord help<CR>
                 "" Tag search
                 """ For searching the word in the cursor in tag file
-                nnoremap <silent><leader>f :Unite -no-split tag/include:<C-R><C-w><CR>
-                nnoremap <silent><leader>ff :Unite tag/include -start-insert -no-split<CR>
+                nnoremap <silent><leader>f :<c-u>Unite tag/include:<C-R><C-w><CR>
+                nnoremap <silent><leader>ff :<c-u>Unite tag/include -start-insert<CR>
                 "" grep dictionay
                 """ For searching the word in the cursor in the current directory
                 nnoremap <silent><leader>v :Unite -auto-preview -no-split grep:.::<C-R><C-w><CR>
