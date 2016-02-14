@@ -269,8 +269,12 @@ if s:settings.neobundle_installed
                     let g:unite_source_grep_default_opts = '-i --exclude ''\.(git|svn|hg|bzr)'''
                     let g:unite_source_grep_recursive_opt = '-R'
                 endif
+                let g:unite_source_rec_async_command =
+                            \ ['ag', '--follow', '--nocolor', '--nogroup',
+                            \  '--hidden', '-g', '']
                 nnoremap <silent><leader>ufa :<C-u>Unite -no-split -buffer-name=Mixed -start-insert file file_mru file_rec buffer<cr>
                 nnoremap <silent><leader>ufr :<C-u>Unite -no-split -buffer-name=files -start-insert file_rec/async:!<cr>
+                call unite#custom#source('file_rec/async', 'ignore_globs',['*.png','.git/','*.ttf'])
                 nnoremap <silent><leader>uf  :<C-u>Unite -no-split -buffer-name=files -start-insert file<cr>
                 nnoremap <silent><leader>ufm :<C-u>Unite -no-split -buffer-name=mru   -start-insert file_mru<cr>
                 nnoremap <silent><leader>ubf :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
