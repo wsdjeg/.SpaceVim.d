@@ -240,6 +240,11 @@ if s:settings.neobundle_installed || s:settings.dein_installed
                 call unite#custom#source('codesearch', 'max_candidates', 30)
                 call unite#filters#matcher_default#use(['matcher_fuzzy'])
                 call unite#filters#sorter_default#use(['sorter_rank'])
+                call unite#custom#profile('default', 'context', {
+                            \'no_split':1,
+                            \'resize':0,
+                            \'ignorecase':1,
+                            \})
                 let g:unite_source_codesearch_ignore_case = 1
                 let g:unite_source_file_mru_time_format = "%m/%d %T "
                 let g:unite_source_directory_mru_limit = 80
