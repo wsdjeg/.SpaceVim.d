@@ -241,10 +241,22 @@ if s:settings.neobundle_installed || s:settings.dein_installed
                 call unite#filters#matcher_default#use(['matcher_fuzzy'])
                 call unite#filters#sorter_default#use(['sorter_rank'])
                 call unite#custom#profile('default', 'context', {
-                            \'no_split':1,
-                            \'resize':0,
-                            \'ignorecase':1,
-                            \})
+                            \   'safe': 0,
+                            \   'start_insert': 1,
+                            \   'short_source_names': 1,
+                            \   'update_time': 500,
+                            \   'direction': 'rightbelow',
+                            \   'winwidth': 40,
+                            \   'winheight': 15,
+                            \   'max_candidates': 100,
+                            \   'no_auto_resize': 1,
+                            \   'vertical_preview': 1,
+                            \   'cursor_line_time': '0.10',
+                            \   'hide_icon': 0,
+                            \   'candidate-icon': ' ',
+                            \   'marked_icon': '✓',
+                            \   'prompt' : '⮀ '
+                            \ })
                 let g:unite_source_codesearch_ignore_case = 1
                 let g:unite_source_file_mru_time_format = "%m/%d %T "
                 let g:unite_source_directory_mru_limit = 80
@@ -352,13 +364,26 @@ if s:settings.neobundle_installed || s:settings.dein_installed
                             \ ['ag', '--follow', '--nocolor', '--nogroup',
                             \  '--hidden', '-g', '']
                 nnoremap <silent><leader>ufa :<C-u>Unite -no-split -buffer-name=Mixed -start-insert file file_mru file_rec buffer<cr>
-                nnoremap <silent><leader>ufr :<C-u>Unite -no-split -buffer-name=files -start-insert file_rec/async:!<cr>
+                nnoremap <silent><leader>ufr :<C-u>Unite -buffer-name=files file_rec/async:!<cr>
+                nnoremap <silent><leader>ufg :<C-u>Unite -buffer-name=git-repo file_rec/git<cr>
+                call unite#custom#profile('file_rec/async,file_rec/git', 'context', {
+                            \   'start_insert' : 1,
+                            \   'quit'         : 1,
+                            \   'split'        : 1,
+                            \   'keep_focus'   : 1,
+                            \   'winheight'    : 20,
+                            \ })
                 call unite#custom#source('file_rec/async', 'ignore_globs',['*.png','.git/','*.ttf'])
-                nnoremap <silent><leader>ufg :<C-u>Unite -no-split -buffer-name=git-repo -start-insert file_rec/git<cr>
                 nnoremap <silent><leader>uf  :<C-u>Unite -no-split -buffer-name=files -start-insert file<cr>
                 nnoremap <silent><leader>ufm :<C-u>Unite -no-split -buffer-name=mru   -start-insert file_mru<cr>
-                nnoremap <silent><leader>ubf :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
-                nnoremap <silent><leader>utb :<C-u>Unite -no-split -buffer-name=buffer_tab  buffer_tab<cr>
+                nnoremap <silent><leader>ubf :<C-u>Unite -buffer-name=buffer  buffer<cr>
+                nnoremap <silent><leader>utb :<C-u>Unite -buffer-name=buffer_tab  buffer_tab<cr>
+                call unite#custom#profile('buffer,buffer_tab', 'context', {
+                            \   'start_insert' : 0,
+                            \   'quit'         : 1,
+                            \   'keep_focus'   : 1,
+                            \   'winheight'    : 20,
+                            \ })
                 nnoremap <silent><leader>um  :<C-u>Unite -start-insert mapping<CR>
                 nnoremap <C-h>  :<C-u>Unite -start-insert help<CR>
                 nnoremap <silent> g<C-h>  :<C-u>UniteWithCursorWord help<CR>
