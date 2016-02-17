@@ -412,7 +412,6 @@ if s:settings.neobundle_installed || s:settings.dein_installed
                 " :Unite neobundle/search
                 "for Unite menu{
                 nnoremap <silent><leader>ug :Unite -silent -start-insert menu:git<CR>
-                nnoremap <space>/ :Unite grep:.<cr>
                 " The prefix key.
                 nnoremap    [unite]   <Nop>
                 nmap    f [unite]
