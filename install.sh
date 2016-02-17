@@ -20,6 +20,7 @@ symlink () {
 }
 
 symlink 'fonts'
+symlink 'config/nvim/init.vim'
 symlink 'weechat/plugins.conf'
 symlink 'weechat/weechat.conf'
 symlink 'irssi/config'
