@@ -19,9 +19,13 @@ symlink () {
   fi
 }
 
-symlink 'gtkrc-2.0'
-symlink 'vimrc'
-symlink 'bashrc'
-symlink 'inputrc'
 symlink 'fonts'
+symlink 'weechat/plugins.conf'
+symlink 'weechat/weechat.conf'
+symlink 'irssi/config'
+symlink 'bashrc'
+symlink 'gitconfig'
+symlink 'gtkrc-2.0'
+symlink 'inputrc'
+symlink 'vimrc'
 symlink 'zshrc'
