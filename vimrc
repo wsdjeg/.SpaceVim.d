@@ -1807,6 +1807,15 @@ if has('nvim')
     let g:terminal_color_15 = "#ebdbb2"
 endif
 
+func! Openpluginrepo()
+    try
+        exec "normal! ".'"ayi'."'"
+        exec 'OpenBrowser https://github.com/'.@a
+    catch
+        echohl WarningMsg | echomsg "can not open the web of current plugin" | echohl None
+    endtry
+endf
+
 function! s:GetVisual()
     let [lnum1, col1] = getpos("'<")[1:2]
     let [lnum2, col2] = getpos("'>")[1:2]
