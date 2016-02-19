@@ -112,6 +112,9 @@ call add(s:settings.plugin_groups, 'core')
 call add(s:settings.plugin_groups, 'unite')
 call add(s:settings.plugin_groups, 'ctrlp')
 call add(s:settings.plugin_groups, 'autocomplete')
+if ! has('nvim')
+    call add(s:settings.plugin_groups, 'vim')
+endif
 
 
 if s:settings.vim_help_language == 'cn'
@@ -980,7 +983,11 @@ if s:settings.neobundle_installed || s:settings.dein_installed
     endif
 
     if count(s:settings.plugin_groups, 'chinese') "{{{
-        call s:add("vimcn/vimcdoc")
+        call s:add('vimcn/vimcdoc')
+    endif
+
+    if count(s:settings.plugin_groups, 'vim') "{{{
+        call s:add('Shougo/vimshell.vim')
     endif
     call s:add('tpope/vim-scriptease')
     call s:add('tpope/vim-fugitive')
