@@ -91,7 +91,7 @@ let s:settings.vim_help_language       = 'en'
 let s:settings.colorscheme             = 'gruvbox'
 let s:settings.colorscheme_default     = 'desert'
 let s:settings.filemanager             = 'vimfiler'
-let s:settings.plugin_manager          = 'vim-plug'  " neobundle or dein
+let s:settings.plugin_manager          = 'neobundle'  " neobundle or dein or vim-plug
 let s:settings.plugin_groups_exclude   = []
 let g:Vimrc_Home                       = fnamemodify(expand('<sfile>'), ':p:h:gs?\\?'. s:Fsep. '?')
 
@@ -191,36 +191,47 @@ elseif s:settings.plugin_manager == 'dein'
     exec 'set runtimepath+='.s:settings.plugin_bundle_dir . 'dein.vim'
 elseif s:settings.plugin_manager == 'vim-plug'
     "auto install dein
-    if filereadable(expand('~/.cache/vim-plug/autoload/plug.vim'))
+    if (filereadable(expand('~/.vim/autoload/plug.vim')) && ! has('nvim'))
+                \|| (filereadable(expand('~/.config/nvim/autoload/plug.vim')) && has('nvim'))
         let s:settings.vim_plug_installed = 1
     else
         if executable('curl')
-                exec '!curl -fLo ~/.cache/vim-plug/autoload/plug.vim' 
-                            \ . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+            exec '!curl -fLo ~/'
+                        \ . (has("nvim") ? '.config/nvim' : '.vim')
+                        \ . '/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
             let s:settings.vim_plug_installed = 1
         else
             echohl WarningMsg | echom "You need install curl!" | echohl None
         endif
     endif
-    exec 'set runtimepath+=~/.cache/vim-plug/'
 endif
 
 "init manager func
+
 fu! s:begin(path)
     if s:settings.plugin_manager == 'neobundle'
         call neobundle#begin(a:path)
     elseif s:settings.plugin_manager == 'dein'
         call dein#begin(a:path)
+    elseif s:settings.plugin_manager == 'vim-plug'
+        call plug#begin(a:path)
     endif
 endf
+
 fu! s:end()
     if s:settings.plugin_manager == 'neobundle'
         call neobundle#end()
         NeoBundleCheck
     elseif s:settings.plugin_manager == 'dein'
         call dein#end()
+    elseif s:settings.plugin_manager == 'vim-plug'
+        call plug#end()
     endif
 endf
+
+fu! s:parser(args)
+endf
+
 fu! s:add(repo,...)
     if s:settings.plugin_manager == 'neobundle'
         exec 'NeoBundle "'.a:repo.'"'.','.join(a:000,',')
@@ -228,6 +239,7 @@ fu! s:add(repo,...)
         call dein#add(a:repo)
     endif
 endf
+
 fu! s:lazyadd(repo,...)
     if s:settings.plugin_manager == 'neobundle'
         exec 'NeoBundleLazy "'.a:repo.'"'.','.join(a:000,',')
@@ -257,8 +269,12 @@ fu! s:fetch()
     endif
 endf
 
+fu! s:enable_plug()
+    return s:settings.neobundle_installed || s:settings.dein_installed || (s:settings.vim_plug_installed && 0)
+endf
+
 "plugins and config
-if s:settings.neobundle_installed || s:settings.dein_installed
+if s:enable_plug()
     call s:begin(s:settings.plugin_bundle_dir)
     call s:fetch()
     if count(s:settings.plugin_groups, 'core') "{{{
