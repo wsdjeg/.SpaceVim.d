@@ -1231,7 +1231,7 @@ if s:enable_plug()
     "}}}
 
     call s:add('wsdjeg/MarkDown.pl')
-    call s:add('wsdjeg/matchit.zip')
+    call s:add('benjifisher/matchit.zip')
     call s:add('tomasr/molokai')
     call s:add('simnalamburt/vim-mundo')
     nnoremap <silent> <F7> :MundoToggle<CR>
