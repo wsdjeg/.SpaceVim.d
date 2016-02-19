@@ -77,7 +77,9 @@ let s:settings.default_indent          = 2
 let s:settings.max_column              = 120
 let s:settings.auto_download_neobundle = 0
 let s:settings.neobundle_installed     = 0
-let s:settings.plugin_bundle_dir       = join(['~/.cache','neobundle',''],s:Fsep)
+let s:settings.dein_installed     = 0
+let s:settings.vim_plug_installed     = 0
+let s:settings.plugin_bundle_dir       = join(['~/.cache','vimfiles',''],s:Fsep)
 let s:settings.autocomplete_method     = ''
 let s:settings.enable_cursorcolumn     = 0
 let s:settings.enable_neomake          = 0
@@ -89,7 +91,7 @@ let s:settings.vim_help_language       = 'en'
 let s:settings.colorscheme             = 'gruvbox'
 let s:settings.colorscheme_default     = 'desert'
 let s:settings.filemanager             = 'vimfiler'
-let s:settings.plugin_manager          = 'neobundle'  " neobundle or dein
+let s:settings.plugin_manager          = 'vim-plug'  " neobundle or dein
 let s:settings.plugin_groups_exclude   = []
 let g:Vimrc_Home                       = fnamemodify(expand('<sfile>'), ':p:h:gs?\\?'. s:Fsep. '?')
 
@@ -114,6 +116,8 @@ call add(s:settings.plugin_groups, 'ctrlp')
 call add(s:settings.plugin_groups, 'autocomplete')
 if ! has('nvim')
     call add(s:settings.plugin_groups, 'vim')
+else
+    call add(s:settings.plugin_groups, 'nvim')
 endif
 
 
@@ -185,6 +189,20 @@ elseif s:settings.plugin_manager == 'dein'
         endif
     endif
     exec 'set runtimepath+='.s:settings.plugin_bundle_dir . 'dein.vim'
+elseif s:settings.plugin_manager == 'vim-plug'
+    "auto install dein
+    if filereadable(expand('~/.cache/vim-plug/autoload/plug.vim'))
+        let s:settings.vim_plug_installed = 1
+    else
+        if executable('curl')
+                exec '!curl -fLo ~/.cache/vim-plug/autoload/plug.vim' 
+                            \ . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+            let s:settings.vim_plug_installed = 1
+        else
+            echohl WarningMsg | echom "You need install curl!" | echohl None
+        endif
+    endif
+    exec 'set runtimepath+=~/.cache/vim-plug/'
 endif
 
 "init manager func
@@ -1209,7 +1227,6 @@ if s:settings.neobundle_installed || s:settings.dein_installed
     vnoremap <silent> <C-l> <Esc>:Ydv<CR>
     nnoremap <silent> <C-l> <Esc>:Ydc<CR>
     noremap <leader>yd :Yde<CR>
-    call s:add('junegunn/vim-plug')
     call s:add('elixir-lang/vim-elixir')
     call s:add('tyru/open-browser.vim')
     if s:tap('open-brower.vim')
