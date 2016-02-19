@@ -534,6 +534,7 @@ if s:settings.neobundle_installed || s:settings.dein_installed
                             \ }
             endf
         endif
+        call s:add('rafi/vim-unite-issue')
         call s:add('tsukkee/unite-tag')
         call s:add('ujihisa/unite-launch')
         call s:add('ujihisa/unite-gem')
@@ -1041,6 +1042,7 @@ if s:settings.neobundle_installed || s:settings.dein_installed
         let g:java_getset_disable_map = 1
     endfunction
     call s:add('wsdjeg/JavaUnit.vim')
+    call s:add('jaxbot/github-issues.vim')
     call s:add('wsdjeg/Mysql.vim')
     let g:JavaUnit_key = "<leader>ooo"
     call s:add('vim-jp/vim-java')
