@@ -1041,13 +1041,14 @@ if s:settings.neobundle_installed || s:settings.dein_installed
     call s:add('wsdjeg/Mysql.vim')
     let g:JavaUnit_key = "<leader>ooo"
     call s:add('vim-jp/vim-java')
-    call s:add('bling/vim-airline')
+    call s:add('vim-airline/vim-airline')
+    call s:add('vim-airline/vim-airline-themes')
     let g:airline#extensions#tabline#enabled = 1
+    let g:airline#extensions#tmuxline#enabled = 1
     if s:tap('vim-airline')
         let s:hooks = s:get_hooks('bling/vim-airline')
         function! s:hooks.on_source(bundle)
             let g:Powerline_sybols = 'unicode'
-            let g:airline#extensions#tmuxline#enabled = 0
             set statusline+=%#warningmsg#
             set statusline+=%{SyntasticStatuslineFlag()}
             set statusline+=%*
