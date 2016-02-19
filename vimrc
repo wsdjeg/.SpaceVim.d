@@ -279,6 +279,9 @@ if s:settings.neobundle_installed || s:settings.dein_installed
                             \   'marked_icon': '✓',
                             \   'prompt' : '⮀ '
                             \ })
+                call unite#custom#profile('source/neobundle/update', 'context', {
+                            \   'start_insert' : 0,
+                            \ })
                 let g:unite_source_codesearch_ignore_case = 1
                 let g:unite_source_file_mru_time_format = "%m/%d %T "
                 let g:unite_source_directory_mru_limit = 80
