@@ -224,7 +224,7 @@ fu! s:defind_hooks(bundle)
     if g:settings.plugin_manager == 'neobundle'
             let s:hooks = s:get_hooks(a:bundle)
             func! s:hooks.on_source(bundle) abort
-                call s:source_script('plugins/' .a:bundle['name'])
+                call s:source_script('plugins/' . split(a:bundle['name'],'\.')[0] . '.vim')
             endf
     elseif g:settings.plugin_manager == 'dein'
         return dein#get_hooks(a:plugin)
@@ -278,61 +278,14 @@ if s:enable_plug()
         call s:add('oppara/vim-unite-cake')
         call s:add('thinca/vim-ref')
         if s:tap('vim-ref')
-            let s:hooks = s:get_hooks('vim-ref')
-            func! s:hooks.on_source(bundle) abort
-                let g:ref_source_webdict_sites = {
-                            \   'je': {
-                            \     'url': 'http://dictionary.infoseek.ne.jp/jeword/%s',
-                            \   },
-                            \   'ej': {
-                            \     'url': 'http://dictionary.infoseek.ne.jp/ejword/%s',
-                            \   },
-                            \   'wiki': {
-                            \     'url': 'http://ja.wikipedia.org/wiki/%s',
-                            \   },
-                            \   'cn': {
-                            \     'url': 'http://www.iciba.com/%s',
-                            \   },
-                            \   'wikipedia:en':{'url': 'http://en.wikipedia.org/wiki/%s',  },
-                            \   'bing':{'url': 'http://cn.bing.com/search?q=%s', },
-                            \ }
-                let g:ref_source_webdict_sites.default = 'cn'
-                "let g:ref_source_webdict_cmd='lynx -dump -nonumbers %s'
-                "let g:ref_source_webdict_cmd='w3m -dump %s'
-                "The filter on the output. Remove the first few lines
-                function! g:ref_source_webdict_sites.je.filter(output)
-                    return join(split(a:output, "\n")[15 :], "\n")
-                endfunction
-                function! g:ref_source_webdict_sites.ej.filter(output)
-                    return join(split(a:output, "\n")[15 :], "\n")
-                endfunction
-                function! g:ref_source_webdict_sites.wiki.filter(output)
-                    return join(split(a:output, "\n")[17 :], "\n")
-                endfunction
-                nnoremap <Leader>rj :<C-u>Ref webdict je<Space>
-                nnoremap <Leader>re :<C-u>Ref webdict ej<Space>
-                nnoremap <Leader>rc :<C-u>Ref webdict cn<Space>
-                nnoremap <Leader>rw :<C-u>Ref webdict wikipedia:en<Space>
-                nnoremap <Leader>rb :<C-u>Ref webdict bing<Space>
-            endf
+            call s:defind_hooks('vim-ref')
         endif
         call s:add('heavenshell/unite-zf')
         call s:add('heavenshell/unite-sf2')
         call s:add('Shougo/unite-outline')
         call s:add('hewes/unite-gtags')
         if s:tap('unite-gtags')
-            let s:hooks = s:get_hooks('unite-gtags')
-            func! s:hooks.on_source(bundle) abort
-                nnoremap <leader>gd :execute 'Unite  -auto-preview -start-insert -no-split gtags/def:'.expand('<cword>')<CR>
-                nnoremap <leader>gc :execute 'Unite  -auto-preview -start-insert -no-split gtags/context'<CR>
-                nnoremap <leader>gr :execute 'Unite  -auto-preview -start-insert -no-split gtags/ref'<CR>
-                nnoremap <leader>gg :execute 'Unite  -auto-preview -start-insert -no-split gtags/grep'<CR>
-                nnoremap <leader>gp :execute 'Unite  -auto-preview -start-insert -no-split gtags/completion'<CR>
-                vnoremap <leader>gd <ESC>:execute 'Unite -auto-preview -start-insert -no-split gtags/def:'.GetVisualSelection()<CR>
-                let g:unite_source_gtags_project_config = {
-                            \ '_':                   { 'treelize': 0 }
-                            \ }
-            endf
+            call s:defind_hooks('unite-gtags')
         endif
         call s:add('rafi/vim-unite-issue')
         call s:add('tsukkee/unite-tag')
@@ -388,8 +341,10 @@ if s:enable_plug()
 
     "{{{ctrlpvim settings
     if count(g:settings.plugin_groups, 'ctrlp') "{{{
-
         call s:add('ctrlpvim/ctrlp.vim')
+        if s:tap('ctrlp.vim')
+            call s:defind_hooks('ctrlp.vim')
+        endif
         call s:add('felixSchl/ctrlp-unity3d-docs')
         call s:add('voronkovich/ctrlp-nerdtree.vim')
         call s:add('elentok/ctrlp-objects.vim')
@@ -408,70 +363,6 @@ if s:enable_plug()
         call s:add('FelikZ/ctrlp-py-matcher')
         call s:add('JazzCore/ctrlp-cmatcher')
         call s:add('ompugao/ctrlp-z')
-        let g:ctrlp_map = '<c-p>'
-        let g:ctrlp_cmd = 'CtrlP'
-        let g:ctrlp_working_path_mode = 'ra'
-        let g:ctrlp_root_markers = 'pom.xml'
-        let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:25,results:25'
-        let g:ctrlp_show_hidden = 1
-        "for caching
-        let g:ctrlp_use_caching = 1
-        let g:ctrlp_clear_cache_on_exit = 0
-        let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
-        "let g:ctrlp_map = ',,'
-        "let g:ctrlp_open_multiple_files = 'v'
-        let g:ctrlp_custom_ignore = {
-                    \ 'dir':  '\v[\/]\.(git|hg|svn)$|target',
-                    \ 'file': '\v\.(exe|so|dll|ttf|png)$',
-                    \ 'link': 'some_bad_symbolic_links',
-                    \ }
-        let g:ctrlp_user_command = ['ag %s -i --nocolor --nogroup --hidden
-                    \ --ignore out
-                    \ --ignore .git
-                    \ --ignore .svn
-                    \ --ignore .hg
-                    \ --ignore .DS_Store
-                    \ --ignore "**/*.pyc"
-                    \ -g ""'
-                    \ ]
-
-        let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch'  }
-
-
-        "nnoremap <Leader>kk :CtrlPMixed<Cr>
-
-
-        " comment for ctrlp-funky {{{
-        nnoremap <Leader>fu :CtrlPFunky<Cr>
-        " narrow the list down with a word under cursor
-        nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
-        let g:ctrlp_funky_syntax_highlight = 1
-        " }}}
-
-        "for ctrlp_nerdtree {{{
-        let g:ctrlp_nerdtree_show_hidden = 1
-        "}}}
-
-        "for ctrlp_sessions{{{
-        let g:ctrlp_extensions = ['funky', 'sessions' , 'k' , 'tag', 'mixed', 'quickfix', 'undo', 'line', 'changes', 'cmdline', 'menu']
-        "}}}
-
-
-        "for k.vim {{{
-        nnoremap <silent> <leader>qe :CtrlPK<CR>
-        "}}}
-
-        " for ctrlp-launcher {{{
-        nnoremap <Leader>pl :<c-u>CtrlPLauncher<cr>
-        "}}}
-
-        ""for ctrlp-cmatcher {{{
-
-        "let g:ctrlp_max_files = 0
-        "let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
-
-        ""}}}
-
     endif "}}}
 
 
@@ -801,40 +692,7 @@ if s:enable_plug()
     call s:add('elixir-lang/vim-elixir')
     call s:add('tyru/open-browser.vim')
     if s:tap('open-brower.vim')
-        let s:hooks = s:get_hooks("open-brower.vim")
-        function! s:hooks.on_source(bundle)
-            "for open-browser {{{
-            " This is my setting.
-            let g:netrw_nogx = 1 " disable netrw's gx mapping.
-            "nmap gx <Plug>(openbrowser-smart-search)
-            "vmap gx <Plug>(openbrowser-smart-search)
-            "" Open URI under cursor.
-            nnoremap go <Plug>(openbrowser-open)
-            "" Open selected URI.
-            vnoremap go <Plug>(openbrowser-open)
-            " Search word under cursor.
-            nnoremap gs <Plug>(openbrowser-search)
-            " Search selected word.
-            vnoremap gs <Plug>(openbrowser-search)
-            " If it looks like URI, Open URI under cursor.
-            " Otherwise, Search word under cursor.
-            nnoremap gx <Plug>(openbrowser-smart-search)
-            " If it looks like URI, Open selected URI.
-            " Otherwise, Search selected word.
-            vnoremap gx <Plug>(openbrowser-smart-search)
-            vnoremap gob :OpenBrowser http://www.baidu.com/s?wd=<C-R>=expand("<cword>")<cr><cr>
-            nnoremap gob :OpenBrowser http://www.baidu.com/s?wd=<C-R>=expand("<cword>")<cr><cr>
-            vnoremap gog :OpenBrowser http://www.google.com/?#newwindow=1&q=<C-R>=expand("<cword>")<cr><cr>
-            nnoremap gog :OpenBrowser http://www.google.com/?#newwindow=1&q=<C-R>=expand("<cword>")<cr><cr>
-            vnoremap goi :OpenBrowserSmartSearch http://www.iciba.com/<C-R>=expand("<cword>")<cr><cr>
-            nnoremap goi :OpenBrowserSmartSearch http://www.iciba.com/<C-R>=expand("<cword>")<cr><cr>
-            " In command-line
-            ":OpenBrowser http://google.com/
-            ":OpenBrowserSearch ggrks
-            ":OpenBrowserSmartSearch http://google.com/
-            ":OpenBrowserSmartSearch ggrks
-            "}}}
-        endf
+        call s:defind_hooks('open-brower.vim')
     endif
     call s:end()
 endif
