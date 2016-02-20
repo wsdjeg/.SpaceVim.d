@@ -1,3 +1,13 @@
+"Detect OS
+function! OSX()
+    return has('macunix')
+endfunction
+function! LINUX()
+    return has('unix') && !has('macunix') && !has('win32unix')
+endfunction
+function! WINDOWS()
+    return (has('win16') || has('win32') || has('win64'))
+endfunction
 function! OnmiConfigForJsp()
     let pos1 = search("</script>","nb",line("w0"))
     let pos2 = search("<script","nb",line("w0"))
@@ -140,4 +150,57 @@ function! JspFileTypeInit()
     inoremap . <c-r>=OnmiConfigForJsp()<cr>
     nnoremap <F4> :JCimportAdd<cr>
     inoremap <F4> <esc>:JCimportAddI<cr>
+endfunction
+function! MyTagfunc() abort
+    mark H
+    let s:MyTagfunc_flag = 1
+    UniteWithCursorWord -immediately tag
+endfunction
+
+function! MyTagfuncBack() abort
+    if exists('s:MyTagfunc_flag')&&s:MyTagfunc_flag
+        exe "normal! `H"
+        let s:MyTagfunc_flag =0
+    endif
+endfunction
+
+function! MyEnterfunc() abort
+    if pumvisible()
+        if getline('.')[col('.') - 2]=="{"
+            return "\<Enter>"
+        elseif g:settings.autocomplete_method == 'neocomplete'||g:settings.autocomplete_method == 'deoplete'
+            return "\<C-y>"
+        else
+            return "\<esc>a"
+        endif
+    elseif getline('.')[col('.') - 2]=="{"&&getline('.')[col('.')-1]=="}"
+        return "\<Enter>\<esc>ko"
+    else
+        return "\<Enter>"
+    endif
+endf
+
+function! MyLeaderTabfunc() abort
+    if g:settings.autocomplete_method == 'deoplete'
+        return deoplete#mappings#manual_complete(['omni'])
+    elseif g:settings.autocomplete_method == 'neocomplete'
+        return neocomplete#start_manual_complete(['omni'])
+    endif
+endfunction
+
+function! MyTabfunc() abort
+    if getline('.')[col('.')-2] =='{'&& pumvisible()
+        return "\<C-n>"
+    endif
+    if neosnippet#expandable() && getline('.')[col('.')-2] =='(' && !pumvisible()
+        return "\<Plug>(neosnippet_expand)"
+    elseif neosnippet#jumpable() && getline('.')[col('.')-2] =='(' && !pumvisible() && !neosnippet#expandable()
+        return "\<plug>(neosnippet_jump)"
+    elseif neosnippet#expandable_or_jumpable() && getline('.')[col('.')-2] !='('
+        return "\<plug>(neosnippet_expand_or_jump)"
+    elseif pumvisible()
+        return "\<C-n>"
+    else
+        return "\<tab>"
+    endif
 endfunction
