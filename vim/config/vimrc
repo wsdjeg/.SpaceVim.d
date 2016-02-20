@@ -352,17 +352,7 @@ if s:enable_plug()
         let g:ag_working_path_mode="r"
         call s:add('dyng/ctrlsf.vim')
         if s:tap('ctrlsf.vim')
-            let s:hooks = s:get_hooks('ctrlsf.vim')
-            func! s:hooks.on_source(bundle) abort
-                nmap <leader>sf <Plug>CtrlSFPrompt
-                vmap <leader>sf <Plug>CtrlSFVwordPath
-                vmap <leader>sF <Plug>CtrlSFVwordExec
-                nmap <leader>sn <Plug>CtrlSFCwordPath
-                nmap <leader>sp <Plug>CtrlSFPwordPath
-                nnoremap <leader>so :CtrlSFOpen<CR>
-                nnoremap <leader>st :CtrlSFToggle<CR>
-                inoremap <leader>st <Esc>:CtrlSFToggle<CR>
-            endf
+            call s:defind_hooks('ctrlsf.vim')
         endif
         call s:add('daisuzu/unite-adb')
         call s:add('osyo-manga/unite-airline_themes')
@@ -542,7 +532,7 @@ if s:enable_plug()
         elseif g:settings.autocomplete_method == 'deoplete'
             call s:add('Shougo/deoplete.nvim')
             if s:tap('deoplete.nvim')
-                call s:defind_hooks('deoplete.vim')
+                call s:defind_hooks('deoplete.nvim')
             endif
         endif "}}}
         call s:add('Shougo/neco-syntax')
