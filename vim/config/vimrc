@@ -458,6 +458,7 @@ if s:enable_plug()
     if count(g:settings.plugin_groups, 'colorscheme') "{{{
         "colorscheme
         call s:add('morhetz/gruvbox')
+        call s:add('kabbamine/yowish.vim')
         call s:add('mhinz/vim-janah')
         call s:add('mhartington/oceanic-next')
         call s:add('nanotech/jellybeans.vim')
@@ -474,6 +475,8 @@ if s:enable_plug()
     endif
     call s:add('tpope/vim-scriptease')
     call s:add('tpope/vim-fugitive')
+    call s:add('cohama/agit.vim')
+    call s:add('gregsexton/gitv')
     call s:add('tpope/vim-surround')
     call s:add('terryma/vim-multiple-cursors')
     let g:multi_cursor_next_key='<C-j>'
