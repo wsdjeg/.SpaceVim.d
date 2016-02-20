@@ -27,13 +27,13 @@ symlink 'bashrc'
 symlink 'gitconfig'
 symlink 'gtkrc-2.0'
 symlink 'inputrc'
-symlink 'vimrc'
+symlink 'vim'
 symlink 'zshrc'
 
-if [ -e ~/.config/nvim/init.vim ]
+if [ -e ~/.config/nvim ]
 then
-  printf "Skipping $RED~/.config/nvim/init.vim$NC\n"
+  printf "Skipping $RED~/.config/nvim$NC\n"
 else
-  printf "Linking $CYAN~/.config/nvim/init.vim$NC -> $BLUE$PWD/vimrc$NC\n"
-  ln -s ~/DotFiles/vimrc ~/.config/nvim/init.vim
+  printf "Linking $CYAN~/.config/nvim$NC -> $BLUE$PWD/vim$NC\n"
+  ln -s $PWD/vim ~/.config/nvim
 fi

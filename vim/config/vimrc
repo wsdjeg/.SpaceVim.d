@@ -91,7 +91,7 @@ let s:settings.vim_help_language       = 'en'
 let s:settings.colorscheme             = 'gruvbox'
 let s:settings.colorscheme_default     = 'desert'
 let s:settings.filemanager             = 'vimfiler'
-let s:settings.plugin_manager          = 'neobundle'  " neobundle or dein or vim-plug
+let s:settings.plugin_manager          = 'vim-plug'  " neobundle or dein or vim-plug
 let s:settings.plugin_groups_exclude   = []
 let g:Vimrc_Home                       = fnamemodify(expand('<sfile>'), ':p:h:gs?\\?'. s:Fsep. '?')
 
@@ -190,20 +190,19 @@ elseif s:settings.plugin_manager == 'dein'
     endif
     exec 'set runtimepath+='.s:settings.plugin_bundle_dir . 'dein.vim'
 elseif s:settings.plugin_manager == 'vim-plug'
-    "auto install dein
-    if (filereadable(expand('~/.vim/autoload/plug.vim')) && ! has('nvim'))
-                \|| (filereadable(expand('~/.config/nvim/autoload/plug.vim')) && has('nvim'))
-        let s:settings.vim_plug_installed = 1
+    "auto install vim-plug
+    if filereadable(expand('~/.cache/vim-plug/autoload/plug.vim'))
+        let s:settings.dein_installed = 1
     else
         if executable('curl')
-            exec '!curl -fLo ~/'
-                        \ . (has("nvim") ? '.config/nvim' : '.vim')
-                        \ . '/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-            let s:settings.vim_plug_installed = 1
+            exec '!curl -fLo ~/.cache/vim-plug/autoload/plug.vim --create-dirs '
+                        \. 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+            let s:settings.dein_installed = 1
         else
             echohl WarningMsg | echom "You need install curl!" | echohl None
         endif
     endif
+    exec 'set runtimepath+=~/.cache/vim-plug/'
 endif
 
 "init manager func
@@ -1071,10 +1070,12 @@ if s:enable_plug()
     let g:JavaComplete_MavenRepositoryDisable = 0
     call s:add('wsdjeg/vim-dict')
     call s:add('wsdjeg/java_getset.vim')
-    let s:hooks = s:get_hooks('java_getset.vim')
-    function! s:hooks.on_source(bundle)
-        let g:java_getset_disable_map = 1
-    endfunction
+    if s:tap('java_getset.vim')
+        let s:hooks = s:get_hooks('java_getset.vim')
+        function! s:hooks.on_source(bundle)
+            let g:java_getset_disable_map = 1
+        endfunction
+    endif
     call s:add('wsdjeg/JavaUnit.vim')
     call s:add('jaxbot/github-issues.vim',{'on_cmd' : 'Gissues'})
     call s:add('wsdjeg/Mysql.vim')
