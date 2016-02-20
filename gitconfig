@@ -17,3 +17,5 @@
 	status = auto
 [core]
 	editor = vim
+[mergetool]
+	path = nvim

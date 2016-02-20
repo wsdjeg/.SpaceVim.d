@@ -1076,7 +1076,7 @@ if s:enable_plug()
         let g:java_getset_disable_map = 1
     endfunction
     call s:add('wsdjeg/JavaUnit.vim')
-    call s:add('jaxbot/github-issues.vim',{'on_cmd': 'Gissues'})
+    call s:add('jaxbot/github-issues.vim',{'on_cmd' : 'Gissues'})
     call s:add('wsdjeg/Mysql.vim')
     call s:add('vim-jp/vim-java')
     call s:add('vim-airline/vim-airline')
