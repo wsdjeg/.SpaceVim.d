@@ -219,6 +219,17 @@ fu! s:get_hooks(plugin)
         return dein#get_hooks(a:plugin)
     endif
 endf
+
+fu! s:defind_hooks(bundle)
+    if g:settings.plugin_manager == 'neobundle'
+            let s:hooks = s:get_hooks(a:bundle)
+            func! s:hooks.on_source(bundle) abort
+                call s:source_script('plugins/' .a:bundle['name'])
+            endf
+    elseif g:settings.plugin_manager == 'dein'
+        return dein#get_hooks(a:plugin)
+    endif
+endf
 fu! s:fetch()
     if g:settings.plugin_manager == 'neobundle'
         NeoBundleFetch 'Shougo/neobundle.vim'
@@ -249,10 +260,7 @@ if s:enable_plug()
     if count(g:settings.plugin_groups, 'unite') "{{{
         call s:add('Shougo/unite.vim')
         if s:tap('unite.vim')
-            let s:hooks = s:get_hooks('unite.vim')
-            func! s:hooks.on_source(bundle) abort
-                call s:source_script('plugins/unite.vim')
-            endf
+            call s:defind_hooks('unite.vim')
         endif
         call s:add('Shougo/neoyank.vim')
         call s:add('soh335/unite-qflist')
@@ -366,12 +374,9 @@ if s:enable_plug()
         call s:add('voi/unite-ctags')
         call s:add('Shougo/unite-session')
         call s:add('osyo-manga/unite-quickfix')
-        call s:add('Shougo/vimfiler')
-        if s:tap('vimfiler')
-            let s:hooks = s:get_hooks("vimfiler")
-            function! s:hooks.on_source(bundle) abort
-                call s:source_script('plugins/vimfiler.vim')
-            endfunction
+        call s:add('Shougo/vimfiler.vim')
+        if s:tap('vimfiler.vim')
+            call s:defind_hooks('vimfiler.vim')
         endif
         "NeoBundle 'mattn/webapi-vim'
         "NeoBundle 'mattn/googlesuggest-complete-vim'
@@ -527,41 +532,17 @@ if s:enable_plug()
         elseif g:settings.autocomplete_method == 'neocomplete' "{{{
             call s:add('Shougo/neocomplete')
             if s:tap('neocomplete')
-                let s:hooks = s:get_hooks("neocomplete")
-                function! s:hooks.on_source(bundle) abort
-                    call s:source_script('plugins/neocomplete.vim')
-                endfunction
+                call s:defind_hooks('neocomplete.vim')
             endif
         elseif g:settings.autocomplete_method == 'neocomplcache' "{{{
             call s:add('Shougo/neocomplcache.vim')
             if s:tap('neocomplcache.vim')
-                let s:hooks = s:get_hooks("neocomplcache.vim")
-                function! s:hooks.on_source(bundle) abort
-                    call s:source_script('plugins/neocomplcache.vim')
-                endf
+                call s:defind_hooks('neocomplcache.vim')
             endif
         elseif g:settings.autocomplete_method == 'deoplete'
             call s:add('Shougo/deoplete.nvim')
             if s:tap('deoplete.nvim')
-                let s:hooks = s:get_hooks("deoplete.nvim")
-                function! s:hooks.on_source(bundle)
-                    let g:deoplete#enable_at_startup = 1
-                    let g:deoplete#enable_ignore_case = 1
-                    let g:deoplete#enable_smart_case = 1
-                    let g:deoplete#enable_refresh_always = 1
-                    let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
-                    let g:deoplete#omni#input_patterns.java = [
-                                \'[^. \t0-9]\.\w*',
-                                \'[^. \t0-9]\->\w*',
-                                \'[^. \t0-9]\::\w*',
-                                \]
-                    let g:deoplete#omni#input_patterns.jsp = ['[^. \t0-9]\.\w*']
-                    let g:deoplete#ignore_sources = {}
-                    let g:deoplete#ignore_sources._ = ['javacomplete2']
-                    call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
-                    inoremap <expr><C-h> deoplete#mappings#smart_close_popup()."\<C-h>"
-                    inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
-                endfunction
+                call s:defind_hooks('deoplete.vim')
             endif
         endif "}}}
         call s:add('Shougo/neco-syntax')
