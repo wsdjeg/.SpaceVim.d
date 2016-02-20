@@ -13,9 +13,13 @@ let g:vimfiler_file_icon = ''
 let g:vimfiler_readonly_file_icon = '*'
 let g:vimfiler_marked_file_icon = '√'
 "let g:vimfiler_preview_action = 'auto_preview'
-let g:vimfiler_ignore_pattern =
-            \ '^\%(\.git\|\.idea\|\.DS_Store\|\.vagrant\|.stversions'
-            \ .'\|node_modules\|.*\.pyc\)$'
+let g:vimfiler_ignore_pattern = [
+            \ '^\.git$',
+            \ '^\.DS_Store$',
+            \ '^\.init\.vim-rplugin\~$',
+            \ '^\.netrwhist$',
+            \ '\.class$'
+            \]
 
 if has('mac')
     let g:vimfiler_quick_look_command =

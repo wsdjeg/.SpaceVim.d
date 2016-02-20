@@ -596,6 +596,7 @@ if s:enable_plug()
     if count(g:settings.plugin_groups, 'colorscheme') "{{{
         "colorscheme
         call s:add('morhetz/gruvbox')
+        call s:add('mhinz/vim-janah')
         call s:add('mhartington/oceanic-next')
         call s:add('nanotech/jellybeans.vim')
         call s:add('altercation/vim-colors-solarized')
