@@ -1,31 +1,18 @@
 # awesome-dotfiles
 
-### INSTALL
-
-```sh
-chmod +x install.sh
-./install.sh
-```
-
 ### Requirements
 1. jdk 1.8  `sudo apt-get install openjdk-8-jdk openjdk-8-doc openjdk-8-source`
 2. Vim 7.3.885+ compiled with lua. If :echo has("lua") returns 1, then you're done; otherwise, see below.
 3. recommend to use neovim(please see how to install below)
 
-### For neovim
 
+### INSTALL
 ```sh
-sudo apt-get install neovim
-sudo apt-get install python python3 python-dev python3-dev python-pip python3-pip
-pip2 install --user neovim
-pip3 install --user neovim
+chmod +x install.sh
+./install.sh
 ```
 
-install vim with lua e.g.
-```sh
-$ sudo apt-get install vim-gnome
-# by install gvim you also can use vim in command
-```
+
 
 install android sdk
 ```sh
@@ -36,21 +23,6 @@ wget https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
 tar -zxvf android-sdk_r24.4.1-linux.tgz
 ```
 
-configration for vim
-
-```sh
-$ mkdir -p ~/.vim/bundle
-$ git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
-$ git clone git@github.com:wsdjeg/DotFiles.git ~/DotFiles
-$ mv ~/.vimrc ~/.vimrc.bak
-$ ln -s ~/DotFiles/vimrc ~/.vimrc
-$ ln -s ~/DotFiles/vimrc ~/.config/nvim/init.vim
-```
-Launch `vim`, run `:NeoBundleInstall`
-
-or
-
-Command run `vim +NeoBundleInstall +qall`
 
 ## For bash
 
@@ -62,10 +34,6 @@ $ ln -s ~/DotFiles/bash/bashrc ~/.bashrc
 $ ln -s ~/DotFiles/bash/inputrc ~/.inputrc
 ```
 
-## For zsh
-```sh
-ln -s ~/DotFiles/zsh/zshrc ~/.zshrc
-```
 
 ## For fzf
 
@@ -104,30 +72,6 @@ sudo apt-get update
 sudo apt-get install silversearcher-ag
 ```
 
-### Fix mysql chinese support
-add into my.cnf(/etc/mysql/my.cnf)
-```
-[mysql]
-default-character-set=utf8
-[mysqld]
-character-set-server=utf8
-```
-restart server
-```sh
-sudo /etc/init.d/mysql stop
-sudo /etc/init.d/mysql start
-```
-
-### Build vim from source
-> I have enable both py and py3
-```sh
-sudo apt-get build-dep vim
-git clone https://github.com/vim/vim.git
-## make distclean && make clean
-## build script from this repo
-make VIMRUNTIMEDIR=/usr/share/vim/vim74
-sudo make install
-```
 
 ## Dark powered Plugins
 
@@ -152,10 +96,6 @@ Kazam
 sudo apt-get install kazam
 ```
 
-## make ubuntu usb disk
-
-1. Windows [win32diskimager](https://wiki.ubuntu.com/Win32DiskImager/)  [download](https://sourceforge.net/projects/win32diskimager/files/latest/download?source=navbar)
-2. ubuntu tools from itself
 
 ## Screenshots
 ![conplete](https://github.com/wsdjeg/DotFiles/blob/master/pic/complete.png)

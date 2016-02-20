@@ -3,3 +3,4 @@ tags
 *.class
 test/
 *.netrwhist
+*.init.vim-rplugin~

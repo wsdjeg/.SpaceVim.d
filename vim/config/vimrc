@@ -91,7 +91,7 @@ let s:settings.vim_help_language       = 'en'
 let s:settings.colorscheme             = 'gruvbox'
 let s:settings.colorscheme_default     = 'desert'
 let s:settings.filemanager             = 'vimfiler'
-let s:settings.plugin_manager          = 'vim-plug'  " neobundle or dein or vim-plug
+let s:settings.plugin_manager          = 'neobundle'  " neobundle or dein or vim-plug
 let s:settings.plugin_groups_exclude   = []
 let g:Vimrc_Home                       = fnamemodify(expand('<sfile>'), ':p:h:gs?\\?'. s:Fsep. '?')
 
