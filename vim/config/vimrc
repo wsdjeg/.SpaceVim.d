@@ -321,21 +321,20 @@ if s:enable_plug()
         if s:tap('vimfiler.vim')
             call s:defind_hooks('vimfiler.vim')
         endif
-        "NeoBundle 'mattn/webapi-vim'
-        "NeoBundle 'mattn/googlesuggest-complete-vim'
-        "NeoBundle 'mopp/googlesuggest-source.vim'
+        call s:add('mopp/googlesuggest-source.vim')
+        call s:add('mattn/googlesuggest-complete-vim')
         call s:add('ujihisa/unite-colorscheme')
         call s:add('mattn/unite-gist')
-        "NeoBundle 'klen/unite-radio.vim'
         call s:add('tacroe/unite-mark')
         call s:add('tacroe/unite-alias')
-        call s:add('ujihisa/quicklearn')
         call s:add('tex/vim-unite-id')
         call s:add('sgur/unite-qf')
         call s:lazyadd('lambdalisue/unite-grep-vcs', {
                     \ 'autoload': {
                     \    'unite_sources': ['grep/git', 'grep/hg'],
                     \}})
+        call s:add('klen/unite-radio.vim')
+        "call s:add('ujihisa/quicklearn')
     endif "}}}
 
 
@@ -610,30 +609,17 @@ if s:enable_plug()
     "配合fcitx输入框架,在离开插入模式时自动切换到英文,在同一个缓冲区再次进入插入模式时回复到原来的输入状态
     call s:add('lilydjwg/fcitx.vim')
     call s:add('junegunn/goyo.vim')
-    function! s:goyo_enter()
-        silent !tmux set status off
-        set noshowmode
-        set noshowcmd
-        set scrolloff=999
-        Limelight
-    endfunction
-
-    function! s:goyo_leave()
-        silent !tmux set status on
-        set showmode
-        set showcmd
-        set scrolloff=5
-    endfunction
-
-    autocmd! User GoyoEnter nested call <SID>goyo_enter()
-    autocmd! User GoyoLeave nested call <SID>goyo_leave()
-
-
+    if s:tap('goyo.vim')
+        call s:defind_hooks('goyo.vim')
+    endif
     "vim Wimdows config
     "NeoBundle 'scrooloose/nerdtree'
     call s:add('tpope/vim-projectionist')
     call s:add('Xuyuanp/nerdtree-git-plugin')
     call s:add('taglist.vim')
+    if s:tap('taglist.vim')
+        call s:defind_hooks('taglist.vim')
+    endif
     call s:add('ntpeters/vim-better-whitespace')
     call s:add('junegunn/rainbow_parentheses.vim')
     augroup rainbow_lisp
@@ -651,17 +637,6 @@ if s:enable_plug()
     let g:NERDTreeWinSize=31
     let g:NERDTreeChDirMode=1
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-    if !executable('ctags')
-        let g:Tlist_Ctags_Cmd = '/usr/bin/ctags'  "设置ctags执行路径
-    endif
-    let g:Tlist_Auto_Update=1
-    let g:Tlist_Auto_Open =0
-    let g:Tlist_Use_Right_Window=1
-    let g:Tlist_Show_One_File=0
-    let g:Tlist_File_Fold_Auto_Close=1
-    let g:Tlist_Exit_OnlyWindow=1
-    let g:Tlist_Show_Menu=1
-    noremap <silent> <F8> :TlistToggle<CR>
     "noremap <silent> <F3> :NERDTreeToggle<CR>
     noremap <silent> <F3> :VimFiler<CR>
     autocmd FileType nerdtree nnoremap <silent><Space> :call OpenOrCloseNERDTree()<cr>
