@@ -37,8 +37,8 @@ let g:settings.default_indent          = 2
 let g:settings.max_column              = 120
 let g:settings.auto_download_neobundle = 0
 let g:settings.neobundle_installed     = 0
-let g:settings.dein_installed     = 0
-let g:settings.vim_plug_installed     = 0
+let g:settings.dein_installed          = 0
+let g:settings.vim_plug_installed      = 0
 let g:settings.plugin_bundle_dir       = join(['~/.cache','vimfiles',''],s:Fsep)
 let g:settings.autocomplete_method     = ''
 let g:settings.enable_cursorcolumn     = 0
@@ -197,14 +197,6 @@ fu! s:add(repo,...)
         call dein#add(a:repo)
     endif
 endf
-
-fu! s:lazyadd(repo,...)
-    if g:settings.plugin_manager == 'neobundle'
-        exec 'NeoBundleLazy "'.a:repo.'"'.','.join(a:000,',')
-    elseif g:settings.plugin_manager == 'dein'
-        call dein#add(a:repo)
-    endif
-endf
 fu! s:tap(plugin)
     if g:settings.plugin_manager == 'neobundle'
         return neobundle#tap(a:plugin)
@@ -212,34 +204,25 @@ fu! s:tap(plugin)
         return dein#tap(a:plugin)
     endif
 endf
-fu! s:get_hooks(plugin)
-    if g:settings.plugin_manager == 'neobundle'
-        return neobundle#get_hooks(a:plugin)
-    elseif g:settings.plugin_manager == 'dein'
-        return dein#get_hooks(a:plugin)
-    endif
-endf
-
 fu! s:defind_hooks(bundle)
     if g:settings.plugin_manager == 'neobundle'
-            let s:hooks = s:get_hooks(a:bundle)
-            func! s:hooks.on_source(bundle) abort
-                call s:source_script('plugins/' . split(a:bundle['name'],'\.')[0] . '.vim')
-            endf
+        let s:hooks = neobundle#get_hooks(a:bundle)
+        func! s:hooks.on_source(bundle) abort
+            call s:source_script('plugins/' . split(a:bundle['name'],'\.')[0] . '.vim')
+        endf
     elseif g:settings.plugin_manager == 'dein'
-        return dein#get_hooks(a:plugin)
     endif
 endf
 fu! s:fetch()
     if g:settings.plugin_manager == 'neobundle'
         NeoBundleFetch 'Shougo/neobundle.vim'
     elseif g:settings.plugin_manager == 'dein'
-        call dein#add('Shougo/dein.vim', {'rtp': ''})
+        call dein#add('Shougo/dein.vim')
     endif
 endf
 
 fu! s:enable_plug()
-    return g:settings.neobundle_installed || g:settings.dein_installed || (g:settings.vim_plug_installed && 0)
+    return g:settings.neobundle_installed || g:settings.dein_installed || g:settings.vim_plug_installed
 endf
 
 "plugins and config
@@ -329,7 +312,7 @@ if s:enable_plug()
         call s:add('tacroe/unite-alias')
         call s:add('tex/vim-unite-id')
         call s:add('sgur/unite-qf')
-        call s:lazyadd('lambdalisue/unite-grep-vcs', {
+        call s:add('lambdalisue/unite-grep-vcs', {
                     \ 'autoload': {
                     \    'unite_sources': ['grep/git', 'grep/hg'],
                     \}})
@@ -485,16 +468,16 @@ if s:enable_plug()
 
     "web plugins
 
-    call s:lazyadd('groenewege/vim-less', {'autoload':{'filetypes':['less']}})
-    call s:lazyadd('cakebaker/scss-syntax.vim', {'autoload':{'filetypes':['scss','sass']}})
-    call s:lazyadd('hail2u/vim-css3-syntax', {'autoload':{'filetypes':['css','scss','sass']}})
-    call s:lazyadd('ap/vim-css-color', {'autoload':{'filetypes':['css','scss','sass','less','styl']}})
-    call s:lazyadd('othree/html5.vim', {'autoload':{'filetypes':['html']}})
-    call s:lazyadd('wavded/vim-stylus', {'autoload':{'filetypes':['styl']}})
-    call s:lazyadd('digitaltoad/vim-jade', {'autoload':{'filetypes':['jade']}})
-    call s:lazyadd('juvenn/mustache.vim', {'autoload':{'filetypes':['mustache']}})
+    call s:add('groenewege/vim-less', {'autoload':{'filetypes':['less']}})
+    call s:add('cakebaker/scss-syntax.vim', {'autoload':{'filetypes':['scss','sass']}})
+    call s:add('hail2u/vim-css3-syntax', {'autoload':{'filetypes':['css','scss','sass']}})
+    call s:add('ap/vim-css-color', {'autoload':{'filetypes':['css','scss','sass','less','styl']}})
+    call s:add('othree/html5.vim', {'autoload':{'filetypes':['html']}})
+    call s:add('wavded/vim-stylus', {'autoload':{'filetypes':['styl']}})
+    call s:add('digitaltoad/vim-jade', {'autoload':{'filetypes':['jade']}})
+    call s:add('juvenn/mustache.vim', {'autoload':{'filetypes':['mustache']}})
     call s:add('Valloric/MatchTagAlways')
-    "call s:lazyadd('marijnh/tern_for_vim', {
+    "call s:add('marijnh/tern_for_vim', {
     "\ 'autoload': { 'filetypes': ['javascript'] },
     "\ 'build': {
     "\ 'mac': 'npm install',
@@ -503,14 +486,14 @@ if s:enable_plug()
     "\ 'windows': 'npm install',
     "\ },
     "\ })
-    call s:lazyadd('pangloss/vim-javascript', {'autoload':{'filetypes':['javascript']}})
-    call s:lazyadd('maksimr/vim-jsbeautify', {'autoload':{'filetypes':['javascript']}})
+    call s:add('pangloss/vim-javascript', {'autoload':{'filetypes':['javascript']}})
+    call s:add('maksimr/vim-jsbeautify', {'autoload':{'filetypes':['javascript']}})
     nnoremap <leader>fjs :call JsBeautify()<cr>
-    call s:lazyadd('leafgarland/typescript-vim', {'autoload':{'filetypes':['typescript']}})
-    call s:lazyadd('kchmck/vim-coffee-script', {'autoload':{'filetypes':['coffee']}})
-    call s:lazyadd('mmalecki/vim-node.js', {'autoload':{'filetypes':['javascript']}})
-    call s:lazyadd('leshill/vim-json', {'autoload':{'filetypes':['javascript','json']}})
-    call s:lazyadd('othree/javascript-libraries-syntax.vim', {'autoload':{'filetypes':['javascript','coffee','ls','typescript']}})
+    call s:add('leafgarland/typescript-vim', {'autoload':{'filetypes':['typescript']}})
+    call s:add('kchmck/vim-coffee-script', {'autoload':{'filetypes':['coffee']}})
+    call s:add('mmalecki/vim-node.js', {'autoload':{'filetypes':['javascript']}})
+    call s:add('leshill/vim-json', {'autoload':{'filetypes':['javascript','json']}})
+    call s:add('othree/javascript-libraries-syntax.vim', {'autoload':{'filetypes':['javascript','coffee','ls','typescript']}})
 
     call s:add('artur-shaik/vim-javacomplete2')
     let g:JavaComplete_UseFQN = 1
@@ -519,10 +502,7 @@ if s:enable_plug()
     call s:add('wsdjeg/vim-dict')
     call s:add('wsdjeg/java_getset.vim')
     if s:tap('java_getset.vim')
-        let s:hooks = s:get_hooks('java_getset.vim')
-        function! s:hooks.on_source(bundle)
-            let g:java_getset_disable_map = 1
-        endfunction
+        let g:java_getset_disable_map = 1
     endif
     call s:add('wsdjeg/JavaUnit.vim')
     call s:add('jaxbot/github-issues.vim',{'on_cmd' : 'Gissues'})
@@ -548,27 +528,14 @@ if s:enable_plug()
     if has('nvim') && g:settings.enable_neomake
         call s:add('wsdjeg/neomake')
         if s:tap('neomake')
-            let s:hooks = s:get_hooks('neomake')
-            function! s:hooks.on_source(bundle) abort
-                let g:neomake_open_list = 2  " 1 open list and move cursor 2 open list without move cursor
-                let g:neomake_verbose = 0
-            endfunction
+            call s:defind_hooks('neomake')
         endif
     else
         call s:add('wsdjeg/syntastic')
+        if s:tap('syntastic')
+            call s:defind_hooks('syntastic')
+        endif
     endif
-    if !filereadable('pom.xml') && !filereadable('build.gradle') && isdirectory('bin')
-        let g:syntastic_java_javac_options = '-d bin'
-    endif
-    let g:syntastic_java_javac_config_file_enabled = 1
-    let g:syntastic_java_javac_delete_output = 0
-    let g:syntastic_always_populate_loc_list = 1
-    let g:syntastic_auto_loc_list = 1
-    let g:syntastic_check_on_open = 0
-    let g:syntastic_check_on_wq = 0
-    let g:syntastic_error_symbol = '✖'
-    let g:syntastic_warning_symbol = '⚠'
-    let g:syntastic_warning_symbol = '➤'
     call s:add('syngan/vim-vimlint', {
                 \ 'depends' : 'ynkdir/vim-vimlparser'})
     let g:syntastic_vimlint_options = {
