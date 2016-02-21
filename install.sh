@@ -37,3 +37,12 @@ else
   printf "Linking $CYAN~/.config/nvim$NC -> $BLUE$PWD/vim$NC\n"
   ln -s $PWD/vim ~/.config/nvim
 fi
+
+if [ -e ~/.bash-git-prompt ]
+then
+    printf "Skipping $RED~/.bash-git-prompt$NC\n"
+else
+    printf "$CYAN Downloading  bash-git-prompt -> $BLUE$HOME/.bash-git-prompt$NC\n"
+    git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prompt
+    printf "$BLUE Finished Downloading$NC\n"
+fi
