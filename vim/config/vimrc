@@ -531,16 +531,8 @@ if s:enable_plug()
     call s:add('vim-jp/vim-java')
     call s:add('vim-airline/vim-airline')
     call s:add('vim-airline/vim-airline-themes')
-    let g:airline#extensions#tabline#enabled = 1
-    let g:airline#extensions#tmuxline#enabled = 1
     if s:tap('vim-airline')
-        let s:hooks = s:get_hooks('bling/vim-airline')
-        function! s:hooks.on_source(bundle)
-            let g:Powerline_sybols = 'unicode'
-            set statusline+=%#warningmsg#
-            set statusline+=%{SyntasticStatuslineFlag()}
-            set statusline+=%*
-        endfunction
+        call s:defind_hooks('vim-airline')
     endif
     call s:add('mattn/emmet-vim')
     let g:user_emmet_install_global = 0
