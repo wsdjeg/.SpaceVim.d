@@ -1,3 +1,11 @@
+" Fsep && Psep
+if has('win16') || has('win32') || has('win64')
+    let s:Psep = ';'
+    let s:Fsep = '\'
+else
+    let s:Psep = ':'
+    let s:Fsep = '/'
+endif
 "Use English for anything in vim
 if WINDOWS()
     silent exec 'language english'
@@ -37,3 +45,98 @@ else
     set encoding=utf-8
     set termencoding=utf-8
 endif
+
+" Enable 256 colors
+if $COLORTERM == 'gnome-terminal'
+    set t_Co=256
+endif
+
+"Vim settings
+let g:settings                         = {}
+let g:settings.default_indent          = 2
+let g:settings.max_column              = 120
+let g:settings.auto_download_neobundle = 0
+let g:settings.neobundle_installed     = 0
+let g:settings.dein_installed          = 0
+let g:settings.vim_plug_installed      = 0
+let g:settings.plugin_bundle_dir       = join(['~/.cache','vimfiles',''],s:Fsep)
+let g:settings.autocomplete_method     = ''
+let g:settings.enable_cursorcolumn     = 0
+let g:settings.enable_neomake          = 0
+let g:settings.enable_ycm              = 0
+let g:settings.enable_neocomplcache    = 0
+let g:settings.enable_cursorline       = 0
+let g:settings.use_colorscheme         = 1
+let g:settings.vim_help_language       = 'en'
+let g:settings.colorscheme             = 'gruvbox'
+let g:settings.colorscheme_default     = 'desert'
+let g:settings.filemanager             = 'vimfiler'
+let g:settings.plugin_manager          = 'neobundle'  " neobundle or dein or vim-plug
+let g:settings.plugin_groups_exclude   = []
+
+
+"core vimrc
+let g:settings.plugin_groups = []
+call add(g:settings.plugin_groups, 'web')
+call add(g:settings.plugin_groups, 'javascript')
+call add(g:settings.plugin_groups, 'ruby')
+call add(g:settings.plugin_groups, 'python')
+call add(g:settings.plugin_groups, 'scala')
+call add(g:settings.plugin_groups, 'go')
+call add(g:settings.plugin_groups, 'scm')
+call add(g:settings.plugin_groups, 'editing')
+call add(g:settings.plugin_groups, 'indents')
+call add(g:settings.plugin_groups, 'navigation')
+call add(g:settings.plugin_groups, 'misc')
+
+call add(g:settings.plugin_groups, 'core')
+call add(g:settings.plugin_groups, 'unite')
+call add(g:settings.plugin_groups, 'ctrlp')
+call add(g:settings.plugin_groups, 'autocomplete')
+if ! has('nvim')
+    call add(g:settings.plugin_groups, 'vim')
+else
+    call add(g:settings.plugin_groups, 'nvim')
+endif
+
+
+if g:settings.vim_help_language == 'cn'
+    call add(g:settings.plugin_groups, 'chinese')
+endif
+if g:settings.use_colorscheme==1
+    call add(g:settings.plugin_groups, 'colorscheme')
+endif
+if OSX()
+    call add(g:settings.plugin_groups, 'osx')
+endif
+if WINDOWS()
+    call add(g:settings.plugin_groups, 'windows')
+endif
+if LINUX()
+    call add(g:settings.plugin_groups, 'linux')
+endif
+
+if has('nvim')
+    let g:settings.autocomplete_method = 'deoplete'
+elseif has('lua')
+    let g:settings.autocomplete_method = 'neocomplete'
+else
+    let g:settings.autocomplete_method = 'neocomplcache'
+endif
+if g:settings.enable_ycm
+    let g:settings.autocomplete_method = 'ycm'
+endif
+if g:settings.enable_neocomplcache
+    let g:settings.autocomplete_method = 'neocomplcache'
+endif
+
+for s:group in g:settings.plugin_groups_exclude
+    let s:i = index(g:settings.plugin_groups, s:group)
+    if s:i != -1
+        call remove(g:settings.plugin_groups, s:i)
+    endif
+endfor
+
+" python host for neovim
+let g:python_host_prog = '/usr/bin/python'
+let g:python3_host_prog = '/usr/bin/python3'

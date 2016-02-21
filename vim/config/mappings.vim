@@ -45,3 +45,7 @@ inoremap <C-S-Up> <Esc>:m .-2<CR>==gi
 "上下移动选中的行
 vnoremap <C-S-Down> :m '>+1<CR>gv=gv
 vnoremap <C-S-Up> :m '<-2<CR>gv=gv
+"background
+noremap <silent><leader>bg :call ToggleBG()<CR>
+"numbers
+noremap <silent><leader>nu :call ToggleNumber()<CR>

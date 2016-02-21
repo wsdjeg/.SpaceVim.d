@@ -84,3 +84,5 @@ set completeopt=longest,menu
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class,tags
 set wildignorecase
 let g:markdown_fenced_languages = ['vim', 'java', 'bash=sh', 'sh', 'html', 'python']
+set mouse=
+set hidden

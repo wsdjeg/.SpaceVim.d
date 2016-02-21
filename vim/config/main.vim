@@ -5,19 +5,14 @@ if has('vim_starting')
     endif
 endif
 
-" Fsep && Psep
-if has('win16') || has('win32') || has('win64')
-    let s:Psep = ';'
-    let s:Fsep = '\'
-else
-    let s:Psep = ':'
-    let s:Fsep = '/'
-endif
 
-let g:Vimrc_Home                       = fnamemodify(expand('<sfile>'), ':p:h:gs?\\?'. s:Fsep. '?')
+let g:Config_Main_Home = fnamemodify(expand('<sfile>'), ':p:h:gs?\\?'.((has('win16') || has('win32') || has('win64'))?'\':'/') . '?')
+
 fu! s:source_script(path)
-    execute 'source ' . g:Vimrc_Home . s:Fsep . a:path
+    call zvim#util#source_rc(a:path)
 endf
+
+
 
 call s:source_script('functions.vim')
 
@@ -25,144 +20,8 @@ call s:source_script('init.vim')
 
 scriptencoding utf-8
 
+call s:source_script('plugins.vim')
 
-" Enable 256 colors
-if $COLORTERM == 'gnome-terminal'
-    set t_Co=256
-endif
-
-"Vim settings
-let g:settings                         = {}
-let g:settings.default_indent          = 2
-let g:settings.max_column              = 120
-let g:settings.auto_download_neobundle = 0
-let g:settings.neobundle_installed     = 0
-let g:settings.dein_installed          = 0
-let g:settings.vim_plug_installed      = 0
-let g:settings.plugin_bundle_dir       = join(['~/.cache','vimfiles',''],s:Fsep)
-let g:settings.autocomplete_method     = ''
-let g:settings.enable_cursorcolumn     = 0
-let g:settings.enable_neomake          = 0
-let g:settings.enable_ycm              = 0
-let g:settings.enable_neocomplcache    = 0
-let g:settings.enable_cursorline       = 0
-let g:settings.use_colorscheme         = 1
-let g:settings.vim_help_language       = 'en'
-let g:settings.colorscheme             = 'gruvbox'
-let g:settings.colorscheme_default     = 'desert'
-let g:settings.filemanager             = 'vimfiler'
-let g:settings.plugin_manager          = 'neobundle'  " neobundle or dein or vim-plug
-let g:settings.plugin_groups_exclude   = []
-
-
-"core vimrc
-let g:settings.plugin_groups = []
-call add(g:settings.plugin_groups, 'web')
-call add(g:settings.plugin_groups, 'javascript')
-call add(g:settings.plugin_groups, 'ruby')
-call add(g:settings.plugin_groups, 'python')
-call add(g:settings.plugin_groups, 'scala')
-call add(g:settings.plugin_groups, 'go')
-call add(g:settings.plugin_groups, 'scm')
-call add(g:settings.plugin_groups, 'editing')
-call add(g:settings.plugin_groups, 'indents')
-call add(g:settings.plugin_groups, 'navigation')
-call add(g:settings.plugin_groups, 'misc')
-
-call add(g:settings.plugin_groups, 'core')
-call add(g:settings.plugin_groups, 'unite')
-call add(g:settings.plugin_groups, 'ctrlp')
-call add(g:settings.plugin_groups, 'autocomplete')
-if ! has('nvim')
-    call add(g:settings.plugin_groups, 'vim')
-else
-    call add(g:settings.plugin_groups, 'nvim')
-endif
-
-
-if g:settings.vim_help_language == 'cn'
-    call add(g:settings.plugin_groups, 'chinese')
-endif
-if g:settings.use_colorscheme==1
-    call add(g:settings.plugin_groups, 'colorscheme')
-endif
-if OSX()
-    call add(g:settings.plugin_groups, 'osx')
-endif
-if WINDOWS()
-    call add(g:settings.plugin_groups, 'windows')
-endif
-if LINUX()
-    call add(g:settings.plugin_groups, 'linux')
-endif
-
-if has('nvim')
-    let g:settings.autocomplete_method = 'deoplete'
-elseif has('lua')
-    let g:settings.autocomplete_method = 'neocomplete'
-else
-    let g:settings.autocomplete_method = 'neocomplcache'
-endif
-if g:settings.enable_ycm
-    let g:settings.autocomplete_method = 'ycm'
-endif
-if g:settings.enable_neocomplcache
-    let g:settings.autocomplete_method = 'neocomplcache'
-endif
-
-for s:group in g:settings.plugin_groups_exclude
-    let s:i = index(g:settings.plugin_groups, s:group)
-    if s:i != -1
-        call remove(g:settings.plugin_groups, s:i)
-    endif
-endfor
-
-" python host for neovim
-let g:python_host_prog = '/usr/bin/python'
-let g:python3_host_prog = '/usr/bin/python3'
-
-" auto install plugin manager
-if g:settings.plugin_manager == 'neobundle'
-    "auto install neobundle
-    if filereadable(expand(g:settings.plugin_bundle_dir) . 'neobundle.vim'. s:Fsep. 'README.md')
-        let g:settings.neobundle_installed = 1
-    else
-        if executable('git')
-            exec '!git clone https://github.com/Shougo/neobundle.vim ' . g:settings.plugin_bundle_dir . 'neobundle.vim'
-            let g:settings.neobundle_installed = 1
-        else
-            echohl WarningMsg | echom "You need install git!" | echohl None
-        endif
-    endif
-    exec 'set runtimepath+='.g:settings.plugin_bundle_dir . 'neobundle.vim'
-elseif g:settings.plugin_manager == 'dein'
-    "auto install dein
-    if filereadable(expand(g:settings.plugin_bundle_dir) . 'dein.vim'. s:Fsep. 'README.md')
-        let g:settings.dein_installed = 1
-    else
-        if executable('git')
-            exec '!git clone https://github.com/Shougo/dein.vim ' . g:settings.plugin_bundle_dir . 'dein.vim'
-            let g:settings.dein_installed = 1
-        else
-            echohl WarningMsg | echom "You need install git!" | echohl None
-        endif
-    endif
-    exec 'set runtimepath+='.g:settings.plugin_bundle_dir . 'dein.vim'
-elseif g:settings.plugin_manager == 'vim-plug'
-    "auto install vim-plug
-    if filereadable(expand('~/.cache/vim-plug/autoload/plug.vim'))
-        let g:settings.dein_installed = 1
-    else
-        if executable('curl')
-            exec '!curl -fLo ~/.cache/vim-plug/autoload/plug.vim --create-dirs '
-                        \. 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-            let g:settings.dein_installed = 1
-        else
-            echohl WarningMsg | echom "You need install curl!" | echohl None
-        endif
-    endif
-    exec 'set runtimepath+=~/.cache/vim-plug/'
-endif
 
 "init manager func
 
@@ -239,6 +98,9 @@ if s:enable_plug()
                     \ 'unix'    : 'gmake',
                     \ },
                     \ })
+    endif
+    if count(g:settings.plugin_groups, 'nvim') "{{{
+        call s:add('junegunn/vim-github-dashboard')
     endif
     if count(g:settings.plugin_groups, 'unite') "{{{
         call s:add('Shougo/unite.vim')
@@ -421,7 +283,7 @@ if s:enable_plug()
         call s:add('Shougo/neosnippet-snippets')
         call s:add('Shougo/neosnippet.vim')
         if WINDOWS()
-            let g:neosnippet#snippets_directory=g:Vimrc_Home .s:Fsep .'snippets'
+            let g:neosnippet#snippets_directory=g:Config_Main_Home .s:Fsep .'snippets'
         else
             let g:neosnippet#snippets_directory='~/DotFiles/snippets'
         endif
@@ -628,6 +490,9 @@ if s:enable_plug()
     noremap <leader>yd :Yde<CR>
     call s:add('elixir-lang/vim-elixir')
     call s:add('tyru/open-browser.vim')
+    call s:add('junegunn/fzf')
+    nnoremap <Leader>fz :FZF<CR>
+    call s:add('junegunn/gv.vim')
     if s:tap('open-brower.vim')
         call s:defind_hooks('open-brower.vim')
     endif
@@ -644,11 +509,6 @@ if count(g:settings.plugin_groups, 'colorscheme')&&g:settings.colorscheme!='' "{
         exec 'colorscheme '. g:settings.colorscheme_default
     endif
 endif
-
-let s:My_vimrc = expand('<sfile>')
-function! EditMy_virmc()
-    exec "edit ".s:My_vimrc
-endf
 
 " source basic setting
 call s:source_script('general.vim')
@@ -675,145 +535,11 @@ nnoremap sf :CtrlPF<Cr>
 
 call s:source_script('mappings.vim')
 
-"background
-noremap <silent><leader>bg :call ToggleBG()<CR>
-"numbers
-noremap <silent><leader>nu :call ToggleNumber()<CR>
 
 call s:source_script('autocmds.vim')
 
-"functions
-"{{{
-autocmd FileType python,coffee call s:check_if_expand_tab()
-autocmd FileType unite call s:unite_my_settings()
-function! s:unite_my_settings()
-    " Overwrite settings.
-
-    " Play nice with supertab
-    let b:SuperTabDisabled=1
-    " Enable navigation with control-j and control-k in insert mode
-    imap <buffer> <C-n>   <Plug>(unite_select_next_line)
-    nmap <buffer> <C-n>   <Plug>(unite_select_next_line)
-    imap <buffer> <C-p>   <Plug>(unite_select_previous_line)
-    nmap <buffer> <C-p>   <Plug>(unite_select_previous_line)
-
-
-    imap <buffer> jj      <Plug>(unite_insert_leave)
-    "imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
-
-    imap <buffer><expr> j unite#smart_map('j', '')
-    imap <buffer> <TAB>   <Plug>(unite_select_next_line)
-    imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
-    imap <buffer> '     <Plug>(unite_quick_match_default_action)
-    nmap <buffer> '     <Plug>(unite_quick_match_default_action)
-    imap <buffer><expr> x
-                \ unite#smart_map('x', "\<Plug>(unite_quick_match_choose_action)")
-    nmap <buffer> x     <Plug>(unite_quick_match_choose_action)
-    nmap <buffer> <C-z>     <Plug>(unite_toggle_transpose_window)
-    imap <buffer> <C-z>     <Plug>(unite_toggle_transpose_window)
-    imap <buffer> <C-y>     <Plug>(unite_narrowing_path)
-    nmap <buffer> <C-y>     <Plug>(unite_narrowing_path)
-    nmap <buffer> <C-e>     <Plug>(unite_toggle_auto_preview)
-    imap <buffer> <C-e>     <Plug>(unite_toggle_auto_preview)
-    nmap <buffer> <C-r>     <Plug>(unite_narrowing_input_history)
-    imap <buffer> <C-r>     <Plug>(unite_narrowing_input_history)
-    nnoremap <silent><buffer><expr> l
-                \ unite#smart_map('l', unite#do_action('default'))
-
-    let unite = unite#get_current_unite()
-    if unite.profile_name ==# 'search'
-        nnoremap <silent><buffer><expr> r     unite#do_action('replace')
-    else
-        nnoremap <silent><buffer><expr> r     unite#do_action('rename')
-    endif
-
-    nnoremap <silent><buffer><expr> cd     unite#do_action('lcd')
-    nnoremap <buffer><expr> S      unite#mappings#set_current_filters(
-                \ empty(unite#mappings#get_current_filters()) ?
-                \ ['sorter_reverse'] : [])
-
-    " Runs "split" action by <C-s>.
-    imap <silent><buffer><expr> <C-s>     unite#do_action('split')
-endfunction
-function! s:check_if_expand_tab()
-    let has_noexpandtab = search('^\t','wn')
-    let has_expandtab = search('^    ','wn')
-
-    "
-    if has_noexpandtab && has_expandtab
-        let idx = inputlist ( ['ERROR: current file exists both expand and noexpand TAB, python can only use one of these two mode in one file.\nSelect Tab Expand Type:',
-                    \ '1. expand (tab=space, recommended)',
-                    \ '2. noexpand (tab=\t, currently have risk)',
-                    \ '3. do nothing (I will handle it by myself)'])
-        let tab_space = printf('%*s',&tabstop,'')
-        if idx == 1
-            let has_noexpandtab = 0
-            let has_expandtab = 1
-            silent exec '%s/\t/' . tab_space . '/g'
-        elseif idx == 2
-            let has_noexpandtab = 1
-            let has_expandtab = 0
-            silent exec '%s/' . tab_space . '/\t/g'
-        else
-            return
-        endif
-    endif
-
-    "
-    if has_noexpandtab == 1 && has_expandtab == 0
-        echomsg 'substitute space to TAB...'
-        set noexpandtab
-        echomsg 'done!'
-    elseif has_noexpandtab == 0 && has_expandtab == 1
-        echomsg 'substitute TAB to space...'
-        set expandtab
-        echomsg 'done!'
-    else
-        " it may be a new file
-        " we use original vim setting
-    endif
-endfunction
-
-
-
-
-if filereadable(expand('~/.config/nvim/autoload/plug.vim'))
-    call plug#begin('~/.cache/vim-plug')
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-    Plug 'junegunn/gv.vim'
-    "for fzf
-    nnoremap <Leader>fz :FZF<CR>
-    if !has('nvim')
-        Plug 'junegunn/vim-github-dashboard'
-    endif
-    call plug#end()
-endif
-
-
-"============> plug.vim
-set mouse=
-set hidden
 if has('nvim')
-    augroup Terminal
-        au!
-        au TermOpen * let g:last_terminal_job_id = b:terminal_job_id
-        au WinEnter term://* startinsert
-    augroup END
-    if g:settings.enable_neomake
-        augroup Neomake_wsd
-            au!
-            autocmd! BufWritePost * Neomake
-        augroup END
-    endif
     call s:source_script('neovim.vim')
 endif
 
-func! Openpluginrepo()
-    try
-        exec "normal! ".'"ayi'."'"
-        exec 'OpenBrowser https://github.com/'.@a
-    catch
-        echohl WarningMsg | echomsg "can not open the web of current plugin" | echohl None
-    endtry
-endf
 call s:source_script('commands.vim')

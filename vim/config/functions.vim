@@ -204,3 +204,11 @@ function! MyTabfunc() abort
         return "\<tab>"
     endif
 endfunction
+func! Openpluginrepo()
+    try
+        exec "normal! ".'"ayi'."'"
+        exec 'OpenBrowser https://github.com/'.@a
+    catch
+        echohl WarningMsg | echomsg "can not open the web of current plugin" | echohl None
+    endtry
+endf
