@@ -4,11 +4,6 @@ if has('vim_starting')
         set nocompatible
     endif
 endif
-"set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
-let g:airline_powerline_fonts=1   
-if !exists('g:airline_symbols')    
-    let g:airline_symbols = {}
-endif
 
 
 let g:Config_Main_Home = fnamemodify(expand('<sfile>'), ':p:h:gs?\\?'.((has('win16') || has('win32') || has('win64'))?'\':'/') . '?')

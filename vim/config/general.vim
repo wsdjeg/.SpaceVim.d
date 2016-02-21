@@ -86,3 +86,4 @@ set wildignorecase
 let g:markdown_fenced_languages = ['vim', 'java', 'bash=sh', 'sh', 'html', 'python']
 set mouse=
 set hidden
+set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
