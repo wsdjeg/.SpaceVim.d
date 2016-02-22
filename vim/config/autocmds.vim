@@ -12,7 +12,7 @@ autocmd BufEnter,WinEnter,InsertLeave * set cursorline
 autocmd BufLeave,WinLeave,InsertEnter * set nocursorline
 autocmd BufReadPost *
             \ if line("'\"") > 0 && line("'\"") <= line("$") |
-            \   exe "normal g`\"" |
+            \   exe "normal! g`\"" |
             \ endif
 autocmd BufNewFile,BufEnter * set cpoptions+=d " NOTE: ctags find the tags file from the current path instead of the path of currect file
 autocmd BufEnter * :syntax sync fromstart " ensure every file does syntax highlighting (full)

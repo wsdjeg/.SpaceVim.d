@@ -104,9 +104,9 @@ function! WSDAutoComplete(char)
     else
         "bug exists
         let col = col('.')
-        normal ma
+        normal! ma
         let [commentline,commentcol] = searchpos('//','b',line('.'))
-        normal `a
+        normal! `a
         if commentcol == 0
             return a:char."\<c-x>\<c-o>\<c-p>"
         else

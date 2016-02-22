@@ -498,7 +498,7 @@ if s:enable_plug()
     autocmd FileType nerdtree nnoremap <silent><Space> :call OpenOrCloseNERDTree()<cr>
     noremap <silent> <F2> :TagbarToggle<CR>
     function! OpenOrCloseNERDTree()
-        exec "normal A"
+        exec "normal! A"
     endfunction
     "}}}
 
