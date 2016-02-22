@@ -87,3 +87,20 @@ let g:markdown_fenced_languages = ['vim', 'java', 'bash=sh', 'sh', 'html', 'pyth
 set mouse=
 set hidden
 set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
+filetype plugin indent on
+syntax on
+if count(g:settings.plugin_groups, 'colorscheme')&&g:settings.colorscheme!='' "{{{
+    set background=dark
+    if g:settings.colorscheme!='' && g:settings.neobundle_installed
+        exec 'colorscheme '. g:settings.colorscheme
+    else
+        exec 'colorscheme '. g:settings.colorscheme_default
+    endif
+endif
+if g:settings.enable_cursorline == 1
+    set cursorline                  "显示当前行
+endif
+if g:settings.enable_cursorcolumn == 1
+    set cursorcolumn                "显示当前列
+endif
+
