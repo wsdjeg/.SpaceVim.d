@@ -342,6 +342,7 @@ if s:enable_plug()
 
     if count(g:settings.plugin_groups, 'vim') "{{{
         call s:add('Shougo/vimshell.vim')
+        call s:add('mattn/vim-terminal')
     endif
     call s:add('tpope/vim-scriptease')
     call s:add('tpope/vim-fugitive')
