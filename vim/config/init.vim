@@ -1,3 +1,10 @@
+" Enable nocompatible
+if has('vim_starting')
+    if &compatible
+        set nocompatible
+    endif
+endif
+
 " Fsep && Psep
 if has('win16') || has('win32') || has('win64')
     let s:Psep = ';'
