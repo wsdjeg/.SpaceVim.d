@@ -58,6 +58,60 @@ A:
 2. ubuntu tools from itself
 
 
+install android sdk
+```sh
+cd ~
+mkdir tools
+cd tools
+wget https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
+tar -zxvf android-sdk_r24.4.1-linux.tgz
+```
+
+
+
+
+
+## For irssi (Get token from irc.gitter.im)
+```sh
+sudo apt-get install irssi
+# /connect -ssl irc.gitter.im 6697 token nick
+# /join neovim/neovim
+```
+
+
+### true color terminal in ubuntu 14.04
+```sh
+sudo add-apt-repository ppa:gnome3-team/gnome3-staging
+sudo apt-get update
+sudo apt-get install gnome-terminal
+sudo add-apt-repository -r ppa:gnome3-team/gnome3-staging
+
+```
+
+### Install fcitx in ubuntu 14.04
+
+```sh
+sudo apt-get install fcitx fcitx-pinyin
+```
+
+### Install latest version ag
+```sh
+sudo add-apt-repository ppa:jonathonf/backports
+sudo apt-get update
+sudo apt-get install silversearcher-ag
+```
+### Install jdk
+
+ `sudo apt-get install openjdk-8-jdk openjdk-8-doc openjdk-8-source`
+
+## Other tools
+
+Screen catch
+
+Kazam
+```sh
+sudo apt-get install kazam
+```
 
 
 

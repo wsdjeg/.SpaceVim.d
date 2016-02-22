@@ -46,3 +46,14 @@ else
     git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prompt
     printf "$BLUE Finished Downloading$NC\n"
 fi
+
+
+if [ -e ~/.fzf ]
+then
+    printf "Skipping $RED~/.fzf$NC\n"
+else
+    printf "$CYAN Downloading  fzf -> $BLUE$HOME/.fzf$NC\n"
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    ~/.fzf/install
+    printf "$BLUE Finished Installing fzf$NC\n"
+fi
