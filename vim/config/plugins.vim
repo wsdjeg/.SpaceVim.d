@@ -517,6 +517,7 @@ if s:enable_plug()
     noremap <leader>yd :Yde<CR>
     call s:add('elixir-lang/vim-elixir')
     call s:add('tyru/open-browser.vim')
+    call s:add('editorconfig/editorconfig-vim')
     call s:add('junegunn/fzf')
     nnoremap <Leader>fz :FZF<CR>
     call s:add('junegunn/gv.vim')
