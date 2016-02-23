@@ -6,6 +6,8 @@ call zvim#util#source_rc('init.vim')
 
 scriptencoding utf-8
 
+call zvim#util#source_rc('local.vim')
+
 call zvim#util#source_rc('plugins.vim')
 
 call zvim#util#source_rc('general.vim')

@@ -2,7 +2,9 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 fu! zvim#util#source_rc(file)
-    execute 'source ' . g:Config_Main_Home  . '/' . a:file
+    if filereadable(g:Config_Main_Home. '/' . a:file)
+        execute 'source ' . g:Config_Main_Home  . '/' . a:file
+    endif
 endf
 
 fu! zvim#util#check_if_expand_tab()

@@ -4,4 +4,4 @@ tags
 test/
 *.netrwhist
 *.init.vim-rplugin~
-./vim/config/local.vim
+vim/config/local.vim
