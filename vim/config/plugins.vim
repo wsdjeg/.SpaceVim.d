@@ -503,6 +503,7 @@ if s:enable_plug()
     "}}}
 
     call s:add('wsdjeg/MarkDown.pl')
+    call s:add('plasticboy/vim-markdown')
     call s:add('benjifisher/matchit.zip')
     call s:add('tomasr/molokai')
     call s:add('simnalamburt/vim-mundo')
