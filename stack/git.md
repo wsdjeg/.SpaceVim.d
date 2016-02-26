@@ -9,3 +9,7 @@ also in new version git
 we also can use
 
 git rebase -i @~3
+
+Fix git cannot lock ref
+rm .git/refs/remotes/origin/master
+git fetch
