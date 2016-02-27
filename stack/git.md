@@ -1,3 +1,12 @@
+Q: how to build from source in ubuntu?
+A:
+```sh
+sudo apt-get install libcurl4-gnutls-dev
+make prefix=/usr/local all
+sudo make prefix=/usr/local install
+```
+
+
 git sqash
 
 git rebase -i HEAD~3
