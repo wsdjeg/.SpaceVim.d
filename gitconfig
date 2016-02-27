@@ -16,6 +16,6 @@
 	branch = auto
 	status = auto
 [core]
-	editor = vim
+	editor = nvim
 [mergetool]
 	path = nvim
