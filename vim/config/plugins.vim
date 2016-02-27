@@ -282,17 +282,26 @@ if s:enable_plug()
                         \   'erlang' : [':'],
                         \ }
         elseif g:settings.autocomplete_method == 'neocomplete' "{{{
-            call s:add('Shougo/neocomplete')
+            call s:add('Shougo/neocomplete', {
+                        \ 'lazy' : 1,
+                        \ 'on_i' : 1,
+                        \ })
             if s:tap('neocomplete')
                 call s:defind_hooks('neocomplete.vim')
             endif
         elseif g:settings.autocomplete_method == 'neocomplcache' "{{{
-            call s:add('Shougo/neocomplcache.vim')
+            call s:add('Shougo/neocomplcache.vim', {
+                        \ 'lazy' : 1,
+                        \ 'on_i' : 1,
+                        \ })
             if s:tap('neocomplcache.vim')
                 call s:defind_hooks('neocomplcache.vim')
             endif
         elseif g:settings.autocomplete_method == 'deoplete'
-            call s:add('Shougo/deoplete.nvim')
+            call s:add('Shougo/deoplete.nvim', {
+                        \ 'lazy' : 1,
+                        \ 'on_i' : 1,
+                        \ })
             if s:tap('deoplete.nvim')
                 call s:defind_hooks('deoplete.nvim')
             endif
@@ -386,12 +395,12 @@ if s:enable_plug()
     call s:add('leshill/vim-json', {'lazy':1,'on_ft':['javascript','json']})
     call s:add('othree/javascript-libraries-syntax.vim', {'lazy':1,'on_ft':['javascript','coffee','ls','typescript']})
 
-    call s:add('artur-shaik/vim-javacomplete2')
+    call s:add('artur-shaik/vim-javacomplete2',{'lazy' : 1 , 'on_ft' : ['java','jsp']})
     let g:JavaComplete_UseFQN = 1
     let g:JavaComplete_ServerAutoShutdownTime = 300
     let g:JavaComplete_MavenRepositoryDisable = 0
-    call s:add('wsdjeg/vim-dict')
-    call s:add('wsdjeg/java_getset.vim')
+    call s:add('wsdjeg/vim-dict',{'lazy' : 1 , 'on_ft' : 'java'})
+    call s:add('wsdjeg/java_getset.vim',{'lazy' : 1 , 'on_ft' : 'java'})
     if s:tap('java_getset.vim')
         let g:java_getset_disable_map = 1
     endif
@@ -462,10 +471,10 @@ if s:enable_plug()
     call s:add('benizi/vim-automkdir')
     "[c  ]c  jump between prev or next hunk
     call s:add('airblade/vim-gitgutter')
-    call s:add('itchyny/calendar.vim')
+    call s:add('itchyny/calendar.vim',{'lazy' : 1 , 'on_cmd' : 'Calendar'})
     "配合fcitx输入框架,在离开插入模式时自动切换到英文,在同一个缓冲区再次进入插入模式时回复到原来的输入状态
     call s:add('lilydjwg/fcitx.vim')
-    call s:add('junegunn/goyo.vim')
+    call s:add('junegunn/goyo.vim',{'lazy' : 1 , 'on_cmd' : 'Goyo'})
     if s:tap('goyo.vim')
         call s:defind_hooks('goyo.vim')
     endif
@@ -478,7 +487,7 @@ if s:enable_plug()
         call s:defind_hooks('taglist.vim')
     endif
     call s:add('ntpeters/vim-better-whitespace')
-    call s:add('junegunn/rainbow_parentheses.vim')
+    call s:add('junegunn/rainbow_parentheses.vim',{'lazy' : 1 , 'on_cmd' : 'RainbowParentheses'})
     augroup rainbow_lisp
         autocmd!
         autocmd FileType lisp,clojure,scheme,java RainbowParentheses
@@ -510,14 +519,14 @@ if s:enable_plug()
     nnoremap <silent> <F7> :MundoToggle<CR>
     "call s:add('nerdtree-ack')
     call s:add('L9')
-    call s:add('TaskList.vim')
+    call s:add('TaskList.vim',{'lazy' : 1 , 'on_cmd' : 'TaskList'})
     map <unique> <Leader>td <Plug>TaskList
     call s:add('ianva/vim-youdao-translater',{'lazy':1,'on_cmd':['Ydv','Ydc','Yde']})
     vnoremap <silent> <C-l> <Esc>:Ydv<CR>
     nnoremap <silent> <C-l> <Esc>:Ydc<CR>
     noremap <leader>yd :Yde<CR>
-    call s:add('elixir-lang/vim-elixir')
-    call s:add('editorconfig/editorconfig-vim')
+    call s:add('elixir-lang/vim-elixir',{'lazy' : 1 , 'on_ft' : 'elixir'})
+    call s:add('editorconfig/editorconfig-vim',{'lazy' : 1 , 'on_cmd' : 'EditorConfigReload'})
     call s:add('junegunn/fzf',{'lazy' : 1 , 'on_cmd' : 'FZF'})
     nnoremap <Leader>fz :FZF<CR>
     call s:add('junegunn/gv.vim',{'lazy' : 1 , 'on_cmd' : 'GV'})
