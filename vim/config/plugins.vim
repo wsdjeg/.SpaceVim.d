@@ -22,17 +22,17 @@ if g:settings.plugin_manager == 'neobundle'
     exec 'set runtimepath+='.g:settings.plugin_bundle_dir . 'neobundle.vim'
 elseif g:settings.plugin_manager == 'dein'
     "auto install dein
-    if filereadable(expand(g:settings.plugin_bundle_dir) . 'dein.vim'. s:Fsep. 'README.md')
+    if filereadable(expand(g:settings.plugin_bundle_dir) . 'repos/github.com/Shougo/dein.vim'. s:Fsep. 'README.md')
         let g:settings.dein_installed = 1
     else
         if executable('git')
-            exec '!git clone https://github.com/Shougo/dein.vim ' . g:settings.plugin_bundle_dir . 'dein.vim'
+            exec '!git clone https://github.com/Shougo/dein.vim ' . g:settings.plugin_bundle_dir . 'repos/github.com/Shougo/dein.vim'
             let g:settings.dein_installed = 1
         else
             echohl WarningMsg | echom "You need install git!" | echohl None
         endif
     endif
-    exec 'set runtimepath+='.g:settings.plugin_bundle_dir . 'dein.vim'
+    exec 'set runtimepath+='.g:settings.plugin_bundle_dir . 'repos/github.com/Shougo/dein.vim'
 elseif g:settings.plugin_manager == 'vim-plug'
     "auto install vim-plug
     if filereadable(expand('~/.cache/vim-plug/autoload/plug.vim'))
@@ -104,7 +104,7 @@ fu! s:defind_hooks(bundle)
             call zvim#util#source_rc('plugins/' . split(a:bundle['name'],'\.')[0] . '.vim')
         endf
     elseif g:settings.plugin_manager == 'dein'
-        exec "autocmd User dein#source#" . a:bundle['name'] ." call zvim#util#source_rc('plugins/' . split(a:bundle['name'],'\.')[0] . '.vim')"
+        exec "autocmd User dein#source#" . g:dein#name ." call zvim#util#source_rc('plugins/" . split(g:dein#name,'\.')[0] . ".vim')"
     endif
 endf
 fu! s:fetch()
