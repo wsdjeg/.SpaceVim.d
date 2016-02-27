@@ -67,19 +67,27 @@ fu! s:end()
         NeoBundleCheck
     elseif g:settings.plugin_manager == 'dein'
         call dein#end()
+        if dein#check_install()
+            call dein#install()
+        endif
     elseif g:settings.plugin_manager == 'vim-plug'
         call plug#end()
     endif
 endf
 
 fu! s:parser(args)
+    return a:args
 endf
 
 fu! s:add(repo,...)
     if g:settings.plugin_manager == 'neobundle'
         exec 'NeoBundle "'.a:repo.'"'.','.join(a:000,',')
     elseif g:settings.plugin_manager == 'dein'
-        call dein#add(a:repo)
+        if len(a:000) > 0
+            call dein#add(a:repo,s:parser(a:000[0]))
+        else
+            call dein#add(a:repo)
+        endif
     endif
 endf
 fu! s:tap(plugin)
@@ -96,6 +104,7 @@ fu! s:defind_hooks(bundle)
             call zvim#util#source_rc('plugins/' . split(a:bundle['name'],'\.')[0] . '.vim')
         endf
     elseif g:settings.plugin_manager == 'dein'
+        exec "autocmd User dein#source#" . a:bundle['name'] ." call zvim#util#source_rc('plugins/' . split(a:bundle['name'],'\.')[0] . '.vim')"
     endif
 endf
 fu! s:fetch()
@@ -115,15 +124,7 @@ if s:enable_plug()
     call s:begin(g:settings.plugin_bundle_dir)
     call s:fetch()
     if count(g:settings.plugin_groups, 'core') "{{{
-        call s:add('Shougo/vimproc.vim', {
-                    \ 'build'   : {
-                    \ 'windows' : 'tools\\update-dll-mingw',
-                    \ 'cygwin'  : 'make -f make_cygwin.mak',
-                    \ 'mac'     : 'make -f make_mac.mak',
-                    \ 'linux'   : 'make',
-                    \ 'unix'    : 'gmake',
-                    \ },
-                    \ })
+        call s:add('Shougo/vimproc.vim', {'build': 'make'})
     endif
     if count(g:settings.plugin_groups, 'nvim') "{{{
         call s:add('junegunn/vim-github-dashboard')
@@ -425,8 +426,7 @@ if s:enable_plug()
             call s:defind_hooks('syntastic')
         endif
     endif
-    call s:add('syngan/vim-vimlint', {
-                \ 'depends' : 'ynkdir/vim-vimlparser'})
+    call s:add('syngan/vim-vimlint')
     let g:syntastic_vimlint_options = {
                 \'EVL102': 1 ,
                 \'EVL103': 1 ,

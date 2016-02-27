@@ -91,11 +91,11 @@ filetype plugin indent on
 syntax on
 if count(g:settings.plugin_groups, 'colorscheme')&&g:settings.colorscheme!='' "{{{
     set background=dark
-    if g:settings.colorscheme!='' && g:settings.neobundle_installed
+    try
         exec 'colorscheme '. g:settings.colorscheme
-    else
+    catch
         exec 'colorscheme '. g:settings.colorscheme_default
-    endif
+    endtry
 endif
 if g:settings.enable_cursorline == 1
     set cursorline                  "显示当前行
