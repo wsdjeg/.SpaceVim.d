@@ -209,7 +209,7 @@ if s:enable_plug()
 
     "{{{ctrlpvim settings
     if count(g:settings.plugin_groups, 'ctrlp') "{{{
-        call s:add('ctrlpvim/ctrlp.vim',{'lazy' : 1 ,'on_cmd':'CtrlSF'})
+        call s:add('ctrlpvim/ctrlp.vim')
         if s:tap('ctrlp.vim')
             call s:defind_hooks('ctrlp.vim')
         endif
@@ -235,7 +235,7 @@ if s:enable_plug()
 
 
     if count(g:settings.plugin_groups, 'autocomplete') "{{{
-        call s:add('honza/vim-snippets')
+        call s:add('honza/vim-snippets',{'lazy' : 1 , 'on_i' : 1})
         imap <silent><expr><TAB> MyTabfunc()
         smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
         inoremap <silent> <CR> <C-r>=MyEnterfunc()<Cr>
@@ -374,7 +374,7 @@ if s:enable_plug()
     call s:add('wavded/vim-stylus', {'lazy':1,'on_ft':['styl']})
     call s:add('digitaltoad/vim-jade', {'lazy':1,'on_ft':['jade']})
     call s:add('juvenn/mustache.vim', {'lazy':1,'on_ft':['mustache']})
-    call s:add('Valloric/MatchTagAlways')
+    call s:add('Valloric/MatchTagAlways',{'lazy':1,'on_ft':['html' , 'xhtml' , 'xml' , 'jinja']})
     "call s:add('marijnh/tern_for_vim', {
     "\ 'autoload': { 'filetypes': ['javascript'] },
     "\ 'build': {
@@ -471,7 +471,7 @@ if s:enable_plug()
     call s:add('airblade/vim-gitgutter')
     call s:add('itchyny/calendar.vim',{'lazy' : 1 , 'on_cmd' : 'Calendar'})
     "配合fcitx输入框架,在离开插入模式时自动切换到英文,在同一个缓冲区再次进入插入模式时回复到原来的输入状态
-    call s:add('lilydjwg/fcitx.vim')
+    call s:add('lilydjwg/fcitx.vim',{'lazy' : 1 , 'on_i' : 1})
     call s:add('junegunn/goyo.vim',{'lazy' : 1 , 'on_cmd' : 'Goyo'})
     if s:tap('goyo.vim')
         call s:defind_hooks('goyo.vim')
