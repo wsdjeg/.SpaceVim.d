@@ -502,14 +502,11 @@ if s:enable_plug()
     endfunction
     "}}}
 
-    call s:add('floobits/floobits-neovim')
+    call s:add('floobits/floobits-neovim',      { 'lazy' : 1 , 'on_cmd' : ['FlooJoinWorkspace','FlooShareDirPublic','FlooShareDirPrivate']})
     call s:add('wsdjeg/MarkDown.pl',            { 'lazy' : 1 , 'on_cmd' : 'MarkDownPreview'})
-    call s:add('plasticboy/vim-markdown',       { 'lazy' : 1 , 'on_ft' : 'markdown'})
-    call s:add('benjifisher/matchit.zip')
+    call s:add('plasticboy/vim-markdown',       { 'lazy' : 1 , 'on_ft'  : 'markdown'})
     call s:add('simnalamburt/vim-mundo',        { 'lazy' : 1 , 'on_cmd' : 'MundoToggle'})
     nnoremap <silent> <F7> :MundoToggle<CR>
-    "call s:add('nerdtree-ack')
-    call s:add('L9')
     call s:add('TaskList.vim',                  { 'lazy' : 1 , 'on_cmd' : 'TaskList'})
     map <unique> <Leader>td <Plug>TaskList
     call s:add('ianva/vim-youdao-translater',   { 'lazy':1,'on_cmd':['Ydv','Ydc','Yde']})
