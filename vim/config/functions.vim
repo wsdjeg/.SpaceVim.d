@@ -212,3 +212,11 @@ func! Openpluginrepo()
         echohl WarningMsg | echomsg "can not open the web of current plugin" | echohl None
     endtry
 endf
+func! Update_current_plugin()
+    try
+        exec "normal! ".'"ayi'."'"
+        exec 'call dein#update(["' . split(@a,'/')[1] . '"])'
+    catch
+        echohl WarningMsg | echomsg "can not open the web of current plugin" | echohl None
+    endtry
+endf
