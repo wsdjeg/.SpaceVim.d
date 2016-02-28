@@ -502,6 +502,7 @@ if s:enable_plug()
     endfunction
     "}}}
 
+    call s:add('floobits/floobits-neovim')
     call s:add('wsdjeg/MarkDown.pl',            { 'lazy' : 1 , 'on_cmd' : 'MarkDownPreview'})
     call s:add('plasticboy/vim-markdown',       { 'lazy' : 1 , 'on_ft' : 'markdown'})
     call s:add('benjifisher/matchit.zip')

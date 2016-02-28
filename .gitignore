@@ -2,6 +2,8 @@ tags
 *.html
 *.class
 test/
+vim/.floo
+vim/.flooignore
 *.netrwhist
 *.init.vim-rplugin~
 vim/config/local.vim
