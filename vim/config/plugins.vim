@@ -126,9 +126,6 @@ if s:enable_plug()
     if count(g:settings.plugin_groups, 'core') "{{{
         call s:add('Shougo/vimproc.vim', {'build': 'make'})
     endif
-    if count(g:settings.plugin_groups, 'nvim') "{{{
-        call s:add('junegunn/vim-github-dashboard')
-    endif
     if count(g:settings.plugin_groups, 'unite') "{{{
         call s:add('Shougo/unite.vim')
         if s:tap('unite.vim')
@@ -175,7 +172,7 @@ if s:enable_plug()
         call s:add('albfan/ag.vim')
         let g:ag_prg="ag  --vimgrep"
         let g:ag_working_path_mode="r"
-        call s:add('dyng/ctrlsf.vim')
+        call s:add('dyng/ctrlsf.vim',{'lazy' : 1 , 'on_cmd' : 'CtrlSF'})
         if s:tap('ctrlsf.vim')
             call s:defind_hooks('ctrlsf.vim')
         endif
@@ -306,18 +303,18 @@ if s:enable_plug()
                 call s:defind_hooks('deoplete.nvim')
             endif
         endif "}}}
-        call s:add('Shougo/neco-syntax')
-        call s:add('ujihisa/neco-look')
-        call s:add('Shougo/neco-vim')
+        call s:add('Shougo/neco-syntax',{'lazy' : 1 , 'on_i' : 1})
+        call s:add('ujihisa/neco-look',{'lazy' : 1 , 'on_i' : 1})
+        call s:add('Shougo/neco-vim',{'lazy' : 1 , 'on_i' : 1})
         if !exists('g:necovim#complete_functions')
             let g:necovim#complete_functions = {}
         endif
         let g:necovim#complete_functions.Ref =
                     \ 'ref#complete'
-        call s:add('Shougo/context_filetype.vim')
-        call s:add('Shougo/neoinclude.vim')
-        call s:add('Shougo/neosnippet-snippets')
-        call s:add('Shougo/neosnippet.vim')
+        call s:add('Shougo/context_filetype.vim',{'lazy' : 1 , 'on_i' : 1})
+        call s:add('Shougo/neoinclude.vim',{'lazy' : 1 , 'on_i' : 1})
+        call s:add('Shougo/neosnippet-snippets',{'lazy' : 1 , 'on_i' : 1})
+        call s:add('Shougo/neosnippet.vim',{'lazy' : 1 , 'on_i' : 1})
         if WINDOWS()
             let g:neosnippet#snippets_directory=g:Config_Main_Home .s:Fsep .'snippets'
         else
@@ -327,7 +324,7 @@ if s:enable_plug()
         let g:neosnippet#enable_complete_done = 1
         let g:neosnippet#completed_pairs= {}
         let g:neosnippet#completed_pairs.java = {'(' : ')'}
-        call s:add('Shougo/neopairs.vim')
+        call s:add('Shougo/neopairs.vim',{'lazy' : 1 , 'on_i' : 1})
         if g:neosnippet#enable_complete_done
             let g:neopairs#enable = 0
         endif
@@ -354,6 +351,7 @@ if s:enable_plug()
     if count(g:settings.plugin_groups, 'vim') "{{{
         call s:add('Shougo/vimshell.vim',{'lazy':1,'on_cmd':['VimShell']})
         call s:add('mattn/vim-terminal',{'lazy':1,'on_cmd':['Terminal']})
+        call s:add('junegunn/vim-github-dashboard',{'lazy':1,'on_cmd':['GHD','GHA','GHActivity','GHDashboard']})
     endif
     call s:add('tpope/vim-scriptease')     " A Vim plugin for Vim plugins
     call s:add('tpope/vim-fugitive')
