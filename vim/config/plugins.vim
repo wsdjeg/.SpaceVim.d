@@ -111,7 +111,7 @@ fu! s:fetch()
     if g:settings.plugin_manager == 'neobundle'
         NeoBundleFetch 'Shougo/neobundle.vim'
     elseif g:settings.plugin_manager == 'dein'
-        call dein#add('Shougo/dein.vim')
+        call dein#add('Shougo/dein.vim', {'rtp': ''})
     endif
 endf
 
@@ -404,16 +404,16 @@ if s:enable_plug()
     if s:tap('java_getset.vim')
         let g:java_getset_disable_map = 1
     endif
-    call s:add('wsdjeg/JavaUnit.vim')
+    call s:add('wsdjeg/JavaUnit.vim',{'lazy' : 1 , 'on_ft' : 'java'})
     call s:add('jaxbot/github-issues.vim',{ 'lazy' : 1 , 'on_cmd' : 'Gissues'})
     call s:add('wsdjeg/Mysql.vim',{'lazy' : 1 , 'on_cmd' : 'SQLGetConnection'})
-    call s:add('vim-jp/vim-java')
+    call s:add('vim-jp/vim-java',{'lazy' : 1 , 'on_ft' : 'java'})
     call s:add('vim-airline/vim-airline')
     call s:add('vim-airline/vim-airline-themes')
     if s:tap('vim-airline')
         call s:defind_hooks('vim-airline')
     endif
-    call s:add('mattn/emmet-vim')
+    call s:add('mattn/emmet-vim',{'lazy' : 1 , 'on_cmd' : 'EmmetInstall'})
     let g:user_emmet_install_global = 0
     let g:user_emmet_leader_key='<C-e>'
     let g:user_emmet_mode='a'
