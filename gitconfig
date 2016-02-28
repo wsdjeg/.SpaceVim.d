@@ -17,5 +17,6 @@
 	status = auto
 [core]
 	editor = nvim
+	excludesfile = ~/.gitignore
 [mergetool]
 	path = nvim
