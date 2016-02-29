@@ -234,7 +234,7 @@ if s:enable_plug()
         call s:add('tacahiroy/ctrlp-funky',          { 'lazy' : 1 , 'on_cmd' : 'CtrlPFunky'})
         call s:add('mattn/ctrlp-launcher',           { 'lazy' : 1 , 'on_cmd' : 'CtrlPLauncher'})
         call s:add('sgur/ctrlp-extensions.vim',      { 'lazy' : 1 , 'on_cmd' : ['CtrlPCmdline','CtrlPMenu','CtrlPYankring']})
-        call s:add('FelikZ/ctrlp-py-matcher',        { 'lazy' : 1 , 'on_cmd' : 'CtrlP'})
+        call s:add('FelikZ/ctrlp-py-matcher')
     endif "}}}
 
 
@@ -470,7 +470,7 @@ if s:enable_plug()
     endif
     "vim Wimdows config
     "NeoBundle 'scrooloose/nerdtree'
-    call s:add('tpope/vim-projectionist')
+    call s:add('tpope/vim-projectionist',{'lazy':1,'on_cmd':['A','AS','AV','AT','AD','Cd','Lcd','ProjectDo']})
     call s:add('Xuyuanp/nerdtree-git-plugin')
     call s:add('taglist.vim')
     if s:tap('taglist.vim')
@@ -504,7 +504,8 @@ if s:enable_plug()
 
     call s:add('floobits/floobits-neovim',      { 'lazy' : 1 , 'on_cmd' : ['FlooJoinWorkspace','FlooShareDirPublic','FlooShareDirPrivate']})
     call s:add('wsdjeg/MarkDown.pl',            { 'lazy' : 1 , 'on_cmd' : 'MarkDownPreview'})
-    call s:add('plasticboy/vim-markdown',       { 'lazy' : 1 , 'on_ft'  : 'markdown'})
+    call s:add('plasticboy/vim-markdown')
+    let g:vim_markdown_conceal = 0
     call s:add('simnalamburt/vim-mundo',        { 'lazy' : 1 , 'on_cmd' : 'MundoToggle'})
     nnoremap <silent> <F7> :MundoToggle<CR>
     call s:add('TaskList.vim',                  { 'lazy' : 1 , 'on_cmd' : 'TaskList'})
