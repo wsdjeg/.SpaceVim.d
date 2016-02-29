@@ -8,7 +8,7 @@
 [credential]
 	helper = store
 [diff]
-	tool = vimdiff
+	tool = nvim
 [difftool]
 	prompt = false
 [color]
@@ -19,4 +19,6 @@
 	editor = nvim
 	excludesfile = ~/.gitignore
 [mergetool]
-	path = nvim
+  prompt = true
+[mergetool "vimdiff"]
+  cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
