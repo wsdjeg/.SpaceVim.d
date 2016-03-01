@@ -111,7 +111,7 @@ fu! s:fetch()
     if g:settings.plugin_manager == 'neobundle'
         NeoBundleFetch 'Shougo/neobundle.vim'
     elseif g:settings.plugin_manager == 'dein'
-        call dein#add('Shougo/dein.vim', {'rtp': ''})
+        call dein#add('Shougo/dein.vim')
     endif
 endf
 

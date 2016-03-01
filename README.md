@@ -35,5 +35,3 @@ chmod +x install.sh
 
 > neo-snippet plugin contains neocomplcache snippets source
 
-
-call unite#start([['output/shellcmd', 'git -C ~/.cache/vimfiles/repos/github.com/Shougo/dein.vim -n 3 --oneline']], {'log': 1, 'wrap': 1})
