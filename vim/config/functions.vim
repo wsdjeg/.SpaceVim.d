@@ -220,3 +220,14 @@ func! Update_current_plugin()
         echohl WarningMsg | echomsg "can not open the web of current plugin" | echohl None
     endtry
 endf
+func! Show_Log_for_current_plugin()
+    try
+        exec "normal! ".'"ayi'."'"
+        exec "call unite#start([['output/shellcmd',"
+                    \ ."'git -C ~/.cache/vimfiles/repos/github.com/"
+                    \ . @a
+                    \ . " log -n 6 --oneline']], {'log': 1, 'wrap': 1,'start_insert':0})"
+    catch
+        echohl WarningMsg | echomsg "can show logs of current plugin" | echohl None
+    endtry
+endf
