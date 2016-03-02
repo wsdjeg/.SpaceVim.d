@@ -224,7 +224,7 @@ func! Show_Log_for_current_plugin()
     try
         exec "normal! ".'"ayi'."'"
         exec "call unite#start([['output/shellcmd',"
-                    \ ."'git -C ~/.cache/vimfiles/repos/github.com/"
+                    \ ."'git --no-pager -C ~/.cache/vimfiles/repos/github.com/"
                     \ . @a
                     \ . " log -n 6 --oneline']], {'log': 1, 'wrap': 1,'start_insert':0})"
     catch
