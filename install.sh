@@ -30,6 +30,8 @@ symlink 'gtkrc-2.0'
 symlink 'inputrc'
 symlink 'vim'
 symlink 'zshrc'
+symlink 'vimperatorrc'
+symlink 'vimperator'
 
 if [ -e ~/.config/nvim ]
 then
