@@ -31,7 +31,6 @@ symlink 'inputrc'
 symlink 'vim'
 symlink 'zshrc'
 symlink 'vimperatorrc'
-symlink 'vimperator'
 
 if [ -e ~/.config/nvim ]
 then
