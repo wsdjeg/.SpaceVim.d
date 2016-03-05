@@ -427,15 +427,15 @@ if s:enable_plug()
             call s:defind_hooks('syntastic')
         endif
     endif
-    call s:add('syngan/vim-vimlint')
+    call s:add('syngan/vim-vimlint',{'on_ft' : 'vim'})
     let g:syntastic_vimlint_options = {
                 \'EVL102': 1 ,
                 \'EVL103': 1 ,
                 \'EVL205': 1 ,
                 \'EVL105': 1 ,
                 \}
-    call s:add('ynkdir/vim-vimlparser')
-    call s:add('todesking/vint-syntastic')
+    call s:add('ynkdir/vim-vimlparser',{'on_ft' : 'vim'})
+    call s:add('todesking/vint-syntastic',{'on_ft' : 'vim'})
     "let g:syntastic_vim_checkers = ['vint']
     call s:add('gcmt/wildfire.vim',{'lazy':1,'on_map' : '<Plug>(wildfire-'})
     noremap <SPACE> <Plug>(wildfire-fuel)
