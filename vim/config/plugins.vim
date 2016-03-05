@@ -168,8 +168,8 @@ if s:enable_plug()
         call s:add('kmnk/vim-unite-giti')
         call s:add('ujihisa/unite-font')
         call s:add('t9md/vim-unite-ack')
-        call s:add('mileszs/ack.vim')
-        call s:add('albfan/ag.vim')
+        call s:add('mileszs/ack.vim',{'lazy' : 1 , 'on_cmd' : 'Ack'})
+        call s:add('albfan/ag.vim',{'lazy' : 1 , 'on_cmd' : 'Ag'})
         let g:ag_prg="ag  --vimgrep"
         let g:ag_working_path_mode="r"
         call s:add('dyng/ctrlsf.vim',{'lazy' : 1 , 'on_cmd' : 'CtrlSF'})
@@ -427,15 +427,15 @@ if s:enable_plug()
             call s:defind_hooks('syntastic')
         endif
     endif
-    call s:add('syngan/vim-vimlint',{'on_ft' : 'vim'})
+    call s:add('syngan/vim-vimlint',{'lazy' : 1 , 'on_ft' : 'vim'})
     let g:syntastic_vimlint_options = {
                 \'EVL102': 1 ,
                 \'EVL103': 1 ,
                 \'EVL205': 1 ,
                 \'EVL105': 1 ,
                 \}
-    call s:add('ynkdir/vim-vimlparser',{'on_ft' : 'vim'})
-    call s:add('todesking/vint-syntastic',{'on_ft' : 'vim'})
+    call s:add('ynkdir/vim-vimlparser',{'lazy' : 1 ,'on_ft' : 'vim'})
+    call s:add('todesking/vint-syntastic',{'lazy' : 1 ,'on_ft' : 'vim'})
     "let g:syntastic_vim_checkers = ['vint']
     call s:add('gcmt/wildfire.vim',{'lazy':1,'on_map' : '<Plug>(wildfire-'})
     noremap <SPACE> <Plug>(wildfire-fuel)
