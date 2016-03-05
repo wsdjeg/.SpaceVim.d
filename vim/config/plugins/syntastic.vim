@@ -4,7 +4,7 @@ if !filereadable('pom.xml') && !filereadable('build.gradle') && isdirectory('bin
 endif
 let g:syntastic_java_javac_config_file_enabled = 1
 let g:syntastic_java_javac_delete_output = 0
-"let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
