@@ -215,7 +215,11 @@ endf
 func! Update_current_plugin()
     try
         exec "normal! ".'"ayi'."'"
-        exec 'call dein#update(["' . split(@a,'/')[1] . '"])'
+        if match(@a, '/') >= 0
+            exec 'call dein#update(["' . split(@a,'/')[1] . '"])'
+        else
+            exec 'call dein#update(["' . @a . '"])'
+        endif
     catch
         echohl WarningMsg | echomsg "can not open the web of current plugin" | echohl None
     endtry

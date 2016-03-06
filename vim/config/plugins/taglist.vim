@@ -8,4 +8,3 @@ let g:Tlist_Show_One_File=0
 let g:Tlist_File_Fold_Auto_Close=1
 let g:Tlist_Exit_OnlyWindow=1
 let g:Tlist_Show_Menu=1
-noremap <silent> <F8> :TlistToggle<CR>

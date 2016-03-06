@@ -189,6 +189,7 @@ if s:enable_plug()
         call s:add('Shougo/vimfiler.vim',{'lazy' : 1 , 'on_cmd' : 'VimFiler'})
         if s:tap('vimfiler.vim')
             call s:defind_hooks('vimfiler.vim')
+            noremap <silent> <F3> :VimFiler<CR>
         endif
         call s:add('mopp/googlesuggest-source.vim')
         call s:add('mattn/googlesuggest-complete-vim')
@@ -469,12 +470,25 @@ if s:enable_plug()
         call s:defind_hooks('goyo.vim')
     endif
     "vim Wimdows config
-    "NeoBundle 'scrooloose/nerdtree'
+    call s:add('scrooloose/nerdtree',{'lazy':1,'on_cmd':'NERDTreeToggle'})
+    if s:tap('nerdtree')
+        call s:defind_hooks('nerdtree')
+        function! OpenOrCloseNERDTree()
+            exec "normal! A"
+        endfunction
+        noremap <silent> <F9> :NERDTreeToggle<CR>
+        let g:NERDTreeWinPos='right'
+        let g:NERDTreeWinSize=31
+        let g:NERDTreeChDirMode=1
+        autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+        autocmd FileType nerdtree nnoremap <silent><buffer><Space> :call OpenOrCloseNERDTree()<cr>
+    endif
     call s:add('tpope/vim-projectionist',{'lazy':1,'on_cmd':['A','AS','AV','AT','AD','Cd','Lcd','ProjectDo']})
     call s:add('Xuyuanp/nerdtree-git-plugin')
-    call s:add('taglist.vim')
+    call s:add('taglist.vim',{'lazy' : 1 , 'on_cmd' : 'TlistToggle'})
     if s:tap('taglist.vim')
         call s:defind_hooks('taglist.vim')
+        noremap <silent> <F8> :TlistToggle<CR>
     endif
     call s:add('ntpeters/vim-better-whitespace')
     call s:add('junegunn/rainbow_parentheses.vim',{'lazy' : 1 , 'on_cmd' : 'RainbowParentheses'})
@@ -489,17 +503,7 @@ if s:enable_plug()
     call s:add('majutsushi/tagbar')
     let g:tagbar_width=30
     let g:tagbar_left = 1
-    let g:NERDTreeWinPos='right'
-    let g:NERDTreeWinSize=31
-    let g:NERDTreeChDirMode=1
-    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-    "noremap <silent> <F3> :NERDTreeToggle<CR>
-    noremap <silent> <F3> :VimFiler<CR>
-    autocmd FileType nerdtree nnoremap <silent><Space> :call OpenOrCloseNERDTree()<cr>
     noremap <silent> <F2> :TagbarToggle<CR>
-    function! OpenOrCloseNERDTree()
-        exec "normal! A"
-    endfunction
     "}}}
 
     call s:add('floobits/floobits-neovim',      { 'lazy' : 1 , 'on_cmd' : ['FlooJoinWorkspace','FlooShareDirPublic','FlooShareDirPrivate']})
