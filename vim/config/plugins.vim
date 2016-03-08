@@ -462,7 +462,7 @@ if s:enable_plug()
     call s:add('godlygeek/tabular',         { 'lazy':1,'on_cmd': 'Tabularize'})
     call s:add('benizi/vim-automkdir')
     "[c  ]c  jump between prev or next hunk
-    call s:add('airblade/vim-gitgutter')
+    call s:add('airblade/vim-gitgutter',{'lazy' : 1 , 'on_cmd' : 'GitGutterEnable'})
     call s:add('itchyny/calendar.vim',      { 'lazy' : 1 , 'on_cmd' : 'Calendar'})
     call s:add('lilydjwg/fcitx.vim',        { 'lazy' : 1 , 'on_i' : 1})
     call s:add('junegunn/goyo.vim',         { 'lazy' : 1 , 'on_cmd' : 'Goyo'})
