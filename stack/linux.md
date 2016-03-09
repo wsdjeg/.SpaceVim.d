@@ -37,6 +37,15 @@ make VIMRUNTIMEDIR=/usr/share/vim/vim74
 sudo make install
 ```
 
+Q:How to build irssi from source?
+A:
+```sh
+git clone https://github.com/irssi/irssi
+./configure --enable-true-color
+make
+sudo make install
+```
+
 Q:How to fix mysql chinese support?
 A:
 add into my.cnf(/etc/mysql/my.cnf)
