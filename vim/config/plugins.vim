@@ -418,7 +418,7 @@ if s:enable_plug()
     "profile start vim-javacomplete2.log
     "profile! file */vim-javacomplete2/*
     if has('nvim') && g:settings.enable_neomake
-        call s:add('wsdjeg/neomake')
+        call s:add('wsdjeg/neomake',{'lazy' : 1 , 'on_cmd' : 'Neomake'})
         if s:tap('neomake')
             call s:defind_hooks('neomake')
         endif
@@ -444,9 +444,12 @@ if s:enable_plug()
     let g:wildfire_objects = ["i'", 'i"', 'i)', 'i]', 'i}', 'ip', 'it']
 
     call s:add('scrooloose/nerdcommenter')
-    call s:add('easymotion/vim-easymotion')
+    call s:add('easymotion/vim-easymotion',{'lazy' : 1 , 'on_map' : '<Plug>(easymotion-prefix)'})
+    if s:tap('vim-easymotion')
+        map <Leader><Leader> <Plug>(easymotion-prefix)
+    endif
+
     call s:add('MarcWeber/vim-addon-mw-utils')
-    "NeoBundle 'tomtom/tlib_vim'
     call s:add('mhinz/vim-startify')
     call s:add('mhinz/vim-signify')
     let g:signify_disable_by_default = 0
@@ -490,7 +493,7 @@ if s:enable_plug()
         call s:defind_hooks('taglist.vim')
         noremap <silent> <F8> :TlistToggle<CR>
     endif
-    call s:add('ntpeters/vim-better-whitespace')
+    call s:add('ntpeters/vim-better-whitespace',{'lazy' : 1 , 'on_cmd' : 'StripWhitespace'})
     call s:add('junegunn/rainbow_parentheses.vim',{'lazy' : 1 , 'on_cmd' : 'RainbowParentheses'})
     augroup rainbow_lisp
         autocmd!
