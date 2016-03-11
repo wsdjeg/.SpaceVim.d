@@ -403,5 +403,6 @@ ignores = (
     pattern = "wsdjeg";
     exception = "yes";
     channels = ( "#xkcd-signal" );
-  }
+  },
+  { level = "JOINS QUITS"; }
 );

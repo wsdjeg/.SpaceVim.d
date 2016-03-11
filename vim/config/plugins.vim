@@ -151,6 +151,7 @@ if s:enable_plug()
         endif
         call s:add('heavenshell/unite-zf')
         call s:add('heavenshell/unite-sf2')
+        call s:add('osyo-manga/unite-vimpatches')
         call s:add('Shougo/unite-outline')
         call s:add('hewes/unite-gtags')
         if s:tap('unite-gtags')
