@@ -128,7 +128,7 @@ channels = (
   { name = "#netfuze"; chatnet = "NetFuze"; autojoin = "No"; },
   { name = "#oftc"; chatnet = "OFTC"; autojoin = "No"; },
   { name = "silc"; chatnet = "SILC"; autojoin = "No"; },
-  { name = "#neovim"; chatnet = "Freenode"; autojoin = "Yes"; }
+  { name = "#neovim"; chatnet = "Freenode"; autojoin = "yes"; }
 );
 
 aliases = {
@@ -386,5 +386,12 @@ statusbar = {
 settings = {
   "fe-text" = { actlist_sort = "refnum"; term_force_colors = "yes"; };
   core = { real_name = "wsdjeg"; user_name = "wsdjeg"; nick = "wsdjeg"; };
+  "fe-common/core" = {
+    use_status_window = "yes";
+    use_msgs_window = "no";
+    show_names_on_join = "no";
+    max_command_history = "1000";
+    window_history = "yes";
+  };
 };
 ignores = ( { level = "JOINS QUITS"; } );
