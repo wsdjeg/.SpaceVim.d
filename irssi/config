@@ -384,25 +384,7 @@ statusbar = {
   };
 };
 settings = {
+  "fe-text" = { actlist_sort = "refnum"; term_force_colors = "yes"; };
   core = { real_name = "wsdjeg"; user_name = "wsdjeg"; nick = "wsdjeg"; };
-  "fe-text" = { actlist_sort = "refnum"; };
 };
-ignores = (
-  {
-    level = "ALL";
-    pattern = "wsdjeg";
-    exception = "yes";
-    channels = ( "#xkcd-signal" );
-  },
-  { 
-    level = "JOINS PARTS QUITS MODES";
-    channels = ( "#xkcd-signal" );
-  },
-  {
-    level = "ALL";
-    pattern = "wsdjeg";
-    exception = "yes";
-    channels = ( "#xkcd-signal" );
-  },
-  { level = "JOINS QUITS"; }
-);
+ignores = ( { level = "JOINS QUITS"; } );
