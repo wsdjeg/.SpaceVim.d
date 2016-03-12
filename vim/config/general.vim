@@ -87,6 +87,8 @@ set wildignorecase
 let g:markdown_fenced_languages = ['vim', 'java', 'bash=sh', 'sh', 'html', 'python']
 set mouse=
 set hidden
+set ttimeout
+set ttimeoutlen=50
 filetype plugin indent on
 syntax on
 if count(g:settings.plugin_groups, 'colorscheme')&&g:settings.colorscheme!='' "{{{
