@@ -514,6 +514,7 @@ if s:enable_plug()
     call s:add('wsdjeg/MarkDown.pl',            { 'lazy' : 1 , 'on_cmd' : 'MarkDownPreview'})
     call s:add('plasticboy/vim-markdown',       { 'lazy' : 1 , 'on_ft' : 'markdown'})
     let g:vim_markdown_conceal = 0
+    let g:vim_markdown_folding_disabled = 1
     call s:add('simnalamburt/vim-mundo',        { 'lazy' : 1 , 'on_cmd' : 'MundoToggle'})
     nnoremap <silent> <F7> :MundoToggle<CR>
     call s:add('TaskList.vim',                  { 'lazy' : 1 , 'on_cmd' : 'TaskList'})
