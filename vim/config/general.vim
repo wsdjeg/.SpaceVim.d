@@ -105,4 +105,4 @@ endif
 if g:settings.enable_cursorcolumn == 1
     set cursorcolumn                "显示当前列
 endif
-
+set shortmess=filnxtToOF
