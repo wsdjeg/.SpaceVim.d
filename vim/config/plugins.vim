@@ -322,11 +322,7 @@ if s:enable_plug()
         call s:add('Shougo/neosnippet-snippets',   { 'lazy' : 1 , 'on_i' : 1})
         call s:add('Shougo/neosnippet.vim',        { 'lazy' : 1 , 'on_i' : 1})
         call s:add('Shougo/neopairs.vim',          { 'lazy' : 1 , 'on_i' : 1})
-        if WINDOWS()
-            let g:neosnippet#snippets_directory=g:Config_Main_Home .s:Fsep .'snippets'
-        else
-            let g:neosnippet#snippets_directory='~/DotFiles/snippets'
-        endif
+        let g:neosnippet#snippets_directory = fnamemodify(g:Config_Main_Home, ':p:h:h:h') . s:Fsep . 'snippets'
         let g:neosnippet#enable_snipmate_compatibility=1
         let g:neosnippet#enable_complete_done = 1
         let g:neosnippet#completed_pairs= {}
