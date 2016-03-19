@@ -7,6 +7,8 @@
 
 ![import](https://github.com/wsdjeg/DotFiles/blob/master/pic/import.png)
 
+![gradle](https://github.com/wsdjeg/DotFiles/blob/master/pic/gradle_project.png)
+
 ### Requirements
 
 1. jdk 1.8

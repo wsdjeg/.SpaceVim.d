@@ -1,3 +1,8 @@
+Q:How long you need to startup your os?
+A:systemd-analyze time
+you will get some info like this:
+`Startup finished in 8.107s (kernel) + 29.343s (userspace) = 37.450s`
+
 Q:How to delete the desktop icon?
 A:
 ```bash

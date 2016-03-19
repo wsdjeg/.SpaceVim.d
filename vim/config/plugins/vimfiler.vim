@@ -46,10 +46,12 @@ call vimfiler#custom#profile('default', 'context', {
             \ 'no_quit' : 1,
             \ 'force_hide' : 0,
             \ })
+augroup vfinit
 autocmd FileType vimfiler call s:vimfilerinit()
 "autocmd VimEnter * if !argc() | VimFiler | endif
 autocmd BufEnter * if (winnr('$') == 1 && &filetype ==# 'vimfiler') |
             \ q | endif
+augroup END
 function! s:vimfilerinit()
     set nonumber
     set norelativenumber

@@ -50,6 +50,6 @@ let g:terminal_color_7 = "#a89984"
 let g:terminal_color_15 = "#ebdbb2"
 augroup Terminal
     au!
-    au TermOpen * let g:last_terminal_job_id = b:terminal_job_id
-    au WinEnter term://* startinsert
+    au TermOpen * let g:last_terminal_job_id = b:terminal_job_id | IndentLinesDisable
+    au WinEnter term://* startinsert | IndentLinesDisable
 augroup END
