@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Symlinks the configs
 
@@ -19,11 +19,11 @@ symlink () {
   fi
 }
 
-if [ ! -d "~/.irssi" ];then
+if [ ! -d "$HOME/.irssi" ];then
     mkdir ~/.irssi
 fi
 
-if [ ! -d ~/.weechat ];then
+if [ ! -d "$HOME/.weechat" ];then
     mkdir ~/.weechat
 fi
 
@@ -40,7 +40,11 @@ symlink 'inputrc'
 symlink 'vim'
 symlink 'zshrc'
 symlink 'vimperatorrc'
-symlink 'xinitrc'
+if cat /etc/issue | grep Ubuntu &> /dev/null;then
+    printf "$RED""Warning ""$NC""$BLUE""This is ubuntu,and will skip xinitrc$NC\n"
+else
+    symlink 'xinitrc'
+fi
 
 if [ -e ~/.config/nvim ]
 then
