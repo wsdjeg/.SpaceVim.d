@@ -127,5 +127,5 @@ Kazam
 sudo apt-get install kazam
 ```
 
-
-
+### Example usage of su and sudo
+[Example usage of su and sudo](http://zebralinux.blog.51cto.com/8627088/1369301)
