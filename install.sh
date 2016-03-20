@@ -19,6 +19,14 @@ symlink () {
   fi
 }
 
+if [ ! -d "~/.irssi" ];then
+    mkdir ~/.irssi
+fi
+
+if [ ! -d ~/.weechat ];then
+    mkdir ~/.weechat
+fi
+
 symlink 'fonts'
 symlink 'weechat/plugins.conf'
 symlink 'weechat/weechat.conf'
@@ -32,6 +40,7 @@ symlink 'inputrc'
 symlink 'vim'
 symlink 'zshrc'
 symlink 'vimperatorrc'
+symlink 'xinitrc'
 
 if [ -e ~/.config/nvim ]
 then

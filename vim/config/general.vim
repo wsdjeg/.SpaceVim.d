@@ -105,4 +105,6 @@ endif
 if g:settings.enable_cursorcolumn == 1
     set cursorcolumn                "显示当前列
 endif
-set shortmess=filnxtToOF
+if g:settings.hiddenfileinfo == 1
+    set shortmess=filnxtToOF
+endif

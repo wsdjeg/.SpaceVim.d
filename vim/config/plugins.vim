@@ -64,11 +64,15 @@ endf
 fu! s:end()
     if g:settings.plugin_manager == 'neobundle'
         call neobundle#end()
-        NeoBundleCheck
+        if g:settings.checkinstall == 1
+            NeoBundleCheck
+        endif
     elseif g:settings.plugin_manager == 'dein'
         call dein#end()
-        if dein#check_install()
-            call dein#install()
+        if g:settings.checkinstall == 1
+            if dein#check_install()
+                call dein#install()
+            endif
         endif
     elseif g:settings.plugin_manager == 'vim-plug'
         call plug#end()
