@@ -92,8 +92,6 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-alias vim='nvim'
-alias gvim='nvim'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -121,7 +119,7 @@ fi
 GIT_PROMPT_ONLY_IN_REPO=1
 GIT_PROMPT_THEME=Single_line_Solarized
 source ~/.bash-git-prompt/gitprompt.sh
-
+source /usr/share/git/completion/git-completion.bash
 if [[ $- == *i* ]]
 then
     bind '"\e[A": history-search-backward'

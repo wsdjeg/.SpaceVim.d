@@ -40,6 +40,7 @@ fi
 
 # Install configuration
 symlink 'fonts'
+symlink 'config/i3/config'
 symlink 'weechat/plugins.conf'
 symlink 'weechat/weechat.conf'
 symlink 'irssi/config'
