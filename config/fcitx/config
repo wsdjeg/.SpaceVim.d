@@ -2,11 +2,11 @@
 # 切换激活/非激活输入法
 #TriggerKey=CTRL_SPACE
 # 只在用额外切换键取消激活后才使用它进行切换
-# 可选值：
+# Available Value:
 # True False
 #UseExtraTriggerKeyOnlyWhenUseItToInactivate=True
 # 额外的激活输入法快捷键
-# 可选值：
+# Available Value:
 # R_CTRL
 # R_SHIFT
 # L_SHIFT
@@ -35,15 +35,15 @@
 # 取消激活输入法
 #InactivateKey=
 # 启用输入法间切换
-# 可选值：
+# Available Value:
 # True False
 #IMSwitchKey=True
 # 输入法间切换时包含未激活状态
-# 可选值：
+# Available Value:
 # True False
 #IMSwitchIncludeInactive=False
 # 输入法切换键
-# 可选值：
+# Available Value:
 # CTRL_SHIFT
 # ALT_SHIFT
 # CTRL_SUPER
@@ -80,68 +80,68 @@
 # Fcitx 真正启动前延迟的秒数
 #DelayStart=0
 # 在窗口间共享状态
-# 可选值：
+# Available Value:
 # No
 # All
 # PerProgram
 #ShareStateAmongWindow=No
 # 默认输入法状态
-# 可选值：
+# Available Value:
 # Inactive
 # Active
 #DefaultInputMethodState=Inactive
 
 [Output]
 # 数字后跟半角符号
-# 可选值：
+# Available Value:
 # True False
 #HalfPuncAfterNumber=True
 # 联想模式禁用翻页
-# 可选值：
+# Available Value:
 # True False
 #RemindModeDisablePaging=True
 # 切换状态时提交
-# 可选值：
+# Available Value:
 # True False
 #SendTextWhenSwitchEng=True
 # 候选词个数
 #CandidateWordNumber=5
 # 提示词库中词组
-# 可选值：
+# Available Value:
 # True False
 #PhraseTips=True
 # 窗口失去焦点时不提交预编辑文本
-# 可选值：
+# Available Value:
 # True False
 #DontCommitPreeditWhenUnfocus=False
 
 [Appearance]
 # 切换输入法时显示输入法提示
-# 可选值：
+# Available Value:
 # True False
-#ShowInputWindowAfterTriggering=True
+ShowInputWindowAfterTriggering=False
 # 获得输入焦点并且输入法变化时显示输入法提示
-# 可选值：
+# Available Value:
 # True False
 #ShowInputWindowWhenFocusIn=False
 # 输入法提示只在激活状态显示
-# 可选值：
+# Available Value:
 # True False
 #ShowInputWindowOnlyWhenActive=True
 # 显示输入速度
-# 可选值：
+# Available Value:
 # True False
 #ShowInputSpeed=False
 # 显示版本
-# 可选值：
+# Available Value:
 # True False
 #ShowVersion=False
 # 只有预编辑字符串时不显示输入窗口
-# 可选值：
+# Available Value:
 # True False
 #HideInputWindowWhenOnlyPreeditString=False
 # 只有一个候选词和预编辑字符串时不显示输入窗口
-# 可选值：
+# Available Value:
 # True False
 #HideInputWindowWhenOnlyOneCandidate=False
 
