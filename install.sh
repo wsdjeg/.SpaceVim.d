@@ -41,6 +41,7 @@ fi
 # Install configuration
 symlink 'fonts'
 symlink 'config/i3/config'
+symlink 'config/fcitx/config'
 symlink 'weechat/plugins.conf'
 symlink 'weechat/weechat.conf'
 symlink 'irssi/config'
@@ -53,6 +54,7 @@ symlink 'inputrc'
 symlink 'vim'
 symlink 'zshrc'
 symlink 'vimperatorrc'
+symlink 'Xdefaults'
 
 if cat /etc/issue | grep Ubuntu &> /dev/null;then
     printf "$RED""Warning ""$NC""$BLUE""This is ubuntu,and will skip xinitrc$NC\n"

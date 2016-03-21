@@ -1,0 +1,147 @@
+[Hotkey]
+# 切换激活/非激活输入法
+#TriggerKey=CTRL_SPACE
+# 只在用额外切换键取消激活后才使用它进行切换
+# 可选值：
+# True False
+#UseExtraTriggerKeyOnlyWhenUseItToInactivate=True
+# 额外的激活输入法快捷键
+# 可选值：
+# R_CTRL
+# R_SHIFT
+# L_SHIFT
+# L_CTRL
+# ALT_L_SHIFT
+# ALT_R_SHIFT
+# CTRL Both
+# SHIFT Both
+# L_ALT
+# R_ALT
+# ALT Both
+# Left Super
+# Right Super
+# Super Both
+# Ctrl+Left Super
+# Ctrl+Right Super
+# Super+Left Ctrl
+# Super+Right Ctrl
+# Disabled
+# Custom
+#SwitchKey=L_SHIFT
+# 自定义切换键
+#CustomSwitchKey=
+# 激活输入法
+#ActivateKey=
+# 取消激活输入法
+#InactivateKey=
+# 启用输入法间切换
+# 可选值：
+# True False
+#IMSwitchKey=True
+# 输入法间切换时包含未激活状态
+# 可选值：
+# True False
+#IMSwitchIncludeInactive=False
+# 输入法切换键
+# 可选值：
+# CTRL_SHIFT
+# ALT_SHIFT
+# CTRL_SUPER
+# ALT_SUPER
+#IMSwitchHotkey=CTRL_SHIFT
+# 重新载入配置
+#ReloadConfig=CTRL_5
+# 输入间隔
+#TimeInterval=250
+# 切换虚拟键盘
+#VKSwitchKey=CTRL_ALT_B
+# 切换联想模式
+#RemindSwitchKey=
+# 切换全角
+#FullWidthSwitchKey=
+# 切换全角标点
+#PuncSwitchKey=CTRL_.
+# 上一页
+#PrevPageKey=- UP
+# 下一页
+#NextPageKey== DOWN
+# 选择第二第三候选词
+#SecondThirdCandWordKey=
+# 保存配置及输入历史
+#SaveAllKey=CTRL_ALT_S
+# 切换嵌入预编辑字符串
+#SwitchPreedit=CTRL_ALT_P
+# 上一个候选词
+#PrevWord=SHIFT_TAB
+# 下一个候选词
+#NextWord=TAB
+
+[Program]
+# Fcitx 真正启动前延迟的秒数
+#DelayStart=0
+# 在窗口间共享状态
+# 可选值：
+# No
+# All
+# PerProgram
+#ShareStateAmongWindow=No
+# 默认输入法状态
+# 可选值：
+# Inactive
+# Active
+#DefaultInputMethodState=Inactive
+
+[Output]
+# 数字后跟半角符号
+# 可选值：
+# True False
+#HalfPuncAfterNumber=True
+# 联想模式禁用翻页
+# 可选值：
+# True False
+#RemindModeDisablePaging=True
+# 切换状态时提交
+# 可选值：
+# True False
+#SendTextWhenSwitchEng=True
+# 候选词个数
+#CandidateWordNumber=5
+# 提示词库中词组
+# 可选值：
+# True False
+#PhraseTips=True
+# 窗口失去焦点时不提交预编辑文本
+# 可选值：
+# True False
+#DontCommitPreeditWhenUnfocus=False
+
+[Appearance]
+# 切换输入法时显示输入法提示
+# 可选值：
+# True False
+#ShowInputWindowAfterTriggering=True
+# 获得输入焦点并且输入法变化时显示输入法提示
+# 可选值：
+# True False
+#ShowInputWindowWhenFocusIn=False
+# 输入法提示只在激活状态显示
+# 可选值：
+# True False
+#ShowInputWindowOnlyWhenActive=True
+# 显示输入速度
+# 可选值：
+# True False
+#ShowInputSpeed=False
+# 显示版本
+# 可选值：
+# True False
+#ShowVersion=False
+# 只有预编辑字符串时不显示输入窗口
+# 可选值：
+# True False
+#HideInputWindowWhenOnlyPreeditString=False
+# 只有一个候选词和预编辑字符串时不显示输入窗口
+# 可选值：
+# True False
+#HideInputWindowWhenOnlyOneCandidate=False
+
