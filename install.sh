@@ -60,6 +60,7 @@ if cat /etc/issue | grep Ubuntu &> /dev/null;then
     printf "$RED""Warning ""$NC""$BLUE""This is ubuntu,and will skip xinitrc$NC\n"
 else
     symlink 'xinitrc'
+    symlink 'xprofile'
 fi
 
 if [ -e ~/.config/nvim ]
