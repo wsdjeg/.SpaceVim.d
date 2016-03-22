@@ -147,5 +147,5 @@ for s:group in g:settings.plugin_groups_exclude
 endfor
 
 " python host for neovim
-let g:python_host_prog = '/usr/bin/python'
+let g:python_host_prog = '/usr/bin/python2'
 let g:python3_host_prog = '/usr/bin/python3'

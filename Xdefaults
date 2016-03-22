@@ -33,7 +33,7 @@ URxvt.font:xft:Dejavu Sans Mono for Powerline:style=Book Liberation Mono:pixelsi
 URxvt.boldFont:xft:Dejavu Sans Mono for Powerline:style=Blod Liberation Mono:pixelsize=14:antialias=false:Bold,xft:Microsoft Yahei:pixelsize=14:Bold
 
 ! Input Method set
-URxvt.inputMethod:ibus
+URxvt.inputMethod:fcitx
 !URxvt.imFont:Liberation Mono
 !URxvt.preeditType: Root
 

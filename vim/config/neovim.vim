@@ -16,7 +16,7 @@ endfunction
 command! -range=% REPLSendSelection call REPLSend(s:GetVisual())
 command! REPLSendLine call REPLSend([getline('.')])
 " }}}
-" let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 " dark0 + gray
 let g:terminal_color_0 = "#282828"
 let g:terminal_color_8 = "#928374"
