@@ -55,7 +55,6 @@ symlink 'inputrc'
 symlink 'vim'
 symlink 'zshrc'
 symlink 'vimperatorrc'
-symlink 'Xdefaults'
 
 if cat /etc/issue | grep Ubuntu &> /dev/null;then
     printf "$RED""Warning ""$NC""$BLUE""This is ubuntu,and will skip xinitrc$NC\n"
