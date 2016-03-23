@@ -18,7 +18,9 @@ sudo apt-get update
 sudo apt-get install neovim
 sudo apt-get install python python3 python-dev python3-dev python-pip python3-pip
 pip2 install --user neovim
+pip2 install --upgrade --user neovim
 pip3 install --user neovim
+pip3 install --upgrade --user neovim
 ```
 
 Q:How to install vim with python and lua?
@@ -129,3 +131,7 @@ sudo apt-get install kazam
 
 ### Example usage of su and sudo
 [Example usage of su and sudo](http://zebralinux.blog.51cto.com/8627088/1369301)
+
+
+### How to show emoji in terminal?
+A: archlinux `sudo pacman -S noto-fonts-emoji`
