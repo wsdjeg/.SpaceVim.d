@@ -74,6 +74,7 @@ fu! s:end()
                 call dein#install()
             endif
         endif
+        call dein#call_hook('source')
     elseif g:settings.plugin_manager == 'vim-plug'
         call plug#end()
     endif
