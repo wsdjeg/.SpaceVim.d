@@ -42,10 +42,14 @@ if [ ! -d "$HOME/.config/termite" ];then
     mkdir ~/.config/termite
 fi
 
+if [ ! -d "$HOME/.config/i3status" ];then
+    mkdir ~/.config/i3status
+fi
+
 # Install configuration
 symlink 'fonts'
 symlink 'config/i3/config'
-symlink 'i3status.conf'
+symlink 'config/i3status/config'
 symlink 'config/fcitx/config'
 symlink 'config/termite/config'
 symlink 'weechat/plugins.conf'
