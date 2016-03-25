@@ -33,7 +33,13 @@ ethernet _first_ {
 }
 
 battery 0 {
-    format = "%status %percentage %remaining"
+    format = "%status %percentage %remaining %emptytime"
+    format_down = "No battery"
+    status_chr = "⚇ CHR"
+    status_bat = "⚡ BAT"
+    status_full = "☻ FULL"
+    path = "/sys/class/power_supply/BAT%d/uevent"
+    low_threshold = 10
 }
 
 run_watch DHCP {
@@ -57,7 +63,8 @@ disk "/" {
 }
 
 volume master {
-    format = "♪:%volume"
+    format = "♪: %volume"
+    format_muted = "♪: muted (%volume)"
     device = "default"
     mixer = "Master"
     mixer_idx = 0
