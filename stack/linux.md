@@ -1,3 +1,6 @@
+Q:archlinux enbale sound in archlinux;
+A:`sudo pacman -S pulseaudio`
+
 Q:How long you need to startup your os?
 A:systemd-analyze time
 you will get some info like this:
