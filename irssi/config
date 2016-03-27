@@ -128,7 +128,8 @@ channels = (
   { name = "#netfuze"; chatnet = "NetFuze"; autojoin = "No"; },
   { name = "#oftc"; chatnet = "OFTC"; autojoin = "No"; },
   { name = "silc"; chatnet = "SILC"; autojoin = "No"; },
-  { name = "#neovim"; chatnet = "Freenode"; autojoin = "yes"; }
+  { name = "#neovim"; chatnet = "Freenode"; autojoin = "yes"; },
+  { name = "#rust-beginners"; chatnet = "Freenode"; autojoin = "yes"; },
   { name = "#archlinux-cn"; chatnet = "Freenode"; autojoin = "yes"; }
 );
 

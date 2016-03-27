@@ -38,6 +38,19 @@ bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 1 +5% #increase sound vo
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume 1 -5% #decrease sound volume
 bindsym XF86AudioMute exec pactl set-sink-mute 1 toggle # mute sound
 
+
+# => 系统管理（Pause Break键呼出)
+set $mode_system 系统设置:锁屏(L) 注销(O) 关机(S) 重启(R) 取消(Esc)
+mode "$mode_system" {
+    bindsym l exec i3lock -c '#333333', exec sleep .1 && exec xset dpms force off, mode "default"
+    bindsym o exec i3-msg exit
+    bindsym s exec systemctl poweroff
+    bindsym r exec systemctl reboot
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+}
+bindsym Pause mode "$mode_system"
+
 # kill focused window
 bindsym $mod+Shift+q kill
 

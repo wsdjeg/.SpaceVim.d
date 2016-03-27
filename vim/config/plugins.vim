@@ -537,5 +537,8 @@ if s:enable_plug()
     if s:tap('open-brower.vim')
         call s:defind_hooks('open-brower.vim')
     endif
+    call s:add('racer-rust/vim-racer',          {'lazy' : 1 , 'on_ft' : 'rust'})
+    let g:racer_cmd = $HOME."/.cargo/bin/racer"
+    call s:add('rust-lang/rust.vim')
     call s:end()
 endif
