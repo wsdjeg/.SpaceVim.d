@@ -78,9 +78,9 @@ let g:settings.vim_help_language       = 'en'
 let g:settings.colorscheme             = 'gruvbox'
 let g:settings.colorscheme_default     = 'desert'
 let g:settings.filemanager             = 'vimfiler'
-let g:settings.plugin_manager          = 'neobundle'  " neobundle or dein or vim-plug
-let g:settings.checkinstall            = 0
-let g:settings.hiddenfileinfo            = 0
+let g:settings.plugin_manager          = 'dein'  " neobundle or dein or vim-plug
+let g:settings.checkinstall            = 1
+let g:settings.hiddenfileinfo          = 1
 let g:settings.plugin_groups_exclude   = []
 
 
