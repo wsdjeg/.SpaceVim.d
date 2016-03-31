@@ -49,6 +49,8 @@ fi
 # Install configuration
 symlink 'fonts'
 symlink 'config/i3/config'
+symlink 'config/vifm'
+symlink 'config/nvim'
 symlink 'config/i3status/config'
 symlink 'config/fcitx/config'
 symlink 'config/termite/config'
@@ -61,7 +63,6 @@ symlink 'gitconfig'
 symlink 'gitignore'
 symlink 'gtkrc-2.0'
 symlink 'inputrc'
-symlink 'vim'
 symlink 'zshrc'
 symlink 'vimperatorrc'
 
@@ -72,12 +73,12 @@ else
     symlink 'xprofile'
 fi
 
-if [ -e ~/.config/nvim ]
+if [ -e ~/.vim ]
 then
-    printf "Installed $RED~/.config/nvim$NC\n"
+    printf "Installed $RED~/.vim$NC\n"
 else
-    printf "Linking $CYAN~/.config/nvim$NC -> $BLUE$PWD/vim$NC\n"
-    ln -s $PWD/vim ~/.config/nvim
+    printf "Linking $CYAN~/.vim$NC -> $BLUE$PWD/config/nvim$NC\n"
+    ln -s $PWD/config/nvim ~/.vim
 fi
 
 # Install bash-git-prompt
