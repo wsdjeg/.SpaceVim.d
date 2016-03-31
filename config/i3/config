@@ -38,6 +38,8 @@ bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 1 +5% #increase sound vo
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume 1 -5% #decrease sound volume
 bindsym XF86AudioMute exec pactl set-sink-mute 1 toggle # mute sound
 
+# synclient contril
+bindsym XF86TouchpadToggle exec "synclient TouchpadOff=$(synclient | awk '/TouchpadOff/ {print ($3+1)%2}')"
 
 # => 系统管理（Pause Break键呼出)
 set $mode_system 系统设置:锁屏(L) 注销(O) 关机(S) 重启(R) 取消(Esc)
