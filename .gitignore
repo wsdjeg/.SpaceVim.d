@@ -8,3 +8,4 @@ vim/.flooignore
 *.init.vim-rplugin~
 vim/config/local.vim
 vimperator/
+**/vifminfo
