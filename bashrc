@@ -124,7 +124,6 @@ fi
 GIT_PROMPT_ONLY_IN_REPO=1
 GIT_PROMPT_THEME=Single_line_Solarized
 source ~/.bash-git-prompt/gitprompt.sh
-source /usr/share/git/completion/git-completion.bash
 if [[ $- == *i* ]]
 then
     bind '"\e[A": history-search-backward'
