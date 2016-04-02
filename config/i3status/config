@@ -72,5 +72,5 @@ volume master {
 }
 
 cpu_usage {
-	format = "CPU: %usage"
+    format = "CPU: %usage"
 }
