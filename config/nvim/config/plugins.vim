@@ -210,6 +210,7 @@ if s:enable_plug()
                     \    'unite_sources': ['grep/git', 'grep/hg'],
                     \}})
         call s:add('klen/unite-radio.vim')
+        let g:unite_source_radio_play_cmd='mpv'
         "call s:add('ujihisa/quicklearn')
     endif "}}}
 
