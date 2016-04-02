@@ -13,6 +13,7 @@ general {
 
 order += "ipv6"
 order += "disk /"
+order += "cpu_usage"
 order += "run_watch DHCP"
 order += "run_watch VPN"
 order += "wireless _first_"
@@ -70,3 +71,6 @@ volume master {
     mixer_idx = 0
 }
 
+cpu_usage {
+	format = "CPU: %usage"
+}
