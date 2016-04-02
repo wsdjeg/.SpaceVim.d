@@ -1,6 +1,9 @@
 Q:archlinux enbale sound in archlinux;
 A:`sudo pacman -S pulseaudio`
 
+Q:termite true color support;
+A:`./configure --with-gtk=3.0`,then build from source
+
 Q:How long you need to startup your os?
 A:systemd-analyze time
 you will get some info like this:
