@@ -48,10 +48,18 @@ fi
 
 # Install configuration
 symlink 'fonts'
+# mail
+symlink 'mutt'
+symlink 'getmail'
+symlink 'muttrc'
+symlink 'msmtprc'
+symlink 'procmailrc'
+symlink 'mailcap'
+# windows manager
 symlink 'config/i3/config'
+symlink 'config/i3status/config'
 symlink 'config/vifm'
 symlink 'config/nvim'
-symlink 'config/i3status/config'
 symlink 'config/fcitx/config'
 symlink 'config/termite/config'
 symlink 'weechat/plugins.conf'

@@ -14,6 +14,7 @@
 1. jdk 1.8
 2. Vim 7.3.885+ compiled with lua. If :echo has("lua") returns 1, then you're done;
 3. recommend to use neovim
+4. mutt getmail procmail msmtp
 
 
 ### Install
