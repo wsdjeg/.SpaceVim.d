@@ -383,6 +383,7 @@ statusbar = {
       };
     };
     awl_0 = {
+      position = "3";
       items = {
         barstart = { priority = "100"; };
         awl_0 = { };
@@ -412,6 +413,13 @@ settings = {
     use_status_window = "yes";
     window_history = "yes";
   };
-  "perl/core/scripts" = { awl_shared_sbar = "OFF"; awl_viewer = "no"; };
+  "perl/core/scripts" = {
+    awl_shared_sbar = "OFF";
+    awl_viewer = "no";
+    awl_maxlines = "1";
+    awl_placement = "bottom";
+    awl_position = "3";
+  };
 };
 ignores = ( { level = "JOINS QUITS"; } );
+logs = { };
