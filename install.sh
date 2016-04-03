@@ -30,6 +30,10 @@ if [ ! -d "$HOME/.irssi" ];then
     mkdir ~/.irssi
 fi
 
+if [ ! -d "$HOME/.irssi/scripts" ];then
+    mkdir ~/.irssi/scripts
+fi
+
 if [ ! -d "$HOME/.weechat" ];then
     mkdir ~/.weechat
 fi
@@ -110,3 +114,18 @@ else
     ~/.fzf/install
     printf "$BLUE Finished Installing fzf$NC\n"
 fi
+
+# Install irssi script
+irssi_add () {
+    SCRIPT=$HOME/.irssi/scripts/$1.pl
+    SCRIPTUP=https://github.com/irssi/scripts.irssi.org/blob/gh-pages/scripts/$1.pl
+    if [ -e "$SCRIPT" ]
+    then
+        printf "Installed $RED$SCRIPT$NC\n"
+    else
+        printf "$CYAN Downloading  $1.pl -> $BLUE$SCRIPT$NC\n"
+        curl -fLo $SCRIPT --create-dirs $SCRIPTUP
+        printf "$BLUE Finished Downloading$NC\n"
+    fi
+}
+irssi_add 'adv_windowlist'
