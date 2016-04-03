@@ -9,5 +9,5 @@ vim/.flooignore
 vim/config/local.vim
 vimperator/
 **/vifminfo
-getmail/getmail*
+getmail/getmail[.r]*
 getmail/oldmail*

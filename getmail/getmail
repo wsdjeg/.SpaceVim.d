@@ -1,0 +1,2 @@
+#!/bin/bash
+getmail -v -n -r ~/.getmail/getmailrc_outlook
