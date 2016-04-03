@@ -5,10 +5,22 @@ servers = (
     port = "6697";
     use_ssl = "yes";
   },
-  { address = "irc.dal.net"; chatnet = "DALnet"; port = "6667"; },
-  { address = "irc.efnet.org"; chatnet = "EFNet"; port = "6667"; },
-  { address = "irc.esper.net"; chatnet = "EsperNet"; port = "6667"; },
-  { 
+  {
+    address = "irc.dal.net";
+    chatnet = "DALnet";
+    port = "6667";
+  },
+  {
+    address = "irc.efnet.org";
+    chatnet = "EFNet";
+    port = "6667";
+  },
+  {
+    address = "irc.esper.net";
+    chatnet = "EsperNet";
+    port = "6667";
+  },
+  {
     address = "chat.freenode.net";
     chatnet = "Freenode";
     port = "6667";
@@ -18,23 +30,47 @@ servers = (
     chatnet = "GameSurge";
     port = "6667";
   },
-  { address = "eu.irc6.net"; chatnet = "IRCnet"; port = "6667"; },
-  { address = "open.ircnet.net"; chatnet = "IRCnet"; port = "6667"; },
+  {
+    address = "eu.irc6.net";
+    chatnet = "IRCnet";
+    port = "6667";
+  },
+  {
+    address = "open.ircnet.net";
+    chatnet = "IRCnet";
+    port = "6667";
+  },
   {
     address = "irc.ircsource.net";
     chatnet = "IRCSource";
     port = "6667";
   },
-  { address = "irc.netfuze.net"; chatnet = "NetFuze"; port = "6667"; },
-  { address = "irc.oftc.net"; chatnet = "OFTC"; port = "6667"; },
-  { 
+  {
+    address = "irc.netfuze.net";
+    chatnet = "NetFuze";
+    port = "6667";
+  },
+  {
+    address = "irc.oftc.net";
+    chatnet = "OFTC";
+    port = "6667";
+  },
+  {
     address = "irc.quakenet.org";
     chatnet = "QuakeNet";
     port = "6667";
   },
-  { address = "irc.rizon.net"; chatnet = "Rizon"; port = "6667"; },
-  { address = "silc.silcnet.org"; chatnet = "SILC"; port = "706"; },
-  { 
+  {
+    address = "irc.rizon.net";
+    chatnet = "Rizon";
+    port = "6667";
+  },
+  {
+    address = "silc.silcnet.org";
+    chatnet = "SILC";
+    port = "706";
+  },
+  {
     address = "irc.undernet.org";
     chatnet = "Undernet";
     port = "6667";
@@ -42,7 +78,7 @@ servers = (
 );
 
 chatnets = {
-  Ubuntu = { 
+  Ubuntu = {
     type = "IRC";
     max_kicks = "1";
     max_msgs = "4";
@@ -54,7 +90,7 @@ chatnets = {
     max_msgs = "20";
     max_whois = "30";
   };
-  EFNet = { 
+  EFNet = {
     type = "IRC";
     max_kicks = "1";
     max_msgs = "4";
@@ -78,7 +114,7 @@ chatnets = {
     max_msgs = "1";
     max_whois = "1";
   };
-  IRCnet = { 
+  IRCnet = {
     type = "IRC";
     max_kicks = "1";
     max_msgs = "1";
@@ -96,20 +132,27 @@ chatnets = {
     max_msgs = "1";
     max_whois = "1";
   };
-  OFTC = { type = "IRC"; max_kicks = "1"; max_msgs = "1"; max_whois = "1"; };
+  OFTC = {
+    type = "IRC";
+    max_kicks = "1";
+    max_msgs = "1";
+    max_whois = "1";
+  };
   QuakeNet = {
     type = "IRC";
     max_kicks = "1";
     max_msgs = "1";
     max_whois = "1";
   };
-  Rizon = { 
+  Rizon = {
     type = "IRC";
     max_kicks = "1";
     max_msgs = "1";
     max_whois = "1";
   };
-  SILC = { type = "SILC"; };
+  SILC = {
+    type = "SILC";
+  };
   Undernet = {
     type = "IRC";
     max_kicks = "1";
@@ -382,17 +425,32 @@ statusbar = {
         topicbarend = { priority = "100"; alignment = "right"; };
       };
     };
+    awl_0 = {
+      items = {
+        barstart = { priority = "100"; };
+        awl_0 = { };
+        barend = { priority = "100"; alignment = "right"; };
+      };
+    };
   };
 };
 settings = {
   "fe-text" = { actlist_sort = "refnum"; term_force_colors = "yes"; };
-  core = { real_name = "wsdjeg"; user_name = "wsdjeg"; nick = "wsdjeg"; };
+  core = { real_name = "Wang Shidong"; user_name = "wsdjeg"; nick = "wsdjeg"; };
   "fe-common/core" = {
-    use_status_window = "yes";
-    use_msgs_window = "no";
-    show_names_on_join = "no";
+    autolog = "yes";
+    autolog_path = "~/.irssi/irclogs/$tag/$0.log";
+    awaylog_colors = "no";
+    beep_msg_level = "MSGS NOTICES DCC DCCMSGS HILIGHT";
+    beep_when_away = "yes";
+    bell_beeps = "yes";
     max_command_history = "1000";
+    show_names_on_join = "no";
+    theme = "default.theme";
+    use_msgs_window = "no";
+    use_status_window = "yes";
     window_history = "yes";
   };
+  "perl/core/scripts" = { awl_shared_sbar = "OFF"; awl_viewer = "no"; };
 };
 ignores = ( { level = "JOINS QUITS"; } );
