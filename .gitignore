@@ -10,3 +10,4 @@ vim/config/local.vim
 vimperator/
 **/vifminfo
 getmail/getmail*
+getmail/oldmail*
