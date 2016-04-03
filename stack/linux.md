@@ -1,8 +1,11 @@
 Q:archlinux enbale sound in archlinux;
 A:`sudo pacman -S pulseaudio`
 
-Q:archlinux issri issue about Text::CharWidth module;
+Q:archlinux issri issue about Text::CharWidth module(adv_windowlist);
 A:`sudo pacman -S perl-text-charwidth`
+
+Q:archlinux issri issue about Date::Format module(queryresume);
+A:`sudo pacman -S perl-timedate`
 
 Q:termite true color support;
 A:`./configure --with-gtk=3.0`,then build from source

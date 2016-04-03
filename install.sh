@@ -26,12 +26,8 @@ symlink () {
 }
 
 # Create directorys
-if [ ! -d "$HOME/.irssi" ];then
-    mkdir ~/.irssi
-fi
-
-if [ ! -d "$HOME/.irssi/scripts" ];then
-    mkdir ~/.irssi/scripts
+if [ ! -d "$HOME/.irssi/scripts/autorun" ];then
+    mkdir -p ~/.irssi/scripts/autorun
 fi
 
 if [ ! -d "$HOME/.weechat" ];then
@@ -118,6 +114,7 @@ fi
 # Install irssi script
 irssi_add () {
     SCRIPT=$HOME/.irssi/scripts/$1.pl
+    SCRIPTAUTO=$HOME/.irssi/scripts/autorun/$1.pl
     SCRIPTUP=https://raw.githubusercontent.com/irssi/scripts.irssi.org/gh-pages/scripts/$1.pl
     if [ -e "$SCRIPT" ]
     then
@@ -127,5 +124,22 @@ irssi_add () {
         curl -fLo $SCRIPT --create-dirs $SCRIPTUP
         printf "$BLUE Finished Downloading$NC\n"
     fi
+    if [ $# == 2 ]
+    then
+        if [ $2 -eq 1 ]
+        then
+            if [ -e "$SCRIPTAUTO" ]
+            then
+                printf "Installed $RED$SCRIPTAUTO$NC\n"
+            else
+                ln -s "$SCRIPT" "$SCRIPTAUTO"
+                printf "Linking $CYAN$SCRIPTAUTO$NC -> $BLUE$SCRIPT$NC\n"
+            fi
+        fi
+    fi
 }
-irssi_add 'adv_windowlist'
+irssi_add 'adv_windowlist' '1'
+irssi_add 'go' '1'
+irssi_add 'queryresume' '1'
+irssi_add 'trackbar' '1'
+irssi_add 'nickcolor' '1'
