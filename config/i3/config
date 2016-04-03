@@ -137,6 +137,11 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
+
+# switch between the current and the previously focused one
+bindsym $mod+Tab workspace back_and_forth
+workspace_auto_back_and_forth no
+
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
