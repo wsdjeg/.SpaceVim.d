@@ -1,3 +1,6 @@
+Q:how to find a package in archlinux;
+A:pkgfile is a tool to find out what package owns a file, even if said package is not installed. pacman -S pkgfile; pkgfile -u; pkgfile -s <file>
+
 Q:archlinux enbale sound in archlinux;
 A:`sudo pacman -S pulseaudio`
 
