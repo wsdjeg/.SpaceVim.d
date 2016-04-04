@@ -217,8 +217,7 @@ if s:enable_plug()
 
     "{{{ctrlpvim settings
     if count(g:settings.plugin_groups, 'ctrlp') "{{{
-        call s:add('ctrlpvim/ctrlp.vim',{'on_cmd':'CtrlP'})
-        nnoremap <silent><c-p> :<c-u>CtrlP<cr>
+        call s:add('ctrlpvim/ctrlp.vim')
         if s:tap('ctrlp.vim')
             call s:defind_hooks('ctrlp.vim')
         endif
@@ -243,7 +242,7 @@ if s:enable_plug()
         call s:add('tacahiroy/ctrlp-funky',          { 'lazy' : 1 , 'on_cmd' : 'CtrlPFunky'})
         call s:add('mattn/ctrlp-launcher',           { 'lazy' : 1 , 'on_cmd' : 'CtrlPLauncher'})
         call s:add('sgur/ctrlp-extensions.vim',      { 'lazy' : 1 , 'on_cmd' : ['CtrlPCmdline','CtrlPMenu','CtrlPYankring']})
-        call s:add('FelikZ/ctrlp-py-matcher',      { 'lazy' : 1 , 'on_source' : 'ctrlp.vim'})
+        call s:add('FelikZ/ctrlp-py-matcher')
     endif "}}}
 
 
