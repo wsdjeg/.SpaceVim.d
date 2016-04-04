@@ -217,7 +217,8 @@ if s:enable_plug()
 
     "{{{ctrlpvim settings
     if count(g:settings.plugin_groups, 'ctrlp') "{{{
-        call s:add('ctrlpvim/ctrlp.vim')
+        call s:add('ctrlpvim/ctrlp.vim',{'on_cmd':'CtrlP'})
+        nnoremap <silent><c-p> :<c-u>CtrlP<cr>
         if s:tap('ctrlp.vim')
             call s:defind_hooks('ctrlp.vim')
         endif
