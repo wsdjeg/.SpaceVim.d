@@ -292,3 +292,6 @@ abstracts = {
   # hilight with specified color, $0 = color, $1 = text
   sb_act_hilight_color = "$0$1-%n";
 };
+formats = {
+  "fe-common/core" = { pubmsg = "{pubmsgnick $2 {pubnick \00311$0}}$1"; };
+};

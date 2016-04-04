@@ -319,7 +319,7 @@ statusbar = {
 
     window = {
 
-      disabled = "no";
+      disabled = "yes";
       type = "window";
       placement = "bottom";
       position = "1";
@@ -327,8 +327,6 @@ statusbar = {
 
       items = {
         barstart = { priority = "100"; };
-        time = { };
-        user = { };
         window = { };
         window_empty = { };
         lag = { priority = "-1"; };
