@@ -293,5 +293,12 @@ abstracts = {
   sb_act_hilight_color = "$0$1-%n";
 };
 formats = {
-  "fe-common/core" = { pubmsg = "{pubmsgnick $2 {pubnick \00311$0}}$1"; };
+  "fe-common/core" = { pubmsg = "{pubmsgnick $2 {pubnick \00305$0}}$1"; };
+  "Irssi::Script::adv_windowlist" = {
+    awl_display_header = "%z8f3f71%W$C|${N}";
+    awl_display_key_active = "%zd65d0e$Q${cumode_space}$H$C$S";
+    awl_separator = "%z3c3836][%n";
+    awl_separator2 = "%z3c3836][%n";
+    awl_abbrev_chars = "~";
+  };
 };
