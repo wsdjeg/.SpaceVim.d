@@ -18,6 +18,12 @@ complete -cf sudo
 # append to the history file, don't overwrite it
 shopt -s histappend
 
+# Line wrap on window resize
+shopt -s checkwinsize
+
+# enable autocd feature
+shopt -s autocd
+
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=100000
 HISTFILESIZE=200000
