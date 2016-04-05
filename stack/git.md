@@ -116,3 +116,11 @@ git fetch
 Q: How do I make git use the editor of my choice for commits?
 
 A: `git config --global core.editor "nvim"`
+
+Q: How to change orgin url?
+A:
+```sh
+git remote remove origin
+git remote add origin <url>
+git branch --set-upstream-to=origin/master
+```
