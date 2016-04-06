@@ -23,28 +23,28 @@ if has('nvim')
 endif
 
 "for buftabs
-noremap <Leader>bp :bprev<CR>
-noremap <Leader>bn :bnext<CR>
+noremap <silent><Leader>bp :bprev<CR>
+noremap <silent><Leader>bn :bnext<CR>
 
 "Quickly add empty lines
-nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>
-nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
+nnoremap <silent>[<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>
+nnoremap <silent>]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 
 "Use jk switch to normal model
 inoremap jk <esc>
 
 "]e or [e move current line ,count can be useed
-nnoremap [e  :<c-u>execute 'move -1-'. v:count1<cr>
-nnoremap ]e  :<c-u>execute 'move +'. v:count1<cr>
+nnoremap <silent>[e  :<c-u>execute 'move -1-'. v:count1<cr>
+nnoremap <silent>]e  :<c-u>execute 'move +'. v:count1<cr>
 
 "Ctrl+Shift+上下移动当前行
-nnoremap <C-S-Down> :m .+1<CR>==
-nnoremap <C-S-Up> :m .-2<CR>==
-inoremap <C-S-Down> <Esc>:m .+1<CR>==gi
-inoremap <C-S-Up> <Esc>:m .-2<CR>==gi
+nnoremap <silent><C-S-Down> :m .+1<CR>==
+nnoremap <silent><C-S-Up> :m .-2<CR>==
+inoremap <silent><C-S-Down> <Esc>:m .+1<CR>==gi
+inoremap <silent><C-S-Up> <Esc>:m .-2<CR>==gi
 "上下移动选中的行
-vnoremap <C-S-Down> :m '>+1<CR>gv=gv
-vnoremap <C-S-Up> :m '<-2<CR>gv=gv
+vnoremap <silent><C-S-Down> :m '>+1<CR>gv=gv
+vnoremap <silent><C-S-Up> :m '<-2<CR>gv=gv
 "background
 noremap <silent><leader>bg :call ToggleBG()<CR>
 "numbers
