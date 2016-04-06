@@ -75,6 +75,7 @@ symlink 'gtkrc-2.0'
 symlink 'inputrc'
 symlink 'zshrc'
 symlink 'vimperatorrc'
+symlink 'backgrounds'
 
 if cat /etc/issue | grep Ubuntu &> /dev/null;then
     printf "$RED""Warning ""$NC""$BLUE""This is ubuntu,and will skip xinitrc$NC\n"
