@@ -457,6 +457,10 @@ if s:enable_plug()
     call s:add('mhinz/vim-signify')
     let g:signify_disable_by_default = 0
     let g:signify_line_highlight = 0
+    call s:add('mhinz/vim-grepper' , { 'on_cmd' : 'Grepper' } )
+    if s:tap('vim-grepper')
+        call s:defind_hooks('vim-grepper')
+    endif
     call s:add('airblade/vim-rooter')
     let g:rooter_silent_chdir = 1
     call s:add('Yggdroot/indentLine')
