@@ -46,6 +46,14 @@ if [ ! -d "$HOME/.config/i3status" ];then
     mkdir ~/.config/i3status
 fi
 
+if [ $# -eq 1 ]
+then
+    case $1 in
+        nvim)
+            symlink 'config/nvim'
+            exit 0
+    esac
+fi
 # Install configuration
 symlink 'fonts'
 # mail
