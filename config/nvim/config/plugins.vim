@@ -109,7 +109,9 @@ fu! s:defind_hooks(bundle)
             call zvim#util#source_rc('plugins/' . split(a:bundle['name'],'\.')[0] . '.vim')
         endf
     elseif g:settings.plugin_manager == 'dein'
-        exec "autocmd User dein#source#" . g:dein#name ." call zvim#util#source_rc('plugins/" . split(g:dein#name,'\.')[0] . ".vim')"
+        call dein#config(g:dein#name, {
+		\ 'hook_source' : "call zvim#util#source_rc('plugins/" . split(g:dein#name,'\.')[0] . ".vim')"
+        \ })
     endif
 endf
 fu! s:fetch()

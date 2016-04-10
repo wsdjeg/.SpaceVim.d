@@ -72,3 +72,232 @@ Java语言规范要求euqals方法具有下面的特征：
 ### LINKS
 
 [java8-the-missing-tutorial](https://github.com/shekhargulati/java8-the-missing-tutorial)
+
+##JavaWeb开发学习笔记
+
+###求解给定List中和为指定数值对所有可能组合
+
+1. 利用递归循环,求出所有组合可能 并存入List中,再存入List<List>中,遍历 判断 筛选最终组合
+
+2. 对给定的List进行处理,排序,求最多最少可能取值对个数
+
+3. 用String 替换掉List 并连同已取值求和 和取值位置 以及 等信息 传参,在取最后一个数时进行判断,若值等于sum 则追加String
+
+
+### MVN新建java应用
+```shell
+mvn archetype:generate -DgroupId=com.howtodoinjava -DartifactId=DemoJavaProject
+\-DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+```
+```shell
+mvn archetype:generate -DgroupId=com.test -DartifactId=web-app -DarchetypeArtifactId=maven-archetype-webapp -DinteractiveMode=false
+```
+Struts2 环境搭建
+pom.xml
+```xml
+        <dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts2-core</artifactId>
+            <version>2.5-BETA2</version>
+        </dependency>
+
+```
+wen.xml
+```xml
+    <filter>
+        <filter-name>struts2</filter-name>
+        <filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</filter-class>
+        <!--<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>-->
+    </filter>
+
+    <filter-mapping>
+        <filter-name>struts2</filter-name>
+        <url-pattern>*.action</url-pattern>
+    </filter-mapping>
+```
+struts.xml
+```xml
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <include file="struts-default.xml"></include>
+    <package name="a" extends="struts-default">
+       <action name="helloworld" class="com.wsdjeg.action.HelloWorldAction">
+           <result>/result.jsp</result>
+       </action>
+       <action name="product-input" class="com.wsdjeg.action.ProductAction" method="save">
+           <!--
+                result 子标签 包含 name 属性 匹配方法返回值
+                type 标签说明响应类型
+                标签体为响应目的地
+
+
+            -->
+           <result name="success" type="dispatcher">/WEB-INF/page/productdetails.jsp</result>
+       </action>
+       <action name="productlist" class="com.wsdjeg.action.ProductAction" method="listAll">
+           <result>/WEB-INF/page/productlist.jsp</result>
+       </action>
+    </package>
+</struts>
+```
+
+mvn 单元测试
+mvn test -Dtest=com.wsdjeg.test.HibernateTestTest
+
+pom.xml
+```
+<dependency>
+      <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+                  <version>4.11</version>
+                        <scope>test</scope>
+                            </dependency>
+```
+```java
+import org.junit.Assert;
+import org.junit.Test;
+
+public class DaemonTest{
+    @Test
+    public void test(){}
+}
+
+
+```
+
+###jQuery study notes
+
+install jQuery by maven
+
+
+add this dependency into pom.xml
+```xml
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>3.0.0-alpha1</version>
+        </dependency>
+
+```
+
+test.jsp
+
+```jsp
+
+<%@ page language="java" contentType = "text/html;charset=UTF-8"
+pageEncoding="UTF-8"%>
+<html>
+    <script type="text/javascript" src="webjars/jquery/3.0.0-alpha1/jquery.min.js"></script>
+    <script type="text/javascript">
+            $(document).ready(function(){
+                alert("helloworld");
+            });
+    </script>
+</html>
+```
+
+the conversion between object of jQuery and DOM
+
+```js
+var $cr = $("#cr"); //var cr = document.getElementById("cr"); only one object
+var cr = $cr[0];// var cr = $cr.get(0);
+```
+```js
+var cr = document.getElementById("cr");
+var $cr = $(cr);
+```
+
+jQuery 的优点
+
+1. 简洁
+```js
+$("#id")   //document.getElementById("id");需要判断此对象是否存在,才可以使用方法,否则浏览器报错
+$("tagName")  //document.getElementsByTagName("tagName")
+
+if(document.getElementById("id"))
+    document.getElementById("id").style.color = "red";
+
+//而使用jquery则不需要判断
+$("#id").css("color","red");
+```
+
+2. jQuery hide() show() toggle()
+
+```js
+$("#hide").click(function(){
+          $("p").hide();
+          });
+
+$("#show").click(function(){
+          $("p").show();
+          });
+<p>test</p>
+
+```
+$(selector).toggle(speed,callback);
+
+3. jQuery 淡入淡出效果
+
+jQuery fadeIn(speed,callback) fadeOut(speed,callback) fadeToggle(speed,callback)
+
+fadeTo(speed,opacity,callback)
+
+`0<opacity<1`
+
+4. jQuery 上下滑动效果
+
+jQuery slideDown(speed,callback) slideUp(speed,callback) slideToggle(speed,callback)
+
+
+5. jQuery animate({params},speed,callback)
+
+params 必须的
+
+```js
+$("button").click(function(){
+  var div=$("div");
+  div.animate({height:'300px',opacity:'0.4'},"slow");
+  div.animate({width:'300px',opacity:'0.8'},"slow");
+  div.animate({height:'100px',opacity:'0.4'},"slow");
+  div.animate({width:'100px',opacity:'0.8'},"slow");
+});
+```
+
+animate 队列按序执行
+
+5. stop(stopAll,gotoEnd)
+
+默认两个参数都是false
+
+6. callback函数
+
+为了避免动画结束之前,后续队列中的js语句执行产生错误或者冲突
+
+7. jQuery 方法链接技术
+
+```js
+$("#p1").css("color","red").slideUp(2000).slideDown(2000);
+```
+```js
+$("#p1").css("color","red")
+    .slideUp(2000)
+    .slideDown(2000);
+```
+
+8. html获取和设置 html() text() val() 均可以有回调函数 callback()
+
+
+```js
+$("#test").html()//获取
+$("#test").html("hello text!")//设置
+
+
+```
+9. 添加 append() prepend() after() before()
+
+```js
+//创建对象
+var text1 = "<p>test</p>"
+var text2 = $("<i></i>").text("test text!")
+
+```
