@@ -1,3 +1,6 @@
+Q:Why do not use gradle wapper?
+A:https://github.com/elastic/elasticsearch/pull/13744
+
 Q:how to find a package in archlinux;
 A:pkgfile is a tool to find out what package owns a file, even if said package is not installed. pacman -S pkgfile; pkgfile -u; pkgfile -s <file>
 
