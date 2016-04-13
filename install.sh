@@ -123,6 +123,16 @@ else
     printf "$BLUE Finished Installing fzf$NC\n"
 fi
 
+# Install maven bash complete
+if [ -e ~/.maven_bash_completion.bash ]
+then
+    printf "Installed $RED~/.maven_bash_completion.bash$NC\n"
+else
+    printf "$CYAN Downloading maven_bash_completion.bash -> $BLUE$HOME/.maven_bash_completion.bash$NC\n"
+    curl -fLo ~/.maven_bash_completion.bash https://raw.githubusercontent.com/juven/maven-bash-completion/master/bash_completion.bash
+    printf "$BLUE Finished Installing maven_bash_completion$NC\n"
+fi
+
 # Install irssi script
 irssi_add () {
     SCRIPT=$HOME/.irssi/scripts/$1.pl
