@@ -28,6 +28,10 @@ shopt -s autocd
 HISTSIZE=100000
 HISTFILESIZE=200000
 
+# enable zsh like auto nd 'set show-all-if-ambiguous on'
+bind 'set show-all-if-ambiguous on'
+bind 'TAB:menu-complete'
+
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
