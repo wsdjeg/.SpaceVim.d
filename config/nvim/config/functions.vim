@@ -60,24 +60,6 @@ function! XmlFileTypeInit()
     endif
 endf
 function! JavaFileTypeInit()
-    let b:javagetset_setterTemplate =
-                \ "/**\n" .
-                \ " * Set %varname%.\n" .
-                \ " *\n" .
-                \ " * @param %varname% the value to set.\n" .
-                \ " */\n" .
-                \ "%modifiers% void %funcname%(%type% %varname%){\n" .
-                \ "    this.%varname% = %varname%;\n" .
-                \ "}"
-    let b:javagetset_getterTemplate =
-                \ "/**\n" .
-                \ " * Get %varname%.\n" .
-                \ " *\n" .
-                \ " * @return %varname% as %type%.\n" .
-                \ " */\n" .
-                \ "%modifiers% %type% %funcname%(){\n" .
-                \ "    return %varname%;\n" .
-                \ "}"
     set omnifunc=javacomplete#Complete
     set tags +=~/others/openjdksrc/java/tags
     set tags +=~/others/openjdksrc/javax/tags

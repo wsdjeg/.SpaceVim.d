@@ -399,7 +399,7 @@ if s:enable_plug()
     call s:add('wsdjeg/vim-dict',                        { 'lazy' : 1 , 'on_ft' : 'java'})
     call s:add('wsdjeg/java_getset.vim',                 { 'lazy' : 1 , 'on_ft' : 'java'})
     if s:tap('java_getset.vim')
-        let g:java_getset_disable_map = 1
+        call s:defind_hooks('java_getset')
     endif
     call s:add('wsdjeg/JavaUnit.vim',                    { 'lazy' : 1 , 'on_ft' : 'java'})
     call s:add('jaxbot/github-issues.vim',               { 'lazy' : 1 , 'on_cmd' : 'Gissues'})
