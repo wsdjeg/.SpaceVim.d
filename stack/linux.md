@@ -237,3 +237,17 @@ esac
 exit 0
 $ sudo chmod 755 /usr/local/bin/pm
 ```
+
+### Install ruby
+
+sudo pacman -S ruby
+```
+The default location of gem installs is $HOME/.gem/ruby
+Add the following line to your PATH if you plan to install using gem
+$(ruby -rubygems -e "puts Gem.user_dir")/bin
+If you want to install to the system wide location, you must either:
+edit /etc/gemrc or run gem with the --no-user-install flag.
+Optional dependencies for ruby
+ruby-docs: Ruby documentation
+tk: for Ruby/TK
+```
