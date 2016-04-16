@@ -316,6 +316,7 @@ if s:enable_plug()
             if s:tap('deoplete.nvim')
                 call s:defind_hooks('deoplete.nvim')
             endif
+            call s:add('zchee/deoplete-jedi',      { 'lazy' : 1 , 'on_ft' : 'python'})
         endif "}}}
         call s:add('Shougo/neco-syntax',           { 'lazy' : 1 , 'on_i' : 1})
         call s:add('ujihisa/neco-look',            { 'lazy' : 1 , 'on_i' : 1})
@@ -363,6 +364,12 @@ if s:enable_plug()
         call s:add('mattn/vim-terminal',                 { 'lazy':1,'on_cmd':['Terminal']})
         call s:add('junegunn/vim-github-dashboard',      { 'lazy':1,'on_cmd':['GHD','GHA','GHActivity','GHDashboard']})
     endif
+    if count(g:settings.plugin_groups, 'nvim') "{{{
+        call s:add('m2mdas/phpcomplete-extended',            { 'lazy' : 1 , 'on_ft' : 'php'})
+        if s:tap('phpcomplete-extended')
+            call s:defind_hooks('phpcomplete-extended')
+        endif
+    endif
     call s:add('tpope/vim-scriptease')
     call s:add('tpope/vim-fugitive')
     call s:add('cohama/agit.vim',                        { 'lazy':1,'on_cmd':['Agit','AgitFile']})
@@ -405,10 +412,6 @@ if s:enable_plug()
     call s:add('jaxbot/github-issues.vim',               { 'lazy' : 1 , 'on_cmd' : 'Gissues'})
     call s:add('wsdjeg/Mysql.vim',                       { 'lazy' : 1 , 'on_cmd' : 'SQLGetConnection'})
     call s:add('vim-jp/vim-java',                        { 'lazy' : 1 , 'on_ft' : 'java'})
-    call s:add('m2mdas/phpcomplete-extended',            { 'lazy' : 1 , 'on_ft' : 'php'})
-    if s:tap('phpcomplete-extended')
-        call s:defind_hooks('phpcomplete-extended')
-    endif
     call s:add('vim-airline/vim-airline')
     call s:add('vim-airline/vim-airline-themes')
     if s:tap('vim-airline')
