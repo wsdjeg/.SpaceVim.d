@@ -110,8 +110,8 @@ fu! s:defind_hooks(bundle)
         endf
     elseif g:settings.plugin_manager == 'dein'
         call dein#config(g:dein#name, {
-		\ 'hook_source' : "call zvim#util#source_rc('plugins/" . split(g:dein#name,'\.')[0] . ".vim')"
-        \ })
+                    \ 'hook_source' : "call zvim#util#source_rc('plugins/" . split(g:dein#name,'\.')[0] . ".vim')"
+                    \ })
     endif
 endf
 fu! s:fetch()
@@ -363,6 +363,10 @@ if s:enable_plug()
         call s:add('Shougo/vimshell.vim',                { 'lazy':1,'on_cmd':['VimShell']})
         call s:add('mattn/vim-terminal',                 { 'lazy':1,'on_cmd':['Terminal']})
         call s:add('junegunn/vim-github-dashboard',      { 'lazy':1,'on_cmd':['GHD','GHA','GHActivity','GHDashboard']})
+        call s:add('davidhalter/jedi-vim',     { 'lazy' : 1 , 'on_ft' : 'python'})
+        if s:tap('jedi-vim')
+            call s:defind_hooks('jedi-vim')
+        endif
     endif
     if count(g:settings.plugin_groups, 'nvim') "{{{
         call s:add('m2mdas/phpcomplete-extended',            { 'lazy' : 1 , 'on_ft' : 'php'})
