@@ -32,6 +32,7 @@ autocmd FileType xml call XmlFileTypeInit()
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType php setlocal omnifunc=phpcomplete_extended#CompletePHP
 autocmd BufEnter *
             \   if empty(&buftype)&&has('nvim')
             \|      nnoremap <silent><buffer> <C-]> :call MyTagfunc()<CR>
