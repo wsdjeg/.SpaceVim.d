@@ -15,7 +15,7 @@ let g:startify_update_oldfiles = 1
 let g:startify_session_autoload = 1
 let g:startify_session_persistence = 1
 "let g:startify_session_delete_buffers = 0
-"let g:startify_change_to_dir = 1
+let g:startify_change_to_dir = 0
 "let g:startify_change_to_vcs_root = 0  " vim-rooter has same feature
 let g:startify_skiplist = [
             \ 'COMMIT_EDITMSG',
