@@ -19,10 +19,14 @@
 
 ### Install
 
+##### Linux
+you can use the install.sh script for vim or neovim;
+
 ```sh
 chmod +x install.sh
-./install.sh
+./install.sh nvim  # or ./install.sh vim
 ```
+
 
 ### Thanks
 

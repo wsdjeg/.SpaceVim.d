@@ -52,6 +52,22 @@ then
         nvim)
             symlink 'config/nvim'
             exit 0
+            ;;
+        vim)
+            if [ -e ~/.vimrc ]
+            then
+                mv ~/.vimrc ~/.vimrc_back
+                printf "Move $RED~/.vimrc to ~/.vimrc_back$NC\n"
+            fi
+            if [ -e ~/.vim ]
+            then
+                printf "Installed $RED~/.vim$NC\n"
+            else
+                printf "Linking $CYAN~/.vim$NC -> $BLUE$PWD/config/nvim$NC\n"
+                ln -s $PWD/config/nvim ~/.vim
+            fi
+            exit 0
+            ;;
     esac
 fi
 # Install configuration
