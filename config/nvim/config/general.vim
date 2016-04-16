@@ -42,7 +42,7 @@ set shiftwidth=4
 set backup
 set undofile
 set undolevels=1000
-let g:data_dir = $HOME.'/.data/'
+let g:data_dir = $HOME . '/.data/'
 let g:backup_dir = g:data_dir . 'backup'
 let g:swap_dir = g:data_dir . 'swap'
 let g:undo_dir = g:data_dir . 'undofile'
