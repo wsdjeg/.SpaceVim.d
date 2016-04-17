@@ -26,7 +26,9 @@ you can use the install.sh script for vim or neovim;
 chmod +x install.sh
 ./install.sh nvim  # or ./install.sh vim
 ```
+### Docs
 
+- VIM [README.md](config/nvim)
 
 ### Thanks
 
