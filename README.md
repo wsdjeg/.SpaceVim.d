@@ -1,6 +1,9 @@
 # awesome-dotfiles
 
 ## Screenshots
+
+![i3-wm](https://github.com/wsdjeg/DotFiles/blob/master/pic/i3-wm.png)
+
 ![conplete](https://github.com/wsdjeg/DotFiles/blob/master/pic/complete.png)
 
 ![check](https://github.com/wsdjeg/DotFiles/blob/master/pic/check.png)
