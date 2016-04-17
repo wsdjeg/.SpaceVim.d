@@ -39,6 +39,10 @@ bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 1 +5% #increase sound vo
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume 1 -5% #decrease sound volume
 bindsym XF86AudioMute exec pactl set-sink-mute 1 toggle # mute sound
 
+# Print screen
+bindsym Print exec --no-startup-id scrot '%Y-%m-%d-%T.png' -e 'mv $f ~/Pictures/'
+bindsym Shift+Print exec "scrot '%Y-%m-%d-%T.png' -e 'mv $f ~/Pictures/ ; feh ~/Pictures/%Y-%m-%d-%T.png'"
+
 # synclient contril
 bindsym XF86TouchpadToggle exec "synclient TouchpadOff=$(synclient | awk '/TouchpadOff/ {print ($3+1)%2}')"
 
