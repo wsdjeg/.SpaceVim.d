@@ -561,5 +561,6 @@ if s:enable_plug()
     call s:add('racer-rust/vim-racer',          {'lazy' : 1 , 'on_ft' : 'rust'})
     let g:racer_cmd = $HOME."/.cargo/bin/racer"
     call s:add('rust-lang/rust.vim')
+    call s:add('PotatoesMaster/i3-vim-syntax',  {'lazy' : 1 , 'on_ft' : 'i3'})
     call s:end()
 endif

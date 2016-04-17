@@ -189,3 +189,5 @@ bar {
         urgent_workspace #ffffff #990000
     }
 }
+
+# vim:filetype=i3
