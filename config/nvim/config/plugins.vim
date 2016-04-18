@@ -328,8 +328,8 @@ if s:enable_plug()
                     \ 'ref#complete'
         call s:add('Shougo/context_filetype.vim',  { 'lazy' : 1 , 'on_i' : 1})
         call s:add('Shougo/neoinclude.vim',        { 'lazy' : 1 , 'on_i' : 1})
-        call s:add('Shougo/neosnippet-snippets',   { 'lazy' : 1 , 'on_i' : 1})
-        call s:add('Shougo/neosnippet.vim',        { 'lazy' : 1 , 'on_i' : 1})
+        call s:add('Shougo/neosnippet-snippets',   { 'lazy' : 1 , 'on_i' : 1 , 'on_ft' : 'neosnippet'})
+        call s:add('Shougo/neosnippet.vim',        { 'lazy' : 1 , 'on_i' : 1 , 'on_ft' : 'neosnippet'})
         call s:add('Shougo/neopairs.vim',          { 'lazy' : 1 , 'on_i' : 1})
         let g:neosnippet#snippets_directory = fnamemodify(g:Config_Main_Home, ( has('nvim') ? ':p:h:h:h:h' : ':p:h:h:h')) . s:Fsep . 'snippets'
         let g:neosnippet#enable_snipmate_compatibility=1
