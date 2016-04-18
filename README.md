@@ -4,7 +4,7 @@
 
 ![i3-wm](https://github.com/wsdjeg/DotFiles/blob/master/pic/i3-wm.png)
 
-![conplete](https://github.com/wsdjeg/DotFiles/blob/master/pic/complete.png)
+![complete](https://github.com/wsdjeg/DotFiles/blob/master/pic/complete.png)
 
 ![check](https://github.com/wsdjeg/DotFiles/blob/master/pic/check.png)
 
@@ -16,7 +16,7 @@
 
 1. jdk 1.8
 2. Vim 7.3.885+ compiled with lua. If :echo has("lua") returns 1, then you're done;
-3. recommend to use neovim
+3. Recommend to use [neovim](https://neovim.io/)
 4. mutt getmail procmail msmtp
 
 
