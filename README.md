@@ -2,15 +2,15 @@
 
 ## Screenshots
 
-![i3-wm](https://github.com/wsdjeg/DotFiles/blob/master/pic/i3-wm.png)
+![i3-wm](pic/i3-wm.png)
 
-![complete](https://github.com/wsdjeg/DotFiles/blob/master/pic/complete.png)
+![complete](pic/complete.png)
 
-![check](https://github.com/wsdjeg/DotFiles/blob/master/pic/check.png)
+![check](pic/check.png)
 
-![import](https://github.com/wsdjeg/DotFiles/blob/master/pic/import.png)
+![import](pic/import.png)
 
-![gradle](https://github.com/wsdjeg/DotFiles/blob/master/pic/gradle_project.png)
+![gradle](pic/gradle_project.png)
 
 ### Requirements
 
