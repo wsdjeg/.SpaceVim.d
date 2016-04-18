@@ -37,6 +37,13 @@ inoremap jk <esc>
 nnoremap <silent>[e  :<c-u>execute 'move -1-'. v:count1<cr>
 nnoremap <silent>]e  :<c-u>execute 'move +'. v:count1<cr>
 
+"]<End> or ]<Home> move current line to the end or the begin of current buffer
+nnoremap <silent>]<End> ddGp``
+nnoremap <silent>]<Home> ddggP``
+vnoremap <silent>]<End> dGp``
+vnoremap <silent>]<Home> dggP``
+
+
 "Ctrl+Shift+上下移动当前行
 nnoremap <silent><C-S-Down> :m .+1<CR>==
 nnoremap <silent><C-S-Up> :m .-2<CR>==
