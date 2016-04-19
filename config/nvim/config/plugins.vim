@@ -541,10 +541,9 @@ if s:enable_plug()
     nnoremap <silent> <F7> :MundoToggle<CR>
     call s:add('TaskList.vim',                  { 'lazy' : 1 , 'on_cmd' : 'TaskList'})
     map <unique> <Leader>td <Plug>TaskList
-    call s:add('ianva/vim-youdao-translater',   { 'lazy':1,'on_cmd':['Ydv','Ydc','Yde']})
+    call s:add('ianva/vim-youdao-translater',   { 'lazy' : 1 , 'on_cmd' : ['Ydv','Ydc','Yde']})
     vnoremap <silent> <C-l> <Esc>:Ydv<CR>
     nnoremap <silent> <C-l> <Esc>:Ydc<CR>
-    noremap <leader>yd :Yde<CR>
     call s:add('elixir-lang/vim-elixir',        { 'lazy' : 1 , 'on_ft' : 'elixir'})
     call s:add('editorconfig/editorconfig-vim', { 'lazy' : 1 , 'on_cmd' : 'EditorConfigReload'})
     call s:add('junegunn/fzf',                  { 'lazy' : 1 , 'on_cmd' : 'FZF'})

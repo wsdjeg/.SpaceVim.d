@@ -1,5 +1,4 @@
 "mapping
-"{{{
 "全局映射
 "也可以通过'za'打开或者关闭折叠
 nnoremap <silent><leader><space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
@@ -7,6 +6,9 @@ nnoremap <silent><leader><space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<C
 "ino <C-v> <esc>:set paste<cr>mui<C-R>+<esc>mv'uV'v=:set nopaste<cr>
 "对于没有权限的文件使用 :w!!来保存
 cnoremap w!! %!sudo tee > /dev/null %
+" cmap W!! w !sudo tee % >/dev/null   " I can not understand
+" Save a file with sudo
+" http://forrst.com/posts/Use_w_to_sudo_write_a_file_with_Vim-uAN
 
 
 " 映射Ctrl+上下左右来切换窗口
@@ -56,3 +58,81 @@ vnoremap <silent><C-S-Up> :m '<-2<CR>gv=gv
 noremap <silent><leader>bg :call ToggleBG()<CR>
 "numbers
 noremap <silent><leader>nu :call ToggleNumber()<CR>
+
+" yark and paste
+vmap <Leader>y "+y
+vmap <Leader>d "+d
+nmap <Leader>p "+p
+nmap <Leader>P "+P
+vmap <Leader>p "+p
+vmap <Leader>P "+P
+
+" Start new line
+inoremap <S-Return> <C-o>o
+
+" Improve scroll, credits: https://github.com/Shougo
+nnoremap <expr> zz (winline() == (winheight(0)+1) / 2) ?
+	\ 'zt' : (winline() == 1) ? 'zb' : 'zz'
+noremap <expr> <C-f> max([winheight(0) - 2, 1])
+	\ ."\<C-d>".(line('w$') >= line('$') ? "L" : "H")
+noremap <expr> <C-b> max([winheight(0) - 2, 1])
+	\ ."\<C-u>".(line('w0') <= 1 ? "H" : "L")
+noremap <expr> <C-e> (line("w$") >= line('$') ? "j" : "3\<C-e>")
+noremap <expr> <C-y> (line("w0") <= 1         ? "k" : "3\<C-y>")
+
+" Select blocks after indenting
+xnoremap < <gv
+xnoremap > >gv|
+
+" Use tab for indenting in visual mode
+vnoremap <Tab> >gv|
+vnoremap <S-Tab> <gv
+nnoremap > >>_
+nnoremap < <<_
+
+" Select last paste
+nnoremap <expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
+
+" Navigate window
+nnoremap <C-q> <C-w>
+nnoremap <C-x> <C-w>x
+
+" When pressing <leader>cd switch to the directory of the open buffer
+" map <Leader>cd :cd %:p:h<CR>:pwd<CR>       "I use <Plug>RooterChangeToRootDirectory
+
+" Fast saving
+nnoremap <Leader>w :w<CR>
+vnoremap <Leader>w <Esc>:w<CR>
+nnoremap <C-s> :<C-u>w<CR>
+vnoremap <C-s> :<C-u>w<CR>
+cnoremap <C-s> <C-u>w<CR>
+
+" s: Windows and buffers {{{
+" Credits: https://github.com/Shougo/shougo-s-github
+" Window prefix
+nnoremap  [Window]   <Nop>
+nmap      s [Window]
+
+nnoremap <silent> <Tab>      :wincmd w<CR>
+nnoremap <silent> [Window]p  :<C-u>vsplit<CR>:wincmd w<CR>
+nnoremap <silent> [Window]v  :<C-u>split<CR>
+nnoremap <silent> [Window]g  :<C-u>vsplit<CR>
+nnoremap <silent> [Window]t  :tabnew<CR>
+nnoremap <silent> [Window]o  :<C-u>only<CR>
+nnoremap <silent> [Window]x  :<C-u>call <SID>BufferEmpty()<CR>
+nnoremap <silent> [Window]\  :b#<CR>
+nnoremap <silent> [Window]q  :close<CR>
+nnoremap <silent><expr> q winnr('$') != 1 ? ':<C-u>close<CR>' : ""
+
+" Split current buffer, go to previous window and previous buffer
+nnoremap <silent><Leader>sv :split<CR>:wincmd p<CR>:e#<CR>
+nnoremap <silent><Leader>sg :vsplit<CR>:wincmd p<CR>:e#<CR>
+
+function! s:BufferEmpty() "{{{
+	let l:current = bufnr('%')
+	if ! getbufvar(l:current, '&modified')
+		enew
+		silent! execute 'bdelete '.l:current
+	endif
+endfunction "}}}
+" }}}
