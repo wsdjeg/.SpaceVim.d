@@ -90,12 +90,25 @@ vnoremap <S-Tab> <gv
 nnoremap > >>_
 nnoremap < <<_
 
+" smart up and down
+nnoremap <silent><Down> gj
+nnoremap <silent><Up> gk
+
 " Select last paste
 nnoremap <silent><expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
+
+" Disable Q and gQ
+nnoremap Q <Nop>
+nnoremap gQ <Nop>
 
 " Navigate window
 nnoremap <silent><C-q> <C-w>
 nnoremap <silent><C-x> <C-w>x
+
+" Navigation in command line
+cnoremap <C-a> <Home>
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
 
 " When pressing <leader>cd switch to the directory of the open buffer
 " map <Leader>cd :cd %:p:h<CR>:pwd<CR>       "I use <Plug>RooterChangeToRootDirectory
@@ -107,6 +120,46 @@ nnoremap <C-s> :<C-u>w<CR>
 vnoremap <C-s> :<C-u>w<CR>
 cnoremap <C-s> <C-u>w<CR>
 
+" Toggle editor visuals
+nmap <Leader>ts :setlocal spell!<cr>
+nmap <Leader>tn :setlocal nonumber! norelativenumber!<CR>
+nmap <Leader>tl :setlocal nolist!<CR>
+nmap <Leader>th :nohlsearch<CR>
+nmap <Leader>tw :setlocal wrap! breakindent!<CR>
+
+" Tabs
+nnoremap <silent> g0 :<C-u>tabfirst<CR>
+nnoremap <silent> g$ :<C-u>tablast<CR>
+nnoremap <silent> gr :<C-u>tabprevious<CR>
+
+" Remove spaces at the end of lines
+nnoremap <silent> ,<Space> :<C-u>silent! keeppatterns %substitute/\s\+$//e<CR>
+
+" C-r: Easier search and replace
+xnoremap <C-r> :<C-u>call VSetSearch('/')<CR>:%s/\V<C-R>=@/<CR>//gc<Left><Left><Left>
+
+" Location list movement
+nmap <Leader>lj :lnext<CR>
+nmap <Leader>lk :lprev<CR>
+
+" Duplicate lines
+nnoremap <Leader>d m`YP``
+vnoremap <Leader>d YPgv
+
+" Quick manual search and replace
+nnoremap ± *``gn<C-g>
+inoremap ± <C-o>gn<C-g>
+snoremap <expr> . @.
+
+" Source line and selection in vim
+vnoremap <Leader>S y:execute @@<CR>:echo 'Sourced selection.'<CR>
+nnoremap <Leader>S ^vg_y:execute @@<CR>:echo 'Sourced line.'<CR>
+
+" Append modeline to EOF
+nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
+
+" Yank buffer's absolute path to X11 clipboard
+nnoremap <C-c> :let @+=expand("%:p")<CR>:echo 'Copied to clipboard.'<CR>
 " s: Windows and buffers {{{
 " Credits: https://github.com/Shougo/shougo-s-github
 " Window prefix

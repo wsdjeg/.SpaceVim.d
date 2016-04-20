@@ -266,6 +266,7 @@ Key   | Mode | Action
 `Ctrl`+`y` | Normal | Smart scroll up (3C-y/k)
 `Ctrl`+`q` | Normal | `Ctrl`+`w`
 `Ctrl`+`x` | Normal | Switch buffer and placement
+`Up,Down` | Normal | Smart up and down
 `}` | Normal | After paragraph motion go to first non-blank char (}^)
 `<` | Visual/Normal | Indent to left and re-select
 `>` | Visual/Normal | Indent to right and re-select
@@ -281,7 +282,7 @@ Key   | Mode | Action
 
 Key   | Mode | Action
 ----- |:----:| ------------------
-`<leader>`+`cd` | Normal | Switch to the directory of opened buffer (:cd %:p:h)
+`<leader>`+`cd` | Normal | Switch to the root directory(vim-rooter)
 `<leader>`+`w` | Normal/visual | Write (:w)
 `Ctrl`+`s` | _All_ | Write (:w)
 `W!!` | Command | Write as root
@@ -290,8 +291,8 @@ Key   | Mode | Action
 
 Key   | Mode | Action
 ----- |:----:| ------------------
-`F2` | _All_ | Toggle paste mode
-`F3` | Normal | Show highlight group that matches current cursor
+`F2` | _All_ | Toggle tagbar
+`F3` | _All_ | Toggle Vimfiler
 `<leader>`+`ts` | Normal | Toggle spell-checker (:setlocal spell!)
 `<leader>`+`tn` | Normal | Toggle line numbers (:setlocal nonumber!)
 `<leader>`+`tl` | Normal | Toggle hidden characters (:setlocal nolist!)
@@ -300,20 +301,17 @@ Key   | Mode | Action
 `g0` | Normal | Go to first tab (:tabfirst)
 `g$` | Normal | Go to last tab (:tablast)
 `gr` | Normal | Go to preview tab (:tabprevious)
-`Ctrl`+`j` | Normal | Move to split below (<C-w>j)
-`Ctrl`+`k` | Normal | Move to upper split (<C-w>k)
-`Ctrl`+`h` | Normal | Move to left split (<C-w>h)
-`Ctrl`+`l` | Normal | Move to right split (<C-w>l)
+`Ctrl`+`<Dow>` | Normal | Move to split below (<C-w>j)
+`Ctrl`+`<Up>` | Normal | Move to upper split (<C-w>k)
+`Ctrl`+`<Left>` | Normal | Move to left split (<C-w>h)
+`Ctrl`+`<Right>` | Normal | Move to right split (<C-w>l)
 `*` | Visual | Search selection forwards
 `#` | Visual | Search selection backwards
 `,`+`Space` | Normal | Remove all spaces at EOL
-`,`+`d` | Normal | Toggle diff
 `Ctrl`+`r` | Visual | Replace selection
 `<leader>`+`lj` | Normal | Next on location list
 `<leader>`+`lk` | Normal | Previous on location list
 `<leader>`+`S` | Normal/visual | Source selection
-`<leader>`+`ml` | Normal | Append modeline
-`f`+`z` | Normal | Focus the current fold by closing all others
 
 ### Window Management
 
