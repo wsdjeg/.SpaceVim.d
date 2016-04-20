@@ -91,11 +91,11 @@ nnoremap > >>_
 nnoremap < <<_
 
 " Select last paste
-nnoremap <expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
+nnoremap <silent><expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
 
 " Navigate window
-nnoremap <C-q> <C-w>
-nnoremap <C-x> <C-w>x
+nnoremap <silent><C-q> <C-w>
+nnoremap <silent><C-x> <C-w>x
 
 " When pressing <leader>cd switch to the directory of the open buffer
 " map <Leader>cd :cd %:p:h<CR>:pwd<CR>       "I use <Plug>RooterChangeToRootDirectory
