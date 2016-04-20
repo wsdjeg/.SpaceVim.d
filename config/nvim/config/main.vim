@@ -2,7 +2,7 @@ let g:Config_Main_Home = fnamemodify(expand('<sfile>'), ':p:h:gs?\\?'.((has('win
 try
     call zvim#util#source_rc('functions.vim')
 catch
-    execute "set rtp +=" . fnamemodify(g:Config_Main_Home, ( has('nvim') ? ':p:h:h' : ':p:h'))
+    execute "set rtp +=" . fnamemodify(g:Config_Main_Home, ':p:h:h')
     call zvim#util#source_rc('functions.vim')
 endtry
 
