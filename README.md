@@ -2,8 +2,13 @@
 
 ## Screenshots
 
+#### termite
 ![i3-wm](pic/i3-wm.png)
 
+#### irssi
+![irssi](pic/irssi.png)
+
+#### neovim && vim
 ![complete](pic/complete.png)
 
 ![check](pic/check.png)
