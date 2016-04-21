@@ -1,5 +1,7 @@
 # awesome-dotfiles
 
+[![Join the chat at https://gitter.im/wsdjeg/DotFiles](https://badges.gitter.im/wsdjeg/DotFiles.svg)](https://gitter.im/wsdjeg/DotFiles?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ## Screenshots
 
 #### termite
