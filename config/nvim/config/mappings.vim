@@ -72,11 +72,11 @@ inoremap <S-Return> <C-o>o
 
 " Improve scroll, credits: https://github.com/Shougo
 nnoremap <expr> zz (winline() == (winheight(0)+1) / 2) ?
-	\ 'zt' : (winline() == 1) ? 'zb' : 'zz'
+    \ 'zt' : (winline() == 1) ? 'zb' : 'zz'
 noremap <expr> <C-f> max([winheight(0) - 2, 1])
-	\ ."\<C-d>".(line('w$') >= line('$') ? "L" : "H")
+    \ ."\<C-d>".(line('w$') >= line('$') ? "L" : "H")
 noremap <expr> <C-b> max([winheight(0) - 2, 1])
-	\ ."\<C-u>".(line('w0') <= 1 ? "H" : "L")
+    \ ."\<C-u>".(line('w0') <= 1 ? "H" : "L")
 noremap <expr> <C-e> (line("w$") >= line('$') ? "j" : "3\<C-e>")
 noremap <expr> <C-y> (line("w0") <= 1         ? "k" : "3\<C-y>")
 
@@ -128,9 +128,9 @@ nmap <Leader>th :nohlsearch<CR>
 nmap <Leader>tw :setlocal wrap! breakindent!<CR>
 
 " Tabs
-nnoremap <silent> g0 :<C-u>tabfirst<CR>
-nnoremap <silent> g$ :<C-u>tablast<CR>
-nnoremap <silent> gr :<C-u>tabprevious<CR>
+nnoremap <silent>g0 :<C-u>tabfirst<CR>
+nnoremap <silent>g$ :<C-u>tablast<CR>
+nnoremap <silent>gr :<C-u>tabprevious<CR>
 
 " Remove spaces at the end of lines
 nnoremap <silent> ,<Space> :<C-u>silent! keeppatterns %substitute/\s\+$//e<CR>
@@ -139,8 +139,14 @@ nnoremap <silent> ,<Space> :<C-u>silent! keeppatterns %substitute/\s\+$//e<CR>
 xnoremap <C-r> :<C-u>call VSetSearch('/')<CR>:%s/\V<C-R>=@/<CR>//gc<Left><Left><Left>
 
 " Location list movement
-nmap <Leader>lj :lnext<CR>
-nmap <Leader>lk :lprev<CR>
+nmap <silent><Leader>lj :lnext<CR>
+nmap <silent><Leader>lk :lprev<CR>
+nmap <silent><Leader>lq :lclose<CR>
+
+" quickfix list movement
+nmap <silent><Leader>qj :cnext<CR>
+nmap <silent><Leader>qk :cprev<CR>
+nmap <silent><Leader>qq :cclose<CR>
 
 " Duplicate lines
 nnoremap <Leader>d m`YP``
@@ -156,10 +162,10 @@ vnoremap <Leader>S y:execute @@<CR>:echo 'Sourced selection.'<CR>
 nnoremap <Leader>S ^vg_y:execute @@<CR>:echo 'Sourced line.'<CR>
 
 " Append modeline to EOF
-nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
+nnoremap <silent><Leader>ml :call AppendModeline()<CR>
 
 " Yank buffer's absolute path to X11 clipboard
-nnoremap <C-c> :let @+=expand("%:p")<CR>:echo 'Copied to clipboard.'<CR>
+nnoremap <silent><C-c> :let @+=expand("%:p")<CR>:echo 'Copied to clipboard.'<CR>
 " s: Windows and buffers {{{
 " Credits: https://github.com/Shougo/shougo-s-github
 " Window prefix
@@ -176,16 +182,17 @@ nnoremap <silent> [Window]x  :<C-u>call <SID>BufferEmpty()<CR>
 nnoremap <silent> [Window]\  :b#<CR>
 nnoremap <silent> [Window]q  :close<CR>
 nnoremap <silent><expr> q winnr('$') != 1 ? ':<C-u>close<CR>' : ""
-
+" Use <leader>qr start or stop recording.
+nnoremap <silent> <Leader>qr q
 " Split current buffer, go to previous window and previous buffer
 nnoremap <silent><Leader>sv :split<CR>:wincmd p<CR>:e#<CR>
 nnoremap <silent><Leader>sg :vsplit<CR>:wincmd p<CR>:e#<CR>
 
 function! s:BufferEmpty() "{{{
-	let l:current = bufnr('%')
-	if ! getbufvar(l:current, '&modified')
-		enew
-		silent! execute 'bdelete '.l:current
-	endif
+    let l:current = bufnr('%')
+    if ! getbufvar(l:current, '&modified')
+        enew
+        silent! execute 'bdelete '.l:current
+    endif
 endfunction "}}}
 " }}}
