@@ -1,21 +1,5 @@
 # awesome-dotfiles
-
-## Screenshots
-
-#### termite
-![i3-wm](pic/i3-wm.png)
-
-#### irssi
-![irssi](pic/irssi.png)
-
-#### neovim && vim
-![complete](pic/complete.png)
-
-![check](pic/check.png)
-
-![import](pic/import.png)
-
-![gradle](pic/gradle_project.png)
+[![Gitter](https://badges.gitter.im/wsdjeg/DotFiles.svg)](https://gitter.im/wsdjeg/DotFiles?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 ### Requirements
 
@@ -51,4 +35,22 @@ chmod +x install.sh
 - [neosnippet.vim](https://github.com/Shougo/neosnippet.vim)
 
 > neo-snippet plugin contains neocomplcache snippets source
+
+
+## Screenshots
+
+#### termite
+![i3-wm](pic/i3-wm.png)
+
+#### irssi
+![irssi](pic/irssi.png)
+
+#### neovim && vim
+![complete](pic/complete.png)
+
+![check](pic/check.png)
+
+![import](pic/import.png)
+
+![gradle](pic/gradle_project.png)
 
