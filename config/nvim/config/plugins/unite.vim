@@ -6,7 +6,7 @@ call unite#custom#profile('default', 'context', {
             \   'safe': 0,
             \   'start_insert': 1,
             \   'short_source_names': 1,
-            \   'update_time': 500,
+            \   'update_time': 200,
             \   'direction': 'rightbelow',
             \   'winwidth': 40,
             \   'winheight': 15,
@@ -17,22 +17,22 @@ call unite#custom#profile('default', 'context', {
             \   'hide_icon': 0,
             \   'candidate-icon': ' ',
             \   'marked_icon': '✓',
-            \   'prompt' : '⮀ '
+            \   'prompt' : ' ➭'
             \ })
 call unite#custom#profile('source/neobundle/update', 'context', {
             \   'start_insert' : 0,
             \ })
 let g:unite_source_codesearch_ignore_case = 1
-let g:unite_source_file_mru_time_format = "%m/%d %T "
+let g:unite_source_buffer_time_format = '(%m-%d-%Y %H:%M:%S) '
+let g:unite_source_file_mru_time_format = '(%m-%d-%Y %H:%M:%S) '
+let g:unite_source_directory_mru_time_format = '(%m-%d-%Y %H:%M:%S) '
 let g:unite_source_directory_mru_limit = 80
-let g:unite_source_directory_mru_time_format = "%m/%d %T "
 let g:unite_source_file_rec_max_depth = 6
 let g:unite_enable_ignore_case = 1
 let g:unite_enable_smart_case = 1
 let g:unite_data_directory='~/.cache/unite'
 "let g:unite_enable_start_insert=1
 let g:unite_source_history_yank_enable=1
-let g:unite_prompt='>> '
 let g:unite_split_rule = 'botright'
 let g:unite_winheight=25
 let g:unite_source_grep_default_opts = "-iRHn"
@@ -147,7 +147,6 @@ call unite#custom#profile('buffer,buffer_tab', 'context', {
             \   'start_insert' : 0,
             \   'quit'         : 1,
             \   'keep_focus'   : 1,
-            \   'winheight'    : 20,
             \ })
 nnoremap <silent><leader>um  :<C-u>Unite -start-insert mapping<CR>
 nnoremap <C-h>  :<C-u>Unite -start-insert help<CR>
@@ -166,7 +165,7 @@ nnoremap <silent><leader>vs :Unite -auto-preview -no-split grep:.<CR>
 noremap <silent><leader>vf :Unite -auto-preview -no-split grep:%::<C-r><C-w><CR>
 """ For searching the word in the cursor in all opened buffer
 noremap <silent><leader>va :Unite -auto-preview -no-split grep:$buffers::<C-r><C-w><CR>
-nnoremap <silent> <C-b> :<C-u>Unite -start-insert -buffer-name=buffer buffer<cr>
+nnoremap <silent><Leader>bl :<C-u>Unite -start-insert -buffer-name=buffer buffer<cr>
 "" outline
 nnoremap <silent><leader>o :<C-u>Unite -buffer-name=outline -start-insert -auto-preview -no-split outline<cr>
 "" Line search
@@ -250,3 +249,19 @@ function! s:unite_my_settings()
     " Runs "split" action by <C-s>.
     imap <silent><buffer><expr> <C-s>     unite#do_action('split')
 endfunction
+
+
+let g:unite_source_menu_menus.CustomKeyMaps = {'description': 'Custom mapped keyboard shortcuts                   |<SPACE>'}
+let g:unite_source_menu_menus.CustomKeyMaps.command_candidates = [
+    \['➤ Buffer list                                                   <Leader>bl', 'Unite buffer'],
+    \['➤ Delete from buffer list in normal mode                        <C-d>', 'echo "Use <C-d> to delete a buffer"'],
+    \['➤ Find files                                                    <Leader>ff', 'normal <Leader>ff'],
+    \['➤ Search jumps                                                  <Leader>sj', 'Unite jump'],
+    \['➤ Search lines in the current buffer                            <Leader>sb', 'Unite line'],
+    \['➤ Update Vim plugins                                            <Leader>vu', 'normal <Leader>vu'],
+    \['➤ Grep in Quickfix buffer                                       <Leader>g', 'echo "Use <Leader>g to grep within the Quickfix buffer"'],
+    \['➤ Restore the Quickfix buffer                                   <Leader>r', 'echo "Use <Leader>r to restore the Quickfix buffer"'],
+    \['➤ Reverse Grep in Quickfix buffer                               <Leader>v', 'echo "Use <Leader>v to reverse grep within the Quickfix buffer"'],
+    \['➤ Reverse Grep Line Under Cursor in Quickfix buffer             <Leader>d', 'echo "Use <Leader>d to reverse grep the Line Under the Cursor in Quickfix buffer"'],
+    \]
+nnoremap <silent>[unite]<Space> :Unite -silent -winheight=17 -start-insert menu:CustomKeyMaps<CR>
