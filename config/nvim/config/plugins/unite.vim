@@ -51,7 +51,7 @@ let g:unite_launch_apps = [
             \ 'make',
             \ 'git pull',
             \ 'git push']
-let g:unite_source_menu_menus = {}
+let g:unite_source_menu_menus = get(g:,'unite_source_menu_menus',{})
 let g:unite_source_menu_menus.git = {
             \ 'description' : '            gestionar repositorios git
             \                            ⌘ [espacio]g',

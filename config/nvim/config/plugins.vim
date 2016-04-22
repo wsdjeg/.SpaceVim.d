@@ -52,6 +52,10 @@ endif
 "init manager func
 
 fu! s:begin(path)
+    let g:unite_source_menu_menus = get(g:,'unite_source_menu_menus',{})
+    let g:unite_source_menu_menus.AddedPlugins = {'description': 'All the Added plugins                    <leader>lp'}
+    let g:unite_source_menu_menus.AddedPlugins.command_candidates = []
+    nnoremap <silent><Leader>lp :Unite -silent -winheight=17 -start-insert menu:AddedPlugins<CR>
     if g:settings.plugin_manager == 'neobundle'
         call neobundle#begin(a:path)
     elseif g:settings.plugin_manager == 'dein'
@@ -94,6 +98,11 @@ fu! s:add(repo,...)
             call dein#add(a:repo)
         endif
     endif
+    exec "call add(g:unite_source_menu_menus.AddedPlugins.command_candidates, ['"
+                \ . a:repo
+                \ . "','OpenBrowser https://github.com/"
+                \ . a:repo
+                \ . "'])"
 endf
 fu! s:tap(plugin)
     if g:settings.plugin_manager == 'neobundle'
