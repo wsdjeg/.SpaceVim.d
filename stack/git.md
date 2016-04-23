@@ -124,3 +124,17 @@ git remote remove origin
 git remote add origin <url>
 git branch --set-upstream-to=origin/master
 ```
+Q: 修改 git repo 历史提交的 author ?
+A:
+```sh
+git rebase -i HEAD~n
+# change pick to edit
+git commit --amend      #change commit info
+git rebase --continue   #continue
+git commit --amend --author "your email"    #change author
+git rebase --continue   #continue
+#  you will see
+$ git rebase --continue
+Successfully rebased and updated refs/heads/master.
+```
+
