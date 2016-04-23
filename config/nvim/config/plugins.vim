@@ -52,7 +52,6 @@ endif
 "init manager func
 
 fu! s:begin(path)
-    let g:unite_source_menu_menus = get(g:,'unite_source_menu_menus',{})
     let g:unite_source_menu_menus.AddedPlugins = {'description': 'All the Added plugins                    <leader>lp'}
     let g:unite_source_menu_menus.AddedPlugins.command_candidates = []
     nnoremap <silent><Leader>lp :Unite -silent -winheight=17 -start-insert menu:AddedPlugins<CR>

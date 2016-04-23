@@ -199,6 +199,7 @@ nnoremap <silent> [unite]w
             \ :<C-u>Unite -buffer-name=files -no-split
             \ jump_point file_point buffer_tab
             \ file_rec:! file file/new<CR>
+nnoremap <silent>[unite]<Space> :Unite -silent -winheight=17 -start-insert menu:CustomKeyMaps<CR>
 autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()
     " Overwrite settings.
@@ -249,19 +250,3 @@ function! s:unite_my_settings()
     " Runs "split" action by <C-s>.
     imap <silent><buffer><expr> <C-s>     unite#do_action('split')
 endfunction
-
-
-let g:unite_source_menu_menus.CustomKeyMaps = {'description': 'Custom mapped keyboard shortcuts                   |<SPACE>'}
-let g:unite_source_menu_menus.CustomKeyMaps.command_candidates = [
-    \['➤ Buffer list                                                   <Leader>bl', 'Unite buffer'],
-    \['➤ Delete from buffer list in normal mode                        <C-d>', 'echo "Use <C-d> to delete a buffer"'],
-    \['➤ Find files                                                    <Leader>ff', 'normal <Leader>ff'],
-    \['➤ Search jumps                                                  <Leader>sj', 'Unite jump'],
-    \['➤ Search lines in the current buffer                            <Leader>sb', 'Unite line'],
-    \['➤ Update Vim plugins                                            <Leader>vu', 'normal <Leader>vu'],
-    \['➤ Grep in Quickfix buffer                                       <Leader>g', 'echo "Use <Leader>g to grep within the Quickfix buffer"'],
-    \['➤ Restore the Quickfix buffer                                   <Leader>r', 'echo "Use <Leader>r to restore the Quickfix buffer"'],
-    \['➤ Reverse Grep in Quickfix buffer                               <Leader>v', 'echo "Use <Leader>v to reverse grep within the Quickfix buffer"'],
-    \['➤ Reverse Grep Line Under Cursor in Quickfix buffer             <Leader>d', 'echo "Use <Leader>d to reverse grep the Line Under the Cursor in Quickfix buffer"'],
-    \]
-nnoremap <silent>[unite]<Space> :Unite -silent -winheight=17 -start-insert menu:CustomKeyMaps<CR>

@@ -166,22 +166,23 @@ nnoremap <silent><Leader>ml :call AppendModeline()<CR>
 
 " Yank buffer's absolute path to X11 clipboard
 nnoremap <silent><C-c> :let @+=expand("%:p")<CR>:echo 'Copied to clipboard.'<CR>
-" s: Windows and buffers {{{
-" Credits: https://github.com/Shougo/shougo-s-github
 " Window prefix
-nnoremap  [Window]   <Nop>
-nmap      s [Window]
+call zvim#util#defineMap('nnoremap', '[Window]', '<Nop>'   , 'Defind window prefix'   ,'normal [Window]')
+call zvim#util#defineMap('nmap'    , 's'       , '[Window]', 'Use s as window prefix' ,'normal s')
 
-nnoremap <silent> <Tab>      :wincmd w<CR>
-nnoremap <silent> [Window]p  :<C-u>vsplit<CR>:wincmd w<CR>
-nnoremap <silent> [Window]v  :<C-u>split<CR>
-nnoremap <silent> [Window]g  :<C-u>vsplit<CR>
-nnoremap <silent> [Window]t  :tabnew<CR>
-nnoremap <silent> [Window]o  :<C-u>only<CR>
+call zvim#util#defineMap('nnoremap <silent>', '<Tab>', ':wincmd w<CR>', 'Switch to another buffer','wincmd w')
+call zvim#util#defineMap('nnoremap <silent>', '[Window]p', ':<C-u>vsplit<CR>:wincmd w<CR>',
+            \'vsplit vertically,switch to next window','vsplit | wincmd w')
+call zvim#util#defineMap('nnoremap <silent>', '[Window]v', ':<C-u>split<CR>', 'split window','split')
+call zvim#util#defineMap('nnoremap <silent>', '[Window]g', ':<C-u>vsplit<CR>', 'vsplit window','vsplit')
+call zvim#util#defineMap('nnoremap <silent>', '[Window]t', ':<C-u>tabnew<CR>', 'Create new tab','tabnew')
+call zvim#util#defineMap('nnoremap <silent>', '[Window]o', ':<C-u>only<CR>', 'Close other windows','only')
 nnoremap <silent> [Window]x  :<C-u>call <SID>BufferEmpty()<CR>
-nnoremap <silent> [Window]\  :b#<CR>
-nnoremap <silent> [Window]q  :close<CR>
-nnoremap <silent><expr> q winnr('$') != 1 ? ':<C-u>close<CR>' : ""
+call zvim#util#defineMap('nnoremap <silent>', '[Window]\', ':<C-u>b#<CR>', 'Switch to the last buffer','b#')
+call zvim#util#defineMap('nnoremap <silent>', '[Window]q', ':<C-u>close<CR>', 'Close current windows','close')
+call zvim#util#defineMap('nnoremap <silent><expr>', 'q', "winnr('$') != 1 ? ':<C-u>close<CR>' : ''",
+            \ 'Smart close windows',
+            \ '')
 " Use <leader>qr start or stop recording.
 nnoremap <silent> <Leader>qr q
 " Split current buffer, go to previous window and previous buffer
