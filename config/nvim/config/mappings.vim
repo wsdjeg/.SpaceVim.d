@@ -85,8 +85,8 @@ xnoremap < <gv
 xnoremap > >gv|
 
 " Use tab for indenting in visual mode
-vnoremap <Tab> >gv|
-vnoremap <S-Tab> <gv
+xnoremap <Tab> >gv|
+xnoremap <S-Tab> <gv
 nnoremap > >>_
 nnoremap < <<_
 
