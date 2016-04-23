@@ -17,6 +17,10 @@ command! -range=% REPLSendSelection call REPLSend(s:GetVisual())
 command! REPLSendLine call REPLSend([getline('.')])
 " }}}
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+"let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+"silent! let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+"silent! let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+"silent! let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " dark0 + gray
 let g:terminal_color_0 = "#282828"
 let g:terminal_color_8 = "#928374"
