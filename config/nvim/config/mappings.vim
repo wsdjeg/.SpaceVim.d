@@ -166,6 +166,8 @@ nnoremap <silent><Leader>ml :call AppendModeline()<CR>
 
 " Yank buffer's absolute path to X11 clipboard
 nnoremap <silent><C-c> :let @+=expand("%:p")<CR>:echo 'Copied to clipboard.'<CR>
+" Yank the github link to X11 clipboard
+nnoremap <silent><Leader><C-c> :let @+="https://github.com/wsdjeg/DotFiles/blob/master/" . expand("%")<CR>:echo 'Copied to clipboard.'<CR>
 " Window prefix
 call zvim#util#defineMap('nnoremap', '[Window]', '<Nop>'   , 'Defind window prefix'   ,'normal [Window]')
 call zvim#util#defineMap('nmap'    , 's'       , '[Window]', 'Use s as window prefix' ,'normal s')
