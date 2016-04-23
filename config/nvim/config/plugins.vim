@@ -98,9 +98,9 @@ fu! s:add(repo,...)
             call dein#add(a:repo)
         endif
     endif
-    exec "call add(g:unite_source_menu_menus.AddedPlugins.command_candidates, ['"
-                \ . a:repo
-                \ . "','OpenBrowser https://github.com/"
+    exec "call add(g:unite_source_menu_menus.AddedPlugins.command_candidates, ['["
+                \ . a:repo . (len(a:000) > 0 ? (']' . repeat(' ', 80 - len(a:repo)) . '[lazy loaded') : '')
+                \ . "]','OpenBrowser https://github.com/"
                 \ . a:repo
                 \ . "'])"
 endf
