@@ -45,7 +45,12 @@ chmod +x install.sh
 #### irssi
 ![irssi](pic/irssi.png)
 
-#### neovim && vim
+#### neovim && vim(You can do everything in vim)
+##### List all the installed plugin,and open plugin's official website in github
+![installed plugins](pic/installed_plugin.png)
+##### List all the mappings and descriptions
+![mappings](pic/list_mappings.png)
+
 ![complete](pic/complete.png)
 
 ![check](pic/check.png)
