@@ -2,17 +2,15 @@ let s:save_cpo = &cpo
 set cpo&vim
 let g:unite_source_menu_menus = get(g:,'unite_source_menu_menus',{})
 let g:unite_source_menu_menus.CustomKeyMaps = {'description': 'Custom mapped keyboard shortcuts                   [unite]<SPACE>'}
-let g:unite_source_menu_menus.CustomKeyMaps.command_candidates = []
+let g:unite_source_menu_menus.CustomKeyMaps.command_candidates = get(g:unite_source_menu_menus.CustomKeyMaps,'command_candidates', [])
 fu! zvim#util#defineMap(type,key,value,desc,...)
     exec a:type . ' ' . a:key . ' ' . a:value
-    exec "call add(g:unite_source_menu_menus.CustomKeyMaps.command_candidates, [" 
-                \. "'➤ "
+    let description = "'➤ "
                 \. a:desc
                 \. repeat(' ', 80 - len(a:desc) - len(a:key))
                 \. a:key
-                \. "','"
-                \. (len(a:000) > 0 ? a:000[0] : a:value)
-                \. "'])"
+    let cmd = len(a:000) > 0 ? a:000[0] : a:value
+    call add(g:unite_source_menu_menus.CustomKeyMaps.command_candidates, [description,cmd])
 
 endf
 fu! zvim#util#source_rc(file)
@@ -55,6 +53,14 @@ fu! zvim#util#check_if_expand_tab()
         " we use original vim setting
     endif
 endf
+
+function! zvim#util#BufferEmpty()
+    let l:current = bufnr('%')
+    if ! getbufvar(l:current, '&modified')
+        enew
+        silent! execute 'bdelete '.l:current
+    endif
+endfunction
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

@@ -181,22 +181,15 @@ call zvim#util#defineMap('nnoremap <silent>', '[Window]v', ':<C-u>split<CR>', 's
 call zvim#util#defineMap('nnoremap <silent>', '[Window]g', ':<C-u>vsplit<CR>', 'vsplit window','vsplit')
 call zvim#util#defineMap('nnoremap <silent>', '[Window]t', ':<C-u>tabnew<CR>', 'Create new tab','tabnew')
 call zvim#util#defineMap('nnoremap <silent>', '[Window]o', ':<C-u>only<CR>', 'Close other windows','only')
-nnoremap <silent> [Window]x  :<C-u>call <SID>BufferEmpty()<CR>
+call zvim#util#defineMap('nnoremap <silent>', '[Window]x', ':<C-u>call zvim#util#BufferEmpty()<CR>',
+            \'Empty current buffer','call zvim#util#BufferEmpty()')
 call zvim#util#defineMap('nnoremap <silent>', '[Window]\', ':<C-u>b#<CR>', 'Switch to the last buffer','b#')
 call zvim#util#defineMap('nnoremap <silent>', '[Window]q', ':<C-u>close<CR>', 'Close current windows','close')
 call zvim#util#defineMap('nnoremap <silent><expr>', 'q', "winnr('$') != 1 ? ':<C-u>close<CR>' : ''",
             \ 'Smart close windows',
-            \ '')
+            \ "exec winnr('$') != 1 ? 'close' : ''")
 call zvim#util#defineMap('nnoremap <silent>', '<Leader>qr', 'q', 'Toggle recording','')
 call zvim#util#defineMap('nnoremap <silent>', '<Leader>sv', ':split<CR>:wincmd p<CR>:e#<CR>',
             \'Open previous buffer in split window' , 'split|wincmd p|e#')
 call zvim#util#defineMap('nnoremap <silent>', '<Leader>sg', ':vsplit<CR>:wincmd p<CR>:e#<CR>',
             \'Open previous buffer in vsplit window' , 'vsplit|wincmd p|e#')
-
-function! s:BufferEmpty()
-    let l:current = bufnr('%')
-    if ! getbufvar(l:current, '&modified')
-        enew
-        silent! execute 'bdelete '.l:current
-    endif
-endfunction
