@@ -199,7 +199,7 @@ nnoremap <silent> [unite]w
             \ :<C-u>Unite -buffer-name=files -no-split
             \ jump_point file_point buffer_tab
             \ file_rec:! file file/new<CR>
-nnoremap <silent>[unite]<Space> :Unite -silent -winheight=17 -start-insert menu:CustomKeyMaps<CR>
+nnoremap <silent>[unite]<Space> :Unite -silent -ignorecase -winheight=17 -start-insert menu:CustomKeyMaps<CR>
 autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()
     " Overwrite settings.

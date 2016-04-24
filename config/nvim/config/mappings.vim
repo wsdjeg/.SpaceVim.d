@@ -164,10 +164,12 @@ nnoremap <Leader>S ^vg_y:execute @@<CR>:echo 'Sourced line.'<CR>
 " Append modeline to EOF
 nnoremap <silent><Leader>ml :call AppendModeline()<CR>
 
-" Yank buffer's absolute path to X11 clipboard
-nnoremap <silent><C-c> :let @+=expand("%:p")<CR>:echo 'Copied to clipboard.'<CR>
-" Yank the github link to X11 clipboard
-nnoremap <silent><Leader><C-c> :let @+="https://github.com/wsdjeg/DotFiles/blob/master/" . expand("%")<CR>:echo 'Copied to clipboard.'<CR>
+call zvim#util#defineMap('nnoremap <silent>', '<C-c>', ':let @+=expand("%:p")<CR>:echo "Copied to clipboard."<CR>',
+            \ 'Copy buffer absolute path to X11 clipboard',':let @+=expand("%:p")|echo "Copied to clipboard."')
+call zvim#util#defineMap('nnoremap <silent>', '<Leader><C-c>',
+            \ ':let @+="https://github.com/wsdjeg/DotFiles/blob/master/" . expand("%")<CR>:echo "Copied to clipboard."<CR>',
+            \ 'Yank the github link to X11 clipboard',
+            \ ':let @+="https://github.com/wsdjeg/DotFiles/blob/master/" . expand("%")|echo "Copied to clipboard."')
 " Window prefix
 call zvim#util#defineMap('nnoremap', '[Window]', '<Nop>'   , 'Defind window prefix'   ,'normal [Window]')
 call zvim#util#defineMap('nmap'    , 's'       , '[Window]', 'Use s as window prefix' ,'normal s')
@@ -185,17 +187,16 @@ call zvim#util#defineMap('nnoremap <silent>', '[Window]q', ':<C-u>close<CR>', 'C
 call zvim#util#defineMap('nnoremap <silent><expr>', 'q', "winnr('$') != 1 ? ':<C-u>close<CR>' : ''",
             \ 'Smart close windows',
             \ '')
-" Use <leader>qr start or stop recording.
-nnoremap <silent> <Leader>qr q
-" Split current buffer, go to previous window and previous buffer
-nnoremap <silent><Leader>sv :split<CR>:wincmd p<CR>:e#<CR>
-nnoremap <silent><Leader>sg :vsplit<CR>:wincmd p<CR>:e#<CR>
+call zvim#util#defineMap('nnoremap <silent>', '<Leader>qr', 'q', 'Toggle recording','')
+call zvim#util#defineMap('nnoremap <silent>', '<Leader>sv', ':split<CR>:wincmd p<CR>:e#<CR>',
+            \'Open previous buffer in split window' , 'split|wincmd p|e#')
+call zvim#util#defineMap('nnoremap <silent>', '<Leader>sg', ':vsplit<CR>:wincmd p<CR>:e#<CR>',
+            \'Open previous buffer in vsplit window' , 'vsplit|wincmd p|e#')
 
-function! s:BufferEmpty() "{{{
+function! s:BufferEmpty()
     let l:current = bufnr('%')
     if ! getbufvar(l:current, '&modified')
         enew
         silent! execute 'bdelete '.l:current
     endif
-endfunction "}}}
-" }}}
+endfunction
