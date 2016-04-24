@@ -5,7 +5,7 @@ let g:unite_source_menu_menus.CustomKeyMaps = {'description': 'Custom mapped key
 let g:unite_source_menu_menus.CustomKeyMaps.command_candidates = get(g:unite_source_menu_menus.CustomKeyMaps,'command_candidates', [])
 fu! zvim#util#defineMap(type,key,value,desc,...)
     exec a:type . ' ' . a:key . ' ' . a:value
-    let description = "'➤ "
+    let description = "➤ "
                 \. a:desc
                 \. repeat(' ', 80 - len(a:desc) - len(a:key))
                 \. a:key

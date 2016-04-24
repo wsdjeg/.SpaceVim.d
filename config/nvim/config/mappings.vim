@@ -152,17 +152,9 @@ nmap <silent><Leader>qq :cclose<CR>
 nnoremap <Leader>d m`YP``
 vnoremap <Leader>d YPgv
 
-" Quick manual search and replace
-nnoremap ± *``gn<C-g>
-inoremap ± <C-o>gn<C-g>
-snoremap <expr> . @.
-
 " Source line and selection in vim
 vnoremap <Leader>S y:execute @@<CR>:echo 'Sourced selection.'<CR>
 nnoremap <Leader>S ^vg_y:execute @@<CR>:echo 'Sourced line.'<CR>
-
-" Append modeline to EOF
-nnoremap <silent><Leader>ml :call AppendModeline()<CR>
 
 call zvim#util#defineMap('nnoremap <silent>', '<C-c>', ':let @+=expand("%:p")<CR>:echo "Copied to clipboard."<CR>',
             \ 'Copy buffer absolute path to X11 clipboard',':let @+=expand("%:p")|echo "Copied to clipboard."')
