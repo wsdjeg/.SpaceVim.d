@@ -5,6 +5,7 @@ call unite#filters#sorter_default#use(['sorter_rank'])
 call unite#custom#profile('default', 'context', {
             \   'safe': 0,
             \   'start_insert': 1,
+            \   'ignorecase' : 1,
             \   'short_source_names': 1,
             \   'update_time': 200,
             \   'direction': 'rightbelow',
