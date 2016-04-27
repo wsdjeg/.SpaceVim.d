@@ -97,11 +97,11 @@ fu! s:add(repo,...)
             call dein#add(a:repo)
         endif
     endif
-    exec "call add(g:unite_source_menu_menus.AddedPlugins.command_candidates, ['["
-                \ . a:repo . (len(a:000) > 0 ? (']' . repeat(' ', 80 - len(a:repo)) . '[lazy loaded') : '')
-                \ . "]','OpenBrowser https://github.com/"
+    exec 'call add(g:unite_source_menu_menus.AddedPlugins.command_candidates, ["['
+                \ . a:repo . (len(a:000) > 0 ? (']' . repeat(' ', 40 - len(a:repo)) . '[lazy loaded]  [' . string(a:000[0])) : '')
+                \ . ']","OpenBrowser https://github.com/'
                 \ . a:repo
-                \ . "'])"
+                \ . '"])'
 endf
 fu! s:tap(plugin)
     if g:settings.plugin_manager == 'neobundle'
@@ -185,11 +185,11 @@ if s:enable_plug()
         call s:add('kmnk/vim-unite-giti')
         call s:add('ujihisa/unite-font')
         call s:add('t9md/vim-unite-ack')
-        call s:add('mileszs/ack.vim',{'lazy' : 1 , 'on_cmd' : 'Ack'})
-        call s:add('albfan/ag.vim',{'lazy' : 1 , 'on_cmd' : 'Ag'})
+        call s:add('mileszs/ack.vim',{'on_cmd' : 'Ack'})
+        call s:add('albfan/ag.vim',{'on_cmd' : 'Ag'})
         let g:ag_prg="ag  --vimgrep"
         let g:ag_working_path_mode="r"
-        call s:add('dyng/ctrlsf.vim',{'lazy' : 1 , 'on_cmd' : 'CtrlSF'})
+        call s:add('dyng/ctrlsf.vim',{'on_cmd' : 'CtrlSF'})
         if s:tap('ctrlsf.vim')
             call s:defind_hooks('ctrlsf.vim')
         endif
@@ -203,7 +203,7 @@ if s:enable_plug()
         call s:add('voi/unite-ctags')
         call s:add('Shougo/unite-session')
         call s:add('osyo-manga/unite-quickfix')
-        call s:add('Shougo/vimfiler.vim',{'lazy' : 1 , 'on_cmd' : 'VimFiler'})
+        call s:add('Shougo/vimfiler.vim',{'on_cmd' : 'VimFiler'})
         if s:tap('vimfiler.vim')
             call s:defind_hooks('vimfiler.vim')
             noremap <silent> <F3> :VimFiler<CR>
@@ -233,32 +233,32 @@ if s:enable_plug()
             call s:defind_hooks('ctrlp.vim')
         endif
         if !has('nvim')
-            call s:add('wsdjeg/ctrlp-unity3d-docs',  { 'lazy' : 1 , 'on_cmd' : 'CtrlPUnity3DDocs'})
+            call s:add('wsdjeg/ctrlp-unity3d-docs',  { 'on_cmd' : 'CtrlPUnity3DDocs'})
         endif
-        call s:add('voronkovich/ctrlp-nerdtree.vim', { 'lazy' : 1 , 'on_cmd' : 'CtrlPNerdTree'})
-        call s:add('elentok/ctrlp-objects.vim',      { 'lazy' : 1 , 'on_cmd' : [
+        call s:add('voronkovich/ctrlp-nerdtree.vim', { 'on_cmd' : 'CtrlPNerdTree'})
+        call s:add('elentok/ctrlp-objects.vim',      { 'on_cmd' : [
                     \'CtrlPModels',
                     \'CtrlPViews',
                     \'CtrlPControllers',
                     \'CtrlPTemplates',
                     \'CtrlPPresenters']})
-        call s:add('h14i/vim-ctrlp-buftab',          { 'lazy' : 1 , 'on_cmd' : 'CtrlPBufTab'})
-        call s:add('vim-scripts/ctrlp-cmdpalette',   { 'lazy' : 1 , 'on_cmd' : 'CtrlPCmdPalette'})
-        call s:add('mattn/ctrlp-windowselector',     { 'lazy' : 1 , 'on_cmd' : 'CtrlPWindowSelector'})
-        call s:add('the9ball/ctrlp-gtags',           { 'lazy' : 1 , 'on_cmd' : ['CtrlPGtagsX','CtrlPGtagsF','CtrlPGtagsR']})
-        call s:add('thiderman/ctrlp-project',        { 'lazy' : 1 , 'on_cmd' : 'CtrlPProject'})
-        call s:add('mattn/ctrlp-google',             { 'lazy' : 1 , 'on_cmd' : 'CtrlPGoogle'})
-        call s:add('ompugao/ctrlp-history',          { 'lazy' : 1 , 'on_cmd' : ['CtrlPCmdHistory','CtrlPSearchHistory']})
-        call s:add('pielgrzym/ctrlp-sessions',       { 'lazy' : 1 , 'on_cmd' : ['CtrlPSessions','MkS']})
-        call s:add('tacahiroy/ctrlp-funky',          { 'lazy' : 1 , 'on_cmd' : 'CtrlPFunky'})
-        call s:add('mattn/ctrlp-launcher',           { 'lazy' : 1 , 'on_cmd' : 'CtrlPLauncher'})
-        call s:add('sgur/ctrlp-extensions.vim',      { 'lazy' : 1 , 'on_cmd' : ['CtrlPCmdline','CtrlPMenu','CtrlPYankring']})
+        call s:add('h14i/vim-ctrlp-buftab',          { 'on_cmd' : 'CtrlPBufTab'})
+        call s:add('vim-scripts/ctrlp-cmdpalette',   { 'on_cmd' : 'CtrlPCmdPalette'})
+        call s:add('mattn/ctrlp-windowselector',     { 'on_cmd' : 'CtrlPWindowSelector'})
+        call s:add('the9ball/ctrlp-gtags',           { 'on_cmd' : ['CtrlPGtagsX','CtrlPGtagsF','CtrlPGtagsR']})
+        call s:add('thiderman/ctrlp-project',        { 'on_cmd' : 'CtrlPProject'})
+        call s:add('mattn/ctrlp-google',             { 'on_cmd' : 'CtrlPGoogle'})
+        call s:add('ompugao/ctrlp-history',          { 'on_cmd' : ['CtrlPCmdHistory','CtrlPSearchHistory']})
+        call s:add('pielgrzym/ctrlp-sessions',       { 'on_cmd' : ['CtrlPSessions','MkS']})
+        call s:add('tacahiroy/ctrlp-funky',          { 'on_cmd' : 'CtrlPFunky'})
+        call s:add('mattn/ctrlp-launcher',           { 'on_cmd' : 'CtrlPLauncher'})
+        call s:add('sgur/ctrlp-extensions.vim',      { 'on_cmd' : ['CtrlPCmdline','CtrlPMenu','CtrlPYankring']})
         call s:add('FelikZ/ctrlp-py-matcher')
     endif "}}}
 
 
     if count(g:settings.plugin_groups, 'autocomplete') "{{{
-        call s:add('honza/vim-snippets',{'lazy' : 1 , 'on_i' : 1})
+        call s:add('honza/vim-snippets',{'on_i' : 1})
         imap <silent><expr><TAB> MyTabfunc()
         smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
         inoremap <silent> <CR> <C-r>=MyEnterfunc()<Cr>
@@ -303,7 +303,6 @@ if s:enable_plug()
                         \ }
         elseif g:settings.autocomplete_method == 'neocomplete' "{{{
             call s:add('Shougo/neocomplete', {
-                        \ 'lazy' : 1,
                         \ 'on_i' : 1,
                         \ })
             if s:tap('neocomplete')
@@ -311,7 +310,6 @@ if s:enable_plug()
             endif
         elseif g:settings.autocomplete_method == 'neocomplcache' "{{{
             call s:add('Shougo/neocomplcache.vim', {
-                        \ 'lazy' : 1,
                         \ 'on_i' : 1,
                         \ })
             if s:tap('neocomplcache.vim')
@@ -319,27 +317,26 @@ if s:enable_plug()
             endif
         elseif g:settings.autocomplete_method == 'deoplete'
             call s:add('Shougo/deoplete.nvim', {
-                        \ 'lazy' : 1,
                         \ 'on_i' : 1,
                         \ })
             if s:tap('deoplete.nvim')
                 call s:defind_hooks('deoplete.nvim')
             endif
-            call s:add('zchee/deoplete-jedi',      { 'lazy' : 1 , 'on_ft' : 'python'})
+            call s:add('zchee/deoplete-jedi',      { 'on_ft' : 'python'})
         endif "}}}
-        call s:add('Shougo/neco-syntax',           { 'lazy' : 1 , 'on_i' : 1})
-        call s:add('ujihisa/neco-look',            { 'lazy' : 1 , 'on_i' : 1})
-        call s:add('Shougo/neco-vim',              { 'lazy' : 1 , 'on_i' : 1})
+        call s:add('Shougo/neco-syntax',           { 'on_i' : 1})
+        call s:add('ujihisa/neco-look',            { 'on_i' : 1})
+        call s:add('Shougo/neco-vim',              { 'on_i' : 1})
         if !exists('g:necovim#complete_functions')
             let g:necovim#complete_functions = {}
         endif
         let g:necovim#complete_functions.Ref =
                     \ 'ref#complete'
-        call s:add('Shougo/context_filetype.vim',  { 'lazy' : 1 , 'on_i' : 1})
-        call s:add('Shougo/neoinclude.vim',        { 'lazy' : 1 , 'on_i' : 1})
-        call s:add('Shougo/neosnippet-snippets',   { 'lazy' : 1 , 'on_i' : 1 , 'on_ft' : 'neosnippet'})
-        call s:add('Shougo/neosnippet.vim',        { 'lazy' : 1 , 'on_i' : 1 , 'on_ft' : 'neosnippet'})
-        call s:add('Shougo/neopairs.vim',          { 'lazy' : 1 , 'on_i' : 1})
+        call s:add('Shougo/context_filetype.vim',  { 'on_i' : 1})
+        call s:add('Shougo/neoinclude.vim',        { 'on_i' : 1})
+        call s:add('Shougo/neosnippet-snippets',   { 'on_i' : 1 , 'on_ft' : 'neosnippet'})
+        call s:add('Shougo/neosnippet.vim',        { 'on_i' : 1 , 'on_ft' : 'neosnippet'})
+        call s:add('Shougo/neopairs.vim',          { 'on_i' : 1})
         let g:neosnippet#snippets_directory = fnamemodify(g:Config_Main_Home, ( has('nvim') ? ':p:h:h:h:h' : ':p:h:h:h')) . s:Fsep . 'snippets'
         let g:neosnippet#enable_snipmate_compatibility=1
         let g:neosnippet#enable_complete_done = 1
@@ -369,24 +366,24 @@ if s:enable_plug()
     endif
 
     if count(g:settings.plugin_groups, 'vim') "{{{
-        call s:add('Shougo/vimshell.vim',                { 'lazy':1,'on_cmd':['VimShell']})
-        call s:add('mattn/vim-terminal',                 { 'lazy':1,'on_cmd':['Terminal']})
-        call s:add('junegunn/vim-github-dashboard',      { 'lazy':1,'on_cmd':['GHD','GHA','GHActivity','GHDashboard']})
-        call s:add('davidhalter/jedi-vim',     { 'lazy' : 1 , 'on_ft' : 'python'})
+        call s:add('Shougo/vimshell.vim',                { 'on_cmd':['VimShell']})
+        call s:add('mattn/vim-terminal',                 { 'on_cmd':['Terminal']})
+        call s:add('junegunn/vim-github-dashboard',      { 'on_cmd':['GHD','GHA','GHActivity','GHDashboard']})
+        call s:add('davidhalter/jedi-vim',     { 'on_ft' : 'python'})
         if s:tap('jedi-vim')
             call s:defind_hooks('jedi-vim')
         endif
     endif
     if count(g:settings.plugin_groups, 'nvim') "{{{
-        call s:add('m2mdas/phpcomplete-extended',            { 'lazy' : 1 , 'on_ft' : 'php'})
+        call s:add('m2mdas/phpcomplete-extended',            { 'on_ft' : 'php'})
         if s:tap('phpcomplete-extended')
             call s:defind_hooks('phpcomplete-extended')
         endif
     endif
     call s:add('tpope/vim-scriptease')
     call s:add('tpope/vim-fugitive')
-    call s:add('cohama/agit.vim',                        { 'lazy':1,'on_cmd':['Agit','AgitFile']})
-    call s:add('gregsexton/gitv',                        { 'lazy':1,'on_cmd':['Gitv']})
+    call s:add('cohama/agit.vim',                        { 'on_cmd':['Agit','AgitFile']})
+    call s:add('gregsexton/gitv',                        { 'on_cmd':['Gitv']})
     call s:add('tpope/vim-surround')
     call s:add('terryma/vim-multiple-cursors')
     let g:multi_cursor_next_key='<C-j>'
@@ -396,41 +393,41 @@ if s:enable_plug()
 
     "web plugins
 
-    call s:add('groenewege/vim-less',                    { 'lazy':1,'on_ft':['less']})
-    call s:add('cakebaker/scss-syntax.vim',              { 'lazy':1,'on_ft':['scss','sass']})
-    call s:add('hail2u/vim-css3-syntax',                 { 'lazy':1,'on_ft':['css','scss','sass']})
-    call s:add('ap/vim-css-color',                       { 'lazy':1,'on_ft':['css','scss','sass','less','styl']})
-    call s:add('othree/html5.vim',                       { 'lazy':1,'on_ft':['html']})
-    call s:add('wavded/vim-stylus',                      { 'lazy':1,'on_ft':['styl']})
-    call s:add('digitaltoad/vim-jade',                   { 'lazy':1,'on_ft':['jade']})
-    call s:add('juvenn/mustache.vim',                    { 'lazy':1,'on_ft':['mustache']})
-    call s:add('Valloric/MatchTagAlways',                { 'lazy':1,'on_ft':['html' , 'xhtml' , 'xml' , 'jinja']})
-    call s:add('pangloss/vim-javascript',                { 'lazy':1,'on_ft':['javascript']})
-    call s:add('maksimr/vim-jsbeautify',                 { 'lazy':1,'on_ft':['javascript']})
-    call s:add('leafgarland/typescript-vim',             { 'lazy':1,'on_ft':['typescript']})
-    call s:add('kchmck/vim-coffee-script',               { 'lazy':1,'on_ft':['coffee']})
-    call s:add('mmalecki/vim-node.js',                   { 'lazy':1,'on_ft':['javascript']})
-    call s:add('leshill/vim-json',                       { 'lazy':1,'on_ft':['javascript','json']})
-    call s:add('othree/javascript-libraries-syntax.vim', { 'lazy':1,'on_ft':['javascript','coffee','ls','typescript']})
-    call s:add('artur-shaik/vim-javacomplete2',          { 'lazy' : 1 , 'on_ft' : ['java','jsp']})
+    call s:add('groenewege/vim-less',                    { 'on_ft':['less']})
+    call s:add('cakebaker/scss-syntax.vim',              { 'on_ft':['scss','sass']})
+    call s:add('hail2u/vim-css3-syntax',                 { 'on_ft':['css','scss','sass']})
+    call s:add('ap/vim-css-color',                       { 'on_ft':['css','scss','sass','less','styl']})
+    call s:add('othree/html5.vim',                       { 'on_ft':['html']})
+    call s:add('wavded/vim-stylus',                      { 'on_ft':['styl']})
+    call s:add('digitaltoad/vim-jade',                   { 'on_ft':['jade']})
+    call s:add('juvenn/mustache.vim',                    { 'on_ft':['mustache']})
+    call s:add('Valloric/MatchTagAlways',                { 'on_ft':['html' , 'xhtml' , 'xml' , 'jinja']})
+    call s:add('pangloss/vim-javascript',                { 'on_ft':['javascript']})
+    call s:add('maksimr/vim-jsbeautify',                 { 'on_ft':['javascript']})
+    call s:add('leafgarland/typescript-vim',             { 'on_ft':['typescript']})
+    call s:add('kchmck/vim-coffee-script',               { 'on_ft':['coffee']})
+    call s:add('mmalecki/vim-node.js',                   { 'on_ft':['javascript']})
+    call s:add('leshill/vim-json',                       { 'on_ft':['javascript','json']})
+    call s:add('othree/javascript-libraries-syntax.vim', { 'on_ft':['javascript','coffee','ls','typescript']})
+    call s:add('artur-shaik/vim-javacomplete2',          { 'on_ft' : ['java','jsp']})
     let g:JavaComplete_UseFQN = 1
     let g:JavaComplete_ServerAutoShutdownTime = 300
     let g:JavaComplete_MavenRepositoryDisable = 0
-    call s:add('wsdjeg/vim-dict',                        { 'lazy' : 1 , 'on_ft' : 'java'})
-    call s:add('wsdjeg/java_getset.vim',                 { 'lazy' : 1 , 'on_ft' : 'java'})
+    call s:add('wsdjeg/vim-dict',                        { 'on_ft' : 'java'})
+    call s:add('wsdjeg/java_getset.vim',                 { 'on_ft' : 'java'})
     if s:tap('java_getset.vim')
         call s:defind_hooks('java_getset')
     endif
-    call s:add('wsdjeg/JavaUnit.vim',                    { 'lazy' : 1 , 'on_ft' : 'java'})
-    call s:add('jaxbot/github-issues.vim',               { 'lazy' : 1 , 'on_cmd' : 'Gissues'})
-    call s:add('wsdjeg/Mysql.vim',                       { 'lazy' : 1 , 'on_cmd' : 'SQLGetConnection'})
-    call s:add('vim-jp/vim-java',                        { 'lazy' : 1 , 'on_ft' : 'java'})
+    call s:add('wsdjeg/JavaUnit.vim',                    { 'on_ft' : 'java'})
+    call s:add('jaxbot/github-issues.vim',               { 'on_cmd' : 'Gissues'})
+    call s:add('wsdjeg/Mysql.vim',                       { 'on_cmd' : 'SQLGetConnection'})
+    call s:add('vim-jp/vim-java',                        { 'on_ft' : 'java'})
     call s:add('vim-airline/vim-airline')
     call s:add('vim-airline/vim-airline-themes')
     if s:tap('vim-airline')
         call s:defind_hooks('vim-airline')
     endif
-    call s:add('mattn/emmet-vim',                        { 'lazy' : 1 , 'on_cmd' : 'EmmetInstall'})
+    call s:add('mattn/emmet-vim',                        { 'on_cmd' : 'EmmetInstall'})
     let g:user_emmet_install_global = 0
     let g:user_emmet_leader_key='<C-e>'
     let g:user_emmet_mode='a'
@@ -443,7 +440,7 @@ if s:enable_plug()
     "profile start vim-javacomplete2.log
     "profile! file */vim-javacomplete2/*
     if has('nvim') && g:settings.enable_neomake
-        call s:add('wsdjeg/neomake',{'lazy' : 1 , 'on_cmd' : 'Neomake'})
+        call s:add('wsdjeg/neomake',{'on_cmd' : 'Neomake'})
         if s:tap('neomake')
             call s:defind_hooks('neomake')
         endif
@@ -453,23 +450,23 @@ if s:enable_plug()
             call s:defind_hooks('syntastic')
         endif
     endif
-    call s:add('syngan/vim-vimlint',{'lazy' : 1 , 'on_ft' : 'vim'})
+    call s:add('syngan/vim-vimlint',{'on_ft' : 'vim'})
     let g:syntastic_vimlint_options = {
                 \'EVL102': 1 ,
                 \'EVL103': 1 ,
                 \'EVL205': 1 ,
                 \'EVL105': 1 ,
                 \}
-    call s:add('ynkdir/vim-vimlparser',{'lazy' : 1 ,'on_ft' : 'vim'})
-    call s:add('todesking/vint-syntastic',{'lazy' : 1 ,'on_ft' : 'vim'})
+    call s:add('ynkdir/vim-vimlparser',{'on_ft' : 'vim'})
+    call s:add('todesking/vint-syntastic',{'on_ft' : 'vim'})
     "let g:syntastic_vim_checkers = ['vint']
-    call s:add('gcmt/wildfire.vim',{'lazy':1,'on_map' : '<Plug>(wildfire-'})
+    call s:add('gcmt/wildfire.vim',{'on_map' : '<Plug>(wildfire-'})
     noremap <SPACE> <Plug>(wildfire-fuel)
     vnoremap <C-SPACE> <Plug>(wildfire-water)
     let g:wildfire_objects = ["i'", 'i"', 'i)', 'i]', 'i}', 'ip', 'it']
 
     call s:add('scrooloose/nerdcommenter')
-    call s:add('easymotion/vim-easymotion',{'lazy' : 1 , 'on_map' : '<Plug>(easymotion-prefix)'})
+    call s:add('easymotion/vim-easymotion',{'on_map' : '<Plug>(easymotion-prefix)'})
     if s:tap('vim-easymotion')
         map <Leader><Leader> <Plug>(easymotion-prefix)
     endif
@@ -494,18 +491,18 @@ if s:enable_plug()
     let g:indentLine_char = '¦'
     let g:indentLine_concealcursor = 'niv' " (default 'inc')
     let g:indentLine_conceallevel = 2  " (default 2)
-    call s:add('godlygeek/tabular',         { 'lazy':1,'on_cmd': 'Tabularize'})
+    call s:add('godlygeek/tabular',         { 'on_cmd': 'Tabularize'})
     call s:add('benizi/vim-automkdir')
     "[c  ]c  jump between prev or next hunk
-    call s:add('airblade/vim-gitgutter',{'lazy' : 1 , 'on_cmd' : 'GitGutterEnable'})
-    call s:add('itchyny/calendar.vim',      { 'lazy' : 1 , 'on_cmd' : 'Calendar'})
-    call s:add('lilydjwg/fcitx.vim',        { 'lazy' : 1 , 'on_i' : 1})
-    call s:add('junegunn/goyo.vim',         { 'lazy' : 1 , 'on_cmd' : 'Goyo'})
+    call s:add('airblade/vim-gitgutter',{'on_cmd' : 'GitGutterEnable'})
+    call s:add('itchyny/calendar.vim',      { 'on_cmd' : 'Calendar'})
+    call s:add('lilydjwg/fcitx.vim',        { 'on_i' : 1})
+    call s:add('junegunn/goyo.vim',         { 'on_cmd' : 'Goyo'})
     if s:tap('goyo.vim')
         call s:defind_hooks('goyo.vim')
     endif
     "vim Wimdows config
-    call s:add('scrooloose/nerdtree',{'lazy':1,'on_cmd':'NERDTreeToggle'})
+    call s:add('scrooloose/nerdtree',{'on_cmd':'NERDTreeToggle'})
     if s:tap('nerdtree')
         call s:defind_hooks('nerdtree')
         function! OpenOrCloseNERDTree()
@@ -518,15 +515,15 @@ if s:enable_plug()
         autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
         autocmd FileType nerdtree nnoremap <silent><buffer><Space> :call OpenOrCloseNERDTree()<cr>
     endif
-    call s:add('tpope/vim-projectionist',{'lazy':1,'on_cmd':['A','AS','AV','AT','AD','Cd','Lcd','ProjectDo']})
+    call s:add('tpope/vim-projectionist',{'on_cmd':['A','AS','AV','AT','AD','Cd','Lcd','ProjectDo']})
     call s:add('Xuyuanp/nerdtree-git-plugin')
-    call s:add('taglist.vim',{'lazy' : 1 , 'on_cmd' : 'TlistToggle'})
+    call s:add('taglist.vim',{'on_cmd' : 'TlistToggle'})
     if s:tap('taglist.vim')
         call s:defind_hooks('taglist.vim')
         noremap <silent> <F8> :TlistToggle<CR>
     endif
-    call s:add('ntpeters/vim-better-whitespace',{'lazy' : 1 , 'on_cmd' : 'StripWhitespace'})
-    call s:add('junegunn/rainbow_parentheses.vim',{'lazy' : 1 , 'on_cmd' : 'RainbowParentheses'})
+    call s:add('ntpeters/vim-better-whitespace',{'on_cmd' : 'StripWhitespace'})
+    call s:add('junegunn/rainbow_parentheses.vim',{'on_cmd' : 'RainbowParentheses'})
     augroup rainbow_lisp
         autocmd!
         autocmd FileType lisp,clojure,scheme,java RainbowParentheses
@@ -541,34 +538,33 @@ if s:enable_plug()
     noremap <silent> <F2> :TagbarToggle<CR>
     "}}}
 
-    call s:add('floobits/floobits-neovim',      { 'lazy' : 1 , 'on_cmd' : ['FlooJoinWorkspace','FlooShareDirPublic','FlooShareDirPrivate']})
-    call s:add('wsdjeg/MarkDown.pl',            { 'lazy' : 1 , 'on_cmd' : 'MarkDownPreview'})
-    call s:add('plasticboy/vim-markdown',       { 'lazy' : 1 , 'on_ft' : 'markdown'})
+    call s:add('floobits/floobits-neovim',      { 'on_cmd' : ['FlooJoinWorkspace','FlooShareDirPublic','FlooShareDirPrivate']})
+    call s:add('wsdjeg/MarkDown.pl',            { 'on_cmd' : 'MarkDownPreview'})
+    call s:add('plasticboy/vim-markdown',       { 'on_ft' : 'markdown'})
     let g:vim_markdown_conceal = 0
     let g:vim_markdown_folding_disabled = 1
-    call s:add('simnalamburt/vim-mundo',        { 'lazy' : 1 , 'on_cmd' : 'MundoToggle'})
+    call s:add('simnalamburt/vim-mundo',        { 'on_cmd' : 'MundoToggle'})
     nnoremap <silent> <F7> :MundoToggle<CR>
-    call s:add('TaskList.vim',                  { 'lazy' : 1 , 'on_cmd' : 'TaskList'})
+    call s:add('TaskList.vim',                  { 'on_cmd' : 'TaskList'})
     map <unique> <Leader>td <Plug>TaskList
-    call s:add('ianva/vim-youdao-translater',   { 'lazy' : 1 , 'on_cmd' : ['Ydv','Ydc','Yde']})
+    call s:add('ianva/vim-youdao-translater',   { 'on_cmd' : ['Ydv','Ydc','Yde']})
     vnoremap <silent> <C-l> <Esc>:Ydv<CR>
     nnoremap <silent> <C-l> <Esc>:Ydc<CR>
-    call s:add('elixir-lang/vim-elixir',        { 'lazy' : 1 , 'on_ft' : 'elixir'})
-    call s:add('editorconfig/editorconfig-vim', { 'lazy' : 1 , 'on_cmd' : 'EditorConfigReload'})
-    call s:add('junegunn/fzf',                  { 'lazy' : 1 , 'on_cmd' : 'FZF'})
+    call s:add('elixir-lang/vim-elixir',        { 'on_ft' : 'elixir'})
+    call s:add('editorconfig/editorconfig-vim', { 'on_cmd' : 'EditorConfigReload'})
+    call s:add('junegunn/fzf',                  { 'on_cmd' : 'FZF'})
     nnoremap <Leader>fz :FZF<CR>
-    call s:add('junegunn/gv.vim',               { 'lazy' : 1 , 'on_cmd' : 'GV'})
+    call s:add('junegunn/gv.vim',               { 'on_cmd' : 'GV'})
     call s:add('tyru/open-browser.vim',{
-                \'lazy' : 1,
                 \'on_cmd' : ['OpenBrowserSmartSearch','OpenBrowser','OpenBrowserSearch'],
                 \'on_map' : '<Plug>(openbrowser-',
                 \})
     if s:tap('open-brower.vim')
         call s:defind_hooks('open-brower.vim')
     endif
-    call s:add('racer-rust/vim-racer',          {'lazy' : 1 , 'on_ft' : 'rust'})
+    call s:add('racer-rust/vim-racer',          {'on_ft' : 'rust'})
     let g:racer_cmd = $HOME."/.cargo/bin/racer"
     call s:add('rust-lang/rust.vim')
-    call s:add('PotatoesMaster/i3-vim-syntax',  {'lazy' : 1 , 'on_ft' : 'i3'})
+    call s:add('PotatoesMaster/i3-vim-syntax',  {'on_ft' : 'i3'})
     call s:end()
 endif
