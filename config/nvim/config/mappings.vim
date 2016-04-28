@@ -152,6 +152,22 @@ nmap <silent><Leader>qq :cclose<CR>
 nnoremap <Leader>d m`YP``
 vnoremap <Leader>d YPgv
 
+fu! s:tobur(num)
+    if bufexists(a:num)&&buflisted(a:num)
+        exec "buffer " . a:num
+    elseif bufexists(a:num + 1)&&buflisted(a:num + 1)
+        exec "buffer " . (a:num + 1)
+    endif
+endf
+"irssi like hot key
+nnoremap <silent><M-1> :<C-u>call <SID>tobur(1)<CR>
+nnoremap <silent><M-2> :<C-u>call <SID>tobur(2)<CR>
+nnoremap <silent><M-3> :<C-u>call <SID>tobur(3)<CR>
+nnoremap <silent><M-4> :<C-u>call <SID>tobur(4)<CR>
+nnoremap <silent><M-5> :<C-u>call <SID>tobur(5)<CR>
+nnoremap <silent><M-Right> :<C-U>bnext<CR>
+nnoremap <silent><M-Left> :<C-U>bprev<CR>
+
 call zvim#util#defineMap('vnoremap', '<Leader>S', "y:execute @@<CR>:echo 'Sourced selection.'<CR>",
             \ "Sourced selection.",
             \ "echo 'Use <leader>S to sourced selection.'")
