@@ -5,7 +5,7 @@ test/
 vim/.floo
 vim/.flooignore
 *.netrwhist
-*.init.vim-rplugin~
+*-rplugin~
 vim/config/local.vim
 vimperator/
 **/vifminfo
