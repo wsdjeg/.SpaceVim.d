@@ -195,9 +195,9 @@ call zvim#util#defineMap('nnoremap <silent>', '[Window]x', ':<C-u>call zvim#util
             \'Empty current buffer','call zvim#util#BufferEmpty()')
 call zvim#util#defineMap('nnoremap <silent>', '[Window]\', ':<C-u>b#<CR>', 'Switch to the last buffer','b#')
 call zvim#util#defineMap('nnoremap <silent>', '[Window]q', ':<C-u>close<CR>', 'Close current windows','close')
-call zvim#util#defineMap('nnoremap <silent><expr>', 'q', "winnr('$') != 1 ? ':<C-u>close<CR>' : ''",
+call zvim#util#defineMap('nnoremap <silent>', 'q', ":<C-u>call zvim#util#SmartClose()<cr>",
             \ 'Smart close windows',
-            \ "exec winnr('$') != 1 ? 'close' : ''")
+            \ "call zvim#util#SmartClose()")
 call zvim#util#defineMap('nnoremap <silent>', '<Leader>qr', 'q', 'Toggle recording','')
 call zvim#util#defineMap('nnoremap <silent>', '<Leader>sv', ':split<CR>:wincmd p<CR>:e#<CR>',
             \'Open previous buffer in split window' , 'split|wincmd p|e#')

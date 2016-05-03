@@ -82,6 +82,7 @@ let g:settings.plugin_manager          = 'dein'  " neobundle or dein or vim-plug
 let g:settings.checkinstall            = 1
 let g:settings.hiddenfileinfo          = 1
 let g:settings.plugin_groups_exclude   = []
+let g:settings.smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
 
 
 "core vimrc

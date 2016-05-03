@@ -19,6 +19,21 @@ fu! zvim#util#source_rc(file)
     endif
 endf
 
+fu! zvim#util#SmartClose()
+    let ignorewin = get(g:settings,'smartcloseignorewin',['__Tagbar__' , 'vimfiler:default'])
+    let win_count = winnr('$')
+    let num = win_count
+    for i in range(1,win_count)
+        if index(ignorewin , bufname(winbufnr(i))) != -1
+            let num = num - 1
+        endif
+    endfor
+    if num == 1
+    else
+        close
+    endif
+endf
+
 fu! zvim#util#check_if_expand_tab()
     let has_noexpandtab = search('^\t','wn')
     let has_expandtab = search('^    ','wn')
