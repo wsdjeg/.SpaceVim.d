@@ -34,3 +34,9 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 let g:airline_symbols.maxlinenr= ''
+
+
+augroup Fix_airline_with_unite
+autocmd FileType unite AirlineRefresh
+autocmd FileType vimfiler AirlineRefresh
+augroup END
