@@ -12,7 +12,7 @@ let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
 "let g:ctrlp_open_multiple_files = 'v'
 let g:ctrlp_custom_ignore = {
             \ 'dir':  '\v[\/]\.(git|hg|svn)$|target',
-            \ 'file': '\v\.(exe|so|dll|ttf|png)$',
+            \ 'file': '\v\.(exe|so|dll|ttf|png)$|\-rplugin\~',
             \ 'link': 'some_bad_symbolic_links',
             \ }
 let g:ctrlp_user_command = ['ag %s -i --nocolor --nogroup --hidden
