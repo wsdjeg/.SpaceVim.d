@@ -48,3 +48,7 @@ nnoremap <Leader>pl :<c-u>CtrlPLauncher<cr>
 "let g:ctrlp_max_files = 0
 "let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
 ""}}}
+
+augroup Fix_command_in_help_buffer
+    autocmd FileType help exec 'nnoremap <buffer><silent><c-p> :<c-u>CtrlP ' . getcwd() .'<cr>'
+augroup END
