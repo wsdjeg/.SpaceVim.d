@@ -443,6 +443,10 @@ if s:enable_plug()
         call s:add('wsdjeg/neomake',{'on_cmd' : 'Neomake'})
         if s:tap('neomake')
             call s:defind_hooks('neomake')
+            augroup Neomake_wsd
+                au!
+                autocmd! BufWritePost * Neomake
+            augroup END
         endif
     else
         call s:add('wsdjeg/syntastic')
