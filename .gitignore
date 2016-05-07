@@ -6,7 +6,7 @@ vim/.floo
 vim/.flooignore
 *.netrwhist
 *-rplugin~
-vim/config/local.vim
+config/nvim/config/local.vim
 vimperator/
 **/vifminfo
 getmail/getmail[.r]*
