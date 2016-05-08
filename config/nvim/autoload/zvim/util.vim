@@ -34,6 +34,60 @@ fu! zvim#util#SmartClose()
     endif
 endf
 
+"call zvim#util#defineMap('nnoremap <silent>', '<C-c>', ':let @+=expand("%:p")<CR>:echo "Copied to clipboard."<CR>',
+            "\ 'Copy buffer absolute path to X11 clipboard',':let @+=expand("%:p")|echo "Copied to clipboard."')
+"call zvim#util#defineMap('nnoremap <silent>', '<Leader><C-c>',
+            "\ ':let @+="https://github.com/wsdjeg/DotFiles/blob/master/" . expand("%")<CR>:echo "Copied to clipboard."<CR>',
+            "\ 'Yank the github link to X11 clipboard',
+            "\ ':let @+="https://github.com/wsdjeg/DotFiles/blob/master/" . expand("%")|echo "Copied to clipboard."')
+
+fu! s:findFileInParent(what, where) abort " {{{2
+    let old_suffixesadd = &suffixesadd
+    let &suffixesadd = ''
+    let file = findfile(a:what, escape(a:where, ' ') . ';')
+    let &suffixesadd = old_suffixesadd
+    return file
+endf " }}}2
+fu! s:findDirInParent(what, where) abort " {{{2
+    let old_suffixesadd = &suffixesadd
+    let &suffixesadd = ''
+    let dir = finddir(a:what, escape(a:where, ' ') . ';')
+    let &suffixesadd = old_suffixesadd
+    return dir
+endf " }}}2
+fu! zvim#util#CopyToClipboard(...)
+    if a:0
+        if executable('git')
+            let repo_home = fnamemodify(s:findDirInParent('.git', expand('%:p')), ':p:h:h')
+            if repo_home !=# '' || !isdirectory(repo_home)
+                let branch = split(systemlist('git -C '. repo_home. ' branch -a |grep "*"')[0],' ')[1]
+                let remotes = filter(systemlist('git -C '. repo_home. ' remote -v'),'match(v:val,"^origin") >= 0 && match(v:val,"fetch") > 0')
+                if len(remotes) > 0
+                    let remote = remotes[0]
+                    if stridx(remote, '@') > -1
+                        let repo_url = 'https://github.com/'. split(split(remote,' ')[0],':')[1]
+                    else
+                        let repo_url = split(remote,' ')[0]
+                        let repo_url = strpart(repo_url, stridx(repo_url, 'http'),len(repo_url) - 4 - stridx(repo_url, 'http'))
+                    endif
+                    let f_url =repo_url. '/blob/'. branch. '/'. strpart(expand('%:p'), len(repo_home) + 1, len(expand('%:p')))
+                    let @+=f_url
+                    echo "Copied to clipboard"
+                else
+                    echohl WarningMsg | echom "This git repo has no remote host" | echohl None
+                endif
+            else
+                echohl WarningMsg | echom "This file is not in a git repo" | echohl None
+            endif
+        else
+            echohl WarningMsg | echom "You need install git!" | echohl None
+        endif
+    else
+        let @+=expand("%:p")
+        echo "Copied to clipboard"
+    endif
+endf
+
 fu! zvim#util#check_if_expand_tab()
     let has_noexpandtab = search('^\t','wn')
     let has_expandtab = search('^    ','wn')

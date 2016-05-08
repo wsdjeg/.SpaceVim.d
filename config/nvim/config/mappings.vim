@@ -174,12 +174,12 @@ call zvim#util#defineMap('vnoremap', '<Leader>S', "y:execute @@<CR>:echo 'Source
 call zvim#util#defineMap('nnoremap','<Leader>S',"^vg_y:execute @@<CR>:echo 'Sourced line.'<CR>",'Source line',
             \ "echo 'Use <leader>S to sourced line.'")
 
-call zvim#util#defineMap('nnoremap <silent>', '<C-c>', ':let @+=expand("%:p")<CR>:echo "Copied to clipboard."<CR>',
-            \ 'Copy buffer absolute path to X11 clipboard',':let @+=expand("%:p")|echo "Copied to clipboard."')
+call zvim#util#defineMap('nnoremap <silent>', '<C-c>', ':<c-u>call zvim#util#CopyToClipboard()<cr>',
+            \ 'Copy buffer absolute path to X11 clipboard','call zvim#util#CopyToClipboard()')
 call zvim#util#defineMap('nnoremap <silent>', '<Leader><C-c>',
-            \ ':let @+="https://github.com/wsdjeg/DotFiles/blob/master/" . expand("%")<CR>:echo "Copied to clipboard."<CR>',
+            \ ':<c-u>call zvim#util#CopyToClipboard(1)<cr>',
             \ 'Yank the github link to X11 clipboard',
-            \ ':let @+="https://github.com/wsdjeg/DotFiles/blob/master/" . expand("%")|echo "Copied to clipboard."')
+            \ 'call zvim#util#CopyToClipboard(1)')
 " Window prefix
 call zvim#util#defineMap('nnoremap', '[Window]', '<Nop>'   , 'Defind window prefix'   ,'normal [Window]')
 call zvim#util#defineMap('nmap'    , 's'       , '[Window]', 'Use s as window prefix' ,'normal s')
