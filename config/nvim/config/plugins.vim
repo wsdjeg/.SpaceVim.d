@@ -22,17 +22,19 @@ if g:settings.plugin_manager == 'neobundle'
     exec 'set runtimepath+='.g:settings.plugin_bundle_dir . 'neobundle.vim'
 elseif g:settings.plugin_manager == 'dein'
     "auto install dein
-    if filereadable(expand(g:settings.plugin_bundle_dir) . 'repos/github.com/Shougo/dein.vim'. s:Fsep. 'README.md')
+    if filereadable(expand(g:settings.plugin_bundle_dir) . join(['repos', 'github.com', 'Shougo', 'dein.vim', 'README.md'], s:Fsep))
         let g:settings.dein_installed = 1
     else
         if executable('git')
-            exec '!git clone https://github.com/Shougo/dein.vim ' . g:settings.plugin_bundle_dir . 'repos/github.com/Shougo/dein.vim'
+            exec '!git clone https://github.com/Shougo/dein.vim '
+                        \ . g:settings.plugin_bundle_dir
+                        \ . join(['repos', 'github.com', 'Shougo', 'dein.vim'], s:Fsep)
             let g:settings.dein_installed = 1
         else
             echohl WarningMsg | echom "You need install git!" | echohl None
         endif
     endif
-    exec 'set runtimepath+='.g:settings.plugin_bundle_dir . 'repos/github.com/Shougo/dein.vim'
+    exec 'set runtimepath+='.g:settings.plugin_bundle_dir . join(['repos', 'github.com', 'Shougo', 'dein.vim'], s:Fsep)
 elseif g:settings.plugin_manager == 'vim-plug'
     "auto install vim-plug
     if filereadable(expand('~/.cache/vim-plug/autoload/plug.vim'))

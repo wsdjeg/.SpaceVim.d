@@ -59,14 +59,14 @@ if $COLORTERM == 'gnome-terminal'
 endif
 
 "Vim settings
-let g:settings                         = {}
+let g:settings                         = get(g:, 'settings', {})
 let g:settings.default_indent          = 2
 let g:settings.max_column              = 120
 let g:settings.auto_download_neobundle = 0
 let g:settings.neobundle_installed     = 0
 let g:settings.dein_installed          = 0
 let g:settings.vim_plug_installed      = 0
-let g:settings.plugin_bundle_dir       = join(['~/.cache','vimfiles',''],s:Fsep)
+let g:settings.plugin_bundle_dir       = $HOME. join(['', '.cache', 'vimfiles', ''],s:Fsep)
 let g:settings.autocomplete_method     = ''
 let g:settings.enable_cursorcolumn     = 0
 let g:settings.enable_neomake          = 1
