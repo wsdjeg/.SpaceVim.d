@@ -3,9 +3,9 @@ let g:neomake_verbose = 0
 let g:neomake_java_javac_delete_output = 0
 let g:neomake_error_sign = {
             \ 'text': get(g:settings, 'error_symbol', '✖'),
-            \ 'texthl': 'GruvboxRedSign',
+            \ 'texthl': (g:settings.colorscheme ==# 'gruvbox' ? 'GruvboxRedSign' : 'error'),
             \ }
 let g:neomake_warning_sign = {
             \ 'text': get(g:settings, 'warning_symbol', '➤'),
-            \ 'texthl': 'GruvboxYellowSign',
+            \ 'texthl': (g:settings.colorscheme ==# 'gruvbox' ? 'GruvboxYellowSign' : 'todo'),
             \ }
