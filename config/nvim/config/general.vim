@@ -105,6 +105,11 @@ endif
 if g:settings.enable_cursorcolumn == 1
     set cursorcolumn                "显示当前列
 endif
-if g:settings.hiddenfileinfo == 1
+if g:settings.hiddenfileinfo == 1 && has("patch-7.4.1570")
     set shortmess=filnxtToOF
+endif
+if exists('+termguicolors')
+    set termguicolors
+elseif exists('+guicolors')
+    set guicolors
 endif
