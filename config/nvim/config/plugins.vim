@@ -441,7 +441,7 @@ if s:enable_plug()
     " use this two command to find how long the plugin take!
     "profile start vim-javacomplete2.log
     "profile! file */vim-javacomplete2/*
-    if has('nvim') && g:settings.enable_neomake
+    if g:settings.enable_neomake
         call s:add('wsdjeg/neomake',{'on_cmd' : 'Neomake'})
         if s:tap('neomake')
             call s:defind_hooks('neomake')
@@ -451,7 +451,7 @@ if s:enable_plug()
             augroup END
         endif
     else
-        call s:add('wsdjeg/syntastic')
+        call s:add('wsdjeg/syntastic', {'on_event': 'WinEnter'})
         if s:tap('syntastic')
             call s:defind_hooks('syntastic')
         endif
