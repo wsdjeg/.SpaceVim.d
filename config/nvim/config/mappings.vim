@@ -91,8 +91,8 @@ nnoremap > >>_
 nnoremap < <<_
 
 " smart up and down
-nnoremap <silent><Down> gj
-nnoremap <silent><Up> gk
+nnoremap <silent><Down> :normal gj<cr>
+nnoremap <silent><Up> :normal gk<cr>
 
 " Select last paste
 nnoremap <silent><expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
