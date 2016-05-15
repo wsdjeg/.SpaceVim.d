@@ -12,8 +12,7 @@ function! s:goyo_leave()
     set showcmd
     set scrolloff=5
 endfunction
-
+augroup goyo_map
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
-
-
+augroup END

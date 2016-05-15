@@ -22,3 +22,6 @@ let g:startify_skiplist = [
             \ escape(fnamemodify(resolve($VIMRUNTIME), ':p'), '\') .'doc',
             \ 'bundle/.*/doc',
             \ ]
+augroup startify_map
+    autocmd FileType startify nnoremap <buffer><F2> <Nop>
+augroup END
