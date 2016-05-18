@@ -191,7 +191,7 @@ if s:enable_plug()
         call s:add('albfan/ag.vim',{'on_cmd' : 'Ag'})
         let g:ag_prg="ag  --vimgrep"
         let g:ag_working_path_mode="r"
-        call s:add('wsdjeg/ctrlsf.vim',{'on_cmd' : 'CtrlSF', 'on_map' : '<Plug>CtrlSF'})
+        call s:add('dyng/ctrlsf.vim',{'on_cmd' : 'CtrlSF', 'on_map' : '<Plug>CtrlSF'})
         if s:tap('ctrlsf.vim')
             call s:defind_hooks('ctrlsf.vim')
             nmap <silent><leader>sn <Plug>CtrlSFCwordExec

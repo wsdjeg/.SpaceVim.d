@@ -20,7 +20,7 @@ chmod +x install.sh
 ```
 ### Docs
 
-- VIM [README.md](config/nvim)
+- VIM [README.md](config/nvim/README.md)
 
 ### Thanks
 
