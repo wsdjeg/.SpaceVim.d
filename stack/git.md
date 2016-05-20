@@ -137,4 +137,8 @@ git rebase --continue   #continue
 $ git rebase --continue
 Successfully rebased and updated refs/heads/master.
 ```
-
+Q: 如果只克隆指定的分支?
+A:
+```sh
+git clone -b gh-pages --single-branch git@github.com:wsdjeg/DotFiles.git
+```
