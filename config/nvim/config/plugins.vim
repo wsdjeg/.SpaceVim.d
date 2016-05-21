@@ -176,6 +176,7 @@ if s:enable_plug()
             call s:defind_hooks('unite-gtags')
         endif
         call s:add('rafi/vim-unite-issue')
+        call s:add("joker1007/unite-pull-request")
         call s:add('tsukkee/unite-tag')
         call s:add('ujihisa/unite-launch')
         call s:add('ujihisa/unite-gem')
@@ -223,6 +224,10 @@ if s:enable_plug()
                     \ 'autoload': {
                     \    'unite_sources': ['grep/git', 'grep/hg'],
                     \}})
+        call s:add('lambdalisue/vim-gista', {
+                    \ 'on_cmd': 'Gista'
+                    \})
+        call s:add('lambdalisue/vim-gista-unite')
         call s:add('klen/unite-radio.vim')
         let g:unite_source_radio_play_cmd='mpv'
         "call s:add('ujihisa/quicklearn')
@@ -257,6 +262,7 @@ if s:enable_plug()
         call s:add('mattn/ctrlp-launcher',           { 'on_cmd' : 'CtrlPLauncher'})
         call s:add('sgur/ctrlp-extensions.vim',      { 'on_cmd' : ['CtrlPCmdline','CtrlPMenu','CtrlPYankring']})
         call s:add('FelikZ/ctrlp-py-matcher')
+        call s:add('lambdalisue/vim-gista-ctrlp',    { 'on_cmd' : 'CtrlPGista'})
     endif "}}}
 
 
@@ -573,5 +579,6 @@ if s:enable_plug()
     let g:racer_cmd = $HOME."/.cargo/bin/racer"
     call s:add('rust-lang/rust.vim')
     call s:add('PotatoesMaster/i3-vim-syntax',  {'on_ft' : 'i3'})
+    call s:add('lambdalisue/vim-gita',          {'on_cmd': 'Gita'})
     call s:end()
 endif
