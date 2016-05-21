@@ -50,5 +50,7 @@ nnoremap <Leader>pl :<c-u>CtrlPLauncher<cr>
 ""}}}
 
 augroup Fix_command_in_help_buffer
+    au!
     autocmd FileType help exec 'nnoremap <buffer><silent><c-p> :<c-u>CtrlP ' . getcwd() .'<cr>'
+    au FileType help exec "nnoremap <silent><buffer> q :q<CR>"
 augroup END

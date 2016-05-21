@@ -20,11 +20,12 @@ fu! zvim#util#source_rc(file)
 endf
 
 fu! zvim#util#SmartClose()
-    let ignorewin = get(g:settings,'smartcloseignorewin',['__Tagbar__' , 'vimfiler:default'])
+    let ignorewin = get(g:settings,'smartcloseignorewin',[])
+    let ignoreft = get(g:settings,'smartcloseignoreft',[])
     let win_count = winnr('$')
     let num = win_count
     for i in range(1,win_count)
-        if index(ignorewin , bufname(winbufnr(i))) != -1
+        if index(ignorewin , bufname(winbufnr(i))) != -1 || index(ignoreft, getbufvar(bufname(winbufnr(i)),"&filetype")) != -1
             let num = num - 1
         endif
     endfor
