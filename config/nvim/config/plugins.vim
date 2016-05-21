@@ -443,7 +443,7 @@ if s:enable_plug()
     "profile start vim-javacomplete2.log
     "profile! file */vim-javacomplete2/*
     if g:settings.enable_neomake
-        call s:add('wsdjeg/neomake',{'on_cmd' : 'Neomake'})
+        call s:add('neomake/neomake',{'on_cmd' : 'Neomake'})
         if s:tap('neomake')
             call s:defind_hooks('neomake')
             augroup Neomake_wsd
