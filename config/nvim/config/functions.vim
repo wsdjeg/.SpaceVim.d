@@ -196,25 +196,30 @@ func! Openpluginrepo()
 endf
 func! Update_current_plugin()
     try
-        exec "normal! ".'"ayi'."'"
-        if match(@a, '/') >= 0
-            exec 'call dein#update(["' . split(@a,'/')[1] . '"])'
-        else
-            exec 'call dein#update(["' . @a . '"])'
-        endif
-    catch
-        echohl WarningMsg | echomsg "can not open the web of current plugin" | echohl None
+        let a_save = @a
+        let @a=''
+        normal! "ayi'
+        let plug_name = match(@a, '/') >= 0 ? split(@a, '/')[1] : @a
+    finally
+        let @a = a_save
     endtry
+    call dein#update([plug_name])
 endf
 func! Show_Log_for_current_plugin()
     try
-        exec "normal! ".'"ayi'."'"
-        exec "call unite#start([['output/shellcmd',"
-                    \ ."'git --no-pager -C ~/.cache/vimfiles/repos/github.com/"
-                    \ . @a
-                    \ . " log -n 15 --oneline']], {'log': 1, 'wrap': 1,'start_insert':0})"
-        nnoremap <buffer><CR> :exe "OpenBrowser https://github.com/" . @a ."/commit/". strpart(split(getline('.'),'[33m')[1],0,7)<CR>
-    catch
-        echohl WarningMsg | echomsg "can show logs of current plugin" | echohl None
+        let a_save = @a
+        let @a=''
+        normal! "ayi'
+        let plug = match(@a, '/') >= 0 ? @a : 'vim-scripts/'.@a
+    finally
+        let @a = a_save
     endtry
+    call unite#start([['output/shellcmd',
+                \ 'git --no-pager -C ~/.cache/vimfiles/repos/github.com/'
+                \ . plug
+                \ . ' log -n 15 --oneline']], {'log': 1, 'wrap': 1,'start_insert':0})
+    exe "nnoremap <buffer><CR> :call <SID>Opencommit('". plug ."', strpart(split(getline('.'),'[33m')[1],0,7))<CR>"
+endf
+fu! s:Opencommit(repo,commit)
+    exe "OpenBrowser https://github.com/" . a:repo ."/commit/". a:commit
 endf
