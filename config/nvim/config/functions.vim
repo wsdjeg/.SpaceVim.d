@@ -213,6 +213,7 @@ func! Show_Log_for_current_plugin()
                     \ ."'git --no-pager -C ~/.cache/vimfiles/repos/github.com/"
                     \ . @a
                     \ . " log -n 15 --oneline']], {'log': 1, 'wrap': 1,'start_insert':0})"
+        nnoremap <buffer><CR> :exe "OpenBrowser https://github.com/" . @a ."/commit/". strpart(split(getline('.'),'[33m')[1],0,7)<CR>
     catch
         echohl WarningMsg | echomsg "can show logs of current plugin" | echohl None
     endtry
