@@ -12,16 +12,16 @@ cnoremap w!! %!sudo tee > /dev/null %
 
 
 " 映射Ctrl+上下左右来切换窗口
-nnoremap <C-Right> <C-W><Right>
-nnoremap <C-Left>  <C-W><Left>
-nnoremap <C-Up>    <C-W><Up>
-nnoremap <C-Down>  <C-W><Down>
+nnoremap <silent><C-Right> :<C-u>wincmd l<CR>
+nnoremap <silent><C-Left>  :<C-u>wincmd h<CR>
+nnoremap <silent><C-Up>    :<C-u>wincmd k<CR>
+nnoremap <silent><C-Down>  :<C-u>wincmd j<CR>
 if has('nvim')
-    tnoremap <C-Right> <C-\><C-n><C-w><Right>
-    tnoremap <C-Left>  <C-\><C-n><C-w><Left>
-    tnoremap <C-Up>    <C-\><C-n><C-w><Up>
-    tnoremap <C-Down>  <C-\><C-n><C-w><Down>
-    tnoremap <esc>     <C-\><C-n>
+    tnoremap <silent><C-Right> <C-\><C-n>:<C-u>wincmd l<CR>
+    tnoremap <silent><C-Left>  <C-\><C-n>:<C-u>wincmd h<CR>
+    tnoremap <silent><C-Up>    <C-\><C-n>:<C-u>wincmd k<CR>
+    tnoremap <silent><C-Down>  <C-\><C-n>:<C-u>wincmd j<CR>
+    tnoremap <silent><esc>     <C-\><C-n>
 endif
 
 "for buftabs
