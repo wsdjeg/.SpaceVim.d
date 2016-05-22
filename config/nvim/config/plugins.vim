@@ -232,7 +232,7 @@ if s:enable_plug()
                     \ 'on_cmd': 'Gista'
                     \})
         call s:add('lambdalisue/vim-gista-unite')
-        call s:add('klen/unite-radio.vim')
+        call s:add('wsdjeg/unite-radio.vim')
         let g:unite_source_radio_play_cmd='mpv'
         "call s:add('ujihisa/quicklearn')
     endif "}}}
