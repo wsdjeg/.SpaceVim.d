@@ -1,6 +1,7 @@
 # awesome-dotfiles
 [![Gitter](https://badges.gitter.im/wsdjeg/DotFiles.svg)](https://gitter.im/wsdjeg/DotFiles?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![Build Status](https://travis-ci.org/wsdjeg/DotFiles.svg?branch=master)](https://travis-ci.org/wsdjeg/DotFiles)
+[![Build Status](https://tea-ci.org/api/badges/wsdjeg/DotFiles/status.svg)](https://tea-ci.org/wsdjeg/DotFiles)
 
 ### Requirements
 
