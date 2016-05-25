@@ -6,10 +6,5 @@ cmdargs:
   color: true
 
 policies:
-  # Disable a violation
-  ProhibitSomethingEvil:
+  ProhibitImplicitScopeVariable:
     enabled: false
-
-  # Enable a violation
-  ProhibitSomethingBad:
-    enabled: true
