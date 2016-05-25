@@ -16,4 +16,4 @@ install:
 
 script:
   - sh /tmp/vimlint/bin/vimlint.sh -l /tmp/vimlint -p /tmp/vimlparser -v ./config/nvim
-  - vint ./config/nvim
+  - vint -e ./config/nvim
