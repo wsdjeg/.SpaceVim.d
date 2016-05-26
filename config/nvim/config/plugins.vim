@@ -1,3 +1,4 @@
+scriptencoding utf-8
 " Fsep && Psep
 if has('win16') || has('win32') || has('win64')
     let s:Psep = ';'

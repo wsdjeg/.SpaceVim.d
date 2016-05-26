@@ -1,3 +1,4 @@
+scriptencoding utf-8
 if !executable('ctags')
     let g:Tlist_Ctags_Cmd = '/usr/bin/ctags'  "设置ctags执行路径
 endif

@@ -1,3 +1,4 @@
+scriptencoding utf-8
 " Enable nocompatible
 if has('vim_starting')
     if &compatible
