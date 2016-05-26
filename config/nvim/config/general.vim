@@ -1,3 +1,4 @@
+scriptencoding utf-8
 " basic vim settiing
 if has("gui_running")
     set guioptions-=m " 隐藏菜单栏
