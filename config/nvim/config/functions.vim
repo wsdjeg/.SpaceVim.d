@@ -12,7 +12,6 @@ function! OnmiConfigForJsp()
     let pos1 = search("</script>","nb",line("w0"))
     let pos2 = search("<script","nb",line("w0"))
     let pos3 = search("</script>","n",line("w$"))
-    let pos4 = search("<script","n",line("w$"))
     let pos0 = line('.')
     if pos1 < pos2 && pos2 < pos0 && pos0 < pos3
         set omnifunc=javascriptcomplete#CompleteJS
@@ -85,9 +84,8 @@ function! WSDAutoComplete(char)
         endif
     else
         "bug exists
-        let col = col('.')
         normal! ma
-        let [commentline,commentcol] = searchpos('//','b',line('.'))
+        let commentcol = searchpos('//','b',line('.'))[1]
         normal! `a
         if commentcol == 0
             return a:char."\<c-x>\<c-o>\<c-p>"
