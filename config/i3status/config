@@ -11,13 +11,13 @@ general {
     interval = 5
 }
 
-order += "ipv6"
+# order += "ipv6"
 order += "disk /"
 order += "cpu_usage"
-order += "run_watch DHCP"
-order += "run_watch VPN"
+# order += "run_watch DHCP"
+# order += "run_watch VPN"
 order += "wireless _first_"
-order += "ethernet _first_"
+# order += "ethernet _first_"
 order += "battery 0"
 order += "load"
 order += "volume master"
