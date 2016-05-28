@@ -573,7 +573,7 @@ if s:enable_plug()
     call s:add('junegunn/fzf',                  { 'on_cmd' : 'FZF'})
     nnoremap <Leader>fz :FZF<CR>
     call s:add('junegunn/gv.vim',               { 'on_cmd' : 'GV'})
-    call s:add('tyru/open-browser.vim',{
+    call s:add('tyru/open-browser.vim',         {
                 \'on_cmd' : ['OpenBrowserSmartSearch','OpenBrowser','OpenBrowserSearch'],
                 \'on_map' : '<Plug>(openbrowser-',
                 \})
@@ -584,6 +584,7 @@ if s:enable_plug()
     let g:racer_cmd = $HOME."/.cargo/bin/racer"
     call s:add('rust-lang/rust.vim')
     call s:add('PotatoesMaster/i3-vim-syntax',  {'on_ft' : 'i3'})
+    call s:add('vimperator/vimperator.vim',     {'on_ft' : 'vimperator'})
     call s:add('lambdalisue/vim-gita',          {'on_cmd': 'Gita'})
     call s:end()
 endif

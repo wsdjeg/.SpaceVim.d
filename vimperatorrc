@@ -1,7 +1,91 @@
 "3.12.0 (created: 2016/02/28 22:07:56)
 
-source! /home/wsdjeg/.vimperatorrc.local
 
+" title bar
+set titlestring="Firefox with Vimperator"
+
+" default search/suggest engine: google
+set defsearch=google
+set suggestengines=google
+set complete=sl
+set maxitems=10
+
+
+" scroll height of <C-d> / <C-u>
+set scroll=3
+
+" don't focus any "input" elements automatically when open pages.
+"set focuscontent
+
+" show tabbar only
+"set gui=none,tabs,addons
+
+" preferences ( Firefox about:config ) {{{1
+" tabs {{{2
+" display tab-bar anytime
+set! browser.tabs.autoHide=false
+
+" don't animate tab-bar when switch to fullscreen
+set! browser.fullscreen.animateUp=0
+
+" hide close buttons
+set! browser.tabs.closeButtons=2
+
+" open tab in the background
+set! browser.tabs.loadDivertedInBackground=true
+
+" miscs {{{2
+" case-sensitive when find
+set! accessibility.typeaheadfind.casesensitive=1
+
+" don't resize when open images
+set! browser.enabel_automatic_image_resizing=false
+
+" the number of URL-completions is 20
+set! browser.urlbar.maxRichResults=20
+
+" the number of popups is 100
+set! dom.popup_maximum=100
+
+" activate spell-check textarea/input
+set! layout.spellcheckDefault=2
+
+" don't select trailing spaces, when select words.
+set! layout.word_select.eat_space_to_next_word=false
+
+" don't show download-manager
+set! browser.download.manager.showWhenStarting=false
+
+" mappings {{{1
+" clear all key mappings
+" to avoid troubles from loading rc file several times
+mapclear
+cmapclear
+imapclear
 nnoremap <leader>; :exe ":!ydcv " + content.getSelection()<CR>
+nnoremap <leader>w :!ydcv<space>
+
+" tab operation {{{2
+noremap <C-h> gT
+noremap <C-l> gt
+noremap <C-p> :tabmove! -1<CR>
+noremap <C-n> :tabmove! +1<CR>
+
+" better safe than sorry
+inoremap <C-h> <BS>
+
+" sourcing .vimperatorrc
+noremap <Leader>r :source ~/.vimperatorrc<CR>
+noremap <Leader><C-c> :javascript util.copyToClipboard('['+ buffer.title + '](' + buffer.URL + ')')<CR>
+" autocmds {{{1
+" clear all autocmds to avoid troubles from loading rc fle several times
+autocmd!
+
+" fmaps {{{2
+
+
+
+" finish {{{1
+echo "GET READY!!"
 
 " vim: set ft=vimperator:
