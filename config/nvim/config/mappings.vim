@@ -1,3 +1,4 @@
+scriptencoding utf-8
 "mapping
 "全局映射
 "也可以通过'za'打开或者关闭折叠
