@@ -423,3 +423,9 @@ settings = {
 };
 ignores = ( { level = "JOINS QUITS"; } );
 logs = { };
+keyboard = (
+  { key = "meta-h"; id = "left_window"; data = ""; },
+  { key = "meta-l"; id = "right_window"; data = ""; }
+);
+
+# vim:filetype=irssi

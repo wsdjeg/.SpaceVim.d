@@ -584,6 +584,7 @@ if s:enable_plug()
     let g:racer_cmd = $HOME."/.cargo/bin/racer"
     call s:add('rust-lang/rust.vim')
     call s:add('PotatoesMaster/i3-vim-syntax',  {'on_ft' : 'i3'})
+    call s:add('isundil/vim-irssi-syntax',  {'on_ft' : 'irssi'})
     call s:add('vimperator/vimperator.vim',     {'on_ft' : 'vimperator'})
     call s:add('lambdalisue/vim-gita',          {'on_cmd': 'Gita'})
     call s:end()
