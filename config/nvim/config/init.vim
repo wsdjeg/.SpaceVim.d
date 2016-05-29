@@ -86,9 +86,11 @@ let g:settings.checkinstall            = 0
 let g:settings.hiddenfileinfo          = 1
 let g:settings.plugin_groups_exclude   = []
 let g:settings.smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
-let g:settings.smartcloseignoreft     = ['help']
-let g:settings.altmoveignoreft     = ['Tagbar' , 'vimfiler']
-
+let g:settings.smartcloseignoreft      = ['help']
+let g:settings.altmoveignoreft         = ['Tagbar' , 'vimfiler']
+let g:settings.wildignore              = '*/tmp/*,*.so,*.swp,*.zip,*.class,tags,*.jpg,
+            \*.ttf,*.TTF,*.png,*/target/*,
+            \.git,.svn,.hg,.DS_Store'
 
 "core vimrc
 let g:settings.plugin_groups = []

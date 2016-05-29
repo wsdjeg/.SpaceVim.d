@@ -83,7 +83,7 @@ set autowrite
 set hlsearch
 set laststatus=2
 set completeopt=longest,menu
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class,tags
+exe "set wildignore+=" . g:settings.wildignore
 set wildignorecase
 let g:markdown_fenced_languages = ['vim', 'java', 'bash=sh', 'sh', 'html', 'python']
 set mouse=
