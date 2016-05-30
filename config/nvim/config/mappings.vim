@@ -1,3 +1,4 @@
+scriptencoding utf-8
 "mapping
 "全局映射
 "也可以通过'za'打开或者关闭折叠
@@ -17,11 +18,11 @@ nnoremap <silent><C-Left>  :<C-u>wincmd h<CR>
 nnoremap <silent><C-Up>    :<C-u>wincmd k<CR>
 nnoremap <silent><C-Down>  :<C-u>wincmd j<CR>
 if has('nvim')
-    tnoremap <silent><C-Right> <C-\><C-n>:<C-u>wincmd l<CR>
-    tnoremap <silent><C-Left>  <C-\><C-n>:<C-u>wincmd h<CR>
-    tnoremap <silent><C-Up>    <C-\><C-n>:<C-u>wincmd k<CR>
-    tnoremap <silent><C-Down>  <C-\><C-n>:<C-u>wincmd j<CR>
-    tnoremap <silent><esc>     <C-\><C-n>
+    exe "tnoremap <silent><C-Right> <C-\><C-n>:<C-u>wincmd l<CR>"
+    exe "tnoremap <silent><C-Left>  <C-\><C-n>:<C-u>wincmd h<CR>"
+    exe "tnoremap <silent><C-Up>    <C-\><C-n>:<C-u>wincmd k<CR>"
+    exe "tnoremap <silent><C-Down>  <C-\><C-n>:<C-u>wincmd j<CR>"
+    exe "tnoremap <silent><esc>     <C-\><C-n>"
 endif
 
 "for buftabs
