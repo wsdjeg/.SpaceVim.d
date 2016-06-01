@@ -430,7 +430,7 @@ if s:enable_plug()
     call s:add('wsdjeg/vim-dict',                        { 'on_ft' : 'java'})
     call s:add('wsdjeg/java_getset.vim',                 { 'on_ft' : 'java'})
     if s:tap('java_getset.vim')
-        call s:defind_hooks('java_getset')
+        call s:defind_hooks('java_getset.vim')
     endif
     call s:add('wsdjeg/JavaUnit.vim',                    { 'on_ft' : 'java'})
     call s:add('jaxbot/github-issues.vim',               { 'on_cmd' : 'Gissues'})
