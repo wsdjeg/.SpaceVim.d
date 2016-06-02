@@ -7,7 +7,8 @@ set titlestring="Firefox with Vimperator"
 " default search/suggest engine: google
 set defsearch=google
 set suggestengines=google
-set complete=sl
+" autocomplete smart + bookmark + history + suggestion
+set complete=lbhS
 set maxitems=10
 
 
@@ -18,7 +19,7 @@ set scroll=3
 "set focuscontent
 
 " show tabbar only
-"set gui=none,tabs,addons
+set gui=none,tabs,addons
 
 " preferences ( Firefox about:config ) {{{1
 " tabs {{{2
