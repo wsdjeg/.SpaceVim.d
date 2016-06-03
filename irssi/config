@@ -8,7 +8,7 @@ servers = (
   { address = "irc.dal.net"; chatnet = "DALnet"; port = "6667"; },
   { address = "irc.efnet.org"; chatnet = "EFNet"; port = "6667"; },
   { address = "irc.esper.net"; chatnet = "EsperNet"; port = "6667"; },
-  { 
+  {
     address = "chat.freenode.net";
     chatnet = "Freenode";
     port = "6667";
@@ -27,14 +27,15 @@ servers = (
   },
   { address = "irc.netfuze.net"; chatnet = "NetFuze"; port = "6667"; },
   { address = "irc.oftc.net"; chatnet = "OFTC"; port = "6667"; },
-  { 
+  {
     address = "irc.quakenet.org";
     chatnet = "QuakeNet";
     port = "6667";
   },
   { address = "irc.rizon.net"; chatnet = "Rizon"; port = "6667"; },
   { address = "silc.silcnet.org"; chatnet = "SILC"; port = "706"; },
-  { 
+  { address = "irc.mozilla.org"; chatnet = "Mozilla"; port = "6665"; },
+  {
     address = "irc.undernet.org";
     chatnet = "Undernet";
     port = "6667";
@@ -42,7 +43,7 @@ servers = (
 );
 
 chatnets = {
-  Ubuntu = { 
+  Ubuntu = {
     type = "IRC";
     max_kicks = "1";
     max_msgs = "4";
@@ -54,7 +55,7 @@ chatnets = {
     max_msgs = "20";
     max_whois = "30";
   };
-  EFNet = { 
+  EFNet = {
     type = "IRC";
     max_kicks = "1";
     max_msgs = "4";
@@ -78,7 +79,7 @@ chatnets = {
     max_msgs = "1";
     max_whois = "1";
   };
-  IRCnet = { 
+  IRCnet = {
     type = "IRC";
     max_kicks = "1";
     max_msgs = "1";
@@ -103,7 +104,7 @@ chatnets = {
     max_msgs = "1";
     max_whois = "1";
   };
-  Rizon = { 
+  Rizon = {
     type = "IRC";
     max_kicks = "1";
     max_msgs = "1";
@@ -116,6 +117,7 @@ chatnets = {
     max_msgs = "1";
     max_whois = "1";
   };
+  Mozilla = { type = "IRC"; };
 };
 
 channels = (
@@ -125,13 +127,14 @@ channels = (
   { name = "#linux"; chatnet = "Freenode"; autojoin = "yes"; },
   { name = "#i3"; chatnet = "Freenode"; autojoin = "yes"; },
   { name = "#gamesurge"; chatnet = "GameSurge"; autojoin = "No"; },
-  { name = "#irssi"; chatnet = "IRCNet"; autojoin = "No"; },
   { name = "#ircsource"; chatnet = "IRCSource"; autojoin = "No"; },
   { name = "#netfuze"; chatnet = "NetFuze"; autojoin = "No"; },
   { name = "#oftc"; chatnet = "OFTC"; autojoin = "No"; },
   { name = "silc"; chatnet = "SILC"; autojoin = "No"; },
   { name = "#neovim"; chatnet = "Freenode"; autojoin = "yes"; },
-  { name = "#rust-beginners"; chatnet = "Freenode"; autojoin = "No"; }
+  { name = "#vim"; chatnet = "Freenode"; autojoin = "yes"; },
+  { name = "#rust"; chatnet = "Mozilla"; autojoin = "Yes"; },
+  { name = "#firefox"; chatnet = "Mozilla"; autojoin = "Yes"; }
 );
 
 aliases = {
