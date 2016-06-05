@@ -69,9 +69,10 @@ then
             exit 0
             ;;
         rust)
-            if [ ! -e ~/.cargo/bin/rustc ]
+            if [ ! -e `which rustc` ]
             then
-                curl https://sh.rustup.rs -sSf | sh
+                printf "curl -sSf https://static.rust-lang.org/rustup.sh | sh -s -- --channel=nightly\n"
+                curl -sSf https://static.rust-lang.org/rustup.sh | sh -s -- --channel=nightly
             fi
             exit 0;
     esac

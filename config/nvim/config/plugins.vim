@@ -423,7 +423,11 @@ if s:enable_plug()
     call s:add('mmalecki/vim-node.js',                   { 'on_ft':['javascript']})
     call s:add('leshill/vim-json',                       { 'on_ft':['javascript','json']})
     call s:add('othree/javascript-libraries-syntax.vim', { 'on_ft':['javascript','coffee','ls','typescript']})
-    call s:add('artur-shaik/vim-javacomplete2',          { 'on_ft' : ['java','jsp']})
+    if g:settings.enable_javacomplete2_py
+        call s:add('wsdjeg/vim-javacomplete2',          { 'on_ft' : ['java','jsp']})
+    else
+        call s:add('artur-shaik/vim-javacomplete2',          { 'on_ft' : ['java','jsp']})
+    endif
     let g:JavaComplete_UseFQN = 1
     let g:JavaComplete_ServerAutoShutdownTime = 300
     let g:JavaComplete_MavenRepositoryDisable = 0

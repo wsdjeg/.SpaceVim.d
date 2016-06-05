@@ -162,7 +162,11 @@ endf
 
 function! MyLeaderTabfunc() abort
     if g:settings.autocomplete_method == 'deoplete'
-        return deoplete#mappings#manual_complete(['omni'])
+        if g:settings.enable_javacomplete2_py
+            return deoplete#mappings#manual_complete(['javacomplete2'])
+        else
+            return deoplete#mappings#manual_complete(['omni'])
+        endif
     elseif g:settings.autocomplete_method == 'neocomplete'
         return neocomplete#start_manual_complete(['omni'])
     endif
