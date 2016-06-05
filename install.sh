@@ -68,6 +68,12 @@ then
             fi
             exit 0
             ;;
+        rust)
+            if [ ! -e ~/.cargo/bin/rustc ]
+            then
+                curl https://sh.rustup.rs -sSf | sh
+            fi
+            exit 0;
     esac
 fi
 # Install configuration
@@ -91,6 +97,7 @@ symlink 'weechat/plugins.conf'
 symlink 'weechat/weechat.conf'
 symlink 'irssi/config'
 symlink 'irssi/default.theme'
+symlink 'profile'
 symlink 'bashrc'
 symlink 'bash_logout'
 symlink 'bash_profile'
