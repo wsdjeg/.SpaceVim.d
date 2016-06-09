@@ -1,13 +1,18 @@
 #!/bin/bash
-#
-# Symlinks the configs
-
 # Init colors
 CYAN='\033[0;36m'
 BLUE='\033[0;34m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
+# utils
+need_cmd () {
+    if ! command -v "$1" > /dev/null 2>&1
+    then printf "${RED}need '$1' (command not found)${NC}\n"
+    fi
+}
+
+# Symlinks the configs
 # Manager func
 symlink () {
     TARGET=$PWD/$1
