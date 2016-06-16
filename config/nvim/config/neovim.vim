@@ -59,3 +59,7 @@ augroup Terminal
     "au TermClose * exec &buftype == 'terminal' ? 'bd!' :  ''
     au TermClose * exe expand('<abuf>').'bd!'
 augroup END
+augroup nvimrc_aucmd
+    autocmd!
+    autocmd CursorHold,FocusGained,FocusLost * rshada|wshada
+augroup END
