@@ -225,3 +225,12 @@ endf
 fu! s:Opencommit(repo,commit)
     exe "OpenBrowser https://github.com/" . a:repo ."/commit/". a:commit
 endf
+
+fu! UpdateStarredRepos()
+    let repos = githubapi#users#GetStarred('wsdjeg')
+    for repo in repos
+        let description = repo.full_name . repeat(' ', 40 - len(repo.full_name)) . repo.description
+        let cmd = "OpenBrowser " . repo.html_url
+        call add(g:unite_source_menu_menus.MyStarredrepos.command_candidates, [description,cmd])
+    endfor
+endf

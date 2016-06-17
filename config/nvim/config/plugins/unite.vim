@@ -201,6 +201,7 @@ nnoremap <silent> [unite]w
             \ jump_point file_point buffer_tab
             \ file_rec:! file file/new<CR>
 nnoremap <silent>[unite]<Space> :Unite -silent -ignorecase -winheight=17 -start-insert menu:CustomKeyMaps<CR>
+nnoremap <silent><Leader>ls :Unite -silent -ignorecase -winheight=17 -start-insert menu:MyStarredrepos<CR>
 autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()
     " Overwrite settings.

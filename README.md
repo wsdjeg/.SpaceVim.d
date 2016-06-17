@@ -51,6 +51,8 @@ chmod +x install.sh
 ![installed plugins](pic/installed_plugin.png)
 ##### List all the mappings and descriptions
 ![mappings](pic/list_mappings.png)
+##### List all the repos I starred in github
+![starred repos](pic/starred.png)
 
 ![complete](pic/complete.png)
 
