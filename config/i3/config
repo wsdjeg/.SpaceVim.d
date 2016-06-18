@@ -16,7 +16,7 @@ set $mod Mod4
 font pango:Source Sans Pro-10 9
 exec fcitx -r &
 exec exec feh --bg-scale ~/.backgrounds/just_be_yourself.jpg
-exec --no-startup-id synclient TapButton2=3 VertEdgeScroll=1
+exec --no-startup-id synclient TapButton1=1 TapButton2=3 VertEdgeScroll=1
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 #font pango:DejaVu Sans Mono 8
