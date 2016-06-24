@@ -8,7 +8,7 @@ else
     let s:Fsep = '/'
 endif
 " auto install plugin manager
-if g:settings.plugin_manager == 'neobundle'
+if g:settings.plugin_manager ==# 'neobundle'
     "auto install neobundle
     if filereadable(expand(g:settings.plugin_bundle_dir) . 'neobundle.vim'. s:Fsep. 'README.md')
         let g:settings.neobundle_installed = 1
@@ -315,7 +315,7 @@ if s:enable_plug()
                         \   'lua' : ['.', ':'],
                         \   'erlang' : [':'],
                         \ }
-        elseif g:settings.autocomplete_method == 'neocomplete' "{{{
+        elseif g:settings.autocomplete_method ==# 'neocomplete' "{{{
             call s:add('Shougo/neocomplete', {
                         \ 'on_i' : 1,
                         \ })
@@ -366,6 +366,9 @@ if s:enable_plug()
     if count(g:settings.plugin_groups, 'colorscheme') "{{{
         "colorscheme
         call s:add('morhetz/gruvbox')
+        if s:tap('gruvbox')
+            call s:defind_hooks('gruvbox')
+        endif
         call s:add('kabbamine/yowish.vim')
         call s:add('tomasr/molokai')
         call s:add('mhinz/vim-janah')
