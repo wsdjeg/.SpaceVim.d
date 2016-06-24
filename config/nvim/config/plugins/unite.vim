@@ -36,7 +36,7 @@ let g:unite_data_directory='~/.cache/unite'
 let g:unite_source_history_yank_enable=1
 let g:unite_split_rule = 'botright'
 let g:unite_winheight=25
-let g:unite_source_grep_default_opts = "-iRHn"
+let g:unite_source_grep_default_opts = '-iRHn'
             \ . " --exclude='tags'"
             \ . " --exclude='cscope*'"
             \ . " --exclude='*.svn*'"
@@ -250,7 +250,9 @@ nnoremap <silent> [unite]w
             \ file_rec:! file file/new<CR>
 nnoremap <silent>[unite]<Space> :Unite -silent -ignorecase -winheight=17 -start-insert menu:CustomKeyMaps<CR>
 nnoremap <silent><Leader>ls :Unite -silent -ignorecase -winheight=17 -start-insert menu:MyStarredrepos<CR>
-autocmd FileType unite call s:unite_my_settings()
+augroup unite_buffer_feature
+    autocmd FileType unite call s:unite_my_settings()
+augroup END
 function! s:unite_my_settings()
     " Overwrite settings.
 
