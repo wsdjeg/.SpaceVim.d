@@ -36,7 +36,7 @@ let g:unite_data_directory='~/.cache/unite'
 let g:unite_source_history_yank_enable=1
 let g:unite_split_rule = 'botright'
 let g:unite_winheight=25
-let g:unite_source_grep_default_opts = "-iRHn"
+let g:unite_source_grep_default_opts = '-iRHn'
             \ . " --exclude='tags'"
             \ . " --exclude='cscope*'"
             \ . " --exclude='*.svn*'"
@@ -87,6 +87,54 @@ let g:unite_source_menu_menus.git.command_candidates = [
             \['▷ git cd           (Fugitive)',
             \'Gcd'],
             \]
+"===============================================================================
+" HTTP Status Code Definitions
+"===============================================================================
+let g:unite_source_menu_menus.StatusCodeDefinitions = {'description': 'HTTP status code definitions             <leader>sc'}
+let g:unite_source_menu_menus.StatusCodeDefinitions.command_candidates = [
+    \['➤ 100 Continue                                                   ', 'echo "Continue"'],
+    \['➤ 101 Switching Protocols                                        ', 'echo "Switching Protocols"'],
+    \['➤ 200 OK                                                         ', 'echo "OK"'],
+    \['➤ 201 Created                                                    ', 'echo "Created"'],
+    \['➤ 202 Accepted                                                   ', 'echo "Accepted"'],
+    \['➤ 203 Non-Authoritative Information                              ', 'echo "Non-Authoritative Information"'],
+    \['➤ 204 No Content                                                 ', 'echo "No Content"'],
+    \['➤ 205 Reset Content                                              ', 'echo "Reset Content"'],
+    \['➤ 206 Partial Content                                            ', 'echo "Partial Content"'],
+    \['➤ 300 Multiple Choices                                           ', 'echo "Multiple Choices"'],
+    \['➤ 301 Moved Permanently                                          ', 'echo "Moved Permanently"'],
+    \['➤ 302 Found                                                      ', 'echo "Found"'],
+    \['➤ 303 See Other                                                  ', 'echo "See Other"'],
+    \['➤ 304 Not Modified                                               ', 'echo "Not Modified"'],
+    \['➤ 305 Use Proxy                                                  ', 'echo "Use Proxy"'],
+    \['➤ 307 Temporary Redirect                                         ', 'echo "Temporary Redirect"'],
+    \['➤ 400 Bad Request                                                ', 'echo "Bad Request"'],
+    \['➤ 401 Unauthorized                                               ', 'echo "Unauthorized"'],
+    \['➤ 402 Payment Required                                           ', 'echo "Payment Required"'],
+    \['➤ 403 Forbidden                                                  ', 'echo "Forbidden"'],
+    \['➤ 404 Not Found                                                  ', 'echo "Not Found"'],
+    \['➤ 405 Method Not Allowed                                         ', 'echo "Method Not Allowed"'],
+    \['➤ 406 Not Acceptable                                             ', 'echo "Not Acceptable"'],
+    \['➤ 407 Proxy Authentication Required                              ', 'echo "Proxy Authoritative Required"'],
+    \['➤ 408 Request Timeout                                            ', 'echo "Request Timeout"'],
+    \['➤ 409 Conflict                                                   ', 'echo "Conflict"'],
+    \['➤ 410 Gone                                                       ', 'echo "Gone"'],
+    \['➤ 411 Length Required                                            ', 'echo "Length Required"'],
+    \['➤ 412 Precondition Failed                                        ', 'echo "Precondition Failed"'],
+    \['➤ 413 Request Entity Too Large                                   ', 'echo "Request Entity Too Large"'],
+    \['➤ 414 Request-URI Too Long                                       ', 'echo "Request-URI Too Long"'],
+    \['➤ 415 Unsupported Media Type                                     ', 'echo "Unsupported Media Type"'],
+    \['➤ 416 Requested Range Not Satisfiable                            ', 'echo "Requested Range Not Satisfiable"'],
+    \['➤ 417 Expectation Failed                                         ', 'echo "Expectation Failed"'],
+    \['➤ 422 Unprocessable Entity                                       ', 'echo "Unprocessable Entity"'],
+    \['➤ 500 Internal Server Error                                      ', 'echo "Internal Server Error"'],
+    \['➤ 501 Not Implemented                                            ', 'echo "Not Implemented"'],
+    \['➤ 502 Bad Gateway                                                ', 'echo "Bad Gateway"'],
+    \['➤ 503 Service Unavailable                                        ', 'echo "Service Unavailable"'],
+    \['➤ 504 Gateway Timeout                                            ', 'echo "Gateway Timeout"'],
+    \['➤ 505 HTTP Version Not Supported                                 ', 'echo "HTTP Version Not Supported"'],
+    \]
+nnoremap <silent><leader>sc :Unite -silent -winheight=17 -start-insert menu:StatusCodeDefinitions<CR>
 let g:unite_source_grep_max_candidates = 200
 if executable('hw')
     " Use hw (highway)
@@ -201,7 +249,10 @@ nnoremap <silent> [unite]w
             \ jump_point file_point buffer_tab
             \ file_rec:! file file/new<CR>
 nnoremap <silent>[unite]<Space> :Unite -silent -ignorecase -winheight=17 -start-insert menu:CustomKeyMaps<CR>
-autocmd FileType unite call s:unite_my_settings()
+nnoremap <silent><Leader>ls :Unite -silent -ignorecase -winheight=17 -start-insert menu:MyStarredrepos<CR>
+augroup unite_buffer_feature
+    autocmd FileType unite call s:unite_my_settings()
+augroup END
 function! s:unite_my_settings()
     " Overwrite settings.
 
