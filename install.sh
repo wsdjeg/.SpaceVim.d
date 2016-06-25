@@ -132,10 +132,14 @@ then
                 mv ~/.vimrc ~/.vimrc_back
                 printf "Move $Red~/.vimrc to ~/.vimrc_back$Color_off\n"
             fi
-            if [ -e ~/.vim ]
-            then
+            if file ~/.vim | grep $PWD &> /dev/null;then
                 printf "Installed $Red~/.vim$Color_off\n"
             else
+                if [ -e ~/.vim ]
+                then
+                    mv ~/.vim ~/.vim_back
+                    printf "Move $Red~/.vim to ~/.vim_back$Color_off\n"
+                fi
                 printf "Linking $Cyan~/.vim$Color_off -> $Blue$PWD/config/nvim$Color_off\n"
                 ln -s $PWD/config/nvim ~/.vim
             fi
