@@ -1,0 +1,18 @@
+#第一个字符为“#”的行是注释
+#格式：编码 符号
+#编码只能为小写字母，经拼音解析后最长为10(如py为2，pinyin也为2)
+#数学符号
+sxfh ＋
+sxfh －
+sxfh ＜
+sxfh ＝
+sxfh ＞
+sxfh ±
+sxfh ×
+sxfh ÷
+sxfh ∈
+sxfh ∏
+sxfh ∑
+sxfh ∕
+sxfh √
+sxfh ∝

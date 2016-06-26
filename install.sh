@@ -169,7 +169,11 @@ symlink 'config/i3status/config'
 symlink 'config/vifm'
 symlink 'config/nvim'
 symlink 'config/lilyterm'
+# fcitx
 symlink 'config/fcitx/config'
+symlink 'config/fcitx/conf'
+symlink 'config/fcitx/data'
+# termite
 symlink 'config/termite/config'
 symlink 'weechat/plugins.conf'
 symlink 'weechat/weechat.conf'
