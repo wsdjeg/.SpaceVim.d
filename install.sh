@@ -1,7 +1,7 @@
 #!/bin/bash
 # Init colors
 # Reset
-Color_Off='\033[0m'       # Text Reset
+Color_off='\033[0m'       # Text Reset
 
 # Regular Colors
 Black='\033[0;30m'        # Black
@@ -88,12 +88,12 @@ symlink () {
     if [ -e "$FILE" ]
     then
         if file $FILE | grep $PWD &> /dev/null;then
-            printf "Installed $Red$FILE$Color_off\n"
+            printf "Installed $Red$FILE${Color_off}\n"
         else
-            printf "Skipping $Red$FILE$Color_off\n"
+            printf "Skipping $Red$FILE${Color_off}\n"
         fi
     else
-        printf "Linking $Cyan$FILE$Color_off -> $Blue$TARGET$Color_off\n"
+        printf "Linking $Cyan$FILE${Color_off} -> $Blue$TARGET${Color_off}\n"
         ln -s "$TARGET" "$FILE"
     fi
 }
@@ -173,6 +173,7 @@ symlink 'config/lilyterm'
 symlink 'config/fcitx/config'
 symlink 'config/fcitx/conf'
 symlink 'config/fcitx/data'
+symlink 'config/fcitx/pinyin/pySym.mb'
 # termite
 symlink 'config/termite/config'
 symlink 'weechat/plugins.conf'
