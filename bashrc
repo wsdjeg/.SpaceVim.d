@@ -147,6 +147,7 @@ fi
 export ANDROID_HOME="$HOME/tools/android-sdk-linux"
 export RUST_SRC_PATH="$HOME/forks/rust/src"
 export PATH="$HOME/.local/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH"
+export PATH="$HOME/.npm-packages/bin:$PATH"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 export FZF_COMPLETION_TRIGGER='~~'

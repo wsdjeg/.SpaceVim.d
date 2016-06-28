@@ -176,6 +176,9 @@ symlink 'config/fcitx/data'
 symlink 'config/fcitx/pinyin/pySym.mb'
 # termite
 symlink 'config/termite/config'
+# npm
+symlink 'npmrc'
+# weechat
 symlink 'weechat/plugins.conf'
 symlink 'weechat/weechat.conf'
 symlink 'irssi/config'
