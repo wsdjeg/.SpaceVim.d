@@ -18,11 +18,11 @@ nnoremap <silent><C-Left>  :<C-u>wincmd h<CR>
 nnoremap <silent><C-Up>    :<C-u>wincmd k<CR>
 nnoremap <silent><C-Down>  :<C-u>wincmd j<CR>
 if has('nvim')
-    exe "tnoremap <silent><C-Right> <C-\><C-n>:<C-u>wincmd l<CR>"
-    exe "tnoremap <silent><C-Left>  <C-\><C-n>:<C-u>wincmd h<CR>"
-    exe "tnoremap <silent><C-Up>    <C-\><C-n>:<C-u>wincmd k<CR>"
-    exe "tnoremap <silent><C-Down>  <C-\><C-n>:<C-u>wincmd j<CR>"
-    exe "tnoremap <silent><esc>     <C-\><C-n>"
+    exe 'tnoremap <silent><C-Right> <C-\><C-n>:<C-u>wincmd l<CR>'
+    exe 'tnoremap <silent><C-Left>  <C-\><C-n>:<C-u>wincmd h<CR>'
+    exe 'tnoremap <silent><C-Up>    <C-\><C-n>:<C-u>wincmd k<CR>'
+    exe 'tnoremap <silent><C-Down>  <C-\><C-n>:<C-u>wincmd j<CR>'
+    exe 'tnoremap <silent><esc>     <C-\><C-n>'
 endif
 
 "for buftabs
@@ -92,8 +92,8 @@ nnoremap > >>_
 nnoremap < <<_
 
 " smart up and down
-nnoremap <silent><Down> :normal! gj<cr>
-nnoremap <silent><Up> :normal! gk<cr>
+nnoremap <silent><Down> gj
+nnoremap <silent><Up> gk
 
 " Select last paste
 nnoremap <silent><expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
@@ -154,15 +154,15 @@ nnoremap <Leader>d m`YP``
 vnoremap <Leader>d YPgv
 
 fu! s:tobur(num)
-    if index(get(g:settings,'altmoveignoreft',[]), &ft) == -1
-        if a:num ==# "bnext"
+    if index(get(g:settings,'altmoveignoreft',[]), &filetype) == -1
+        if a:num ==# 'bnext'
             bnext
-        elseif a:num ==# "bprev"
+        elseif a:num ==# 'bprev'
             bprev
         elseif bufexists(a:num)&&buflisted(a:num)
-            exec "buffer " . a:num
+            exec 'buffer ' . a:num
         elseif bufexists(a:num + 1)&&buflisted(a:num + 1)
-            exec "buffer " . (a:num + 1)
+            exec 'buffer ' . (a:num + 1)
         endif
     endif
 endf
@@ -176,7 +176,7 @@ nnoremap <silent><M-Right> :<C-U>call <SID>tobur("bnext")<CR>
 nnoremap <silent><M-Left> :<C-U>call <SID>tobur("bprev")<CR>
 
 call zvim#util#defineMap('vnoremap', '<Leader>S', "y:execute @@<CR>:echo 'Sourced selection.'<CR>",
-            \ "Sourced selection.",
+            \ 'Sourced selection.',
             \ "echo 'Use <leader>S to sourced selection.'")
 call zvim#util#defineMap('nnoremap','<Leader>S',"^vg_y:execute @@<CR>:echo 'Sourced line.'<CR>",'Source line',
             \ "echo 'Use <leader>S to sourced line.'")
@@ -202,9 +202,9 @@ call zvim#util#defineMap('nnoremap <silent>', '[Window]x', ':<C-u>call zvim#util
             \'Empty current buffer','call zvim#util#BufferEmpty()')
 call zvim#util#defineMap('nnoremap <silent>', '[Window]\', ':<C-u>b#<CR>', 'Switch to the last buffer','b#')
 call zvim#util#defineMap('nnoremap <silent>', '[Window]q', ':<C-u>close<CR>', 'Close current windows','close')
-call zvim#util#defineMap('nnoremap <silent>', 'q', ":<C-u>call zvim#util#SmartClose()<cr>",
+call zvim#util#defineMap('nnoremap <silent>', 'q', ':<C-u>call zvim#util#SmartClose()<cr>',
             \ 'Smart close windows',
-            \ "call zvim#util#SmartClose()")
+            \ 'call zvim#util#SmartClose()')
 call zvim#util#defineMap('nnoremap <silent>', '<Leader>qr', 'q', 'Toggle recording','')
 call zvim#util#defineMap('nnoremap <silent>', '<Leader>sv', ':split<CR>:wincmd p<CR>:e#<CR>',
             \'Open previous buffer in split window' , 'split|wincmd p|e#')
