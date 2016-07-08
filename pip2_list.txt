@@ -1,0 +1,15 @@
+chardet
+click
+futures
+getmail
+greenlet
+msgpack-python
+neovim
+packaging
+pip
+pyparsing
+requests
+setuptools
+six
+trollius
+urllib3

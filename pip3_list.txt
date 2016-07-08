@@ -1,0 +1,17 @@
+ansicolor
+chardet
+click
+greenlet
+msgpack-python
+neovim
+packaging
+pip
+PyGithub
+pyparsing
+PyYAML
+requests
+setuptools
+six
+urllib3
+vim-vint
+vimdoc
