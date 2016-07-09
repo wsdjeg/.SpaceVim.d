@@ -1,3 +1,8 @@
+Q:What is the vimscript style guide?
+A:https://google.github.io/styleguide/vimscriptfull.xml
+  https://google.github.io/styleguide/vimscriptguide.xml
+  https://github.com/noahfrederick/vim-scripting-style-guide/blob/master/doc/scripting-style.txt
+
 Q:Why do not use gradle wapper?
 A:https://github.com/elastic/elasticsearch/pull/13744
 
