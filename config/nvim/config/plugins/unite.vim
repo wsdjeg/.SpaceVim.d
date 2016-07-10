@@ -250,6 +250,8 @@ nnoremap <silent> [unite]w
             \ file_rec:! file file/new<CR>
 nnoremap <silent>[unite]<Space> :Unite -silent -ignorecase -winheight=17 -start-insert menu:CustomKeyMaps<CR>
 nnoremap <silent><Leader>ls :Unite -silent -ignorecase -winheight=17 -start-insert menu:MyStarredrepos<CR>
+nnoremap <silent><Leader>lm :Unite -silent -ignorecase -winheight=17 -start-insert menu:MpvPlayer<CR>
+call zvim#util#loadMusics()
 augroup unite_buffer_feature
     autocmd FileType unite call s:unite_my_settings()
 augroup END

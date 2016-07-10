@@ -6,6 +6,8 @@ let g:unite_source_menu_menus.CustomKeyMaps = {'description': 'Custom mapped key
 let g:unite_source_menu_menus.CustomKeyMaps.command_candidates = get(g:unite_source_menu_menus.CustomKeyMaps,'command_candidates', [])
 let g:unite_source_menu_menus.MyStarredrepos = {'description': 'All github repos starred by me                   <leader>ls'}
 let g:unite_source_menu_menus.MyStarredrepos.command_candidates = get(g:unite_source_menu_menus.MyStarredrepos,'command_candidates', [])
+let g:unite_source_menu_menus.MpvPlayer = {'description': 'Musics list                   <leader>lm'}
+let g:unite_source_menu_menus.MpvPlayer.command_candidates = get(g:unite_source_menu_menus.MpvPlayer,'command_candidates', [])
 fu! zvim#util#defineMap(type,key,value,desc,...)
     exec a:type . ' ' . a:key . ' ' . a:value
     let description = "➤ "
@@ -133,6 +135,16 @@ function! zvim#util#BufferEmpty()
         enew
         silent! execute 'bdelete '.l:current
     endif
+endfunction
+
+function! zvim#util#loadMusics() abort
+   let musics = globpath('~/Musics', '*.mp3', 0, 1)
+   let g:unite_source_menu_menus.MpvPlayer.command_candidates = []
+   for m in musics
+       call add(g:unite_source_menu_menus.MpvPlayer.command_candidates,
+                   \ [fnamemodify(m, ':t'),
+                   \ 'call zvim#mpv#play("' . m . '")'])
+   endfor
 endfunction
 
 let &cpo = s:save_cpo
