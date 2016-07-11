@@ -1,0 +1,13 @@
+bigdecimal
+did_you_mean
+io-console
+json
+minitest
+msgpack
+neovim
+net-telnet
+power_assert
+psych
+rake
+rdoc
+test-unit
