@@ -382,10 +382,10 @@ if s:enable_plug()
         call s:add('vimcn/vimcdoc')
     endif
 
+    call s:add('junegunn/vim-github-dashboard',      { 'on_cmd':['GHD','GHA','GHActivity','GHDashboard']})
     if count(g:settings.plugin_groups, 'vim') "{{{
         call s:add('Shougo/vimshell.vim',                { 'on_cmd':['VimShell']})
         call s:add('mattn/vim-terminal',                 { 'on_cmd':['Terminal']})
-        call s:add('junegunn/vim-github-dashboard',      { 'on_cmd':['GHD','GHA','GHActivity','GHDashboard']})
         call s:add('davidhalter/jedi-vim',     { 'on_ft' : 'python'})
         if s:tap('jedi-vim')
             call s:defind_hooks('jedi-vim')
