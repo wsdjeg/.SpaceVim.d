@@ -147,5 +147,14 @@ function! zvim#util#loadMusics() abort
    endfor
 endfunction
 
+function! zvim#util#listDirs(dir) abort
+    let dir = fnamemodify(a:dir, ':p')
+    if isdirectory(dir)
+        let cmd = printf('ls -F %s | grep /$', dir)
+        return map(systemlist(cmd), 'v:val[:-2]')
+    endif
+    return []
+endfunction
+
 let &cpo = s:save_cpo
 unlet s:save_cpo

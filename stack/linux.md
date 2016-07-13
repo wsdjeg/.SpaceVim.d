@@ -1,3 +1,11 @@
+Q:How to write fu! in one line
+A:
+```
+21:52 < wsdjeg> how could I defind a func in command line? I just try `:fu! Test() | endf` but it does not work, I get E488,
+22:04 < MarcoHinzGitter[> wsdjeg: Either you use `<c-v><c-j>` instead of `|` or something like: `:exe "fu! Test() \n echo 'foo' \n endfu`.
+22:05 < MarcoHinzGitter[> I can also use `<c-2>` instead of `<c-v><c-j>`, but that might be different depending on your layout.
+22:08 < wsdjeg> @mhinz greate that works well
+```
 Q:What is the vimscript style guide?
 A:https://google.github.io/styleguide/vimscriptfull.xml
   https://google.github.io/styleguide/vimscriptguide.xml
