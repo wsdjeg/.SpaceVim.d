@@ -148,6 +148,8 @@ export ANDROID_HOME="$HOME/tools/android-sdk-linux"
 export RUST_SRC_PATH="$HOME/forks/rust/src"
 export PATH="$HOME/.local/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH"
 export PATH="$HOME/.npm-packages/bin:$PATH"
-
+if which ruby >/dev/null && which gem >/dev/null; then
+    PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
+fi
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 export FZF_COMPLETION_TRIGGER='~~'
