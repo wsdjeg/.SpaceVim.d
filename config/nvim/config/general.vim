@@ -8,6 +8,9 @@ if has("gui_running")
     set guioptions-=b " 隐藏底部滚动条
     set showtabline=0 " 隐藏Tab栏
     set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
+    if WINDOWS()
+        set guifont=Sauce_Code_Powerline:h11:cANSI:qDRAFT
+    endif
 endif
 
 " indent use backspace delete indent, eol use backspace delete line at
