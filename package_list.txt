@@ -369,6 +369,7 @@ openjpeg
 openresolv
 openssh
 openssl
+openvpn
 opus
 orc
 p11-kit
