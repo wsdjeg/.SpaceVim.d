@@ -156,5 +156,18 @@ function! zvim#util#listDirs(dir) abort
     return []
 endfunction
 
+function! zvim#util#OpenVimfiler() abort
+    if bufnr('vimfiler') == -1
+        VimFiler
+        AirlineRefresh
+        wincmd p
+        IndentLinesToggle
+        IndentLinesToggle
+        wincmd p
+    else
+        VimFiler
+    endif
+endfunction
+
 let &cpo = s:save_cpo
 unlet s:save_cpo

@@ -215,7 +215,7 @@ if s:enable_plug()
         call s:add('Shougo/vimfiler.vim',{'on_cmd' : 'VimFiler'})
         if s:tap('vimfiler.vim')
             call s:defind_hooks('vimfiler.vim')
-            noremap <silent> <F3> :exe "VimFiler \| AirlineRefresh"<CR>
+            noremap <silent> <F3> :call zvim#util#OpenVimfiler()<CR>
         endif
         call s:add('mopp/googlesuggest-source.vim')
         call s:add('mattn/googlesuggest-complete-vim')
