@@ -17,7 +17,7 @@ complete -cf sudo
 
 # append to the history file, don't overwrite it
 shopt -s histappend
-
+export PROMPT_COMMAND='history -a;history -c;history -r'
 # Line wrap on window resize
 shopt -s checkwinsize
 
