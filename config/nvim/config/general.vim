@@ -9,7 +9,8 @@ if has("gui_running")
     set showtabline=0 " 隐藏Tab栏
     set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
     if WINDOWS()
-        set guifont=Sauce_Code_Powerline:h11:cANSI:qDRAFT
+        " please install the font in 'Dotfiles\font'
+        set guifont=DejaVu_Sans_Mono_for_Powerline:h11:cANSI:qDRAFT
     endif
 endif
 
