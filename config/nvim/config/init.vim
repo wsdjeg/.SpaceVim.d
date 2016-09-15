@@ -63,6 +63,7 @@ endif
 let g:settings                         = get(g:, 'settings', {})
 let g:settings.default_indent          = 2
 let g:settings.max_column              = 120
+let g:settings.enable_googlesuggest    = 0
 let g:settings.auto_download_neobundle = 0
 let g:settings.neobundle_installed     = 0
 let g:settings.dein_installed          = 0

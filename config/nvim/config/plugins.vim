@@ -217,8 +217,10 @@ if s:enable_plug()
             call s:defind_hooks('vimfiler.vim')
             noremap <silent> <F3> :call zvim#util#OpenVimfiler()<CR>
         endif
-        call s:add('mopp/googlesuggest-source.vim')
-        call s:add('mattn/googlesuggest-complete-vim')
+        if g:settings.enable_googlesuggest
+            call s:add('mopp/googlesuggest-source.vim')
+            call s:add('mattn/googlesuggest-complete-vim')
+        endif
         call s:add('ujihisa/unite-colorscheme')
         call s:add('mattn/unite-gist')
         call s:add('tacroe/unite-mark')
