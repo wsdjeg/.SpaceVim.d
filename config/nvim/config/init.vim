@@ -16,7 +16,7 @@ else
 endif
 "Use English for anything in vim
 if WINDOWS()
-    silent exec 'language english'
+    silent exec 'lan mes en_US.UTF-8'
 elseif OSX()
     silent exec 'language en_US'
 else
@@ -157,3 +157,7 @@ endfor
 " python host for neovim
 let g:python_host_prog = '/usr/bin/python2'
 let g:python3_host_prog = '/usr/bin/python3'
+set langmenu=en_US
+let $LANG = 'en_US'
+source $VIMRUNTIME/delmenu.vim
+source $VIMRUNTIME/menu.vim

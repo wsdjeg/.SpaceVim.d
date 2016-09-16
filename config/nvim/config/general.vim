@@ -94,6 +94,10 @@ set mouse=
 set hidden
 set ttimeout
 set ttimeoutlen=50
+" shell
+if has('filterpipe')
+    set noshelltemp
+endif
 filetype plugin indent on
 syntax on
 if count(g:settings.plugin_groups, 'colorscheme')&&g:settings.colorscheme!='' "{{{
