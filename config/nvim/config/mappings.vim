@@ -59,7 +59,9 @@ vnoremap <silent><C-S-Up> :m '<-2<CR>gv=gv
 noremap <silent><leader>bg :call ToggleBG()<CR>
 "numbers
 noremap <silent><leader>nu :call ToggleNumber()<CR>
-
+" download gvimfullscreen.dll from github, copy gvimfullscreen.dll to
+" the directory that has gvim.exe
+nnoremap <F11> :call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<cr>
 " yark and paste
 vmap <Leader>y "+y
 vmap <Leader>d "+d
