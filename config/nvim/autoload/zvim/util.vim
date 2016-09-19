@@ -72,11 +72,15 @@ fu! zvim#util#CopyToClipboard(...)
                     let remote = remotes[0]
                     if stridx(remote, '@') > -1
                         let repo_url = 'https://github.com/'. split(split(remote,' ')[0],':')[1]
+                        let repo_url = strpart(repo_url, 0, len(repo_url) - 4)
                     else
                         let repo_url = split(remote,' ')[0]
                         let repo_url = strpart(repo_url, stridx(repo_url, 'http'),len(repo_url) - 4 - stridx(repo_url, 'http'))
                     endif
                     let f_url =repo_url. '/blob/'. branch. '/'. strpart(expand('%:p'), len(repo_home) + 1, len(expand('%:p')))
+                    if WINDOWS()
+                        let f_url = substitute(f_url, '\', '/', 'g')
+                    endif
                     let @+=f_url
                     echo "Copied to clipboard"
                 else
