@@ -598,5 +598,6 @@ if s:enable_plug()
     call s:add('isundil/vim-irssi-syntax',  {'on_ft' : 'irssi'})
     call s:add('vimperator/vimperator.vim',     {'on_ft' : 'vimperator'})
     call s:add('lambdalisue/vim-gita',          {'on_cmd': 'Gita'})
+    call s:add('tweekmonster/helpful.vim',      {'on_cmd': 'HelpfulVersion'})
     call s:end()
 endif
