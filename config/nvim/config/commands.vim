@@ -3,4 +3,4 @@
 " defined already.
 command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
             \ | wincmd p | diffthis
-" }}}
+command -nargs=* -complete=custom,zvim#util#complete_plugs Plugin :call zvim#util#Plugin(<f-args>)

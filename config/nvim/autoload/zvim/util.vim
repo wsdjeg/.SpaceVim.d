@@ -170,7 +170,37 @@ function! zvim#util#OpenVimfiler() abort
         wincmd p
     else
         VimFiler
+        AirlineRefresh
     endif
+endfunction
+
+let s:plugins_argv = ['-update', '-openurl']
+
+function! zvim#util#complete_plugs(ArgLead, CmdLine, CursorPos) abort
+    call zvim#debug#completion_debug(a:ArgLead, a:CmdLine, a:CursorPos)
+    if a:CmdLine =~ 'Plugin\s*$' || a:ArgLead =~ '^-[a-zA-Z]*'
+        return join(s:plugins_argv, "\n")
+    endif
+    return join(plugins#list(), "\n")
+endfunction
+
+function! zvim#util#Plugin(...) abort
+    let adds = []
+    let updates = []
+    let flag = 0
+    for a in a:000
+        if flag == 1
+            call add(adds, a)
+        elseif flag == 2
+            call add(updates, a)
+        endif
+        if a == '-update'
+            let flag = 1
+        elseif a == '-openurl'
+            let flag = 2
+        endif
+    endfor
+    echo string(adds) . "\n" . string(updates)
 endfunction
 
 let &cpo = s:save_cpo

@@ -22,6 +22,12 @@ let g:startify_skiplist = [
             \ escape(fnamemodify(resolve($VIMRUNTIME), ':p'), '\') .'doc',
             \ 'bundle/.*/doc',
             \ ]
+fu! <SID>startify_mapping()
+    if getcwd() == $VIM || getcwd() == expand('~')
+        nnoremap <silent> <c-p> :<c-u>CtrlP ~\DotFiles<cr>
+    endif
+endf
 augroup startify_map
     autocmd FileType startify nnoremap <buffer><F2> <Nop>
+    autocmd FileType startify call <SID>startify_mapping()
 augroup END

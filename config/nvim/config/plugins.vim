@@ -90,6 +90,8 @@ fu! s:parser(args)
     return a:args
 endf
 
+let s:plugins = []
+
 fu! s:add(repo,...)
     if g:settings.plugin_manager == 'neobundle'
         exec 'NeoBundle "'.a:repo.'"'.','.join(a:000,',')
@@ -100,12 +102,20 @@ fu! s:add(repo,...)
             call dein#add(a:repo)
         endif
     endif
-    exec 'call add(g:unite_source_menu_menus.AddedPlugins.command_candidates, ["['
-                \ . a:repo . (len(a:000) > 0 ? (']' . repeat(' ', 40 - len(a:repo)) . '[lazy loaded]  [' . string(a:000[0])) : '')
+    exec 'call add(g:unite_source_menu_menus'
+                \ . '.AddedPlugins.command_candidates, ["['
+                \ . a:repo . (len(a:000) > 0 ? (']' . repeat(' ', 40 - len(a:repo))
+                \ . '[lazy loaded]  [' . string(a:000[0])) : '')
                 \ . ']","OpenBrowser https://github.com/'
                 \ . a:repo
                 \ . '"])'
+    call add(s:plugins, a:repo)
 endf
+
+function! plugins#list() abort
+    return s:plugins
+endfunction
+
 fu! s:tap(plugin)
     if g:settings.plugin_manager == 'neobundle'
         return neobundle#tap(a:plugin)
