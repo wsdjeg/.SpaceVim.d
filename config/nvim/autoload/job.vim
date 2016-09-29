@@ -1,0 +1,109 @@
+" make vim and neovim use same job func.
+let s:jobs = {}
+let s:nvim_job = has('nvim')
+let s:vim_job = !has('nvim') && has('job') && has('patch-7-4-1590')
+function! s:warn(...) abort
+    if len(a:000) == 0
+        echohl WarningMsg | echom "Current version do not support job feature!" | echohl None
+    elseif len(a:000) == 1 && type(a:1) == type('')
+        echohl WarningMsg | echom a:1| echohl None
+    else
+    endif
+endfunction
+function! s:warp(argv, opts) abort
+    let obj = {}
+    let obj._argv = a:argv
+    let obj._opts = a:opts
+
+    function! obj._out_cb(job_id, data)
+        if has_key(self._opts, 'on_stdout')
+            call self._opts.on_stdout(a:job_id, [a:data], 'stdout')
+        endif
+    endfunction
+
+    function! obj._err_cb(job_id, data)
+        if has_key(self._opts, 'on_stderr')
+            call self._opts.on_stderr(a:job_id, [a:data], 'stderr')
+        endif
+    endfunction
+
+    function! obj._exit_cb(job_id, data)
+        if has_key(self._opts, 'on_exit')
+            call self._opts.on_exit(a:job_id, [a:data], 'exit')
+        endif
+    endfunction
+
+    let obj = {
+                \ 'argv': a:argv,
+                \ 'opts': {
+                \ 'mode': 'nl',
+                \ 'out_cb': obj._out_cb,
+                \ 'err_cb': obj._err_cb,
+                \ 'exit_cb': obj._exit_cb,
+                \ }
+                \ }
+
+    return obj
+endfunction
+
+" start a job, and return the job_id.
+function! job#start(argv, ...) abort
+    if s:nvim_job
+    elseif s:vim_job
+        if len(a:000) > 0
+            let opts = a:1
+        else
+            let opts = {}
+        endif
+        let wrapped = s:warp(a:argv, opts)
+        let job = job_start(wrapped.argv, wrapped.opts)
+        let id = len(s:jobs) + 1
+        call extend(s:jobs, {id : job})
+        return id
+    else
+        call s:warn()
+    endif
+endfunction
+
+function! job#stop(id) abort
+    if s:nvim_job
+    elseif s:vim_job
+        if has_key(s:jobs, a:id)
+            call job_stop(get(s:jobs, a:id))
+            call remove(s:jobs, a:id)
+        endif
+    else
+        call s:warn()
+    endif
+endfunction
+
+function! job#send(job, data) abort
+    " TODO
+endfunction
+
+function! job#status(id) abort
+    if has('nvim')
+    endif
+    if has_key(s:jobs, a:id)
+        return job_status(get(s:jobs, a:id))
+    else
+        call s:warn('No job with such id!')
+    endif
+endfunction
+
+function! job#list() abort
+    return copy(s:jobs)
+endfunction
+
+function! job#info(id) abort
+    if s:nvim_job
+    elseif s:vim_job
+        if has_key(s:jobs, a:id)
+            return job_info(get(s:jobs, a:id))
+        else
+            call s:warn('No job with such id!')
+        endif
+    else
+        call s:warn()
+    endif
+endfunction
