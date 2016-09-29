@@ -6,3 +6,8 @@ endfunction
 function! zvim#debug#get_message() abort
     return join(s:debug_message, "\n")
 endfunction
+
+function! zvim#debug#clean_message() abort
+   let s:debug_message = []
+   return s:debug_message
+endfunction

@@ -157,6 +157,10 @@ endfor
 " python host for neovim
 let g:python_host_prog = '/usr/bin/python2'
 let g:python3_host_prog = '/usr/bin/python3'
+if WINDOWS()
+    let g:python_host_prog = 'D:\Python27\python.exe'
+    let g:python3_host_prog = 'C:\Users\wsdjeg\AppData\Local\Programs\Python\Python35-32\python.exe'
+endif
 set langmenu=en_US
 let $LANG = 'en_US'
 source $VIMRUNTIME/delmenu.vim

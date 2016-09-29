@@ -7,10 +7,11 @@ if has("gui_running")
     set guioptions-=r " 隐藏右侧滚动条
     set guioptions-=b " 隐藏底部滚动条
     set showtabline=0 " 隐藏Tab栏
-    set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
     if WINDOWS()
         " please install the font in 'Dotfiles\font'
         set guifont=DejaVu_Sans_Mono_for_Powerline:h11:cANSI:qDRAFT
+    else
+        set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
     endif
 endif
 
