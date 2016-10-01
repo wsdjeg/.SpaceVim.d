@@ -285,9 +285,9 @@ if s:enable_plug()
 
     if count(g:settings.plugin_groups, 'autocomplete') "{{{
         call s:add('honza/vim-snippets',{'on_i' : 1})
-        imap <silent><expr><TAB> MyTabfunc()
+        imap <silent><expr><TAB> zvim#tab()
         smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-        inoremap <silent> <CR> <C-r>=MyEnterfunc()<Cr>
+        inoremap <silent><expr><CR> zvim#enter()
         inoremap <silent> <Leader><Tab> <C-r>=MyLeaderTabfunc()<CR>
         inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
         inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
