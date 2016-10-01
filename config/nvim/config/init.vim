@@ -90,6 +90,7 @@ let g:settings.smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
 let g:settings.smartcloseignoreft      = ['help']
 let g:settings.altmoveignoreft         = ['Tagbar' , 'vimfiler']
 let g:settings.enable_javacomplete2_py = 0
+let g:settings.src_root                = 'E:\sources\'
 
 
 "core vimrc

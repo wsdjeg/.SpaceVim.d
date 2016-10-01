@@ -571,10 +571,11 @@ if s:enable_plug()
     let g:rainbow#pairs = [['(', ')'], ['[', ']'],['{','}']]
     " List of colors that you do not want. ANSI code or #RRGGBB
     let g:rainbow#blacklist = [233, 234]
-    call s:add('majutsushi/tagbar')
-    let g:tagbar_width=30
-    let g:tagbar_left = 1
-    noremap <silent> <F2> :TagbarToggle<CR>
+    call s:add('wsdjeg/tagbar')
+    if s:tap('tagbar')
+        call s:defind_hooks('tagbar')
+        noremap <silent> <F2> :TagbarToggle<CR>
+    endif
     "}}}
 
     call s:add('floobits/floobits-neovim',      { 'on_cmd' : ['FlooJoinWorkspace','FlooShareDirPublic','FlooShareDirPrivate']})

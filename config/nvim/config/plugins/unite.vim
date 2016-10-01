@@ -234,7 +234,7 @@ nnoremap <silent> [unite]b  :<C-u>UniteWithBufferDir
             \ -buffer-name=files -prompt=%\  buffer bookmark file<CR>
 nnoremap <silent> [unite]r  :<C-u>Unite
             \ -buffer-name=register register<CR>
-nnoremap <silent> [unite]o  :<C-u>Unite outline<CR>
+nnoremap <silent> [unite]o  :<C-u>Unite -buffer-name=outline -start-insert -auto-preview -split outline<CR>
 nnoremap <silent> [unite]s  :<C-u>Unite session<CR>
 nnoremap <silent> [unite]n  :<C-u>Unite session/new<CR>
 nnoremap <silent> [unite]fr

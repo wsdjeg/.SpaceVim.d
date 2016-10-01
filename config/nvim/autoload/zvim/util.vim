@@ -203,5 +203,23 @@ function! zvim#util#Plugin(...) abort
     echo string(adds) . "\n" . string(updates)
 endfunction
 
+function! zvim#util#complete_project(ArgLead, CmdLine, CursorPos) abort
+    let dir = get(g:settings, 'src_root', '~')
+    "return globpath(dir, '*')
+    let result = split(globpath(dir, '*'), "\n")
+    let ps = []
+    for p in result
+        if isdirectory(p) && isdirectory(p. '\' . '.git')
+            call add(ps, fnamemodify(p, ':t'))
+        endif
+    endfor
+    return join(ps, "\n")
+endfunction
+
+function! zvim#util#OpenProject(p) abort
+    let dir = get(g:settings, 'src_root', '~') . a:p
+    exe 'CtrlP '. dir
+endfunction
+
 let &cpo = s:save_cpo
 unlet s:save_cpo
