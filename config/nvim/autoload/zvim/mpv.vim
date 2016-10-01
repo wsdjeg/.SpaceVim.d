@@ -7,7 +7,7 @@ function! zvim#mpv#play(file,...) abort
         endif
         let s:playId =  jobstart(['mpv','--vid=no',a:file])
     else
-        if s:playId != 0
+        if type(s:playId) == 8 && job_status(s:playId) == 'run'
             call job_stop(s:playId)
             let s:playId =0
         endif

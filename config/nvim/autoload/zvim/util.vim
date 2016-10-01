@@ -147,7 +147,7 @@ function! zvim#util#loadMusics() abort
    for m in musics
        call add(g:unite_source_menu_menus.MpvPlayer.command_candidates,
                    \ [fnamemodify(m, ':t'),
-                   \ 'call zvim#mpv#play("' . m . '")'])
+                   \ "call zvim#mpv#play('" . m . "')"])
    endfor
 endfunction
 
