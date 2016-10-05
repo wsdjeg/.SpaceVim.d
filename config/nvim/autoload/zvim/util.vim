@@ -1,13 +1,20 @@
 scriptencoding utf-8
 let s:save_cpo = &cpo
 set cpo&vim
-let g:unite_source_menu_menus = get(g:,'unite_source_menu_menus',{})
-let g:unite_source_menu_menus.CustomKeyMaps = {'description': 'Custom mapped keyboard shortcuts                   [unite]<SPACE>'}
-let g:unite_source_menu_menus.CustomKeyMaps.command_candidates = get(g:unite_source_menu_menus.CustomKeyMaps,'command_candidates', [])
-let g:unite_source_menu_menus.MyStarredrepos = {'description': 'All github repos starred by me                   <leader>ls'}
-let g:unite_source_menu_menus.MyStarredrepos.command_candidates = get(g:unite_source_menu_menus.MyStarredrepos,'command_candidates', [])
-let g:unite_source_menu_menus.MpvPlayer = {'description': 'Musics list                   <leader>lm'}
-let g:unite_source_menu_menus.MpvPlayer.command_candidates = get(g:unite_source_menu_menus.MpvPlayer,'command_candidates', [])
+let g:unite_source_menu_menus =
+            \ get(g:,'unite_source_menu_menus',{})
+let g:unite_source_menu_menus.CustomKeyMaps = {'description':
+            \ 'Custom mapped keyboard shortcuts                   [unite]<SPACE>'}
+let g:unite_source_menu_menus.CustomKeyMaps.command_candidates =
+            \ get(g:unite_source_menu_menus.CustomKeyMaps,'command_candidates', [])
+let g:unite_source_menu_menus.MyStarredrepos = {'description':
+            \ 'All github repos starred by me                   <leader>ls'}
+let g:unite_source_menu_menus.MyStarredrepos.command_candidates =
+            \ get(g:unite_source_menu_menus.MyStarredrepos,'command_candidates', [])
+let g:unite_source_menu_menus.MpvPlayer = {'description':
+            \ 'Musics list                   <leader>lm'}
+let g:unite_source_menu_menus.MpvPlayer.command_candidates =
+            \ get(g:unite_source_menu_menus.MpvPlayer,'command_candidates', [])
 fu! zvim#util#defineMap(type,key,value,desc,...)
     exec a:type . ' ' . a:key . ' ' . a:value
     let description = "➤ "
@@ -219,6 +226,25 @@ endfunction
 function! zvim#util#OpenProject(p) abort
     let dir = get(g:settings, 'src_root', '~') . a:p
     exe 'CtrlP '. dir
+endfunction
+
+function! zvim#util#UpdateHosts(...) abort
+    if len(a:000) == 0
+        let url = get(g:settings, 'hosts_url', '')
+    else
+        let url = a:1
+    endif
+    let hosts = systemlist('curl -s ' . url)
+    if WINDOWS()
+        let local_hosts = $SystemRoot . expand('\System32\drivers\etc\hosts')
+    else
+        let local_hosts = '/etc/hosts'
+    endif
+    if writefile(hosts, local_hosts, 'a') == -1
+        echo 'failed!'
+    else
+        echo 'successfully!'
+    endif
 endfunction
 
 let &cpo = s:save_cpo

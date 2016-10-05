@@ -91,6 +91,7 @@ let g:settings.smartcloseignoreft      = ['help']
 let g:settings.altmoveignoreft         = ['Tagbar' , 'vimfiler']
 let g:settings.enable_javacomplete2_py = 0
 let g:settings.src_root                = 'E:\sources\'
+let g:settings.hosts_url               = 'https://raw.githubusercontent.com/racaljk/hosts/master/hosts'
 
 
 "core vimrc
