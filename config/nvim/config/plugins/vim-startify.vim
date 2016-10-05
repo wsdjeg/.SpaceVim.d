@@ -24,7 +24,7 @@ let g:startify_skiplist = [
             \ ]
 fu! <SID>startify_mapping()
     if getcwd() == $VIM || getcwd() == expand('~')
-        nnoremap <silent> <c-p> :<c-u>CtrlP ~\DotFiles<cr>
+        nnoremap <silent><buffer> <c-p> :<c-u>CtrlP ~\DotFiles<cr>
     endif
 endf
 augroup startify_map
