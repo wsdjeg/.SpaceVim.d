@@ -1,296 +1,148 @@
 scriptencoding utf-8
-" Fsep && Psep
-if has('win16') || has('win32') || has('win64')
-    let s:Psep = ';'
-    let s:Fsep = '\'
-else
-    let s:Psep = ':'
-    let s:Fsep = '/'
-endif
-" auto install plugin manager
-if g:settings.plugin_manager ==# 'neobundle'
-    "auto install neobundle
-    if filereadable(expand(g:settings.plugin_bundle_dir) . 'neobundle.vim'. s:Fsep. 'README.md')
-        let g:settings.neobundle_installed = 1
-    else
-        if executable('git')
-            exec '!git clone https://github.com/Shougo/neobundle.vim ' . g:settings.plugin_bundle_dir . 'neobundle.vim'
-            let g:settings.neobundle_installed = 1
-        else
-            echohl WarningMsg | echom "You need install git!" | echohl None
-        endif
-    endif
-    exec 'set runtimepath+='.g:settings.plugin_bundle_dir . 'neobundle.vim'
-elseif g:settings.plugin_manager == 'dein'
-    "auto install dein
-    if filereadable(expand(g:settings.plugin_bundle_dir) . join(['repos', 'github.com', 'Shougo', 'dein.vim', 'README.md'], s:Fsep))
-        let g:settings.dein_installed = 1
-    else
-        if executable('git')
-            exec '!git clone https://github.com/Shougo/dein.vim '
-                        \ . g:settings.plugin_bundle_dir
-                        \ . join(['repos', 'github.com', 'Shougo', 'dein.vim'], s:Fsep)
-            let g:settings.dein_installed = 1
-        else
-            echohl WarningMsg | echom "You need install git!" | echohl None
-        endif
-    endif
-    exec 'set runtimepath+='.g:settings.plugin_bundle_dir . join(['repos', 'github.com', 'Shougo', 'dein.vim'], s:Fsep)
-elseif g:settings.plugin_manager == 'vim-plug'
-    "auto install vim-plug
-    if filereadable(expand('~/.cache/vim-plug/autoload/plug.vim'))
-        let g:settings.dein_installed = 1
-    else
-        if executable('curl')
-            exec '!curl -fLo ~/.cache/vim-plug/autoload/plug.vim --create-dirs '
-                        \. 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-            let g:settings.dein_installed = 1
-        else
-            echohl WarningMsg | echom "You need install curl!" | echohl None
-        endif
-    endif
-    exec 'set runtimepath+=~/.cache/vim-plug/'
-endif
 
-"init manager func
-
-fu! s:begin(path)
-    let g:unite_source_menu_menus.AddedPlugins = {'description': 'All the Added plugins                    <leader>lp'}
-    let g:unite_source_menu_menus.AddedPlugins.command_candidates = []
-    nnoremap <silent><Leader>lp :Unite -silent -winheight=17 -start-insert menu:AddedPlugins<CR>
-    if g:settings.plugin_manager == 'neobundle'
-        call neobundle#begin(a:path)
-    elseif g:settings.plugin_manager == 'dein'
-        call dein#begin(a:path)
-    elseif g:settings.plugin_manager == 'vim-plug'
-        call plug#begin(a:path)
-    endif
-endf
-
-fu! s:end()
-    if g:settings.plugin_manager == 'neobundle'
-        call neobundle#end()
-        if g:settings.checkinstall == 1
-            NeoBundleCheck
-        endif
-    elseif g:settings.plugin_manager == 'dein'
-        call dein#end()
-        if g:settings.checkinstall == 1
-            if dein#check_install()
-                call dein#install()
-            endif
-        endif
-        call dein#call_hook('source')
-    elseif g:settings.plugin_manager == 'vim-plug'
-        call plug#end()
-    endif
-endf
-
-fu! s:parser(args)
-    return a:args
-endf
-
-let s:plugins = []
-
-fu! s:add(repo,...)
-    if g:settings.plugin_manager == 'neobundle'
-        exec 'NeoBundle "'.a:repo.'"'.','.join(a:000,',')
-    elseif g:settings.plugin_manager == 'dein'
-        if len(a:000) > 0
-            call dein#add(a:repo,s:parser(a:000[0]))
-        else
-            call dein#add(a:repo)
-        endif
-    endif
-    exec 'call add(g:unite_source_menu_menus'
-                \ . '.AddedPlugins.command_candidates, ["['
-                \ . a:repo . (len(a:000) > 0 ? (']' . repeat(' ', 40 - len(a:repo))
-                \ . '[lazy loaded]  [' . string(a:000[0])) : '')
-                \ . ']","OpenBrowser https://github.com/'
-                \ . a:repo
-                \ . '"])'
-    call add(s:plugins, a:repo)
-endf
-
-function! plugins#list() abort
-    return s:plugins
-endfunction
-
-fu! s:tap(plugin)
-    if g:settings.plugin_manager == 'neobundle'
-        return neobundle#tap(a:plugin)
-    elseif g:settings.plugin_manager == 'dein'
-        return dein#tap(a:plugin)
-    endif
-endf
-fu! s:defind_hooks(bundle)
-    if g:settings.plugin_manager == 'neobundle'
-        let s:hooks = neobundle#get_hooks(a:bundle)
-        func! s:hooks.on_source(bundle) abort
-            call zvim#util#source_rc('plugins/' . split(a:bundle['name'],'\.')[0] . '.vim')
-        endf
-    elseif g:settings.plugin_manager == 'dein'
-        call dein#config(g:dein#name, {
-                    \ 'hook_source' : "call zvim#util#source_rc('plugins/" . split(g:dein#name,'\.')[0] . ".vim')"
-                    \ })
-    endif
-endf
-fu! s:fetch()
-    if g:settings.plugin_manager == 'neobundle'
-        NeoBundleFetch 'Shougo/neobundle.vim'
-    elseif g:settings.plugin_manager == 'dein'
-        call dein#add('Shougo/dein.vim')
-    endif
-endf
-
-fu! s:enable_plug()
-    return g:settings.neobundle_installed || g:settings.dein_installed || g:settings.vim_plug_installed
-endf
-
-"plugins and config
-if s:enable_plug()
-    call s:begin(g:settings.plugin_bundle_dir)
-    call s:fetch()
+if zvim#plug#enable_plug()
+    call zvim#plug#begin(g:settings.plugin_bundle_dir)
+    call zvim#plug#fetch()
     if count(g:settings.plugin_groups, 'core') "{{{
-        call s:add('Shougo/vimproc.vim', {'build': 'make'})
+        call zvim#plug#add('Shougo/vimproc.vim', {'build': 'make'})
     endif
     if count(g:settings.plugin_groups, 'denite')
-        call s:add('Shougo/denite.nvim',{ 'merged' : 0})
-        if s:tap('denite.nvim')
-            call s:defind_hooks('denite.nvim')
+        call zvim#plug#add('Shougo/denite.nvim',{ 'merged' : 0})
+        if zvim#plug#tap('denite.nvim')
+            call zvim#plug#defind_hooks('denite.nvim')
         endif
     endif
     if count(g:settings.plugin_groups, 'unite') "{{{
-        call s:add('Shougo/unite.vim',{ 'merged' : 0})
-        if s:tap('unite.vim')
-            call s:defind_hooks('unite.vim')
+        call zvim#plug#add('Shougo/unite.vim',{ 'merged' : 0})
+        if zvim#plug#tap('unite.vim')
+            call zvim#plug#defind_hooks('unite.vim')
         endif
-        call s:add('Shougo/neoyank.vim')
-        call s:add('soh335/unite-qflist')
-        call s:add('ujihisa/unite-equery')
-        call s:add('m2mdas/unite-file-vcs')
-        call s:add('Shougo/neomru.vim')
-        call s:add('kmnk/vim-unite-svn')
-        call s:add('basyura/unite-rails')
-        call s:add('nobeans/unite-grails')
-        call s:add('choplin/unite-vim_hacks')
-        call s:add('mattn/webapi-vim')
-        call s:add('mattn/gist-vim')
-        if s:tap('gist-vim')
-            call s:defind_hooks('gist-vim')
+        call zvim#plug#add('Shougo/neoyank.vim')
+        call zvim#plug#add('soh335/unite-qflist')
+        call zvim#plug#add('ujihisa/unite-equery')
+        call zvim#plug#add('m2mdas/unite-file-vcs')
+        call zvim#plug#add('Shougo/neomru.vim')
+        call zvim#plug#add('kmnk/vim-unite-svn')
+        call zvim#plug#add('basyura/unite-rails')
+        call zvim#plug#add('nobeans/unite-grails')
+        call zvim#plug#add('choplin/unite-vim_hacks')
+        call zvim#plug#add('mattn/webapi-vim')
+        call zvim#plug#add('mattn/gist-vim')
+        if zvim#plug#tap('gist-vim')
+            call zvim#plug#defind_hooks('gist-vim')
         endif
-        call s:add('henices/unite-stock')
-        call s:add('mattn/wwwrenderer-vim')
-        call s:add('thinca/vim-openbuf')
-        call s:add('ujihisa/unite-haskellimport')
-        call s:add('oppara/vim-unite-cake')
-        call s:add('thinca/vim-ref')
-        if s:tap('vim-ref')
-            call s:defind_hooks('vim-ref')
+        call zvim#plug#add('henices/unite-stock')
+        call zvim#plug#add('mattn/wwwrenderer-vim')
+        call zvim#plug#add('thinca/vim-openbuf')
+        call zvim#plug#add('ujihisa/unite-haskellimport')
+        call zvim#plug#add('oppara/vim-unite-cake')
+        call zvim#plug#add('thinca/vim-ref')
+        if zvim#plug#tap('vim-ref')
+            call zvim#plug#defind_hooks('vim-ref')
         endif
-        call s:add('heavenshell/unite-zf')
-        call s:add('heavenshell/unite-sf2')
-        call s:add('osyo-manga/unite-vimpatches')
-        call s:add('Shougo/unite-outline')
-        call s:add('hewes/unite-gtags')
-        if s:tap('unite-gtags')
-            call s:defind_hooks('unite-gtags')
+        call zvim#plug#add('heavenshell/unite-zf')
+        call zvim#plug#add('heavenshell/unite-sf2')
+        call zvim#plug#add('osyo-manga/unite-vimpatches')
+        call zvim#plug#add('Shougo/unite-outline')
+        call zvim#plug#add('hewes/unite-gtags')
+        if zvim#plug#tap('unite-gtags')
+            call zvim#plug#defind_hooks('unite-gtags')
         endif
-        call s:add('rafi/vim-unite-issue')
-        call s:add("joker1007/unite-pull-request")
-        call s:add('tsukkee/unite-tag')
-        call s:add('ujihisa/unite-launch')
-        call s:add('ujihisa/unite-gem')
-        call s:add('osyo-manga/unite-filetype')
-        call s:add('thinca/vim-unite-history')
-        call s:add('Shougo/neobundle-vim-recipes')
-        call s:add('Shougo/unite-help')
-        call s:add('ujihisa/unite-locate')
-        call s:add('kmnk/vim-unite-giti')
-        call s:add('ujihisa/unite-font')
-        call s:add('t9md/vim-unite-ack')
-        call s:add('mileszs/ack.vim',{'on_cmd' : 'Ack'})
-        call s:add('albfan/ag.vim',{'on_cmd' : 'Ag'})
+        call zvim#plug#add('rafi/vim-unite-issue')
+        call zvim#plug#add("joker1007/unite-pull-request")
+        call zvim#plug#add('tsukkee/unite-tag')
+        call zvim#plug#add('ujihisa/unite-launch')
+        call zvim#plug#add('ujihisa/unite-gem')
+        call zvim#plug#add('osyo-manga/unite-filetype')
+        call zvim#plug#add('thinca/vim-unite-history')
+        call zvim#plug#add('Shougo/neobundle-vim-recipes')
+        call zvim#plug#add('Shougo/unite-help')
+        call zvim#plug#add('ujihisa/unite-locate')
+        call zvim#plug#add('kmnk/vim-unite-giti')
+        call zvim#plug#add('ujihisa/unite-font')
+        call zvim#plug#add('t9md/vim-unite-ack')
+        call zvim#plug#add('mileszs/ack.vim',{'on_cmd' : 'Ack'})
+        call zvim#plug#add('albfan/ag.vim',{'on_cmd' : 'Ag'})
         let g:ag_prg="ag  --vimgrep"
         let g:ag_working_path_mode="r"
-        call s:add('dyng/ctrlsf.vim',{'on_cmd' : 'CtrlSF', 'on_map' : '<Plug>CtrlSF'})
-        if s:tap('ctrlsf.vim')
-            call s:defind_hooks('ctrlsf.vim')
+        call zvim#plug#add('dyng/ctrlsf.vim',{'on_cmd' : 'CtrlSF', 'on_map' : '<Plug>CtrlSF'})
+        if zvim#plug#tap('ctrlsf.vim')
+            call zvim#plug#defind_hooks('ctrlsf.vim')
             nmap <silent><leader>sn <Plug>CtrlSFCwordExec
         endif
-        call s:add('daisuzu/unite-adb')
-        call s:add('osyo-manga/unite-airline_themes')
-        call s:add('mattn/unite-vim_advent-calendar')
-        call s:add('mattn/unite-remotefile')
-        call s:add('sgur/unite-everything')
-        call s:add('kannokanno/unite-dwm')
-        call s:add('raw1z/unite-projects')
-        call s:add('voi/unite-ctags')
-        call s:add('Shougo/unite-session')
-        call s:add('osyo-manga/unite-quickfix')
-        call s:add('Shougo/vimfiler.vim',{'on_cmd' : 'VimFiler'})
-        if s:tap('vimfiler.vim')
-            call s:defind_hooks('vimfiler.vim')
+        call zvim#plug#add('daisuzu/unite-adb')
+        call zvim#plug#add('osyo-manga/unite-airline_themes')
+        call zvim#plug#add('mattn/unite-vim_advent-calendar')
+        call zvim#plug#add('mattn/unite-remotefile')
+        call zvim#plug#add('sgur/unite-everything')
+        call zvim#plug#add('kannokanno/unite-dwm')
+        call zvim#plug#add('raw1z/unite-projects')
+        call zvim#plug#add('voi/unite-ctags')
+        call zvim#plug#add('Shougo/unite-session')
+        call zvim#plug#add('osyo-manga/unite-quickfix')
+        call zvim#plug#add('Shougo/vimfiler.vim',{'on_cmd' : 'VimFiler'})
+        if zvim#plug#tap('vimfiler.vim')
+            call zvim#plug#defind_hooks('vimfiler.vim')
             noremap <silent> <F3> :call zvim#util#OpenVimfiler()<CR>
         endif
         if g:settings.enable_googlesuggest
-            call s:add('mopp/googlesuggest-source.vim')
-            call s:add('mattn/googlesuggest-complete-vim')
+            call zvim#plug#add('mopp/googlesuggest-source.vim')
+            call zvim#plug#add('mattn/googlesuggest-complete-vim')
         endif
-        call s:add('ujihisa/unite-colorscheme')
-        call s:add('mattn/unite-gist')
-        call s:add('tacroe/unite-mark')
-        call s:add('tacroe/unite-alias')
-        call s:add('tex/vim-unite-id')
-        call s:add('sgur/unite-qf')
-        call s:add('lambdalisue/unite-grep-vcs', {
+        call zvim#plug#add('ujihisa/unite-colorscheme')
+        call zvim#plug#add('mattn/unite-gist')
+        call zvim#plug#add('tacroe/unite-mark')
+        call zvim#plug#add('tacroe/unite-alias')
+        call zvim#plug#add('tex/vim-unite-id')
+        call zvim#plug#add('sgur/unite-qf')
+        call zvim#plug#add('lambdalisue/unite-grep-vcs', {
                     \ 'autoload': {
                     \    'unite_sources': ['grep/git', 'grep/hg'],
                     \}})
-        call s:add('lambdalisue/vim-gista', {
+        call zvim#plug#add('lambdalisue/vim-gista', {
                     \ 'on_cmd': 'Gista'
                     \})
-        call s:add('lambdalisue/vim-gista-unite')
-        call s:add('wsdjeg/unite-radio.vim')
+        call zvim#plug#add('lambdalisue/vim-gista-unite')
+        call zvim#plug#add('wsdjeg/unite-radio.vim')
         let g:unite_source_radio_play_cmd='mpv'
-        "call s:add('ujihisa/quicklearn')
+        "call zvim#plug#add('ujihisa/quicklearn')
     endif "}}}
 
 
     "{{{ctrlpvim settings
     if count(g:settings.plugin_groups, 'ctrlp') "{{{
-        call s:add('ctrlpvim/ctrlp.vim')
-        if s:tap('ctrlp.vim')
-            call s:defind_hooks('ctrlp.vim')
+        call zvim#plug#add('ctrlpvim/ctrlp.vim')
+        if zvim#plug#tap('ctrlp.vim')
+            call zvim#plug#defind_hooks('ctrlp.vim')
         endif
         if !has('nvim')
-            call s:add('wsdjeg/ctrlp-unity3d-docs',  { 'on_cmd' : 'CtrlPUnity3DDocs'})
+            call zvim#plug#add('wsdjeg/ctrlp-unity3d-docs',  { 'on_cmd' : 'CtrlPUnity3DDocs'})
         endif
-        call s:add('voronkovich/ctrlp-nerdtree.vim', { 'on_cmd' : 'CtrlPNerdTree'})
-        call s:add('elentok/ctrlp-objects.vim',      { 'on_cmd' : [
+        call zvim#plug#add('voronkovich/ctrlp-nerdtree.vim', { 'on_cmd' : 'CtrlPNerdTree'})
+        call zvim#plug#add('elentok/ctrlp-objects.vim',      { 'on_cmd' : [
                     \'CtrlPModels',
                     \'CtrlPViews',
                     \'CtrlPControllers',
                     \'CtrlPTemplates',
                     \'CtrlPPresenters']})
-        call s:add('h14i/vim-ctrlp-buftab',          { 'on_cmd' : 'CtrlPBufTab'})
-        call s:add('vim-scripts/ctrlp-cmdpalette',   { 'on_cmd' : 'CtrlPCmdPalette'})
-        call s:add('mattn/ctrlp-windowselector',     { 'on_cmd' : 'CtrlPWindowSelector'})
-        call s:add('the9ball/ctrlp-gtags',           { 'on_cmd' : ['CtrlPGtagsX','CtrlPGtagsF','CtrlPGtagsR']})
-        call s:add('thiderman/ctrlp-project',        { 'on_cmd' : 'CtrlPProject'})
-        call s:add('mattn/ctrlp-google',             { 'on_cmd' : 'CtrlPGoogle'})
-        call s:add('ompugao/ctrlp-history',          { 'on_cmd' : ['CtrlPCmdHistory','CtrlPSearchHistory']})
-        call s:add('pielgrzym/ctrlp-sessions',       { 'on_cmd' : ['CtrlPSessions','MkS']})
-        call s:add('tacahiroy/ctrlp-funky',          { 'on_cmd' : 'CtrlPFunky'})
-        call s:add('mattn/ctrlp-launcher',           { 'on_cmd' : 'CtrlPLauncher'})
-        call s:add('sgur/ctrlp-extensions.vim',      { 'on_cmd' : ['CtrlPCmdline','CtrlPMenu','CtrlPYankring']})
-        call s:add('FelikZ/ctrlp-py-matcher')
-        call s:add('lambdalisue/vim-gista-ctrlp',    { 'on_cmd' : 'CtrlPGista'})
+        call zvim#plug#add('h14i/vim-ctrlp-buftab',          { 'on_cmd' : 'CtrlPBufTab'})
+        call zvim#plug#add('vim-scripts/ctrlp-cmdpalette',   { 'on_cmd' : 'CtrlPCmdPalette'})
+        call zvim#plug#add('mattn/ctrlp-windowselector',     { 'on_cmd' : 'CtrlPWindowSelector'})
+        call zvim#plug#add('the9ball/ctrlp-gtags',           { 'on_cmd' : ['CtrlPGtagsX','CtrlPGtagsF','CtrlPGtagsR']})
+        call zvim#plug#add('thiderman/ctrlp-project',        { 'on_cmd' : 'CtrlPProject'})
+        call zvim#plug#add('mattn/ctrlp-google',             { 'on_cmd' : 'CtrlPGoogle'})
+        call zvim#plug#add('ompugao/ctrlp-history',          { 'on_cmd' : ['CtrlPCmdHistory','CtrlPSearchHistory']})
+        call zvim#plug#add('pielgrzym/ctrlp-sessions',       { 'on_cmd' : ['CtrlPSessions','MkS']})
+        call zvim#plug#add('tacahiroy/ctrlp-funky',          { 'on_cmd' : 'CtrlPFunky'})
+        call zvim#plug#add('mattn/ctrlp-launcher',           { 'on_cmd' : 'CtrlPLauncher'})
+        call zvim#plug#add('sgur/ctrlp-extensions.vim',      { 'on_cmd' : ['CtrlPCmdline','CtrlPMenu','CtrlPYankring']})
+        call zvim#plug#add('FelikZ/ctrlp-py-matcher')
+        call zvim#plug#add('lambdalisue/vim-gista-ctrlp',    { 'on_cmd' : 'CtrlPGista'})
     endif "}}}
 
 
     if count(g:settings.plugin_groups, 'autocomplete') "{{{
-        call s:add('honza/vim-snippets',{'on_i' : 1})
+        call zvim#plug#add('honza/vim-snippets',{'on_i' : 1})
         imap <silent><expr><TAB> zvim#tab()
         smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
         inoremap <silent><expr><CR> zvim#enter()
@@ -300,17 +152,17 @@ if s:enable_plug()
         inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
         inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
         if g:settings.autocomplete_method == 'ycm' "{{{
-            call s:add('SirVer/ultisnips')
+            call zvim#plug#add('SirVer/ultisnips')
             let g:UltiSnipsExpandTrigger="<tab>"
             let g:UltiSnipsJumpForwardTrigger="<tab>"
             let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
             let g:UltiSnipsSnippetsDir='~/DotFiles/snippets'
-            call s:add('ervandew/supertab')
+            call zvim#plug#add('ervandew/supertab')
             let g:SuperTabContextDefaultCompletionType = "<c-n>"
             let g:SuperTabDefaultCompletionType = '<C-n>'
             autocmd InsertLeave * if pumvisible() == 0|pclose|endif
             let g:neobundle#install_process_timeout = 1500
-            call s:add('Valloric/YouCompleteMe')
+            call zvim#plug#add('Valloric/YouCompleteMe')
             "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
             "let g:ycm_confirm_extra_conf = 0
             let g:ycm_collect_identifiers_from_tags_files = 1
@@ -334,42 +186,44 @@ if s:enable_plug()
                         \   'erlang' : [':'],
                         \ }
         elseif g:settings.autocomplete_method ==# 'neocomplete' "{{{
-            call s:add('Shougo/neocomplete', {
+            call zvim#plug#add('Shougo/neocomplete', {
                         \ 'on_i' : 1,
                         \ })
-            if s:tap('neocomplete')
-                call s:defind_hooks('neocomplete.vim')
+            if zvim#plug#tap('neocomplete')
+                call zvim#plug#defind_hooks('neocomplete.vim')
             endif
         elseif g:settings.autocomplete_method == 'neocomplcache' "{{{
-            call s:add('Shougo/neocomplcache.vim', {
+            call zvim#plug#add('Shougo/neocomplcache.vim', {
                         \ 'on_i' : 1,
                         \ })
-            if s:tap('neocomplcache.vim')
-                call s:defind_hooks('neocomplcache.vim')
+            if zvim#plug#tap('neocomplcache.vim')
+                call zvim#plug#defind_hooks('neocomplcache.vim')
             endif
         elseif g:settings.autocomplete_method == 'deoplete'
-            call s:add('Shougo/deoplete.nvim', {
+            call zvim#plug#add('Shougo/deoplete.nvim', {
                         \ 'on_i' : 1,
                         \ })
-            if s:tap('deoplete.nvim')
-                call s:defind_hooks('deoplete.nvim')
+            if zvim#plug#tap('deoplete.nvim')
+                call zvim#plug#defind_hooks('deoplete.nvim')
             endif
-            call s:add('zchee/deoplete-jedi',      { 'on_ft' : 'python'})
+            call zvim#plug#add('zchee/deoplete-jedi',      { 'on_ft' : 'python'})
         endif "}}}
-        call s:add('Shougo/neco-syntax',           { 'on_i' : 1})
-        call s:add('ujihisa/neco-look',            { 'on_i' : 1})
-        call s:add('Shougo/neco-vim',              { 'on_i' : 1})
+        call zvim#plug#add('Shougo/neco-syntax',           { 'on_i' : 1})
+        call zvim#plug#add('ujihisa/neco-look',            { 'on_i' : 1})
+        call zvim#plug#add('Shougo/neco-vim',              { 'on_i' : 1})
         if !exists('g:necovim#complete_functions')
             let g:necovim#complete_functions = {}
         endif
         let g:necovim#complete_functions.Ref =
                     \ 'ref#complete'
-        call s:add('Shougo/context_filetype.vim',  { 'on_i' : 1})
-        call s:add('Shougo/neoinclude.vim',        { 'on_i' : 1})
-        call s:add('Shougo/neosnippet-snippets',   { 'on_i' : 1 , 'on_ft' : 'neosnippet'})
-        call s:add('Shougo/neosnippet.vim',        { 'on_i' : 1 , 'on_ft' : 'neosnippet'})
-        call s:add('Shougo/neopairs.vim',          { 'on_i' : 1})
-        let g:neosnippet#snippets_directory = fnamemodify(g:Config_Main_Home, ( has('nvim') ? ':p:h:h:h:h' : ':p:h:h:h')) . s:Fsep . 'snippets'
+        call zvim#plug#add('Shougo/context_filetype.vim',  { 'on_i' : 1})
+        call zvim#plug#add('Shougo/neoinclude.vim',        { 'on_i' : 1})
+        call zvim#plug#add('Shougo/neosnippet-snippets',   { 'on_i' : 1 , 'on_ft' : 'neosnippet'})
+        call zvim#plug#add('Shougo/neosnippet.vim',        { 'on_i' : 1 , 'on_ft' : 'neosnippet'})
+        call zvim#plug#add('Shougo/neopairs.vim',          { 'on_i' : 1})
+        if isdirectory(expand('~/DotFiles/snippets/'))
+            let g:neosnippet#snippets_directory = expand('~/DotFiles/snippets/')
+        endif
         let g:neosnippet#enable_snipmate_compatibility=1
         let g:neosnippet#enable_complete_done = 1
         let g:neosnippet#completed_pairs= {}
@@ -383,44 +237,44 @@ if s:enable_plug()
 
     if count(g:settings.plugin_groups, 'colorscheme') "{{{
         "colorscheme
-        call s:add('morhetz/gruvbox')
-        if s:tap('gruvbox')
-            call s:defind_hooks('gruvbox')
+        call zvim#plug#add('morhetz/gruvbox')
+        if zvim#plug#tap('gruvbox')
+            call zvim#plug#defind_hooks('gruvbox')
         endif
-        call s:add('kabbamine/yowish.vim')
-        call s:add('tomasr/molokai')
-        call s:add('mhinz/vim-janah')
-        call s:add('mhartington/oceanic-next')
-        call s:add('nanotech/jellybeans.vim')
-        call s:add('altercation/vim-colors-solarized')
-        call s:add('kristijanhusak/vim-hybrid-material')
+        call zvim#plug#add('kabbamine/yowish.vim')
+        call zvim#plug#add('tomasr/molokai')
+        call zvim#plug#add('mhinz/vim-janah')
+        call zvim#plug#add('mhartington/oceanic-next')
+        call zvim#plug#add('nanotech/jellybeans.vim')
+        call zvim#plug#add('altercation/vim-colors-solarized')
+        call zvim#plug#add('kristijanhusak/vim-hybrid-material')
     endif
 
     if count(g:settings.plugin_groups, 'chinese') "{{{
-        call s:add('vimcn/vimcdoc')
+        call zvim#plug#add('vimcn/vimcdoc')
     endif
 
-    call s:add('junegunn/vim-github-dashboard',      { 'on_cmd':['GHD','GHA','GHActivity','GHDashboard']})
+    call zvim#plug#add('junegunn/vim-github-dashboard',      { 'on_cmd':['GHD','GHA','GHActivity','GHDashboard']})
     if count(g:settings.plugin_groups, 'vim') "{{{
-        call s:add('Shougo/vimshell.vim',                { 'on_cmd':['VimShell']})
-        call s:add('mattn/vim-terminal',                 { 'on_cmd':['Terminal']})
-        call s:add('davidhalter/jedi-vim',     { 'on_ft' : 'python'})
-        if s:tap('jedi-vim')
-            call s:defind_hooks('jedi-vim')
+        call zvim#plug#add('Shougo/vimshell.vim',                { 'on_cmd':['VimShell']})
+        call zvim#plug#add('mattn/vim-terminal',                 { 'on_cmd':['Terminal']})
+        call zvim#plug#add('davidhalter/jedi-vim',     { 'on_ft' : 'python'})
+        if zvim#plug#tap('jedi-vim')
+            call zvim#plug#defind_hooks('jedi-vim')
         endif
     endif
     if count(g:settings.plugin_groups, 'nvim') "{{{
-        call s:add('m2mdas/phpcomplete-extended',            { 'on_ft' : 'php'})
-        if s:tap('phpcomplete-extended')
-            call s:defind_hooks('phpcomplete-extended')
+        call zvim#plug#add('m2mdas/phpcomplete-extended',            { 'on_ft' : 'php'})
+        if zvim#plug#tap('phpcomplete-extended')
+            call zvim#plug#defind_hooks('phpcomplete-extended')
         endif
     endif
-    call s:add('tpope/vim-scriptease')
-    call s:add('tpope/vim-fugitive')
-    call s:add('cohama/agit.vim',                        { 'on_cmd':['Agit','AgitFile']})
-    call s:add('gregsexton/gitv',                        { 'on_cmd':['Gitv']})
-    call s:add('tpope/vim-surround')
-    call s:add('terryma/vim-multiple-cursors')
+    call zvim#plug#add('tpope/vim-scriptease')
+    call zvim#plug#add('tpope/vim-fugitive')
+    call zvim#plug#add('cohama/agit.vim',                        { 'on_cmd':['Agit','AgitFile']})
+    call zvim#plug#add('gregsexton/gitv',                        { 'on_cmd':['Gitv']})
+    call zvim#plug#add('tpope/vim-surround')
+    call zvim#plug#add('terryma/vim-multiple-cursors')
     let g:multi_cursor_next_key='<C-j>'
     let g:multi_cursor_prev_key='<C-k>'
     let g:multi_cursor_skip_key='<C-x>'
@@ -428,47 +282,47 @@ if s:enable_plug()
 
     "web plugins
 
-    call s:add('groenewege/vim-less',                    { 'on_ft':['less']})
-    call s:add('cakebaker/scss-syntax.vim',              { 'on_ft':['scss','sass']})
-    call s:add('hail2u/vim-css3-syntax',                 { 'on_ft':['css','scss','sass']})
-    call s:add('ap/vim-css-color',                       { 'on_ft':['css','scss','sass','less','styl']})
-    call s:add('othree/html5.vim',                       { 'on_ft':['html']})
-    call s:add('wavded/vim-stylus',                      { 'on_ft':['styl']})
-    call s:add('digitaltoad/vim-jade',                   { 'on_ft':['jade']})
-    call s:add('juvenn/mustache.vim',                    { 'on_ft':['mustache']})
-    call s:add('Valloric/MatchTagAlways',                { 'on_ft':['html' , 'xhtml' , 'xml' , 'jinja']})
-    call s:add('pangloss/vim-javascript',                { 'on_ft':['javascript']})
-    call s:add('maksimr/vim-jsbeautify',                 { 'on_ft':['javascript']})
-    call s:add('leafgarland/typescript-vim',             { 'on_ft':['typescript']})
-    call s:add('kchmck/vim-coffee-script',               { 'on_ft':['coffee']})
-    call s:add('mmalecki/vim-node.js',                   { 'on_ft':['javascript']})
-    call s:add('leshill/vim-json',                       { 'on_ft':['javascript','json']})
-    call s:add('othree/javascript-libraries-syntax.vim', { 'on_ft':['javascript','coffee','ls','typescript']})
+    call zvim#plug#add('groenewege/vim-less',                    { 'on_ft':['less']})
+    call zvim#plug#add('cakebaker/scss-syntax.vim',              { 'on_ft':['scss','sass']})
+    call zvim#plug#add('hail2u/vim-css3-syntax',                 { 'on_ft':['css','scss','sass']})
+    call zvim#plug#add('ap/vim-css-color',                       { 'on_ft':['css','scss','sass','less','styl']})
+    call zvim#plug#add('othree/html5.vim',                       { 'on_ft':['html']})
+    call zvim#plug#add('wavded/vim-stylus',                      { 'on_ft':['styl']})
+    call zvim#plug#add('digitaltoad/vim-jade',                   { 'on_ft':['jade']})
+    call zvim#plug#add('juvenn/mustache.vim',                    { 'on_ft':['mustache']})
+    call zvim#plug#add('Valloric/MatchTagAlways',                { 'on_ft':['html' , 'xhtml' , 'xml' , 'jinja']})
+    call zvim#plug#add('pangloss/vim-javascript',                { 'on_ft':['javascript']})
+    call zvim#plug#add('maksimr/vim-jsbeautify',                 { 'on_ft':['javascript']})
+    call zvim#plug#add('leafgarland/typescript-vim',             { 'on_ft':['typescript']})
+    call zvim#plug#add('kchmck/vim-coffee-script',               { 'on_ft':['coffee']})
+    call zvim#plug#add('mmalecki/vim-node.js',                   { 'on_ft':['javascript']})
+    call zvim#plug#add('leshill/vim-json',                       { 'on_ft':['javascript','json']})
+    call zvim#plug#add('othree/javascript-libraries-syntax.vim', { 'on_ft':['javascript','coffee','ls','typescript']})
     if g:settings.enable_javacomplete2_py
-        call s:add('wsdjeg/vim-javacomplete2',          { 'on_ft' : ['java','jsp']})
+        call zvim#plug#add('wsdjeg/vim-javacomplete2',          { 'on_ft' : ['java','jsp']})
     else
-        call s:add('artur-shaik/vim-javacomplete2',          { 'on_ft' : ['java','jsp']})
+        call zvim#plug#add('artur-shaik/vim-javacomplete2',          { 'on_ft' : ['java','jsp']})
     endif
     let g:JavaComplete_UseFQN = 1
     let g:JavaComplete_ServerAutoShutdownTime = 300
     let g:JavaComplete_MavenRepositoryDisable = 0
-    call s:add('wsdjeg/vim-dict',                        { 'on_ft' : 'java'})
-    call s:add('wsdjeg/java_getset.vim',                 { 'on_ft' : 'java'})
-    if s:tap('java_getset.vim')
-        call s:defind_hooks('java_getset.vim')
+    call zvim#plug#add('wsdjeg/vim-dict',                        { 'on_ft' : 'java'})
+    call zvim#plug#add('wsdjeg/java_getset.vim',                 { 'on_ft' : 'java'})
+    if zvim#plug#tap('java_getset.vim')
+        call zvim#plug#defind_hooks('java_getset.vim')
     endif
-    call s:add('wsdjeg/JavaUnit.vim',                    { 'on_ft' : 'java'})
-    call s:add('jaxbot/github-issues.vim',               { 'on_cmd' : 'Gissues'})
-    call s:add('wsdjeg/Mysql.vim',                       { 'on_cmd' : 'SQLGetConnection'})
-    call s:add('wsdjeg/vim-cheat',                       { 'on_cmd' : 'Cheat'})
-    call s:add('wsdjeg/GitHub-api.vim')
-    call s:add('vim-jp/vim-java',                        { 'on_ft' : 'java'})
-    call s:add('vim-airline/vim-airline',                { 'merged' : 0})
-    call s:add('vim-airline/vim-airline-themes',         { 'merged' : 0})
-    if s:tap('vim-airline')
-        call s:defind_hooks('vim-airline')
+    call zvim#plug#add('wsdjeg/JavaUnit.vim',                    { 'on_ft' : 'java'})
+    call zvim#plug#add('jaxbot/github-issues.vim',               { 'on_cmd' : 'Gissues'})
+    call zvim#plug#add('wsdjeg/Mysql.vim',                       { 'on_cmd' : 'SQLGetConnection'})
+    call zvim#plug#add('wsdjeg/vim-cheat',                       { 'on_cmd' : 'Cheat'})
+    call zvim#plug#add('wsdjeg/GitHub-api.vim')
+    call zvim#plug#add('vim-jp/vim-java',                        { 'on_ft' : 'java'})
+    call zvim#plug#add('vim-airline/vim-airline',                { 'merged' : 0})
+    call zvim#plug#add('vim-airline/vim-airline-themes',         { 'merged' : 0})
+    if zvim#plug#tap('vim-airline')
+        call zvim#plug#defind_hooks('vim-airline')
     endif
-    call s:add('mattn/emmet-vim',                        { 'on_cmd' : 'EmmetInstall'})
+    call zvim#plug#add('mattn/emmet-vim',                        { 'on_cmd' : 'EmmetInstall'})
     let g:user_emmet_install_global = 0
     let g:user_emmet_leader_key='<C-e>'
     let g:user_emmet_mode='a'
@@ -481,75 +335,75 @@ if s:enable_plug()
     "profile start vim-javacomplete2.log
     "profile! file */vim-javacomplete2/*
     if g:settings.enable_neomake
-        call s:add('neomake/neomake',{'on_cmd' : 'Neomake'})
-        if s:tap('neomake')
-            call s:defind_hooks('neomake')
+        call zvim#plug#add('neomake/neomake',{'on_cmd' : 'Neomake'})
+        if zvim#plug#tap('neomake')
+            call zvim#plug#defind_hooks('neomake')
             augroup Neomake_wsd
                 au!
                 autocmd! BufWritePost * Neomake
             augroup END
         endif
     else
-        call s:add('wsdjeg/syntastic', {'on_event': 'WinEnter'})
-        if s:tap('syntastic')
-            call s:defind_hooks('syntastic')
+        call zvim#plug#add('wsdjeg/syntastic', {'on_event': 'WinEnter'})
+        if zvim#plug#tap('syntastic')
+            call zvim#plug#defind_hooks('syntastic')
         endif
     endif
-    call s:add('syngan/vim-vimlint',{'on_ft' : 'vim'})
+    call zvim#plug#add('syngan/vim-vimlint',{'on_ft' : 'vim'})
     let g:syntastic_vimlint_options = {
                 \'EVL102': 1 ,
                 \'EVL103': 1 ,
                 \'EVL205': 1 ,
                 \'EVL105': 1 ,
                 \}
-    call s:add('ynkdir/vim-vimlparser',{'on_ft' : 'vim'})
-    call s:add('todesking/vint-syntastic',{'on_ft' : 'vim'})
+    call zvim#plug#add('ynkdir/vim-vimlparser',{'on_ft' : 'vim'})
+    call zvim#plug#add('todesking/vint-syntastic',{'on_ft' : 'vim'})
     "let g:syntastic_vim_checkers = ['vint']
-    call s:add('gcmt/wildfire.vim',{'on_map' : '<Plug>(wildfire-'})
+    call zvim#plug#add('gcmt/wildfire.vim',{'on_map' : '<Plug>(wildfire-'})
     noremap <SPACE> <Plug>(wildfire-fuel)
     vnoremap <C-SPACE> <Plug>(wildfire-water)
     let g:wildfire_objects = ["i'", 'i"', 'i)', 'i]', 'i}', 'ip', 'it']
 
-    call s:add('scrooloose/nerdcommenter')
-    call s:add('easymotion/vim-easymotion',{'on_map' : '<Plug>(easymotion-prefix)'})
-    if s:tap('vim-easymotion')
+    call zvim#plug#add('scrooloose/nerdcommenter')
+    call zvim#plug#add('easymotion/vim-easymotion',{'on_map' : '<Plug>(easymotion-prefix)'})
+    if zvim#plug#tap('vim-easymotion')
         map <Leader><Leader> <Plug>(easymotion-prefix)
     endif
 
-    call s:add('MarcWeber/vim-addon-mw-utils')
-    call s:add('mhinz/vim-startify')
-    if s:tap('vim-startify')
-        call s:defind_hooks('vim-startify')
+    call zvim#plug#add('MarcWeber/vim-addon-mw-utils')
+    call zvim#plug#add('mhinz/vim-startify')
+    if zvim#plug#tap('vim-startify')
+        call zvim#plug#defind_hooks('vim-startify')
     endif
-    call s:add('mhinz/vim-signify')
+    call zvim#plug#add('mhinz/vim-signify')
     let g:signify_disable_by_default = 0
     let g:signify_line_highlight = 0
-    call s:add('mhinz/vim-grepper' , { 'on_cmd' : 'Grepper' } )
-    if s:tap('vim-grepper')
-        call s:defind_hooks('vim-grepper')
+    call zvim#plug#add('mhinz/vim-grepper' , { 'on_cmd' : 'Grepper' } )
+    if zvim#plug#tap('vim-grepper')
+        call zvim#plug#defind_hooks('vim-grepper')
     endif
-    call s:add('airblade/vim-rooter')
+    call zvim#plug#add('airblade/vim-rooter')
     let g:rooter_silent_chdir = 1
-    call s:add('Yggdroot/indentLine')
+    call zvim#plug#add('Yggdroot/indentLine')
     let g:indentLine_color_term = 239
     let g:indentLine_color_gui = '#09AA08'
     let g:indentLine_char = '¦'
     let g:indentLine_concealcursor = 'niv' " (default 'inc')
     let g:indentLine_conceallevel = 2  " (default 2)
-    call s:add('godlygeek/tabular',         { 'on_cmd': 'Tabularize'})
-    call s:add('benizi/vim-automkdir')
+    call zvim#plug#add('godlygeek/tabular',         { 'on_cmd': 'Tabularize'})
+    call zvim#plug#add('benizi/vim-automkdir')
     "[c  ]c  jump between prev or next hunk
-    call s:add('airblade/vim-gitgutter',{'on_cmd' : 'GitGutterEnable'})
-    call s:add('itchyny/calendar.vim',      { 'on_cmd' : 'Calendar'})
-    call s:add('lilydjwg/fcitx.vim',        { 'on_i' : 1})
-    call s:add('junegunn/goyo.vim',         { 'on_cmd' : 'Goyo'})
-    if s:tap('goyo.vim')
-        call s:defind_hooks('goyo.vim')
+    call zvim#plug#add('airblade/vim-gitgutter',{'on_cmd' : 'GitGutterEnable'})
+    call zvim#plug#add('itchyny/calendar.vim',      { 'on_cmd' : 'Calendar'})
+    call zvim#plug#add('lilydjwg/fcitx.vim',        { 'on_i' : 1})
+    call zvim#plug#add('junegunn/goyo.vim',         { 'on_cmd' : 'Goyo'})
+    if zvim#plug#tap('goyo.vim')
+        call zvim#plug#defind_hooks('goyo.vim')
     endif
     "vim Wimdows config
-    call s:add('scrooloose/nerdtree',{'on_cmd':'NERDTreeToggle'})
-    if s:tap('nerdtree')
-        call s:defind_hooks('nerdtree')
+    call zvim#plug#add('scrooloose/nerdtree',{'on_cmd':'NERDTreeToggle'})
+    if zvim#plug#tap('nerdtree')
+        call zvim#plug#defind_hooks('nerdtree')
         function! OpenOrCloseNERDTree()
             exec "normal! A"
         endfunction
@@ -560,15 +414,15 @@ if s:enable_plug()
         autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
         autocmd FileType nerdtree nnoremap <silent><buffer><Space> :call OpenOrCloseNERDTree()<cr>
     endif
-    call s:add('tpope/vim-projectionist',{'on_cmd':['A','AS','AV','AT','AD','Cd','Lcd','ProjectDo']})
-    call s:add('Xuyuanp/nerdtree-git-plugin')
-    call s:add('taglist.vim',{'on_cmd' : 'TlistToggle'})
-    if s:tap('taglist.vim')
-        call s:defind_hooks('taglist.vim')
+    call zvim#plug#add('tpope/vim-projectionist',{'on_cmd':['A','AS','AV','AT','AD','Cd','Lcd','ProjectDo']})
+    call zvim#plug#add('Xuyuanp/nerdtree-git-plugin')
+    call zvim#plug#add('taglist.vim',{'on_cmd' : 'TlistToggle'})
+    if zvim#plug#tap('taglist.vim')
+        call zvim#plug#defind_hooks('taglist.vim')
         noremap <silent> <F8> :TlistToggle<CR>
     endif
-    call s:add('ntpeters/vim-better-whitespace',{'on_cmd' : 'StripWhitespace'})
-    call s:add('junegunn/rainbow_parentheses.vim',{'on_cmd' : 'RainbowParentheses'})
+    call zvim#plug#add('ntpeters/vim-better-whitespace',{'on_cmd' : 'StripWhitespace'})
+    call zvim#plug#add('junegunn/rainbow_parentheses.vim',{'on_cmd' : 'RainbowParentheses'})
     augroup rainbow_lisp
         autocmd!
         autocmd FileType lisp,clojure,scheme,java RainbowParentheses
@@ -577,44 +431,44 @@ if s:enable_plug()
     let g:rainbow#pairs = [['(', ')'], ['[', ']'],['{','}']]
     " List of colors that you do not want. ANSI code or #RRGGBB
     let g:rainbow#blacklist = [233, 234]
-    call s:add('wsdjeg/tagbar')
-    if s:tap('tagbar')
-        call s:defind_hooks('tagbar')
+    call zvim#plug#add('wsdjeg/tagbar')
+    if zvim#plug#tap('tagbar')
+        call zvim#plug#defind_hooks('tagbar')
         noremap <silent> <F2> :TagbarToggle<CR>
     endif
     "}}}
 
-    call s:add('floobits/floobits-neovim',      { 'on_cmd' : ['FlooJoinWorkspace','FlooShareDirPublic','FlooShareDirPrivate']})
-    call s:add('wsdjeg/MarkDown.pl',            { 'on_cmd' : 'MarkDownPreview'})
-    call s:add('plasticboy/vim-markdown',       { 'on_ft' : 'markdown'})
+    call zvim#plug#add('floobits/floobits-neovim',      { 'on_cmd' : ['FlooJoinWorkspace','FlooShareDirPublic','FlooShareDirPrivate']})
+    call zvim#plug#add('wsdjeg/MarkDown.pl',            { 'on_cmd' : 'MarkDownPreview'})
+    call zvim#plug#add('plasticboy/vim-markdown',       { 'on_ft' : 'markdown'})
     let g:vim_markdown_conceal = 0
     let g:vim_markdown_folding_disabled = 1
-    call s:add('simnalamburt/vim-mundo',        { 'on_cmd' : 'MundoToggle'})
+    call zvim#plug#add('simnalamburt/vim-mundo',        { 'on_cmd' : 'MundoToggle'})
     nnoremap <silent> <F7> :MundoToggle<CR>
-    call s:add('TaskList.vim',                  { 'on_cmd' : 'TaskList'})
+    call zvim#plug#add('TaskList.vim',                  { 'on_cmd' : 'TaskList'})
     map <unique> <Leader>td <Plug>TaskList
-    call s:add('ianva/vim-youdao-translater',   { 'on_cmd' : ['Ydv','Ydc','Yde']})
+    call zvim#plug#add('ianva/vim-youdao-translater',   { 'on_cmd' : ['Ydv','Ydc','Yde']})
     vnoremap <silent> <C-l> <Esc>:Ydv<CR>
     nnoremap <silent> <C-l> <Esc>:Ydc<CR>
-    call s:add('elixir-lang/vim-elixir',        { 'on_ft' : 'elixir'})
-    call s:add('editorconfig/editorconfig-vim', { 'on_cmd' : 'EditorConfigReload'})
-    call s:add('junegunn/fzf',                  { 'on_cmd' : 'FZF'})
+    call zvim#plug#add('elixir-lang/vim-elixir',        { 'on_ft' : 'elixir'})
+    call zvim#plug#add('editorconfig/editorconfig-vim', { 'on_cmd' : 'EditorConfigReload'})
+    call zvim#plug#add('junegunn/fzf',                  { 'on_cmd' : 'FZF'})
     nnoremap <Leader>fz :FZF<CR>
-    call s:add('junegunn/gv.vim',               { 'on_cmd' : 'GV'})
-    call s:add('tyru/open-browser.vim',         {
+    call zvim#plug#add('junegunn/gv.vim',               { 'on_cmd' : 'GV'})
+    call zvim#plug#add('tyru/open-browser.vim',         {
                 \'on_cmd' : ['OpenBrowserSmartSearch','OpenBrowser','OpenBrowserSearch'],
                 \'on_map' : '<Plug>(openbrowser-',
                 \})
-    if s:tap('open-brower.vim')
-        call s:defind_hooks('open-brower.vim')
+    if zvim#plug#tap('open-brower.vim')
+        call zvim#plug#defind_hooks('open-brower.vim')
     endif
-    call s:add('racer-rust/vim-racer',          {'on_ft' : 'rust'})
+    call zvim#plug#add('racer-rust/vim-racer',          {'on_ft' : 'rust'})
     let g:racer_cmd = $HOME."/.cargo/bin/racer"
-    call s:add('rust-lang/rust.vim')
-    call s:add('PotatoesMaster/i3-vim-syntax',  {'on_ft' : 'i3'})
-    call s:add('isundil/vim-irssi-syntax',  {'on_ft' : 'irssi'})
-    call s:add('vimperator/vimperator.vim',     {'on_ft' : 'vimperator'})
-    call s:add('lambdalisue/vim-gita',          {'on_cmd': 'Gita'})
-    call s:add('tweekmonster/helpful.vim',      {'on_cmd': 'HelpfulVersion'})
-    call s:end()
+    call zvim#plug#add('rust-lang/rust.vim')
+    call zvim#plug#add('PotatoesMaster/i3-vim-syntax',  {'on_ft' : 'i3'})
+    call zvim#plug#add('isundil/vim-irssi-syntax',  {'on_ft' : 'irssi'})
+    call zvim#plug#add('vimperator/vimperator.vim',     {'on_ft' : 'vimperator'})
+    call zvim#plug#add('lambdalisue/vim-gita',          {'on_cmd': 'Gita'})
+    call zvim#plug#add('tweekmonster/helpful.vim',      {'on_cmd': 'HelpfulVersion'})
+    call zvim#plug#end()
 endif
