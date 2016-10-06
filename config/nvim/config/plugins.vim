@@ -154,8 +154,14 @@ if s:enable_plug()
     if count(g:settings.plugin_groups, 'core') "{{{
         call s:add('Shougo/vimproc.vim', {'build': 'make'})
     endif
+    if count(g:settings.plugin_groups, 'denite')
+        call s:add('Shougo/denite.nvim',{ 'merged' : 0})
+        if s:tap('denite.nvim')
+            call s:defind_hooks('denite.nvim')
+        endif
+    endif
     if count(g:settings.plugin_groups, 'unite') "{{{
-        call s:add('Shougo/unite.vim')
+        call s:add('Shougo/unite.vim',{ 'merged' : 0})
         if s:tap('unite.vim')
             call s:defind_hooks('unite.vim')
         endif

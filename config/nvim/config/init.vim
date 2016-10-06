@@ -110,6 +110,9 @@ call add(g:settings.plugin_groups, 'misc')
 
 call add(g:settings.plugin_groups, 'core')
 call add(g:settings.plugin_groups, 'unite')
+if has('python3')
+    call add(g:settings.plugin_groups, 'denite')
+endif
 call add(g:settings.plugin_groups, 'ctrlp')
 call add(g:settings.plugin_groups, 'autocomplete')
 if ! has('nvim')
