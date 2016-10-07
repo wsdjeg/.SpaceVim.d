@@ -21,6 +21,14 @@ A:use `pacman -Fs file`, before this you need `sudo pacman -Fyu`
 Q:archlinux enbale sound in archlinux;
 A:`sudo pacman -S pulseaudio`
 
+Q:How to set localtime in archlinux?
+A:
+```sh
+sudo ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+sudo hwclock -s --localtime
+sudo hwclock -w --localtime 
+```
+
 Q:archlinux issri issue about Text::CharWidth module(adv_windowlist);
 A:`sudo pacman -S perl-text-charwidth`
 
