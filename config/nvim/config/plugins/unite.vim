@@ -18,7 +18,7 @@ call unite#custom#profile('default', 'context', {
             \   'hide_icon': 0,
             \   'candidate-icon': ' ',
             \   'marked_icon': '✓',
-            \   'prompt' : ' ➭'
+            \   'prompt' : '➭ '
             \ })
 call unite#custom#profile('source/neobundle/update', 'context', {
             \   'start_insert' : 0,
