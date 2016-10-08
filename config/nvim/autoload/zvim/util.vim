@@ -246,6 +246,16 @@ function! zvim#util#UpdateHosts(...) abort
         echo 'successfully!'
     endif
 endfunction
+fu! zvim#util#Generate_ag_cmd(ignore,tool)
+    let ignore = []
+    if a:tool ==# 'ag'
+        for ig in split(a:ignore,',')
+            call add(ignore, '--ignore')
+            call add(ignore, ig)
+        endfor
+    endif
+    return ignore
+endf
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

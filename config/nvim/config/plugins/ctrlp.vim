@@ -10,20 +10,15 @@ let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
 "let g:ctrlp_map = ',,'
 "let g:ctrlp_open_multiple_files = 'v'
+"if you have install ag, the g:ctrlp_custom_ignore will not work
 let g:ctrlp_custom_ignore = {
             \ 'dir':  '\v[\/]\.(git|hg|svn)$|target',
             \ 'file': '\v\.(exe|so|dll|ttf|png)$|\-rplugin\~',
             \ 'link': 'some_bad_symbolic_links',
             \ }
-let g:ctrlp_user_command = ['ag %s -i --nocolor --nogroup --hidden
-            \ --ignore out
-            \ --ignore .git
-            \ --ignore .svn
-            \ --ignore .hg
-            \ --ignore .DS_Store
-            \ --ignore "**/*.pyc"
-            \ -g ""'
-            \ ]
+if executable('ag')
+    let g:ctrlp_user_command = 'ag %s --hidden -i  -g "" ' . join(zvim#util#Generate_ag_cmd(g:settings.wildignore,'ag'))
+endif
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch'  }
 "nnoremap <Leader>kk :CtrlPMixed<Cr>
 " comment for ctrlp-funky {{{
