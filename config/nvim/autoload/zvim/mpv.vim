@@ -1,4 +1,11 @@
 let s:playId = 0
+function! zvim#mpv#stop() abort
+        if s:playId != 0
+            call jobstop(s:playId)
+            let s:playId = 0
+        endif
+        delcommand MStop
+endfunction
 function! zvim#mpv#play(file,...) abort
     if has('nvim')
         if s:playId != 0
@@ -13,4 +20,5 @@ function! zvim#mpv#play(file,...) abort
         endif
         let s:playId = job_start(['mpv','--vid=no',a:file])
     endif
+    command! MStop call zvim#mpv#stop()
 endfunction

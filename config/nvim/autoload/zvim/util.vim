@@ -48,11 +48,11 @@ fu! zvim#util#SmartClose()
 endf
 
 "call zvim#util#defineMap('nnoremap <silent>', '<C-c>', ':let @+=expand("%:p")<CR>:echo "Copied to clipboard."<CR>',
-            "\ 'Copy buffer absolute path to X11 clipboard',':let @+=expand("%:p")|echo "Copied to clipboard."')
+"\ 'Copy buffer absolute path to X11 clipboard',':let @+=expand("%:p")|echo "Copied to clipboard."')
 "call zvim#util#defineMap('nnoremap <silent>', '<Leader><C-c>',
-            "\ ':let @+="https://github.com/wsdjeg/DotFiles/blob/master/" . expand("%")<CR>:echo "Copied to clipboard."<CR>',
-            "\ 'Yank the github link to X11 clipboard',
-            "\ ':let @+="https://github.com/wsdjeg/DotFiles/blob/master/" . expand("%")|echo "Copied to clipboard."')
+"\ ':let @+="https://github.com/wsdjeg/DotFiles/blob/master/" . expand("%")<CR>:echo "Copied to clipboard."<CR>',
+"\ 'Yank the github link to X11 clipboard',
+"\ ':let @+="https://github.com/wsdjeg/DotFiles/blob/master/" . expand("%")|echo "Copied to clipboard."')
 
 fu! s:findFileInParent(what, where) abort " {{{2
     let old_suffixesadd = &suffixesadd
@@ -149,13 +149,13 @@ function! zvim#util#BufferEmpty()
 endfunction
 
 function! zvim#util#loadMusics() abort
-   let musics = globpath('~/Music', '*.mp3', 0, 1)
-   let g:unite_source_menu_menus.MpvPlayer.command_candidates = []
-   for m in musics
-       call add(g:unite_source_menu_menus.MpvPlayer.command_candidates,
-                   \ [fnamemodify(m, ':t'),
-                   \ "call zvim#mpv#play('" . m . "')"])
-   endfor
+    let musics = globpath('~/Musics', '*.mp3', 0, 1)
+    let g:unite_source_menu_menus.MpvPlayer.command_candidates = []
+    for m in musics
+        call add(g:unite_source_menu_menus.MpvPlayer.command_candidates,
+                    \ [fnamemodify(m, ':t'),
+                    \ "call zvim#mpv#play('" . m . "')"])
+    endfor
 endfunction
 
 function! zvim#util#listDirs(dir) abort

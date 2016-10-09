@@ -1,7 +1,7 @@
 " make vim and neovim use same job func.
 let s:jobs = {}
 let s:nvim_job = has('nvim')
-let s:vim_job = !has('nvim') && has('job') && has('patch-7-4-1590')
+let s:vim_job = !has('nvim') && has('job') && has('patch-7.4.1590')
 function! s:warn(...) abort
     if len(a:000) == 0
         echohl WarningMsg | echom "Current version do not support job feature!" | echohl None
@@ -49,6 +49,14 @@ endfunction
 " start a job, and return the job_id.
 function! job#start(argv, ...) abort
     if s:nvim_job
+        if len(a:000) > 0
+            let job = jobstart(a:argv, a:1)
+        else
+            let job = jobstart(a:argv)
+        endi
+        let id = len(s:jobs) + 1
+        call extend(s:jobs, {id : job})
+        return id
     elseif s:vim_job
         if len(a:000) > 0
             let opts = a:1
@@ -67,6 +75,10 @@ endfunction
 
 function! job#stop(id) abort
     if s:nvim_job
+        if has_key(s:jobs, a:id)
+            call jobstop(get(s:jobs, a:id))
+            call remove(s:jobs, a:id)
+        endif
     elseif s:vim_job
         if has_key(s:jobs, a:id)
             call job_stop(get(s:jobs, a:id))
@@ -78,14 +90,20 @@ function! job#stop(id) abort
 endfunction
 
 function! job#send(job, data) abort
-    " TODO
+    if s:nvim_job
+    elseif s:vim_job
+    endif
 endfunction
 
 function! job#status(id) abort
-    if has('nvim')
-    endif
-    if has_key(s:jobs, a:id)
-        return job_status(get(s:jobs, a:id))
+    if s:nvim_job
+        if has_key(s:jobs, a:id)
+            return jobpid(get(s:jobs, a:id))
+        endif
+    elseif s:vim_job
+        if has_key(s:jobs, a:id)
+            return job_status(get(s:jobs, a:id))
+        endif
     else
         call s:warn('No job with such id!')
     endif

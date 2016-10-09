@@ -1,15 +1,14 @@
-chardet
+appdirs
 click
 futures
 getmail
 greenlet
 msgpack-python
+mutagen
 neovim
 packaging
 pip
 pyparsing
-requests
 setuptools
 six
 trollius
-urllib3
