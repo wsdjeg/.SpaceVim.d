@@ -107,6 +107,7 @@ alias la='ls -A'
 alias l='ls -CF'
 alias vim='nvim'
 alias vi='/usr/bin/vim'
+alias vimtest='vim -u NORC --cmd "exe '\''set rtp+='\'' . getcwd()"'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
