@@ -21,6 +21,22 @@ A:use `pacman -Fs file`, before this you need `sudo pacman -Fyu`
 Q:archlinux enbale sound in archlinux;
 A:`sudo pacman -S pulseaudio`
 
+Q:`dmesg` show me `Failed to activate swap /dev/sda2.` and `Dependency failed for Swap`.
+A: use UUID in /etc/fstab instead of `SWAP`.
+1. `free -m`, you will see `swap : 0 0 0`,
+2. `sudo mkswap /dev/sda2`, you will see something like:
+```
+Setting up swapspace version 1, size = 4 GiB (4294963200 bytes)
+no label, UUID=836b551a-6814-437c-a3f4-edf2a498f51a
+```
+3. edite `/etc/fstab`, add :
+```
+# UUID=836b551a-6814-437c-a3f4-edf2a498f51a
+/dev/sda2		swap		swap		default 0 0
+```
+4. `sudo swapon -a`
+5. `free -m`, check the swap size.
+
 Q:How to set localtime in archlinux?
 A:
 ```sh
