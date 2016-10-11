@@ -54,9 +54,9 @@ function! job#start(argv, ...) abort
         else
             let job = jobstart(a:argv)
         endi
-        let id = len(s:jobs) + 1
-        call extend(s:jobs, {id : job})
-        return id
+        let msg = ['process '. jobpid(job), ' run']
+        call extend(s:jobs, {job : msg})
+        return job
     elseif s:vim_job
         if len(a:000) > 0
             let opts = a:1
@@ -76,8 +76,10 @@ endfunction
 function! job#stop(id) abort
     if s:nvim_job
         if has_key(s:jobs, a:id)
-            call jobstop(get(s:jobs, a:id))
+            call jobstop(a:id)
             call remove(s:jobs, a:id)
+        else
+            call s:warn('No job with such id')
         endif
     elseif s:vim_job
         if has_key(s:jobs, a:id)
@@ -92,8 +94,7 @@ endfunction
 function! job#send(id, data) abort
     if s:nvim_job
         if has_key(s:jobs, a:id)
-            let job = get(s:jobs, a:id)
-            call jobsend(job, a:data)
+            call jobsend(a:id, a:data)
         else
             call s:warn('No job with such id')
         endif
@@ -113,7 +114,7 @@ endfunction
 function! job#status(id) abort
     if s:nvim_job
         if has_key(s:jobs, a:id)
-            return jobpid(get(s:jobs, a:id))
+            return get(s:jobs, a:id)[1]
         endif
     elseif s:vim_job
         if has_key(s:jobs, a:id)
