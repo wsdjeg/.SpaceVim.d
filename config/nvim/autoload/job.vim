@@ -91,11 +91,17 @@ endfunction
 
 function! job#send(id, data) abort
     if s:nvim_job
+        if has_key(s:jobs, a:id)
+            let job = get(s:jobs, a:id)
+            call jobsend(job, a:data)
+        else
+            call s:warn('No job with such id')
+        endif
     elseif s:vim_job
         if has_key(s:jobs, a:id)
             let job = get(s:jobs, a:id)
             let chanel = job_getchannel(job)
-            call ch_sendraw(chanel, a:data)
+            call ch_sendraw(chanel, a:data . "\n")
         else
             call s:warn('No job with such id')
         endif
