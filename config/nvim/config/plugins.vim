@@ -49,7 +49,7 @@ if zvim#plug#enable_plug()
             call zvim#plug#defind_hooks('unite-gtags')
         endif
         call zvim#plug#add('rafi/vim-unite-issue')
-        call zvim#plug#add("joker1007/unite-pull-request")
+        call zvim#plug#add('joker1007/unite-pull-request')
         call zvim#plug#add('tsukkee/unite-tag')
         call zvim#plug#add('ujihisa/unite-launch')
         call zvim#plug#add('ujihisa/unite-gem')
@@ -63,8 +63,8 @@ if zvim#plug#enable_plug()
         call zvim#plug#add('t9md/vim-unite-ack')
         call zvim#plug#add('mileszs/ack.vim',{'on_cmd' : 'Ack'})
         call zvim#plug#add('albfan/ag.vim',{'on_cmd' : 'Ag'})
-        let g:ag_prg="ag  --vimgrep"
-        let g:ag_working_path_mode="r"
+        let g:ag_prg='ag  --vimgrep'
+        let g:ag_working_path_mode='r'
         call zvim#plug#add('dyng/ctrlsf.vim',{'on_cmd' : 'CtrlSF', 'on_map' : '<Plug>CtrlSF'})
         if zvim#plug#tap('ctrlsf.vim')
             call zvim#plug#defind_hooks('ctrlsf.vim')
@@ -151,16 +151,16 @@ if zvim#plug#enable_plug()
         inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
         inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
         inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
-        if g:settings.autocomplete_method == 'ycm' "{{{
+        if g:settings.autocomplete_method ==# 'ycm' "{{{
             call zvim#plug#add('SirVer/ultisnips')
-            let g:UltiSnipsExpandTrigger="<tab>"
-            let g:UltiSnipsJumpForwardTrigger="<tab>"
-            let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
+            let g:UltiSnipsExpandTrigger='<tab>'
+            let g:UltiSnipsJumpForwardTrigger='<tab>'
+            let g:UltiSnipsJumpBackwardTrigger='<S-tab>'
             let g:UltiSnipsSnippetsDir='~/DotFiles/snippets'
             call zvim#plug#add('ervandew/supertab')
-            let g:SuperTabContextDefaultCompletionType = "<c-n>"
+            let g:SuperTabContextDefaultCompletionType = '<c-n>'
             let g:SuperTabDefaultCompletionType = '<C-n>'
-            autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+            "autocmd InsertLeave * if pumvisible() ==# 0|pclose|endif
             let g:neobundle#install_process_timeout = 1500
             call zvim#plug#add('Valloric/YouCompleteMe')
             "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
@@ -192,14 +192,14 @@ if zvim#plug#enable_plug()
             if zvim#plug#tap('neocomplete')
                 call zvim#plug#defind_hooks('neocomplete.vim')
             endif
-        elseif g:settings.autocomplete_method == 'neocomplcache' "{{{
+        elseif g:settings.autocomplete_method ==# 'neocomplcache' "{{{
             call zvim#plug#add('Shougo/neocomplcache.vim', {
                         \ 'on_i' : 1,
                         \ })
             if zvim#plug#tap('neocomplcache.vim')
                 call zvim#plug#defind_hooks('neocomplcache.vim')
             endif
-        elseif g:settings.autocomplete_method == 'deoplete'
+        elseif g:settings.autocomplete_method ==# 'deoplete'
             call zvim#plug#add('Shougo/deoplete.nvim', {
                         \ 'on_i' : 1,
                         \ })
@@ -405,14 +405,17 @@ if zvim#plug#enable_plug()
     if zvim#plug#tap('nerdtree')
         call zvim#plug#defind_hooks('nerdtree')
         function! OpenOrCloseNERDTree()
-            exec "normal! A"
+            exec 'normal! A'
         endfunction
         noremap <silent> <F9> :NERDTreeToggle<CR>
         let g:NERDTreeWinPos='right'
         let g:NERDTreeWinSize=31
         let g:NERDTreeChDirMode=1
-        autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-        autocmd FileType nerdtree nnoremap <silent><buffer><Space> :call OpenOrCloseNERDTree()<cr>
+        autocmd bufenter * if (winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree()) | q | endif
+        augroup nerdtree_zvim
+            autocmd!
+            autocmd FileType nerdtree nnoremap <silent><buffer><Space> :call OpenOrCloseNERDTree()<cr>
+        augroup END
     endif
     call zvim#plug#add('tpope/vim-projectionist',{'on_cmd':['A','AS','AV','AT','AD','Cd','Lcd','ProjectDo']})
     call zvim#plug#add('Xuyuanp/nerdtree-git-plugin')
@@ -463,7 +466,7 @@ if zvim#plug#enable_plug()
         call zvim#plug#defind_hooks('open-brower.vim')
     endif
     call zvim#plug#add('racer-rust/vim-racer',          {'on_ft' : 'rust'})
-    let g:racer_cmd = $HOME."/.cargo/bin/racer"
+    let g:racer_cmd = $HOME.'/.cargo/bin/racer'
     call zvim#plug#add('rust-lang/rust.vim')
     call zvim#plug#add('PotatoesMaster/i3-vim-syntax',  {'on_ft' : 'i3'})
     call zvim#plug#add('isundil/vim-irssi-syntax',  {'on_ft' : 'irssi'})

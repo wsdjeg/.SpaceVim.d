@@ -20,8 +20,8 @@ if WINDOWS()
 elseif OSX()
     silent exec 'language en_US'
 else
-    let s:uname = system("uname -s")
-    if s:uname == "Darwin\n"
+    let s:uname = system('uname -s')
+    if s:uname ==# "Darwin\n"
         " in mac-terminal
         silent exec 'language en_US'
     else
@@ -55,7 +55,7 @@ else
 endif
 
 " Enable 256 colors
-if $COLORTERM == 'gnome-terminal'
+if $COLORTERM ==# 'gnome-terminal'
     set t_Co=256
 endif
 
@@ -124,7 +124,7 @@ else
 endif
 
 
-if g:settings.vim_help_language == 'cn'
+if g:settings.vim_help_language ==# 'cn'
     call add(g:settings.plugin_groups, 'chinese')
 endif
 if g:settings.use_colorscheme==1
