@@ -211,6 +211,7 @@ function! zvim#util#Plugin(...) abort
 endfunction
 
 function! zvim#util#complete_project(ArgLead, CmdLine, CursorPos) abort
+    call zvim#debug#completion_debug(a:ArgLead, a:CmdLine, a:CursorPos)
     let dir = get(g:settings, 'src_root', '~')
     "return globpath(dir, '*')
     let result = split(globpath(dir, '*'), "\n")
