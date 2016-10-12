@@ -130,7 +130,11 @@ function! job#list() abort
 endfunction
 
 function! job#info(id) abort
+    let info = {}
     if s:nvim_job
+        let info.status = job#status(a:id)
+        let info.job_id = a:id
+        return info
     elseif s:vim_job
         if has_key(s:jobs, a:id)
             return job_info(get(s:jobs, a:id))
