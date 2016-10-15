@@ -1,9 +1,11 @@
 "autocmds
 augroup My_autocmds
     au!
-    au! BufWinEnter quickfix nnoremap <silent> <buffer>
-                \   q :cclose<cr>:lclose<cr>
-    au! BufWinEnter quickfix if (winnr('$') == 1 ) |
+    "au! BufWinEnter quickfix nnoremap <silent> <buffer>
+                "\   q :cclose<cr>:lclose<cr>
+    autocmd BufEnter * if &buftype ==# 'quickfix' | nnoremap <silent> <buffer> q :cclose<CR>:lclose<CR>
+    autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
+                \   bd|
                 \   q | endif
     autocmd FileType jsp call JspFileTypeInit()
     autocmd FileType html,css,jsp EmmetInstall
