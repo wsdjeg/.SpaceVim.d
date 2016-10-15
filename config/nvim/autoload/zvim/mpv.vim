@@ -1,10 +1,15 @@
 let s:playId = 0
+fu! s:handler(id, data, event)
+    if a:event == 'exit'
+        let s:playId = 0
+    endif
+endf
 function! zvim#mpv#stop() abort
-        if s:playId != 0
-            call jobstop(s:playId)
-            let s:playId = 0
-        endif
-        delcommand MStop
+    if s:playId != 0
+        call jobstop(s:playId)
+        let s:playId = 0
+    endif
+    delcommand MStop
 endfunction
 function! zvim#mpv#play(file,...) abort
     if has('nvim')
@@ -12,7 +17,11 @@ function! zvim#mpv#play(file,...) abort
             call jobstop(s:playId)
             let s:playId = 0
         endif
-        let s:playId =  jobstart(['mpv','--vid=no',a:file])
+        let s:playId =  jobstart(['mpv','--vid=no',a:file],{
+                    \ 'on_stdout': function('s:handler'),
+                    \ 'on_stderr': function('s:handler'),
+                    \ 'on_exit': function('s:handler'),
+                    \ })
     else
         if type(s:playId) == 8 && job_status(s:playId) == 'run'
             call job_stop(s:playId)
