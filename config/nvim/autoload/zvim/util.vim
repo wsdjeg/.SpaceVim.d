@@ -40,19 +40,15 @@ fu! zvim#util#SmartClose()
         if index(ignorewin , bufname(winbufnr(i))) != -1 || index(ignoreft, getbufvar(bufname(winbufnr(i)),"&filetype")) != -1
             let num = num - 1
         endif
+        if getbufvar(winbufnr(i),"&buftype") ==# 'quickfix'
+            let num = num - 1
+        endif
     endfor
     if num == 1
     else
         close
     endif
 endf
-
-"call zvim#util#defineMap('nnoremap <silent>', '<C-c>', ':let @+=expand("%:p")<CR>:echo "Copied to clipboard."<CR>',
-"\ 'Copy buffer absolute path to X11 clipboard',':let @+=expand("%:p")|echo "Copied to clipboard."')
-"call zvim#util#defineMap('nnoremap <silent>', '<Leader><C-c>',
-"\ ':let @+="https://github.com/wsdjeg/DotFiles/blob/master/" . expand("%")<CR>:echo "Copied to clipboard."<CR>',
-"\ 'Yank the github link to X11 clipboard',
-"\ ':let @+="https://github.com/wsdjeg/DotFiles/blob/master/" . expand("%")|echo "Copied to clipboard."')
 
 fu! s:findFileInParent(what, where) abort " {{{2
     let old_suffixesadd = &suffixesadd
