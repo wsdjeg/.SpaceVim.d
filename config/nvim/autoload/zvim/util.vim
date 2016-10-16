@@ -243,12 +243,17 @@ function! zvim#util#UpdateHosts(...) abort
         echo 'successfully!'
     endif
 endfunction
-fu! zvim#util#Generate_ag_cmd(ignore,tool)
+fu! zvim#util#Generate_ignore(ignore,tool)
     let ignore = []
     if a:tool ==# 'ag'
         for ig in split(a:ignore,',')
             call add(ignore, '--ignore')
             call add(ignore, ig)
+        endfor
+    elseif a:tool ==# 'rg'
+        for ig in split(a:ignore,',')
+            call add(ignore, '-g')
+            call add(ignore, '!' . ig)
         endfor
     endif
     return ignore
