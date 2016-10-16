@@ -1,6 +1,7 @@
 let s:playId = 0
-fu! s:handler(id, data, event)
-    if a:event == 'exit'
+fu! s:handler(id, data, event) abort
+    if a:event ==# 'exit'
+        echom 'job ' . a:id . ' exit with code:' . string(a:data)
         let s:playId = 0
     endif
 endf
@@ -23,7 +24,7 @@ function! zvim#mpv#play(file,...) abort
                     \ 'on_exit': function('s:handler'),
                     \ })
     else
-        if type(s:playId) == 8 && job_status(s:playId) == 'run'
+        if type(s:playId) == 8 && job_status(s:playId) ==# 'run'
             call job_stop(s:playId)
             let s:playId =0
         endif

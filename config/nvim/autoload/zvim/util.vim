@@ -15,9 +15,9 @@ let g:unite_source_menu_menus.MpvPlayer = {'description':
             \ 'Musics list                   <leader>lm'}
 let g:unite_source_menu_menus.MpvPlayer.command_candidates =
             \ get(g:unite_source_menu_menus.MpvPlayer,'command_candidates', [])
-fu! zvim#util#defineMap(type,key,value,desc,...)
+fu! zvim#util#defineMap(type,key,value,desc,...) abort
     exec a:type . ' ' . a:key . ' ' . a:value
-    let description = "➤ "
+    let description = '➤ '
                 \. a:desc
                 \. repeat(' ', 80 - len(a:desc) - len(a:key))
                 \. a:key
@@ -25,22 +25,22 @@ fu! zvim#util#defineMap(type,key,value,desc,...)
     call add(g:unite_source_menu_menus.CustomKeyMaps.command_candidates, [description,cmd])
 
 endf
-fu! zvim#util#source_rc(file)
+fu! zvim#util#source_rc(file) abort
     if filereadable(g:Config_Main_Home. '/' . a:file)
         execute 'source ' . g:Config_Main_Home  . '/' . a:file
     endif
 endf
 
-fu! zvim#util#SmartClose()
+fu! zvim#util#SmartClose() abort
     let ignorewin = get(g:settings,'smartcloseignorewin',[])
     let ignoreft = get(g:settings,'smartcloseignoreft',[])
     let win_count = winnr('$')
     let num = win_count
     for i in range(1,win_count)
-        if index(ignorewin , bufname(winbufnr(i))) != -1 || index(ignoreft, getbufvar(bufname(winbufnr(i)),"&filetype")) != -1
+        if index(ignorewin , bufname(winbufnr(i))) != -1 || index(ignoreft, getbufvar(bufname(winbufnr(i)),'&filetype')) != -1
             let num = num - 1
         endif
-        if getbufvar(winbufnr(i),"&buftype") ==# 'quickfix'
+        if getbufvar(winbufnr(i),'&buftype') ==# 'quickfix'
             let num = num - 1
         endif
     endfor
@@ -64,13 +64,13 @@ fu! s:findDirInParent(what, where) abort " {{{2
     let &suffixesadd = old_suffixesadd
     return dir
 endf " }}}2
-fu! zvim#util#CopyToClipboard(...)
+fu! zvim#util#CopyToClipboard(...) abort
     if a:0
         if executable('git')
             let repo_home = fnamemodify(s:findDirInParent('.git', expand('%:p')), ':p:h:h')
             if repo_home !=# '' || !isdirectory(repo_home)
                 let branch = split(systemlist('git -C '. repo_home. ' branch -a |grep "*"')[0],' ')[1]
-                let remotes = filter(systemlist('git -C '. repo_home. ' remote -v'),'match(v:val,"^origin") >= 0 && match(v:val,"fetch") > 0')
+                let remotes = filter(systemlist('git -C '. repo_home. ' remote -v'),"match(v:val,'^origin') >= 0 && match(v:val,'fetch') > 0")
                 if len(remotes) > 0
                     let remote = remotes[0]
                     if stridx(remote, '@') > -1
@@ -85,23 +85,23 @@ fu! zvim#util#CopyToClipboard(...)
                         let f_url = substitute(f_url, '\', '/', 'g')
                     endif
                     let @+=f_url
-                    echo "Copied to clipboard"
+                    echo 'Copied to clipboard'
                 else
-                    echohl WarningMsg | echom "This git repo has no remote host" | echohl None
+                    echohl WarningMsg | echom 'This git repo has no remote host' | echohl None
                 endif
             else
-                echohl WarningMsg | echom "This file is not in a git repo" | echohl None
+                echohl WarningMsg | echom 'This file is not in a git repo' | echohl None
             endif
         else
-            echohl WarningMsg | echom "You need install git!" | echohl None
+            echohl WarningMsg | echom 'You need install git!' | echohl None
         endif
     else
-        let @+=expand("%:p")
-        echo "Copied to clipboard"
+        let @+=expand('%:p')
+        echo 'Copied to clipboard'
     endif
 endf
 
-fu! zvim#util#check_if_expand_tab()
+fu! zvim#util#check_if_expand_tab() abort
     let has_noexpandtab = search('^\t','wn')
     let has_expandtab = search('^    ','wn')
     if has_noexpandtab && has_expandtab
@@ -136,7 +136,7 @@ fu! zvim#util#check_if_expand_tab()
     endif
 endf
 
-function! zvim#util#BufferEmpty()
+function! zvim#util#BufferEmpty() abort
     let l:current = bufnr('%')
     if ! getbufvar(l:current, '&modified')
         enew
@@ -181,7 +181,7 @@ let s:plugins_argv = ['-update', '-openurl']
 
 function! zvim#util#complete_plugs(ArgLead, CmdLine, CursorPos) abort
     call zvim#debug#completion_debug(a:ArgLead, a:CmdLine, a:CursorPos)
-    if a:CmdLine =~ 'Plugin\s*$' || a:ArgLead =~ '^-[a-zA-Z]*'
+    if a:CmdLine =~# 'Plugin\s*$' || a:ArgLead =~# '^-[a-zA-Z]*'
         return join(s:plugins_argv, "\n")
     endif
     return join(plugins#list(), "\n")
@@ -197,9 +197,9 @@ function! zvim#util#Plugin(...) abort
         elseif flag == 2
             call add(updates, a)
         endif
-        if a == '-update'
+        if a ==# '-update'
             let flag = 1
-        elseif a == '-openurl'
+        elseif a ==# '-openurl'
             let flag = 2
         endif
     endfor
@@ -243,7 +243,7 @@ function! zvim#util#UpdateHosts(...) abort
         echo 'successfully!'
     endif
 endfunction
-fu! zvim#util#Generate_ignore(ignore,tool)
+fu! zvim#util#Generate_ignore(ignore,tool) abort
     let ignore = []
     if a:tool ==# 'ag'
         for ig in split(a:ignore,',')

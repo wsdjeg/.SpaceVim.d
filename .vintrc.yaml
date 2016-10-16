@@ -5,3 +5,5 @@ cmdargs:
 policies:
   ProhibitImplicitScopeVariable:
     enabled: false
+  ProhibitAbbreviationOption:
+    enabled: false
