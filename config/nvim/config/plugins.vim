@@ -218,7 +218,7 @@ if zvim#plug#enable_plug()
                     \ 'ref#complete'
         call zvim#plug#add('Shougo/context_filetype.vim',  { 'on_i' : 1})
         call zvim#plug#add('Shougo/neoinclude.vim',        { 'on_i' : 1})
-        call zvim#plug#add('Shougo/neosnippet-snippets',   { 'on_i' : 1 , 'on_ft' : 'neosnippet'})
+        call zvim#plug#add('Shougo/neosnippet-snippets',   { 'merged' : 0})
         call zvim#plug#add('Shougo/neosnippet.vim',        { 'on_i' : 1 , 'on_ft' : 'neosnippet'})
         call zvim#plug#add('Shougo/neopairs.vim',          { 'on_i' : 1})
         if isdirectory(expand('~/DotFiles/snippets/'))
