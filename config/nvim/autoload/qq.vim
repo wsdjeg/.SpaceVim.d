@@ -11,6 +11,7 @@ let s:irssi_job_id = 0
 let s:feh_code_id = 0
 let s:qq_channels = []
 let s:irssi_commands = ['/join','/query','/list']
+let s:history = []
 
 function! s:feh_code(png) abort
     let s:feh_code_id = jobstart(['feh', a:png])
