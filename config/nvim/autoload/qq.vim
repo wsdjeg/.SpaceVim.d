@@ -42,6 +42,16 @@ function! s:handler_stdout_data(data) abort
         if index(s:qq_channels, ch) == -1
             call add(s:qq_channels, ch)
         endif
+    elseif matchstr(a:data, '\[\d\d/\d\d/\d\d \d\d\:\d\d\:\d\d\] \[群消息\]') !=# ''
+        if matchstr(a:data, '[^\ .]*->[^\ .]*') !=# ''
+            let h = split(matchstr(a:data, '[^\ .]*->[^\ .]*'), '->')
+            call add(h, substitute(a:data,'\[\d\d/\d\d/\d\d \d\d\:\d\d\:\d\d\] \[群消息\].*->[^\ .]*\ \:\ ','','g'))
+            call add(s:history, h)
+        elseif matchstr(a:data, '[^\ .]*|[^\ .]*') !=# ''
+            let h = split(matchstr(a:data, '[^\ .]*|[^\ .]*'), '|')
+            call add(h, substitute(a:data,'\[\d\d/\d\d/\d\d \d\d\:\d\d\:\d\d\] \[群消息\].*|[^\ .]*\ \:\ ','','g'))
+            call add(s:history, h)
+        endif
     endif
 endfunction
 function! Test() abort
