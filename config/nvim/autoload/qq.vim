@@ -133,7 +133,7 @@ function! qq#OpenMsgWin() abort
             echon "\r"
             echon base
         elseif nr == 8 || nr ==# "\<bs>"   " ctrl+h or <bs> delete last char
-            let str = str[:-2]
+            let str = substitute(str,'.$','','g')
             echon "\r"
             echon base . str
         elseif nr == 21                   " ctrl+u clean the message
