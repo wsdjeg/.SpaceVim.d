@@ -90,8 +90,6 @@ function! qq#send(...) abort
         if s:irssi_job_id == 0
             call s:start_irssi()
         endif
-        echom a:1
-        echom s:irssi_job_id
         call jobsend(s:irssi_job_id, [a:1,''])
     endif
 endfunction
@@ -134,6 +132,10 @@ function! qq#OpenMsgWin() abort
             echon base
         elseif nr == 8 || nr ==# "\<bs>"   " ctrl+h or <bs> delete last char
             let str = substitute(str,'.$','','g')
+            echon "\r"
+            echon base . str
+        elseif nr == 23                   " ctrl+w delete last word
+            let str = substitute(str,'[^\ .*]\+\s*$','','g')
             echon "\r"
             echon base . str
         elseif nr == 21                   " ctrl+u clean the message
