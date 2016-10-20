@@ -111,7 +111,7 @@ let s:name = '__VimQQ__'
 function! qq#OpenMsgWin() abort
     if bufwinnr('s:name') < 0
         if bufnr('s:name') != -1
-            exe 'silent! botright split ' . '+b' . bufnr('s:name')
+            exe 'silent! botright split ' . '+b' . bufnr(s:name)
         else
             exe 'silent! botright split ' . s:name
         endif
@@ -125,10 +125,18 @@ function! qq#OpenMsgWin() abort
     call s:windowsinit()
     redraw
     echon base
-    while get(s:, 'quit_qq_win', 0) == get(g:, 'wsd', 1)
+    while get(s:, 'quit_qq_win', 0) == 0
         let nr = getchar()
         if nr == 13
             call s:ParserInput(str)
+            let str = ''
+            echon "\r"
+            echon base
+        elseif nr == 8 || nr ==# "\<bs>"   " ctrl+h or <bs> delete last char
+            let str = str[:-2]
+            echon "\r"
+            echon base . str
+        elseif nr == 21                   " ctrl+u clean the message
             let str = ''
             echon "\r"
             echon base
@@ -139,11 +147,21 @@ function! qq#OpenMsgWin() abort
         endif
     endwhile
     setl nomodifiable
+    exe 'bd ' . bufnr(s:name)
+    let s:quit_qq_win = 0
+    normal! :
 endf
+
+function! s:UpdateMsgScreen(msgs) abort
+    
+endfunction
 
 function! s:ParserInput(str) abort
     if a:str ==# '/quit'
         let s:quit_qq_win = 1
+    elseif a:str =~# '^/join'
+        exe 'set statusline =[#' . split(a:str, '#')[1] . ']'
+        redraw
     endif
 endfunction
 
