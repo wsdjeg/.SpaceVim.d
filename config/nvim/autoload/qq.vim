@@ -106,5 +106,64 @@ function! qq#complete(ArgLead, CmdLine, CursorPos) abort
         return ''
     endif
 endfunction
+
+let s:name = '__VimQQ__'
+function! qq#OpenMsgWin() abort
+    if bufwinnr('s:name') < 0
+        if bufnr('s:name') != -1
+            exe 'silent! botright split ' . '+b' . bufnr('s:name')
+        else
+            exe 'silent! botright split ' . s:name
+        endif
+    else
+        exec bufwinnr('s:name') . 'wincmd w'
+    endif
+    setl modifiable
+    "TODO
+    let base = '>>>'
+    let str = ''
+    call s:windowsinit()
+    echon base
+    while get(s:, 'quit_qq_win', 0) == get(g:, 'wsd', 1)
+        let nr = getchar()
+        if nr == 13
+            call s:ParserInput(str)
+            let str = ''
+            echon "\r"
+            echon base
+        else
+            let str .= nr2char(nr)
+            echon "\r"
+            echon base . str
+        endif
+    endwhile
+    setl nomodifiable
+endf
+
+function! s:ParserInput(str) abort
+    if a:str ==# '/quit'
+        let s:quit_qq_win = 1
+    endif
+endfunction
+
+fu! s:windowsinit() abort
+    " option
+    setl fileformat=unix
+    setl fileencoding=utf-8
+    setl iskeyword=@,48-57,_
+    setl noreadonly
+    setl buftype=nofile
+    setl bufhidden=wipe
+    setl noswapfile
+    setl nobuflisted
+    setl nolist
+    setl nonumber
+    setl nowrap
+    setl winfixwidth
+    setl winfixheight
+    setl textwidth=0
+    setl nospell
+    setl nofoldenable
+endf
 let &cpoptions = s:save_cpo
 unlet s:save_cpo
