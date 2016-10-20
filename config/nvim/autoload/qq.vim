@@ -123,6 +123,7 @@ function! qq#OpenMsgWin() abort
     let base = '>>>'
     let str = ''
     call s:windowsinit()
+    redraw
     echon base
     while get(s:, 'quit_qq_win', 0) == get(g:, 'wsd', 1)
         let nr = getchar()
