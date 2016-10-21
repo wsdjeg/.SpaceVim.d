@@ -10,8 +10,9 @@ let s:run_job_id = 0
 let s:irssi_job_id = 0
 let s:feh_code_id = 0
 let s:qq_channels = []
-let s:irssi_commands = ['/join','/query','/list']
+let s:irssi_commands = ['/join', '/query', '/list', '/quit']
 let s:history = []
+let s:current_channel = ''
 
 function! s:feh_code(png) abort
     let s:feh_code_id = jobstart(['feh', a:png])
@@ -44,18 +45,26 @@ function! s:handler_stdout_data(data) abort
         endif
     elseif matchstr(a:data, '\[\d\d/\d\d/\d\d \d\d\:\d\d\:\d\d\] \[群消息\]') !=# ''
         if matchstr(a:data, '[^\ .]*->[^\ .]*') !=# ''
-            let h = split(matchstr(a:data, '[^\ .]*->[^\ .]*'), '->')
-            call add(h, substitute(a:data,'\[\d\d/\d\d/\d\d \d\d\:\d\d\:\d\d\] \[群消息\].*->[^\ .]*\ \:\ ','','g'))
-            call add(s:history, h)
+            let msg = split(matchstr(a:data, '[^\ .]*->[^\ .]*'), '->')
+            let msg[1] = '#' . msg[1]
+            call add(msg, substitute(a:data,'\[\d\d/\d\d/\d\d \d\d\:\d\d\:\d\d\] \[群消息\].*->[^\ .]*\ \:\ ','','g'))
+            call add(s:history, msg)
+            if msg[1] == s:current_channel
+                doautocmd User QQmsgEvent
+            endif
         elseif matchstr(a:data, '[^\ .]*|[^\ .]*') !=# ''
-            let h = split(matchstr(a:data, '[^\ .]*|[^\ .]*'), '|')
-            call add(h, substitute(a:data,'\[\d\d/\d\d/\d\d \d\d\:\d\d\:\d\d\] \[群消息\].*|[^\ .]*\ \:\ ','','g'))
-            call add(s:history, h)
+            let msg = split(matchstr(a:data, '[^\ .]*|[^\ .]*'), '|')
+            let msg[1] = '#' . msg[1]
+            call add(msg, substitute(a:data,'\[\d\d/\d\d/\d\d \d\d\:\d\d\:\d\d\] \[群消息\].*|[^\ .]*\ \:\ ','','g'))
+            call add(s:history, msg)
+            if msg[1] == s:current_channel
+                doautocmd User QQmsgEvent
+            endif
         endif
     endif
 endfunction
-function! Test() abort
-    echo s:irssi_job_id
+function! Test(str) abort
+    exe a:str
 endfunction
 function! s:start_handler(id, data, event) abort
     if a:event ==# 'stdout'
@@ -140,12 +149,13 @@ function! qq#OpenMsgWin() abort
             echon base . str
         elseif nr == 21                   " ctrl+u clean the message
             let str = ''
-            echon "\r"
-            echon base
+            call s:echon(base)
+        elseif nr == 9
+            let str = s:complete(str)
+            call s:echon(base . str)
         else
             let str .= nr2char(nr)
-            echon "\r"
-            echon base . str
+            call s:echon(base . str)
         endif
     endwhile
     setl nomodifiable
@@ -154,16 +164,51 @@ function! qq#OpenMsgWin() abort
     normal! :
 endf
 
-function! s:UpdateMsgScreen(msgs) abort
-    
+function! s:complete(str) abort
+    if a:str =~# '^/[a-z]*$'
+        let rsl = filter(copy(s:irssi_commands), "v:val =~# a:str .'[^\ .]*'")
+        if len(rsl) > 0
+            return rsl[0]
+        else
+            return a:str
+        endif
+    elseif a:str =~# '/join\s\+#\?$'
+        if len(s:qq_channels) > 0
+            return a:str[-1:] ==# '#' ? a:str[:-2] . s:qq_channels[0] : a:str . s:qq_channels[0]
+        else
+            return a:str
+        endif
+    else
+        return a:str
+    endif
+endfunction
+
+function! s:echon(str) abort
+    echon "\r"
+    echon a:str
+endfunction
+
+function! s:UpdateMsgScreen() abort
+    let msgs = filter(deepcopy(s:history), 'v:val[1] == s:current_channel')
+    normal! ggdG
+    for msg in msgs
+        call append(line('$'), msg[0] . repeat('-', 13 - strwidth(msg[0])) . ' | ' . msg[2])
+    endfor
+    normal! G
+    redraw
 endfunction
 
 function! s:ParserInput(str) abort
     if a:str ==# '/quit'
         let s:quit_qq_win = 1
+        let s:current_channel = ''
     elseif a:str =~# '^/join'
-        exe 'set statusline =[#' . split(a:str, '#')[1] . ']'
+        call qq#send(a:str)
+        let s:current_channel = '#' . split(a:str, '#')[1]
+        exe 'set statusline =[' . s:current_channel . ']'
         redraw
+    elseif a:str !~# '^/.*'
+        call qq#send(a:str)
     endif
 endfunction
 
@@ -186,5 +231,11 @@ fu! s:windowsinit() abort
     setl nospell
     setl nofoldenable
 endf
+
+augroup VimQQ
+    autocmd!
+    autocmd User QQmsgEvent call s:UpdateMsgScreen()
+augroup END
+
 let &cpoptions = s:save_cpo
 unlet s:save_cpo
