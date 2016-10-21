@@ -50,7 +50,7 @@ function! s:handler_stdout_data(data) abort
             call add(msg, substitute(a:data,'\[\d\d/\d\d/\d\d \d\d\:\d\d\:\d\d\] \[群消息\].*->[^\ .]*\ \:\ ','','g'))
             call add(s:history, msg)
             if msg[1] == s:current_channel
-                doautocmd User QQmsgEvent
+                call s:UpdateMsgScreen()
             endif
         elseif matchstr(a:data, '[^\ .]*|[^\ .]*') !=# ''
             let msg = split(matchstr(a:data, '[^\ .]*|[^\ .]*'), '|')
@@ -58,7 +58,7 @@ function! s:handler_stdout_data(data) abort
             call add(msg, substitute(a:data,'\[\d\d/\d\d/\d\d \d\d\:\d\d\:\d\d\] \[群消息\].*|[^\ .]*\ \:\ ','','g'))
             call add(s:history, msg)
             if msg[1] == s:current_channel
-                doautocmd User QQmsgEvent
+                call s:UpdateMsgScreen()
             endif
         endif
     endif
@@ -133,6 +133,8 @@ function! qq#OpenMsgWin() abort
     redraw
     echon base
     while get(s:, 'quit_qq_win', 0) == 0
+        let s:prostr= str
+        let s:probase = base
         let nr = getchar()
         if nr == 13
             call s:ParserInput(str)
@@ -196,6 +198,7 @@ function! s:UpdateMsgScreen() abort
     endfor
     normal! G
     redraw
+    call s:echon(s:probase . s:prostr)
 endfunction
 
 function! s:ParserInput(str) abort
@@ -232,10 +235,6 @@ fu! s:windowsinit() abort
     setl nofoldenable
 endf
 
-augroup VimQQ
-    autocmd!
-    autocmd User QQmsgEvent call s:UpdateMsgScreen()
-augroup END
 
 let &cpoptions = s:save_cpo
 unlet s:save_cpo
