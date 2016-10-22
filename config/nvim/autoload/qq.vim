@@ -51,7 +51,7 @@ function! s:handler_stdout_data(data) abort
         if matchstr(a:data, '[^\ .]*->[^\ .]*') !=# ''
             let idx1 = match(a:data, '->')
             let idx2 = match(a:data, ' : ')
-            let msg = [ a:data[32:idx1-1], a:data[idx1+2:idx2-1], a:data[idx2+3:]]
+            let msg = [ a:data[32:idx1-1], '#' . a:data[idx1+2:idx2-1], a:data[idx2+3:]]
             call add(s:history, msg)
             if msg[1] == s:current_channel
                 call s:UpdateMsgScreen()
@@ -60,7 +60,7 @@ function! s:handler_stdout_data(data) abort
         elseif matchstr(a:data, '[^\ .]*|[^\ .]*') !=# ''
             let idx1 = match(a:data, '|')
             let idx2 = match(a:data, ' : ')
-            let msg = [ a:data[32:idx1-1], a:data[idx1+1:idx2-1], a:data[idx2+3:]]
+            let msg = [ a:data[32:idx1-1], '#' .a:data[idx1+1:idx2-1], a:data[idx2+3:]]
             call add(s:history, msg)
             if msg[1] == s:current_channel
                 call s:UpdateMsgScreen()
