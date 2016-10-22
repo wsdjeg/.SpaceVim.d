@@ -152,5 +152,8 @@ export PATH="$HOME/.npm-packages/bin:$PATH"
 if which ruby >/dev/null && which gem >/dev/null; then
     PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 fi
+if which perl >/dev/null ;then
+    eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
+fi
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 export FZF_COMPLETION_TRIGGER='~~'

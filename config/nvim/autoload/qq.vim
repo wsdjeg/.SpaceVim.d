@@ -32,10 +32,10 @@ function! s:start_irssi() abort
         let s:irssi_job_id = jobstart(['irssi','-c', '127.0.0.1', '-p', '6667'])
     endif
 endfunction
-
+" TODO
+" handler msg from user
 function! s:handler_stdout_data(data) abort
     if match(a:data, '二维码已下载到本地\[ /tmp/mojo_webqq_qrcode_') != -1
-        echom a:data
         let png = matchstr(a:data, '/tmp/mojo_webqq_qrcode_\d*.png')
         call s:feh_code(png)
     elseif matchstr(a:data, '帐号(\d*)登录成功') !=# ''
@@ -60,6 +60,30 @@ function! s:handler_stdout_data(data) abort
             call add(msg, substitute(a:data,'\[\d\d/\d\d/\d\d \d\d\:\d\d\:\d\d\] \[群消息\].*|[^\ .]*\ \:\ ','','g'))
             call add(s:history, msg)
             if msg[1] == s:current_channel
+                call s:UpdateMsgScreen()
+            endif
+        endif
+    elseif matchstr(a:data, '\[\d\d/\d\d/\d\d \d\d\:\d\d\:\d\d\] \[好友消息\]') !=# ''
+        " send: [16/10/22 14:25:56] [好友消息] 我->老婆 : 1
+        if matchstr(a:data, '[^\ .]*->[^\ .]*') !=# ''
+            let msg = split(matchstr(a:data, '[^\ .]*->[^\ .]*'), '->')
+            let f = msg[1]
+            let msg[1] = ''
+            call add(msg, substitute(a:data,'\[\d\d/\d\d/\d\d \d\d\:\d\d\:\d\d\] \[好友消息\].*->[^\ .]*\ \:\ ','','g'))
+            call add(msg, f)
+            call add(s:history, msg)
+            if f == s:current_channel
+                call s:UpdateMsgScreen()
+            endif
+        " get: [16/10/22 14:25:59] [好友消息] 老婆|我的好友 : 测试
+        elseif matchstr(a:data, '[^\ .]*|[^\ .]*') !=# ''
+            let msg = split(matchstr(a:data, '[^\ .]*|[^\ .]*'), '|')
+            let f = msg[0]
+            let msg[1] = ''
+            call add(msg, substitute(a:data,'\[\d\d/\d\d/\d\d \d\d\:\d\d\:\d\d\] \[好友消息\].*|[^\ .]*\ \:\ ','','g'))
+            call add(msg, f)
+            call add(s:history, msg)
+            if f == s:current_channel
                 call s:UpdateMsgScreen()
             endif
         endif
@@ -205,12 +229,21 @@ function! s:echon(str) abort
 endfunction
 
 function! s:UpdateMsgScreen() abort
-    let msgs = filter(deepcopy(s:history), 'v:val[1] == s:current_channel')
-    normal! ggdG
-    for msg in msgs
-        call append(line('$'), msg[0] . repeat('-', 13 - strwidth(msg[0])) . ' | ' . msg[2])
-    endfor
-    normal! G
+    if index(s:qq_channels, s:current_channel) == -1
+        let msgs = filter(deepcopy(s:history), 'len(v:val) == 4 && v:val[3] == s:current_channel')
+        normal! ggdG
+        for msg in msgs
+            call append(line('$'), msg[0] . repeat(' ', 13 - strwidth(msg[0])) . ' | ' . msg[2])
+        endfor
+        normal! G
+    else
+        let msgs = filter(deepcopy(s:history), 'v:val[1] == s:current_channel')
+        normal! ggdG
+        for msg in msgs
+            call append(line('$'), msg[0] . repeat(' ', 13 - strwidth(msg[0])) . ' | ' . msg[2])
+        endfor
+        normal! G
+    endif
     redraw
     call s:echon(s:probase . s:prostr)
 endfunction
@@ -224,6 +257,13 @@ function! s:ParserInput(str) abort
         call qq#send(a:str)
         let s:current_channel = '#' . split(a:str, '#')[1]
         exe 'set statusline =[' . s:current_channel . ']'
+        call s:UpdateMsgScreen()
+        redraw
+    elseif a:str =~# '^/query\ \+.\+'
+        call qq#send(a:str)
+        let s:current_channel = substitute(a:str, '^/query\ \+', '', 'g')
+        exe 'set statusline =[' . s:current_channel . ']'
+        call s:UpdateMsgScreen()
         redraw
     elseif a:str !~# '^/.*'
         call qq#send(a:str)
