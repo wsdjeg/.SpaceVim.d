@@ -33,7 +33,7 @@ function! s:start_irssi() abort
     endif
 endfunction
 " TODO
-" handler msg from user
+" handler msg from user， the data must be a string
 function! s:handler_stdout_data(data) abort
     if match(a:data, '二维码已下载到本地\[ /tmp/mojo_webqq_qrcode_') != -1
         let png = matchstr(a:data, '/tmp/mojo_webqq_qrcode_\d*.png')
@@ -46,8 +46,8 @@ function! s:handler_stdout_data(data) abort
             call add(s:qq_channels, ch)
         endif
     elseif matchstr(a:data, '\[\d\d/\d\d/\d\d \d\d\:\d\d\:\d\d\] \[群消息\]') !=# ''
+        " send:[16/10/22 18:26:58] [群消息] 我->Vim/exVim 开发讨论群 : 测试补全
         if matchstr(a:data, '[^\ .]*->[^\ .]*') !=# ''
-            " send:[16/10/22 18:26:58] [群消息] 我->Vim/exVim 开发讨论群 : 测试补全 
             let msg = split(matchstr(a:data, '[^\ .]*->[^\ .]*'), '->')
             let msg[1] = '#' . msg[1]
             call add(msg, substitute(a:data,'\[\d\d/\d\d/\d\d \d\d\:\d\d\:\d\d\] \[群消息\].*->[^\ .]*\ \:\ ','','g'))
@@ -55,6 +55,7 @@ function! s:handler_stdout_data(data) abort
             if msg[1] == s:current_channel
                 call s:UpdateMsgScreen()
             endif
+        " get:[16/10/22 18:26:58] [群消息] 灰灰|Vim/exVim 开发讨论群 : 测试补全
         elseif matchstr(a:data, '[^\ .]*|[^\ .]*') !=# ''
             let msg = split(matchstr(a:data, '[^\ .]*|[^\ .]*'), '|')
             let msg[1] = '#' . msg[1]
