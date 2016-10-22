@@ -47,19 +47,20 @@ function! s:handler_stdout_data(data) abort
         endif
     elseif matchstr(a:data, '\[\d\d/\d\d/\d\d \d\d\:\d\d\:\d\d\] \[群消息\]') !=# ''
         " send:[16/10/22 18:26:58] [群消息] 我->Vim/exVim 开发讨论群 : 测试补全
+        " start index 32
         if matchstr(a:data, '[^\ .]*->[^\ .]*') !=# ''
-            let msg = split(matchstr(a:data, '[^\ .]*->[^\ .]*'), '->')
-            let msg[1] = '#' . msg[1]
-            call add(msg, substitute(a:data,'\[\d\d/\d\d/\d\d \d\d\:\d\d\:\d\d\] \[群消息\].*->[^\ .]*\ \:\ ','','g'))
+            let idx1 = match(a:data, '->')
+            let idx2 = match(a:data, ' : ')
+            let msg = [ a:data[32:idx1-1], a:data[idx1+2:idx2-1], a:data[idx2+3:]]
             call add(s:history, msg)
             if msg[1] == s:current_channel
                 call s:UpdateMsgScreen()
             endif
         " get:[16/10/22 18:26:58] [群消息] 灰灰|Vim/exVim 开发讨论群 : 测试补全
         elseif matchstr(a:data, '[^\ .]*|[^\ .]*') !=# ''
-            let msg = split(matchstr(a:data, '[^\ .]*|[^\ .]*'), '|')
-            let msg[1] = '#' . msg[1]
-            call add(msg, substitute(a:data,'\[\d\d/\d\d/\d\d \d\d\:\d\d\:\d\d\] \[群消息\].*|[^\ .]*\ \:\ ','','g'))
+            let idx1 = match(a:data, '|')
+            let idx2 = match(a:data, ' : ')
+            let msg = [ a:data[32:idx1-1], a:data[idx1+1:idx2-1], a:data[idx2+3:]]
             call add(s:history, msg)
             if msg[1] == s:current_channel
                 call s:UpdateMsgScreen()
