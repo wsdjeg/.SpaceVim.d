@@ -139,7 +139,8 @@ function! qq#OpenMsgWin() abort
         exe 'set statusline =[' . s:current_channel . ']'
         redraw
         let str = s:msg_before
-        call s:echon(base . s:msg_before)           " TODO here should show the message before close windows
+        let s:prostr= str
+        call s:UpdateMsgScreen()
     else
         call s:echon(base)
     endif
