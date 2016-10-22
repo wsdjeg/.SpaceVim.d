@@ -47,6 +47,7 @@ function! s:handler_stdout_data(data) abort
         endif
     elseif matchstr(a:data, '\[\d\d/\d\d/\d\d \d\d\:\d\d\:\d\d\] \[群消息\]') !=# ''
         if matchstr(a:data, '[^\ .]*->[^\ .]*') !=# ''
+            " send:[16/10/22 18:26:58] [群消息] 我->Vim/exVim 开发讨论群 : 测试补全 
             let msg = split(matchstr(a:data, '[^\ .]*->[^\ .]*'), '->')
             let msg[1] = '#' . msg[1]
             call add(msg, substitute(a:data,'\[\d\d/\d\d/\d\d \d\d\:\d\d\:\d\d\] \[群消息\].*->[^\ .]*\ \:\ ','','g'))
@@ -172,6 +173,9 @@ function! qq#OpenMsgWin() abort
         let s:prostr= str
         let s:probase = base
         let nr = getchar()
+        if nr != 9
+            let s:complete_num = 0
+        endif
         if nr == 13
             call s:ParserInput(str)
             let str = ''
@@ -190,8 +194,14 @@ function! qq#OpenMsgWin() abort
         elseif nr == 21                   " ctrl+u clean the message
             let str = ''
             call s:echon(base)
-        elseif nr == 9
-            let str = s:complete(str)
+        elseif nr == 9                    " use <tab> complete str
+            if s:complete_num == 0
+                let complete_base = str
+            else
+                let str = complete_base
+            endif
+            let str = s:complete(complete_base, s:complete_num)
+            let s:complete_num += 1
             call s:echon(base . str)
         else
             let str .= nr2char(nr)
@@ -204,7 +214,7 @@ function! qq#OpenMsgWin() abort
     normal! :
 endf
 
-function! s:complete(str) abort
+function! s:complete(str, num) abort
     if a:str =~# '^/[a-z]*$'
         let rsl = filter(copy(s:irssi_commands), "v:val =~# a:str .'[^\ .]*'")
         if len(rsl) > 0
@@ -218,6 +228,12 @@ function! s:complete(str) abort
         else
             return a:str
         endif
+    elseif a:str =~# '/join\s\+#.\+$'
+        let results = filter(deepcopy(s:qq_channels), "v:val =~# '" . substitute(a:str , '^/join\s\+', '', 'g') . "'")
+        if len(results) > 0
+            return '/join ' . results[a:num % len(results)]
+        endif
+        return a:str
     else
         return a:str
     endif
