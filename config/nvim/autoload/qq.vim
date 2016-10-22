@@ -13,6 +13,8 @@ let s:qq_channels = []
 let s:irssi_commands = ['/join', '/query', '/list', '/quit']
 let s:history = []
 let s:current_channel = ''
+let s:last_channel = ''
+let s:msg_before = ''
 
 function! s:feh_code(png) abort
     let s:feh_code_id = jobstart(['feh', a:png])
@@ -131,7 +133,16 @@ function! qq#OpenMsgWin() abort
     let str = ''
     call s:windowsinit()
     redraw
-    echon base
+    if s:last_channel !=# ''
+        call qq#send('/join ' . s:last_channel)
+        let s:current_channel = s:last_channel
+        exe 'set statusline =[' . s:current_channel . ']'
+        redraw
+        let str = s:msg_before
+        call s:echon(base . s:msg_before)           " TODO here should show the message before close windows
+    else
+        call s:echon(base)
+    endif
     while get(s:, 'quit_qq_win', 0) == 0
         let s:prostr= str
         let s:probase = base
@@ -139,16 +150,18 @@ function! qq#OpenMsgWin() abort
         if nr == 13
             call s:ParserInput(str)
             let str = ''
-            echon "\r"
-            echon base
+            call s:echon(base)
+        elseif nr ==# "\<M-x>"
+            let s:quit_qq_win = 1
+            let s:last_channel = s:current_channel
+            let s:current_channel = ''
+            let s:msg_before = str
         elseif nr == 8 || nr ==# "\<bs>"   " ctrl+h or <bs> delete last char
             let str = substitute(str,'.$','','g')
-            echon "\r"
-            echon base . str
+            call s:echon(base . str)
         elseif nr == 23                   " ctrl+w delete last word
             let str = substitute(str,'[^\ .*]\+\s*$','','g')
-            echon "\r"
-            echon base . str
+            call s:echon(base . str)
         elseif nr == 21                   " ctrl+u clean the message
             let str = ''
             call s:echon(base)
@@ -186,8 +199,8 @@ function! s:complete(str) abort
 endfunction
 
 function! s:echon(str) abort
-    echon "\r"
-    echon a:str
+    redraw!
+    echo a:str
 endfunction
 
 function! s:UpdateMsgScreen() abort
@@ -204,6 +217,7 @@ endfunction
 function! s:ParserInput(str) abort
     if a:str ==# '/quit'
         let s:quit_qq_win = 1
+        let s:last_channel = s:current_channel
         let s:current_channel = ''
     elseif a:str =~# '^/join'
         call qq#send(a:str)
