@@ -1,6 +1,8 @@
 scriptencoding utf-8
 let s:save_cpo = &cpoptions
 set cpoptions&vim
+" Debug
+let s:server_log = []
 
 let s:run_script = fnamemodify(expand('<sfile>'), ':p:h:gs?\\?'
             \ .((has('win16') || has('win32') || has('win64'))?'\':'/') . '?')
@@ -35,6 +37,7 @@ endfunction
 " TODO
 " handler msg from user， the data must be a string
 function! s:handler_stdout_data(data) abort
+    call add(s:server_log, a:data)
     if match(a:data, '二维码已下载到本地\[ /tmp/mojo_webqq_qrcode_') != -1
         let png = matchstr(a:data, '/tmp/mojo_webqq_qrcode_\d*.png')
         call s:feh_code(png)
@@ -52,6 +55,7 @@ function! s:handler_stdout_data(data) abort
             let idx1 = match(a:data, '->')
             let idx2 = match(a:data, ' : ')
             let msg = [ a:data[32:idx1-1], '#' . a:data[idx1+2:idx2-1], a:data[idx2+3:]]
+            let msg[1] = substitute(msg[1], '[\ !！@&]', '', 'g')
             call add(s:history, msg)
             if msg[1] == s:current_channel
                 call s:UpdateMsgScreen()
@@ -61,6 +65,7 @@ function! s:handler_stdout_data(data) abort
             let idx1 = match(a:data, '|')
             let idx2 = match(a:data, ' : ')
             let msg = [ a:data[32:idx1-1], '#' .a:data[idx1+1:idx2-1], a:data[idx2+3:]]
+            let msg[1] = substitute(msg[1], '[\ !！@&]', '', 'g')
             call add(s:history, msg)
             if msg[1] == s:current_channel
                 call s:UpdateMsgScreen()
@@ -163,7 +168,7 @@ function! qq#OpenMsgWin() abort
     if s:last_channel !=# ''
         call qq#send('/join ' . s:last_channel)
         let s:current_channel = s:last_channel
-        exe 'set statusline =[' . s:current_channel . ']'
+        exe 'set statusline =[' . substitute(s:current_channel, ' ', '\\ ', 'g') . ']'
         redraw
         let str = s:msg_before
         let s:prostr= str
@@ -274,13 +279,13 @@ function! s:ParserInput(str) abort
     elseif a:str =~# '^/join'
         call qq#send(a:str)
         let s:current_channel = '#' . split(a:str, '#')[1]
-        exe 'set statusline =[' . s:current_channel . ']'
+        exe 'set statusline =[' . substitute(s:current_channel, ' ', '\\ ', 'g') . ']'
         call s:UpdateMsgScreen()
         redraw
     elseif a:str =~# '^/query\ \+.\+'
         call qq#send(a:str)
         let s:current_channel = substitute(a:str, '^/query\ \+', '', 'g')
-        exe 'set statusline =[' . s:current_channel . ']'
+        exe 'set statusline =[' . substitute(s:current_channel, ' ', '\\ ', 'g') . ']'
         call s:UpdateMsgScreen()
         redraw
     elseif a:str !~# '^/.*'
