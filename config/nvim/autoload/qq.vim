@@ -17,6 +17,7 @@ let s:history = []
 let s:current_channel = ''
 let s:last_channel = ''
 let s:msg_before = ''
+let s:friends = []     " each item is ['channel','nickname']
 
 function! s:feh_code(png) abort
     let s:feh_code_id = jobstart(['feh', a:png])
@@ -57,6 +58,10 @@ function! s:handler_stdout_data(data) abort
             let msg = [ a:data[32:idx1-1], '#' . a:data[idx1+2:idx2-1], a:data[idx2+3:]]
             let msg[1] = substitute(msg[1], '[\ !！@&]', '', 'g')
             call add(s:history, msg)
+            let friend = [msg[1], msg[0]]
+            if index(s:friends, friend) == -1
+                call add(s:friends, friend)
+            endif
             if msg[1] == s:current_channel
                 call s:UpdateMsgScreen()
             endif
@@ -67,6 +72,10 @@ function! s:handler_stdout_data(data) abort
             let msg = [ a:data[32:idx1-1], '#' .a:data[idx1+1:idx2-1], a:data[idx2+3:]]
             let msg[1] = substitute(msg[1], '[\ !！@&]', '', 'g')
             call add(s:history, msg)
+            let friend = [msg[1], msg[0]]
+            if index(s:friends, friend) == -1
+                call add(s:friends, friend)
+            endif
             if msg[1] == s:current_channel
                 call s:UpdateMsgScreen()
             endif
@@ -80,6 +89,10 @@ function! s:handler_stdout_data(data) abort
             call add(msg, substitute(a:data,'\[\d\d/\d\d/\d\d \d\d\:\d\d\:\d\d\] \[好友消息\].*->[^\ .]*\ \:\ ','','g'))
             call add(msg, f)
             call add(s:history, msg)
+            let friend = ['我的好友',f]
+            if index(s:friends, friend) == -1
+                call add(s:friends, friend)
+            endif
             if f == s:current_channel
                 call s:UpdateMsgScreen()
             endif
@@ -91,6 +104,10 @@ function! s:handler_stdout_data(data) abort
             call add(msg, substitute(a:data,'\[\d\d/\d\d/\d\d \d\d\:\d\d\:\d\d\] \[好友消息\].*|[^\ .]*\ \:\ ','','g'))
             call add(msg, f)
             call add(s:history, msg)
+            let friend = ['我的好友',f]
+            if index(s:friends, friend) == -1
+                call add(s:friends, friend)
+            endif
             if f == s:current_channel
                 call s:UpdateMsgScreen()
             endif
@@ -231,7 +248,7 @@ function! s:complete(str, num) abort
     if a:str =~# '^/[a-z]*$'
         let rsl = filter(copy(s:irssi_commands), "v:val =~# a:str .'[^\ .]*'")
         if len(rsl) > 0
-            return rsl[0]
+            return rsl[a:num % len(rsl)] . ' '
         else
             return a:str
         endif
@@ -245,6 +262,12 @@ function! s:complete(str, num) abort
         let results = filter(deepcopy(s:qq_channels), "v:val =~# '" . substitute(a:str , '^/join\s\+', '', 'g') . "'")
         if len(results) > 0
             return '/join ' . results[a:num % len(results)]
+        endif
+        return a:str
+    elseif index(s:qq_channels, s:current_channel) != -1
+        let names = filter(s:friends, "v:val[0] == s:current_channel && v:val[1] =~# '^' . a:str")
+        if len(names) > 0
+            return names[a:num % len(names)][1] . ': '
         endif
         return a:str
     else
@@ -278,7 +301,7 @@ function! s:UpdateMsgScreen() abort
 endfunction
 
 function! s:ParserInput(str) abort
-    if a:str ==# '/quit'
+    if a:str =~# '^/quit\s*$'
         let s:quit_qq_win = 1
         let s:last_channel = s:current_channel
         let s:current_channel = ''
