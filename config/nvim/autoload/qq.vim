@@ -219,6 +219,12 @@ function! qq#OpenMsgWin() abort
     exe 'bd ' . bufnr(s:name)
     let s:quit_qq_win = 0
     normal! :
+    if executable('fcitx-remote')
+        call system('fcitx-remote -c')          " switch 2 en
+    else
+        doautocmd InsertEnter
+        doautocmd InsertLeave
+    endif
 endf
 
 function! s:complete(str, num) abort
