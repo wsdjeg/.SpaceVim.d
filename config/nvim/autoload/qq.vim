@@ -19,6 +19,8 @@ let s:last_channel = ''
 let s:msg_before = ''
 let s:friends = []     " each item is ['channel','nickname']
 let s:input_history = []
+let s:complete_num = 0
+let s:complete_input_history_num = [0,0]
 
 function! s:feh_code(png) abort
     let s:feh_code_id = jobstart(['feh', a:png])
@@ -64,7 +66,7 @@ function! s:handler_stdout_data(data) abort
                 call add(s:friends, friend)
             endif
             if msg[1] == s:current_channel
-                call s:UpdateMsgScreen()
+                call s:update_msg_screen()
             endif
         " get:[16/10/22 18:26:58] [群消息] 灰灰|Vim/exVim 开发讨论群 : 测试补全
         elseif matchstr(a:data, '[^\ .]*|[^\ .]*') !=# ''
@@ -78,7 +80,7 @@ function! s:handler_stdout_data(data) abort
                 call add(s:friends, friend)
             endif
             if msg[1] == s:current_channel
-                call s:UpdateMsgScreen()
+                call s:update_msg_screen()
             endif
         endif
     elseif matchstr(a:data, '\[\d\d/\d\d/\d\d \d\d\:\d\d\:\d\d\] \[好友消息\]') !=# ''
@@ -95,7 +97,7 @@ function! s:handler_stdout_data(data) abort
                 call add(s:friends, friend)
             endif
             if f == s:current_channel
-                call s:UpdateMsgScreen()
+                call s:update_msg_screen()
             endif
         " get: [16/10/22 14:25:59] [好友消息] 老婆|我的好友 : 测试
         elseif matchstr(a:data, '[^\ .]*|[^\ .]*') !=# ''
@@ -110,7 +112,7 @@ function! s:handler_stdout_data(data) abort
                 call add(s:friends, friend)
             endif
             if f == s:current_channel
-                call s:UpdateMsgScreen()
+                call s:update_msg_screen()
             endif
         endif
     endif
@@ -190,7 +192,7 @@ function! qq#OpenMsgWin() abort
         redraw
         let str = s:msg_before
         let s:prostr= str
-        call s:UpdateMsgScreen()
+        call s:update_msg_screen()
     else
         call s:echon(base)
     endif
@@ -201,8 +203,11 @@ function! qq#OpenMsgWin() abort
         if nr != 9
             let s:complete_num = 0
         endif
+        if nr !=# "\<Up>" && nr !=# "\<Down>"
+            let s:complete_input_history_num = [0,0]
+        endif
         if nr == 13
-            call s:ParserInput(str)
+            call s:parser_input(str)
             let str = ''
             call s:echon(base)
         elseif nr ==# "\<M-x>"
@@ -228,7 +233,7 @@ function! qq#OpenMsgWin() abort
             let str = s:complete(complete_base, s:complete_num)
             let s:complete_num += 1
             call s:echon(base . str)
-        elseif nr == 47
+        elseif nr == 47                 " if type / and str is none, switch to en method
             if str ==# '' && executable('fcitx-remote')
                 call system('fcitx-remote -c')
                 let str .= nr2char(nr)
@@ -238,6 +243,24 @@ function! qq#OpenMsgWin() abort
                 let str .= nr2char(nr)
                 call s:echon(base . str)
             endif
+        elseif nr ==# "\<Up>"
+            if s:complete_input_history_num == [0,0]
+                let complete_input_history_base = str
+            else
+                let str = complete_input_history_base
+            endif
+            let s:complete_input_history_num[0] += 1
+            let str = s:complete_input_history(complete_input_history_base, s:complete_input_history_num)
+            call s:echon(base . str)
+        elseif nr ==# "\<Down>"
+            if s:complete_input_history_num == [0,0]
+                let complete_input_history_base = str
+            else
+                let str = complete_input_history_base
+            endif
+            let s:complete_input_history_num[1] += 1
+            let str = s:complete_input_history(complete_input_history_base, s:complete_input_history_num)
+            call s:echon(base . str)
         else
             let str .= nr2char(nr)
             call s:echon(base . str)
@@ -286,12 +309,23 @@ function! s:complete(str, num) abort
     endif
 endfunction
 
+function! s:complete_input_history(str,num) abort
+    let results = filter(copy(s:input_history), "v:val =~# '^' . a:str")
+    if len(results) > 0
+        call add(results, a:str)
+        let index = ((len(results) - 1) - a:num[0] + a:num[1]) % len(results)
+        return results[index]
+    else
+        return a:str
+    endif
+endfunction
+
 function! s:echon(str) abort
     redraw!
     echo a:str
 endfunction
 
-function! s:UpdateMsgScreen() abort
+function! s:update_msg_screen() abort
     if index(s:qq_channels, s:current_channel) == -1
         let msgs = filter(deepcopy(s:history), 'len(v:val) == 4 && v:val[3] == s:current_channel')
         normal! ggdG
@@ -311,7 +345,10 @@ function! s:UpdateMsgScreen() abort
     call s:echon(s:probase . s:prostr)
 endfunction
 
-function! s:ParserInput(str) abort
+function! s:parser_input(str) abort
+    if a:str !=# ''
+        call add(s:input_history, a:str)
+    endif
     if a:str =~# '^/quit\s*$'
         let s:quit_qq_win = 1
         let s:last_channel = s:current_channel
@@ -320,13 +357,13 @@ function! s:ParserInput(str) abort
         call qq#send(a:str)
         let s:current_channel = '#' . split(a:str, '#')[1]
         exe 'set statusline =[' . substitute(s:current_channel, ' ', '\\ ', 'g') . ']'
-        call s:UpdateMsgScreen()
+        call s:update_msg_screen()
         redraw
     elseif a:str =~# '^/query\ \+.\+'
         call qq#send(a:str)
         let s:current_channel = substitute(a:str, '^/query\ \+', '', 'g')
         exe 'set statusline =[' . substitute(s:current_channel, ' ', '\\ ', 'g') . ']'
-        call s:UpdateMsgScreen()
+        call s:update_msg_screen()
         redraw
     elseif a:str !~# '^/.*'
         call qq#send(a:str)
