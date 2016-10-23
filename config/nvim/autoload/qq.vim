@@ -18,6 +18,7 @@ let s:current_channel = ''
 let s:last_channel = ''
 let s:msg_before = ''
 let s:friends = []     " each item is ['channel','nickname']
+let s:input_history = []
 
 function! s:feh_code(png) abort
     let s:feh_code_id = jobstart(['feh', a:png])
@@ -227,6 +228,16 @@ function! qq#OpenMsgWin() abort
             let str = s:complete(complete_base, s:complete_num)
             let s:complete_num += 1
             call s:echon(base . str)
+        elseif nr == 47
+            if str ==# '' && executable('fcitx-remote')
+                call system('fcitx-remote -c')
+                let str .= nr2char(nr)
+                call s:echon(base . str)
+
+            else
+                let str .= nr2char(nr)
+                call s:echon(base . str)
+            endif
         else
             let str .= nr2char(nr)
             call s:echon(base . str)
