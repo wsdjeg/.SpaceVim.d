@@ -265,7 +265,7 @@ function! s:complete(str, num) abort
         endif
         return a:str
     elseif index(s:qq_channels, s:current_channel) != -1
-        let names = filter(s:friends, "v:val[0] == s:current_channel && v:val[1] =~# '^' . a:str")
+        let names = filter(deepcopy(s:friends), "v:val[0] == s:current_channel && v:val[1] =~# '^' . a:str")
         if len(names) > 0
             return names[a:num % len(names)][1] . ': '
         endif
