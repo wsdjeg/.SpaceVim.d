@@ -243,6 +243,17 @@ function! qq#OpenMsgWin() abort
                 let str .= nr2char(nr)
                 call s:echon(base . str)
             endif
+        elseif nr ==# "\<PageUp>"
+            let l = line('.') - winheight('$')
+            if l < 0
+                exe 0
+            else
+                exe l
+            endif
+            call s:echon(base . str)
+        elseif nr ==# "\<PageDown>"
+            exe line('.') + winheight('$')
+            call s:echon(base . str)
         elseif nr ==# "\<Up>"
             if s:complete_input_history_num == [0,0]
                 let complete_input_history_base = str
@@ -328,18 +339,28 @@ endfunction
 function! s:update_msg_screen() abort
     if index(s:qq_channels, s:current_channel) == -1
         let msgs = filter(deepcopy(s:history), 'len(v:val) == 4 && v:val[3] == s:current_channel')
+        let line = [line('.'),line('$')]
         normal! ggdG
         for msg in msgs
             call append(line('$'), msg[0] . repeat(' ', 13 - strwidth(msg[0])) . ' | ' . msg[2])
         endfor
-        normal! G
+        if line[0] == line[1]
+            normal! G
+        else
+            exe line[0]
+        endif
     else
         let msgs = filter(deepcopy(s:history), 'v:val[1] == s:current_channel')
+        let line = [line('.'),line('$')]
         normal! ggdG
         for msg in msgs
             call append(line('$'), msg[0] . repeat(' ', 13 - strwidth(msg[0])) . ' | ' . msg[2])
         endfor
-        normal! G
+        if line[0] == line[1]
+            normal! G
+        else
+            exe line[0]
+        endif
     endif
     redraw
     call s:echon(s:probase . s:prostr)
@@ -382,7 +403,7 @@ fu! s:windowsinit() abort
     setl nobuflisted
     setl nolist
     setl nonumber
-    setl nowrap
+    setl wrap
     setl winfixwidth
     setl winfixheight
     setl textwidth=0
