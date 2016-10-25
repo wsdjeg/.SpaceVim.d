@@ -94,7 +94,11 @@ endfunction
 function! job#send(id, data) abort
     if s:nvim_job
         if has_key(s:jobs, a:id)
-            call jobsend(a:id, a:data)
+            if type(a:data) == type('') 
+                call jobsend(a:id, [a:data, ''])
+            else
+                call jobsend(a:id, a:data)
+            endif
         else
             call s:warn('No job with such id')
         endif

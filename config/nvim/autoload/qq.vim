@@ -21,21 +21,22 @@ let s:friends = []     " each item is ['channel','nickname']
 let s:input_history = []
 let s:complete_num = 0
 let s:complete_input_history_num = [0,0]
+let s:opened_channels = []
 
 function! s:feh_code(png) abort
-    let s:feh_code_id = jobstart(['feh', a:png])
+    let s:feh_code_id = job#start(['feh', a:png])
 endfunction
 
 function! s:stop_feh() abort
     if s:feh_code_id != 0
-        call jobstop(s:feh_code_id)
+        call job#stop(s:feh_code_id)
         let s:feh_code_id =0
     endif
 endfunction
 
 function! s:start_irssi() abort
     if s:irssi_job_id == 0
-        let s:irssi_job_id = jobstart(['irssi','-c', '127.0.0.1', '-p', '6667'])
+        let s:irssi_job_id = job#start(['irssi','-c', '127.0.0.1', '-p', '6667'])
     endif
 endfunction
 " TODO
@@ -139,7 +140,7 @@ endfunction
 function! qq#start() abort
     let argv = ['perl', s:run_script]
     if s:run_job_id == 0
-        let s:run_job_id = jobstart(argv, {
+        let s:run_job_id = job#start(argv, {
                     \ 'on_stdout': function('s:start_handler'),
                     \ 'on_stderr': function('s:start_handler'),
                     \ 'on_exit': function('s:start_handler'),
@@ -153,7 +154,7 @@ function! qq#send(...) abort
         if s:irssi_job_id == 0
             call s:start_irssi()
         endif
-        call jobsend(s:irssi_job_id, [a:1,''])
+        call job#send(s:irssi_job_id, a:1)
     endif
 endfunction
 
@@ -188,7 +189,7 @@ function! qq#OpenMsgWin() abort
     if s:last_channel !=# ''
         call qq#send('/join ' . s:last_channel)
         let s:current_channel = s:last_channel
-        exe 'set statusline =[' . substitute(s:current_channel, ' ', '\\ ', 'g') . ']'
+        call s:update_statusline()
         redraw
         let str = s:msg_before
         let s:prostr= str
@@ -377,19 +378,36 @@ function! s:parser_input(str) abort
     elseif a:str =~# '^/join'
         call qq#send(a:str)
         let s:current_channel = '#' . split(a:str, '#')[1]
-        exe 'set statusline =[' . substitute(s:current_channel, ' ', '\\ ', 'g') . ']'
+        if index(s:opened_channels, s:current_channel) == -1
+            call add(s:opened_channels, s:current_channel)
+        endif
+        call s:update_statusline()
         call s:update_msg_screen()
         redraw
     elseif a:str =~# '^/query\ \+.\+'
         call qq#send(a:str)
         let s:current_channel = substitute(a:str, '^/query\ \+', '', 'g')
-        exe 'set statusline =[' . substitute(s:current_channel, ' ', '\\ ', 'g') . ']'
+        call s:update_statusline()
         call s:update_msg_screen()
         redraw
     elseif a:str !~# '^/.*'
         call qq#send(a:str)
     endif
 endfunction
+
+function! s:update_statusline() abort
+    let st = ''
+    for ch in s:opened_channels
+        let ch = substitute(ch, ' ', '\ ', 'g')
+        if ch == s:current_channel
+            let st .= '[当前:' . ch . ']'
+        else
+            let st .= '[' . ch . ']'
+        endif
+    endfor
+    exe 'set statusline=' . st
+endfunction
+
 
 fu! s:windowsinit() abort
     " option
