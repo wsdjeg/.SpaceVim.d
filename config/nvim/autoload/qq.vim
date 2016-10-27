@@ -16,7 +16,6 @@ let s:irssi_commands = ['/join', '/query', '/list', '/quit']
 let s:history = []
 let s:current_channel = ''
 let s:last_channel = ''
-let s:msg_before = ''
 let s:friends = []     " each item is ['channel','nickname']
 let s:input_history = []
 let s:complete_num = 0
@@ -219,9 +218,7 @@ function! qq#OpenMsgWin() abort
         exec bufwinnr('s:name') . 'wincmd w'
     endif
     setl modifiable
-    "TODO
-    let base = '>>>'
-    let str = ''
+    let s:c_base = '>>>'
     let s:c_begin = ''
     let s:c_char = ''
     let s:c_end = ''
@@ -231,16 +228,10 @@ function! qq#OpenMsgWin() abort
         call qq#send('/join ' . s:last_channel)
         let s:current_channel = s:last_channel
         call s:update_statusline()
-        redraw
-        let str = s:msg_before
-        let s:prostr= str
         call s:update_msg_screen()
-    else
-        call s:echon(base)
     endif
+    call s:echon()
     while get(s:, 'quit_qq_win', 0) == 0
-        let s:prostr= str
-        let s:probase = base
         let nr = getchar()
         if nr != 9
             let s:complete_num = 0
@@ -249,42 +240,51 @@ function! qq#OpenMsgWin() abort
             let s:complete_input_history_num = [0,0]
         endif
         if nr == 13
-            call s:parser_input(str)
-            let str = ''
-            call s:echon(base)
+            call s:parser_input(s:c_begin . s:c_char . s:c_end)
+            let s:c_begin = ''
+            let s:c_char = ''
+            let s:c_end = ''
+        elseif nr ==# "\<Right>"
+            let s:c_begin = s:c_begin . s:c_char
+            let s:c_char = matchstr(s:c_end, '^.')
+            let s:c_end = substitute(s:c_end, '^.', '', 'g')
+        elseif nr ==# "\<Left>"
+            if s:c_begin !=# ''
+                let s:c_end = s:c_char . s:c_end
+                let s:c_char = matchstr(s:c_begin, '.$')
+                let s:c_begin = substitute(s:c_begin, '.$', '', 'g')
+            endif
+        elseif nr ==# "\<Home>"
+            let s:c_end = s:c_begin . s:c_char . s:c_end
+            let s:c_char = matchstr(s:c_begin, '^.')
+            let s:c_begin = ''
+        elseif nr ==# "\<End>"
+            let s:c_begin = s:c_begin . s:c_char . s:c_end
+            let s:c_char = ''
+            let s:c_end = ''
         elseif nr ==# "\<M-x>"
             let s:quit_qq_win = 1
             let s:last_channel = s:current_channel
             let s:current_channel = ''
-            let s:msg_before = str
         elseif nr == 8 || nr ==# "\<bs>"   " ctrl+h or <bs> delete last char
-            let str = substitute(str,'.$','','g')
-            call s:echon(base . str)
+            let s:c_begin = substitute(s:c_begin,'.$','','g')
         elseif nr == 23                   " ctrl+w delete last word
-            let str = substitute(str,'[^\ .*]\+\s*$','','g')
-            call s:echon(base . str)
+            let s:c_begin = substitute(s:c_begin,'[^\ .*]\+\s*$','','g')
         elseif nr == 21                   " ctrl+u clean the message
-            let str = ''
-            call s:echon(base)
+            let s:c_begin = ''
         elseif nr == 9                    " use <tab> complete str
             if s:complete_num == 0
-                let complete_base = str
+                let complete_base = s:c_begin
             else
-                let str = complete_base
+                let s:c_begin = complete_base
             endif
-            let str = s:complete(complete_base, s:complete_num)
+            let s:c_begin = s:complete(complete_base, s:complete_num)
             let s:complete_num += 1
-            call s:echon(base . str)
         elseif nr == 47                 " if type / and str is none, switch to en method
-            if str ==# '' && executable('fcitx-remote')
+            if s:c_begin ==# '' && s:c_char ==# '' && s:c_end ==# '' && executable('fcitx-remote')
                 call system('fcitx-remote -c')
-                let str .= nr2char(nr)
-                call s:echon(base . str)
-
-            else
-                let str .= nr2char(nr)
-                call s:echon(base . str)
             endif
+            let s:c_begin .= nr2char(nr)
         elseif nr ==# "\<PageUp>"
             let l = line('.') - winheight('$')
             if l < 0
@@ -292,32 +292,32 @@ function! qq#OpenMsgWin() abort
             else
                 exe l
             endif
-            call s:echon(base . str)
         elseif nr ==# "\<PageDown>"
             exe line('.') + winheight('$')
-            call s:echon(base . str)
         elseif nr ==# "\<Up>"
             if s:complete_input_history_num == [0,0]
-                let complete_input_history_base = str
+                let complete_input_history_base = s:c_begin
+                let s:c_char = ''
+                let s:c_end = ''
             else
-                let str = complete_input_history_base
+                let s:c_begin = complete_input_history_base
             endif
             let s:complete_input_history_num[0] += 1
-            let str = s:complete_input_history(complete_input_history_base, s:complete_input_history_num)
-            call s:echon(base . str)
+            let s:c_begin = s:complete_input_history(complete_input_history_base, s:complete_input_history_num)
         elseif nr ==# "\<Down>"
             if s:complete_input_history_num == [0,0]
-                let complete_input_history_base = str
+                let complete_input_history_base = s:c_begin
+                let s:c_char = ''
+                let s:c_end = ''
             else
-                let str = complete_input_history_base
+                let s:c_begin = complete_input_history_base
             endif
             let s:complete_input_history_num[1] += 1
-            let str = s:complete_input_history(complete_input_history_base, s:complete_input_history_num)
-            call s:echon(base . str)
+            let s:c_begin = s:complete_input_history(complete_input_history_base, s:complete_input_history_num)
         else
-            let str .= nr2char(nr)
-            call s:echon(base . str)
+            let s:c_begin .= nr2char(nr)
         endif
+        call s:echon()
     endwhile
     setl nomodifiable
     exe 'bd ' . bufnr(s:name)
@@ -373,9 +373,12 @@ function! s:complete_input_history(str,num) abort
     endif
 endfunction
 
-function! s:echon(str) abort
+function! s:echon() abort
     redraw!
-    echo a:str
+    echohl Comment | echon s:c_base
+    echohl None | echon s:c_begin
+    echohl Wildmenu | echon s:c_char
+    echohl None | echon s:c_end
 endfunction
 
 function! s:update_msg_screen() abort
@@ -405,7 +408,7 @@ function! s:update_msg_screen() abort
         endif
     endif
     redraw
-    call s:echon(s:probase . s:prostr)
+    call s:echon()
 endfunction
 
 function! s:parser_input(str) abort
