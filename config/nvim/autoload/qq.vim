@@ -22,8 +22,11 @@ let s:input_history = []
 let s:complete_num = 0
 let s:complete_input_history_num = [0,0]
 let s:opened_channels = []
+let s:irssi_log = []
+let s:unread_msg_num = {}
 
 function! s:feh_code(png) abort
+    call s:stop_feh()
     let s:feh_code_id = job#start(['feh', a:png])
 endfunction
 
@@ -34,9 +37,24 @@ function! s:stop_feh() abort
     endif
 endfunction
 
+function! s:irssi_handler(id, data, event) abort
+    if a:event ==# 'exit'
+        let s:irssi_job_id = 0
+    elseif a:event ==# 'stderr'
+        call add(s:irssi_log, ['stderr', a:data])
+    elseif a:event ==# 'stdout'
+        call add(s:irssi_log, ['stdout', a:data])
+    endif
+endfunction
+
 function! s:start_irssi() abort
     if s:irssi_job_id == 0
-        let s:irssi_job_id = job#start(['irssi','-c', '127.0.0.1', '-p', '6667'])
+        let argv = ['irssi','-c', '127.0.0.1', '-p', '6667']
+        let s:irssi_job_id = job#start(argv, {
+                    \ 'on_stdout': function('s:irssi_handler'),
+                    \ 'on_stderr': function('s:irssi_handler'),
+                    \ 'on_exit': function('s:irssi_handler'),
+                    \ })
     endif
 endfunction
 " TODO
@@ -82,6 +100,16 @@ function! s:handler_stdout_data(data) abort
             endif
             if msg[1] == s:current_channel
                 call s:update_msg_screen()
+            elseif index(s:opened_channels, msg[1]) != -1 && s:current_channel !=# msg[1]
+                let n = get(s:unread_msg_num, msg[1], 0)
+                let n += 1
+                if has_key(s:unread_msg_num, msg[1])
+                    call remove(s:unread_msg_num, msg[1])
+                endif
+                call extend(s:unread_msg_num, {msg[1] : n})
+                if s:current_channel !=# ''
+                    call s:update_statusline()
+                endif
             endif
         endif
     elseif matchstr(a:data, '\[\d\d/\d\d/\d\d \d\d\:\d\d\:\d\d\] \[好友消息\]') !=# ''
@@ -114,6 +142,16 @@ function! s:handler_stdout_data(data) abort
             endif
             if f == s:current_channel
                 call s:update_msg_screen()
+            elseif index(s:opened_channels, msg[3]) != -1 && s:current_channel !=# msg[3]
+                let n = get(s:unread_msg_num, msg[3], 0)
+                let n += 1
+                if has_key(s:unread_msg_num, msg[3])
+                    call remove(s:unread_msg_num, msg[3])
+                endif
+                call extend(s:unread_msg_num, {msg[3] : n})
+                if s:current_channel !=# ''
+                    call s:update_statusline()
+                endif
             endif
         endif
     endif
@@ -184,6 +222,9 @@ function! qq#OpenMsgWin() abort
     "TODO
     let base = '>>>'
     let str = ''
+    let s:c_begin = ''
+    let s:c_char = ''
+    let s:c_end = ''
     call s:windowsinit()
     redraw
     if s:last_channel !=# ''
@@ -387,6 +428,9 @@ function! s:parser_input(str) abort
     elseif a:str =~# '^/query\ \+.\+'
         call qq#send(a:str)
         let s:current_channel = substitute(a:str, '^/query\ \+', '', 'g')
+        if index(s:opened_channels, s:current_channel) == -1
+            call add(s:opened_channels, s:current_channel)
+        endif
         call s:update_statusline()
         call s:update_msg_screen()
         redraw
@@ -400,9 +444,18 @@ function! s:update_statusline() abort
     for ch in s:opened_channels
         let ch = substitute(ch, ' ', '\ ', 'g')
         if ch == s:current_channel
+            if has_key(s:unread_msg_num, s:current_channel)
+                call remove(s:unread_msg_num, s:current_channel)
+            endif
             let st .= '[当前:' . ch . ']'
         else
-            let st .= '[' . ch . ']'
+            let st .= '[' . ch
+            let n = get(s:unread_msg_num, ch, 0)
+            if n > 0
+                let st .= '(' . n . 'new)]'
+            else
+                let st .= ']'
+            endif
         endif
     endfor
     exe 'set statusline=' . st
