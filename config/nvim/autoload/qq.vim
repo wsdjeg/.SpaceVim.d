@@ -56,8 +56,7 @@ function! s:start_irssi() abort
                     \ })
     endif
 endfunction
-" TODO
-" handler msg from user， the data must be a string
+
 function! s:handler_stdout_data(data) abort
     call add(s:server_log, a:data)
     if match(a:data, '二维码已下载到本地\[ /tmp/mojo_webqq_qrcode_') != -1
@@ -244,6 +243,10 @@ function! qq#OpenMsgWin() abort
             let s:c_begin = ''
             let s:c_char = ''
             let s:c_end = ''
+        elseif nr ==# "\<M-Left>"
+            call s:previous_channel()
+        elseif nr ==# "\<M-Right>"
+            call s:next_channel()
         elseif nr ==# "\<Right>"
             let s:c_begin = s:c_begin . s:c_char
             let s:c_char = matchstr(s:c_end, '^.')
@@ -409,6 +412,30 @@ function! s:update_msg_screen() abort
     endif
     redraw
     call s:echon()
+endfunction
+
+function! s:next_channel() abort
+   let id = index(s:opened_channels, s:current_channel)
+   let id += 1
+   if id > len(s:opened_channels) - 1
+       let id = id - len(s:opened_channels)
+   endif
+   let s:current_channel = s:opened_channels[id]
+   call qq#send('/join ' . s:current_channel)
+   call s:update_msg_screen()
+   call s:update_statusline()
+endfunction
+
+function! s:previous_channel() abort
+   let id = index(s:opened_channels, s:current_channel)
+   let id -= 1
+   if id < 0
+       let id = id + len(s:opened_channels)
+   endif
+   let s:current_channel = s:opened_channels[id]
+   call qq#send('/join ' . s:current_channel)
+   call s:update_msg_screen()
+   call s:update_statusline()
 endfunction
 
 function! s:parser_input(str) abort
