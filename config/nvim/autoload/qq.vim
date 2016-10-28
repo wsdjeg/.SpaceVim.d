@@ -446,6 +446,21 @@ function! s:parser_input(str) abort
         let s:quit_qq_win = 1
         let s:last_channel = s:current_channel
         let s:current_channel = ''
+    elseif a:str ==# '/wc'
+        let cid = index(s:opened_channels, s:current_channel)
+        if cid == -1
+        elseif cid == len(s:opened_channels) - 1
+            call remove(s:opened_channels, cid)
+            call qq#send('/WINDOW CLOSE')
+            let s:current_channel = get(s:opened_channels, cid - 1, '')
+        else
+            call remove(s:opened_channels, cid)
+            call qq#send('/WINDOW CLOSE')
+            let s:current_channel = get(s:opened_channels, cid, '')
+        endif
+        call s:update_statusline()
+        call s:update_msg_screen()
+        redraw
     elseif a:str =~# '^/join'
         call qq#send(a:str)
         let s:current_channel = '#' . split(a:str, '#')[1]
