@@ -544,9 +544,9 @@ function! s:update_statusline() abort
                             \ && s:opened_channels[index(s:opened_channels, ch) + 1] !=# s:current_channel
                     let st .= '%#VimQQ11#' . s:st_sep
                 elseif s:opened_channels[index(s:opened_channels, ch) + 1] ==# s:current_channel
-                    let st .= '%#VimQQ10#' . s:st_sep
-                else
                     let st .= '%#VimQQ9#' . s:st_sep
+                else
+                    let st .= '%#VimQQ10#' . s:st_sep
                 endif
             else
                 let st .= '%#VimQQ3#[' . ch . ']'
