@@ -23,6 +23,7 @@ let s:complete_input_history_num = [0,0]
 let s:opened_channels = []
 let s:irssi_log = []
 let s:unread_msg_num = {}
+let s:st_sep = ''
 
 function! s:feh_code(png) abort
     call s:stop_feh()
@@ -487,10 +488,37 @@ function! s:parser_input(str) abort
 endfunction
 
 function! s:update_statusline() abort
-    hi User1 ctermbg=003 ctermfg=Black guibg=#fabd2f guifg=#282828
-    hi User2 ctermbg=005 ctermfg=Black guibg=#b16286 guifg=#282828
-    hi User3 ctermbg=007 ctermfg=Black guibg=#8ec07c guifg=#282828
-    hi User4 ctermbg=243 guibg=#7c6f64
+    " current channel
+    hi! VimQQ1 ctermbg=003 ctermfg=Black guibg=#fabd2f guifg=#282828
+    " channel with new msg
+    hi! VimQQ2 ctermbg=005 ctermfg=Black guibg=#b16286 guifg=#282828
+    " normal channel
+    hi! VimQQ3 ctermbg=007 ctermfg=Black guibg=#8ec07c guifg=#282828
+    " end
+    hi! VimQQ4 ctermbg=243 guibg=#7c6f64
+    " current channel + end
+    hi! VimQQ5 guibg=#7c6f64 guifg=#fabd2f
+    " current channel + new msg channel
+    hi! VimQQ6 guibg=#b16286 guifg=#fabd2f
+    " current channel + normal channel
+    hi! VimQQ7 guibg=#8ec07c guifg=#fabd2f
+    " new msg channel + end
+    hi! VimQQ8 guibg=#7c6f64 guifg=#b16286
+    " new msg channel + current channel
+    hi! VimQQ9 guibg=#fabd2f guifg=#b16286
+    " new msg channel + normal channel
+    hi! VimQQ10 guibg=#8ec07c guifg=#b16286
+    " new msg channel + new msg channel
+    hi! VimQQ11 guibg=#b16286 guifg=#b16286
+    " normal channel + end
+    hi! VimQQ12 guibg=#7c6f64 guifg=#8ec07c
+    " normal channel + normal channel
+    hi! VimQQ13 guibg=#8ec07c guifg=#8ec07c
+    " normal channel + new msg channel
+    hi! VimQQ14 guibg=#b16286 guifg=#8ec07c
+    " normal channel + current channel
+    hi! VimQQ15 guibg=#fabd2f guifg=#8ec07c
+
     let st = ''
     for ch in s:opened_channels
         let ch = substitute(ch, ' ', '\ ', 'g')
@@ -498,17 +526,44 @@ function! s:update_statusline() abort
             if has_key(s:unread_msg_num, s:current_channel)
                 call remove(s:unread_msg_num, s:current_channel)
             endif
-            let st .= '%1*[' . ch . ']'
+            let st .= '%#VimQQ1#[' . ch . ']'
+            if index(s:opened_channels, ch) == len(s:opened_channels) - 1
+                let st .= '%#VimQQ5#' . s:st_sep
+            elseif get(s:unread_msg_num, s:opened_channels[index(s:opened_channels, ch) + 1], 0) > 0
+                let st .= '%#VimQQ6#' . s:st_sep
+            else
+                let st .= '%#VimQQ7#' . s:st_sep
+            endif
         else
             let n = get(s:unread_msg_num, ch, 0)
             if n > 0
-                let st .= '%2*[' . ch . '(' . n . 'new)]'
+                let st .= '%#VimQQ2#[' . ch . '(' . n . 'new)]'
+                if index(s:opened_channels, ch) == len(s:opened_channels) - 1
+                    let st .= '%#VimQQ8#' . s:st_sep
+                elseif get(s:unread_msg_num, s:opened_channels[index(s:opened_channels, ch) + 1], 0) > 0
+                            \ && s:opened_channels[index(s:opened_channels, ch) + 1] !=# s:current_channel
+                    let st .= '%#VimQQ11#' . s:st_sep
+                elseif s:opened_channels[index(s:opened_channels, ch) + 1] ==# s:current_channel
+                    let st .= '%#VimQQ10#' . s:st_sep
+                else
+                    let st .= '%#VimQQ9#' . s:st_sep
+                endif
             else
-                let st .= '%3*[' . ch . ']'
+                let st .= '%#VimQQ3#[' . ch . ']'
+                if index(s:opened_channels, ch) == len(s:opened_channels) - 1
+                    let st .= '%#VimQQ12#' . s:st_sep
+                elseif get(s:unread_msg_num, s:opened_channels[index(s:opened_channels, ch) + 1], 0) > 0
+                            \ && s:opened_channels[index(s:opened_channels, ch) + 1] !=# s:current_channel
+                    let st .= '%#VimQQ14#' . s:st_sep
+                elseif s:opened_channels[index(s:opened_channels, ch) + 1] ==# s:current_channel
+                    let st .= '%#VimQQ15#' . s:st_sep
+                else
+                    let st .= '%#VimQQ13#' . s:st_sep
+                endif
             endif
         endif
     endfor
-    let st .= '%4*\ '
+    let st .= '%#VimQQ4# '
     exe 'set statusline=' . st
 endfunction
 
