@@ -58,7 +58,9 @@ function! s:start_irssi() abort
 endfunction
 
 function! s:handler_stdout_data(data) abort
-    call add(s:server_log, a:data)
+    if !empty(a:data)
+        call add(s:server_log, a:data)
+    endif
     if match(a:data, '二维码已下载到本地\[ /tmp/mojo_webqq_qrcode_') != -1
         let png = matchstr(a:data, '/tmp/mojo_webqq_qrcode_\d*.png')
         call s:feh_code(png)
@@ -485,6 +487,10 @@ function! s:parser_input(str) abort
 endfunction
 
 function! s:update_statusline() abort
+    hi User1 ctermbg=003 ctermfg=Black guibg=#fabd2f guifg=#282828
+    hi User2 ctermbg=005 ctermfg=Black guibg=#b16286 guifg=#282828
+    hi User3 ctermbg=007 ctermfg=Black guibg=#8ec07c guifg=#282828
+    hi User4 ctermbg=243 guibg=#7c6f64
     let st = ''
     for ch in s:opened_channels
         let ch = substitute(ch, ' ', '\ ', 'g')
@@ -492,17 +498,17 @@ function! s:update_statusline() abort
             if has_key(s:unread_msg_num, s:current_channel)
                 call remove(s:unread_msg_num, s:current_channel)
             endif
-            let st .= '[当前:' . ch . ']'
+            let st .= '%1*[' . ch . ']'
         else
-            let st .= '[' . ch
             let n = get(s:unread_msg_num, ch, 0)
             if n > 0
-                let st .= '(' . n . 'new)]'
+                let st .= '%2*[' . ch . '(' . n . 'new)]'
             else
-                let st .= ']'
+                let st .= '%3*[' . ch . ']'
             endif
         endif
     endfor
+    let st .= '%4*\ '
     exe 'set statusline=' . st
 endfunction
 
