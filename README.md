@@ -44,6 +44,9 @@ chmod +x install.sh
 #### termite
 ![i3-wm](pic/i3-wm.png)
 
+#### Tecent QQ
+![Vim-QQ](pic/Vim-QQ.png)
+
 #### irssi
 ![irssi](pic/irssi.png)
 
