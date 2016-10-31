@@ -72,6 +72,13 @@ function! s:handler_stdout_data(data) abort
         if index(s:qq_channels, ch) == -1
             call add(s:qq_channels, ch)
         endif
+    elseif matchstr(a:data, '\[\d\d/\d\d/\d\d \d\d\:\d\d\:\d\d\] \[info\] \[.*\:虚拟用户\] 加入频道 #我的好友') !=# ''
+        " [16/10/31 20:06:09] [info] [nullptr:虚拟用户] 加入频道 #我的好友
+        " [28:-42]
+        let friend = ['我的好友',a:data[28:-42]]
+        if index(s:friends, friend) == -1
+            call add(s:friends, friend)
+        endif
     elseif matchstr(a:data, '\[\d\d/\d\d/\d\d \d\d\:\d\d\:\d\d\] \[群消息\]') !=# ''
         " send:[16/10/22 18:26:58] [群消息] 我->Vim/exVim 开发讨论群 : 测试补全
         " start index 32
@@ -150,6 +157,17 @@ function! s:handler_stdout_data(data) abort
                     call remove(s:unread_msg_num, msg[3])
                 endif
                 call extend(s:unread_msg_num, {msg[3] : n})
+                if s:current_channel !=# ''
+                    call s:update_statusline()
+                endif
+            elseif index(s:opened_channels, msg[3]) == -1
+                let n = get(s:unread_msg_num, msg[3], 0)
+                let n += 1
+                if has_key(s:unread_msg_num, msg[3])
+                    call remove(s:unread_msg_num, msg[3])
+                endif
+                call extend(s:unread_msg_num, {msg[3] : n})
+                call add(s:opened_channels, msg[3])
                 if s:current_channel !=# ''
                     call s:update_statusline()
                 endif
@@ -357,10 +375,17 @@ function! s:complete(str, num) abort
             return '/join ' . results[a:num % len(results)]
         endif
         return a:str
-    elseif index(s:qq_channels, s:current_channel) != -1
-        let names = filter(deepcopy(s:friends), "v:val[0] == s:current_channel && v:val[1] =~# '^' . a:str")
+    elseif index(s:qq_channels, s:current_channel) != -1 && a:str !~# '^/query'
+        let names = filter(deepcopy(s:friends), "v:val[0] ==# s:current_channel && v:val[1] =~# '^' . a:str")
         if len(names) > 0
             return names[a:num % len(names)][1] . ': '
+        endif
+        return a:str
+    elseif a:str =~# '^/query\s\+.\+'
+        let n_base = substitute(a:str, '^/query\s\+', '', 'g')
+        let names = filter(deepcopy(s:friends), "v:val[0] ==# '我的好友' && v:val[1] =~# '^' . n_base")
+        if len(names) > 0
+            return '/query ' . names[a:num % len(names)][1]
         endif
         return a:str
     else
