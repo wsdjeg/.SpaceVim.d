@@ -47,6 +47,10 @@ chmod +x install.sh
 #### Tecent QQ
 ![Vim-QQ](pic/Vim-QQ.png)
 
+To install qq.vim, you just need copy qq.vim to your vim autoload dir.
+now the plugin only support neovim, if you want to use it in vim8,
+you need install [job.vim](config/nvim/autoload/job.vim).
+
 #### irssi
 ![irssi](pic/irssi.png)
 

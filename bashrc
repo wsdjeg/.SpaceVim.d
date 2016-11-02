@@ -14,6 +14,8 @@ HISTCONTROL=ignoreboth
 
 # Complete after sudo
 complete -cf sudo
+# Complete after man
+complete -cf man
 
 # append to the history file, don't overwrite it
 shopt -s histappend

@@ -23,6 +23,7 @@ if has('nvim')
     exe 'tnoremap <silent><C-Up>    <C-\><C-n>:<C-u>wincmd k<CR>'
     exe 'tnoremap <silent><C-Down>  <C-\><C-n>:<C-u>wincmd j<CR>'
     exe 'tnoremap <silent><esc>     <C-\><C-n>'
+    exe 'tnoremap <silent><c-d>     <c-\><c-n>:bd!<cr>'
 endif
 
 "for buftabs

@@ -4,10 +4,16 @@ set cpoptions&vim
 " Debug
 let s:server_log = []
 
-let s:run_script = fnamemodify(expand('<sfile>'), ':p:h:gs?\\?'
-            \ .((has('win16') || has('win32') || has('win64'))?'\':'/') . '?')
-            \ . '/qq/run.pl'
-
+let s:run_script = "
+            \ use local::lib;\n
+            \ use Mojo::Webqq;\n
+            \ my $qq = " . get(g:, 'VimQQaccount', '279834419') . ";\n
+            \ my $client = Mojo::Webqq->new(qq=>$qq);\n
+            \ $client->load('ShowMsg');\n
+            \ $client->load('IRCShell',data=>{load_friend=>1,});\n
+            \ $client->log->handle(\*STDOUT);\n
+            \ $client->run();\n
+            \ "
 let s:run_job_id = 0
 let s:irssi_job_id = 0
 let s:feh_code_id = 0
@@ -25,14 +31,40 @@ let s:irssi_log = []
 let s:unread_msg_num = {}
 let s:st_sep = ''
 
+function! s:jobstart(...) abort
+    if has('nvim')
+        if a:0 == 1
+            return jobstart(a:1)
+        elseif a:0 == 2
+            return jobstart(a:1, a:2)
+        endif
+    elseif exists('*job#start') && !has('nvim')
+    endif
+endfunction
+
+function! s:jobstop(id) abort
+    if has('nvim')
+        call job#stop(a:id)
+    elseif  exists('*job#stop') && !has('nvim')
+    endif
+endfunction
+
+function! s:jobsend(id,data) abort
+    if has('nvim')
+        call jobsend(a:id, a:data)
+    elseif exists('*job#send') && !has('nvim')
+        call job#send(a:id, a:data)
+    endif
+endfunction
+
 function! s:feh_code(png) abort
     call s:stop_feh()
-    let s:feh_code_id = job#start(['feh', a:png])
+    let s:feh_code_id = s:jobstart(['feh', a:png])
 endfunction
 
 function! s:stop_feh() abort
     if s:feh_code_id != 0
-        call job#stop(s:feh_code_id)
+        call s:jobstop(s:feh_code_id)
         let s:feh_code_id =0
     endif
 endfunction
@@ -50,7 +82,7 @@ endfunction
 function! s:start_irssi() abort
     if s:irssi_job_id == 0
         let argv = ['irssi','-c', '127.0.0.1', '-p', '6667']
-        let s:irssi_job_id = job#start(argv, {
+        let s:irssi_job_id = s:jobstart(argv, {
                     \ 'on_stdout': function('s:irssi_handler'),
                     \ 'on_stderr': function('s:irssi_handler'),
                     \ 'on_exit': function('s:irssi_handler'),
@@ -195,34 +227,23 @@ function! s:start_handler(id, data, event) abort
 endfunction
 
 function! qq#start() abort
-    let argv = ['perl', s:run_script]
+    let argv = ['perl', '-e', s:run_script]
     if s:run_job_id == 0
-        let s:run_job_id = job#start(argv, {
+        let s:run_job_id = s:jobstart(argv, {
                     \ 'on_stdout': function('s:start_handler'),
                     \ 'on_stderr': function('s:start_handler'),
                     \ 'on_exit': function('s:start_handler'),
                     \ })
-        command! -nargs=* -complete=custom,qq#complete Webqq call qq#send(<q-args>)
+        call s:start_irssi()
     endif
 endfunction
 
-function! qq#send(...) abort
+function! s:send(...) abort
     if a:0 > 0
         if s:irssi_job_id == 0
             call s:start_irssi()
         endif
-        call job#send(s:irssi_job_id, a:1)
-    endif
-endfunction
-
-function! qq#complete(ArgLead, CmdLine, CursorPos) abort
-    call zvim#debug#completion_debug(a:ArgLead, a:CmdLine, a:CursorPos)
-    if a:ArgLead =~# '/.*'
-        return join(s:irssi_commands, "\n")
-    elseif a:CmdLine =~# 'Webqq\s\+/join\s\+'
-        return join(s:qq_channels, "\n")
-    else
-        return ''
+        call s:jobsend(s:irssi_job_id, a:1)
     endif
 endfunction
 
@@ -245,7 +266,11 @@ function! qq#OpenMsgWin() abort
     call s:windowsinit()
     redraw
     if s:last_channel !=# ''
-        call qq#send('/join ' . s:last_channel)
+        if s:last_channel =~# '^#'
+            call s:send('/join ' . s:last_channel)
+        else
+            call s:send('/query ' . s:last_channel)
+        endif
         let s:current_channel = s:last_channel
         call s:update_statusline()
         call s:update_msg_screen()
@@ -449,7 +474,11 @@ function! s:next_channel() abort
        let id = id - len(s:opened_channels)
    endif
    let s:current_channel = s:opened_channels[id]
-   call qq#send('/join ' . s:current_channel)
+   if s:current_channel =~# '^#'
+       call s:send('/join ' . s:current_channel)
+   else
+       call s:send('/query ' . s:current_channel)
+   endif
    call s:update_msg_screen()
    call s:update_statusline()
 endfunction
@@ -461,7 +490,11 @@ function! s:previous_channel() abort
        let id = id + len(s:opened_channels)
    endif
    let s:current_channel = s:opened_channels[id]
-   call qq#send('/join ' . s:current_channel)
+   if s:current_channel =~# '^#'
+       call s:send('/join ' . s:current_channel)
+   else
+       call s:send('/query ' . s:current_channel)
+   endif
    call s:update_msg_screen()
    call s:update_statusline()
 endfunction
@@ -479,18 +512,18 @@ function! s:parser_input(str) abort
         if cid == -1
         elseif cid == len(s:opened_channels) - 1
             call remove(s:opened_channels, cid)
-            call qq#send('/WINDOW CLOSE')
+            call s:send('/WINDOW CLOSE')
             let s:current_channel = get(s:opened_channels, cid - 1, '')
         else
             call remove(s:opened_channels, cid)
-            call qq#send('/WINDOW CLOSE')
+            call s:send('/WINDOW CLOSE')
             let s:current_channel = get(s:opened_channels, cid, '')
         endif
         call s:update_statusline()
         call s:update_msg_screen()
         redraw
     elseif a:str =~# '^/join'
-        call qq#send(a:str)
+        call s:send(a:str)
         let s:current_channel = '#' . split(a:str, '#')[1]
         if index(s:opened_channels, s:current_channel) == -1
             call add(s:opened_channels, s:current_channel)
@@ -499,7 +532,7 @@ function! s:parser_input(str) abort
         call s:update_msg_screen()
         redraw
     elseif a:str =~# '^/query\ \+.\+'
-        call qq#send(a:str)
+        call s:send(a:str)
         let s:current_channel = substitute(a:str, '^/query\ \+', '', 'g')
         if index(s:opened_channels, s:current_channel) == -1
             call add(s:opened_channels, s:current_channel)
@@ -508,7 +541,7 @@ function! s:parser_input(str) abort
         call s:update_msg_screen()
         redraw
     elseif a:str !~# '^/.*'
-        call qq#send(a:str)
+        call s:send(a:str)
     endif
 endfunction
 
