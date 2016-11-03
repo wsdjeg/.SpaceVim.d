@@ -44,14 +44,21 @@ endfunction
 
 function! s:jobstop(id) abort
     if has('nvim')
-        call job#stop(a:id)
+        call jobstop(a:id)
     elseif  exists('*job#stop') && !has('nvim')
     endif
 endfunction
 
 function! s:jobsend(id,data) abort
     if has('nvim')
-        call jobsend(a:id, a:data)
+        if type(a:data) == type('')
+            let data = [a:data, '']
+        elseif type(a:data) == type([]) && a:data[-1] !=# ''
+            let data = a:data + ['']
+        else
+            let data = a:data
+        endif
+        call jobsend(a:id, data)
     elseif exists('*job#send') && !has('nvim')
         call job#send(a:id, a:data)
     endif

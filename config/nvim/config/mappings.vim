@@ -23,7 +23,6 @@ if has('nvim')
     exe 'tnoremap <silent><C-Up>    <C-\><C-n>:<C-u>wincmd k<CR>'
     exe 'tnoremap <silent><C-Down>  <C-\><C-n>:<C-u>wincmd j<CR>'
     exe 'tnoremap <silent><esc>     <C-\><C-n>'
-    exe 'tnoremap <silent><c-d>     <c-\><c-n>:bd!<cr>'
 endif
 
 "for buftabs
@@ -162,10 +161,16 @@ fu! s:tobur(num)
             bnext
         elseif a:num ==# 'bprev'
             bprev
-        elseif bufexists(a:num)&&buflisted(a:num)
-            exec 'buffer ' . a:num
-        elseif bufexists(a:num + 1)&&buflisted(a:num + 1)
-            exec 'buffer ' . (a:num + 1)
+        else
+            let ls = split(execute(':ls'), "\n")
+            let buffers = []
+            for b in ls
+                let nr = matchstr(b, '\d\+')
+                call add(buffers, nr)
+            endfor
+            if len(buffers) >= a:num
+                exec 'buffer ' . buffers[a:num - 1]
+            endif
         endif
     endif
 endf

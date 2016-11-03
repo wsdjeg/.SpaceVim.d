@@ -4,7 +4,7 @@ let s:nvim_job = has('nvim')
 let s:vim_job = !has('nvim') && has('job') && has('patch-7.4.1590')
 function! s:warn(...) abort
     if len(a:000) == 0
-        echohl WarningMsg | echom "Current version do not support job feature!" | echohl None
+        echohl WarningMsg | echom 'Current version do not support job feature!' | echohl None
     elseif len(a:000) == 1 && type(a:1) == type('')
         echohl WarningMsg | echom a:1| echohl None
     else
@@ -15,19 +15,19 @@ function! s:warp(argv, opts) abort
     let obj._argv = a:argv
     let obj._opts = a:opts
 
-    function! obj._out_cb(job_id, data)
+    function! obj._out_cb(job_id, data) abort
         if has_key(self._opts, 'on_stdout')
             call self._opts.on_stdout(a:job_id, [a:data], 'stdout')
         endif
     endfunction
 
-    function! obj._err_cb(job_id, data)
+    function! obj._err_cb(job_id, data) abort
         if has_key(self._opts, 'on_stderr')
             call self._opts.on_stderr(a:job_id, [a:data], 'stderr')
         endif
     endfunction
 
-    function! obj._exit_cb(job_id, data)
+    function! obj._exit_cb(job_id, data) abort
         if has_key(self._opts, 'on_exit')
             call self._opts.on_exit(a:job_id, [a:data], 'exit')
         endif
@@ -94,7 +94,7 @@ endfunction
 function! job#send(id, data) abort
     if s:nvim_job
         if has_key(s:jobs, a:id)
-            if type(a:data) == type('') 
+            if type(a:data) == type('')
                 call jobsend(a:id, [a:data, ''])
             else
                 call jobsend(a:id, a:data)
