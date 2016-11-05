@@ -241,7 +241,6 @@ function! qq#start() abort
                     \ 'on_stderr': function('s:start_handler'),
                     \ 'on_exit': function('s:start_handler'),
                     \ })
-        call s:start_irssi()
     endif
 endfunction
 
@@ -291,44 +290,67 @@ function! qq#OpenMsgWin() abort
         if nr !=# "\<Up>" && nr !=# "\<Down>"
             let s:complete_input_history_num = [0,0]
         endif
-        if nr == 13
+        if nr == 13                                                             "<cr> 执行命令，或发送消息
             call s:parser_input(s:c_begin . s:c_char . s:c_end)
             let s:c_begin = ''
             let s:c_char = ''
             let s:c_end = ''
-        elseif nr ==# "\<M-Left>"
+        elseif nr ==# "\<M-Left>"                                               "<Alt>+<Left> 移动到左边一个聊天窗口
             call s:previous_channel()
-        elseif nr ==# "\<M-Right>"
+        elseif nr ==# "\<M-Right>"                                              "<Alt>+<Right> 移动到右边一个聊天窗口
             call s:next_channel()
-        elseif nr ==# "\<Right>"
+        elseif nr ==# "\<Right>" || nr == 6                                     "<Right> 向右移动光标
             let s:c_begin = s:c_begin . s:c_char
             let s:c_char = matchstr(s:c_end, '^.')
             let s:c_end = substitute(s:c_end, '^.', '', 'g')
-        elseif nr ==# "\<Left>"
+        elseif nr ==# "\<Left>"  || nr == 2                                     "<Left> 向左移动光标
             if s:c_begin !=# ''
                 let s:c_end = s:c_char . s:c_end
                 let s:c_char = matchstr(s:c_begin, '.$')
                 let s:c_begin = substitute(s:c_begin, '.$', '', 'g')
             endif
-        elseif nr ==# "\<Home>"
-            let s:c_end = s:c_begin . s:c_char . s:c_end
+        elseif nr ==# "\<Home>" || nr == 1                                     "<Home> 将光标移动到行首
+            let s:c_end = substitute(s:c_begin . s:c_char . s:c_end, '^.', '', 'g')
             let s:c_char = matchstr(s:c_begin, '^.')
             let s:c_begin = ''
-        elseif nr ==# "\<End>"
+        elseif nr ==# "\<End>"  || nr == 5                                     "<End> 将光标移动到行末
             let s:c_begin = s:c_begin . s:c_char . s:c_end
             let s:c_char = ''
             let s:c_end = ''
-        elseif nr ==# "\<M-x>"
+        elseif nr ==# "\<M-x>"                                                  "<Alt>+x 关闭聊天窗口
             let s:quit_qq_win = 1
             let s:last_channel = s:current_channel
             let s:current_channel = ''
-        elseif nr == 8 || nr ==# "\<bs>"   " ctrl+h or <bs> delete last char
+        elseif nr == 8 || nr ==# "\<bs>"                                        " ctrl+h or <bs> delete last char
             let s:c_begin = substitute(s:c_begin,'.$','','g')
-        elseif nr == 23                   " ctrl+w delete last word
+        elseif nr == 23                                                         " ctrl+w delete last word
             let s:c_begin = substitute(s:c_begin,'[^\ .*]\+\s*$','','g')
-        elseif nr == 21                   " ctrl+u clean the message
+        elseif nr == 11                                                         " ctrl+k delete the chars from cursor to the end
+            let s:c_char = ''
+            let s:c_end = ''
+        elseif nr ==# "\<M-f>"                                                  " Alt + f ：按单词前移（右向）
+            if matchstr(s:c_end, '^\ *[^\ .]\+') !=# ''
+                let s:c_begin = s:c_begin . s:c_char . matchstr(s:c_end, '^\ *[^\ .]\+')
+                let s:c_end = substitute(s:c_end, '^\ *[^\ .]\+', '', 'g')
+                let s:c_char = matchstr(s:c_end, '^.')
+                let s:c_end = substitute(s:c_end, '^.', '', 'g')
+            endif
+        elseif nr ==# "\<M-b>"
+            let s:c_end = matchstr(s:c_begin, '[^\ .]\+\s*$') . s:c_char . s:c_end
+            let s:c_begin = substitute(s:c_begin, '[^\ .]\+\s*$', '', 'g')
+            let s:c_char = matchstr(s:c_end, '^.')
+            let s:c_end = substitute(s:c_end, '^.', '', 'g')
+        elseif nr ==# "\<M-d>"                                                  " Alt + d 从光标处删除至词尾
+            let s:c_end = s:c_char . s:c_end
+            let s:c_end = substitute(s:c_end, '^\s*[^\ .]*', '', 'g')
+            let s:c_char = matchstr(s:c_end, '^.')
+            let s:c_end = substitute(s:c_end, '^.', '', 'g')
+        elseif nr == 4                                                          " ctrl+d delete the char under the cursor
+            let s:c_char = matchstr(s:c_end, '^.')
+            let s:c_end = substitute(s:c_end, '^.', '', 'g')
+        elseif nr == 21                                                         " ctrl+u clean the message
             let s:c_begin = ''
-        elseif nr == 9                    " use <tab> complete str
+        elseif nr == 9                                                          " use <tab> complete str
             if s:complete_num == 0
                 let complete_base = s:c_begin
             else
