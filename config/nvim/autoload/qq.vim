@@ -466,13 +466,55 @@ function! s:echon() abort
     echohl None | echon s:c_end
 endfunction
 
+function! s:get_str_with_width(str,width) abort
+    let str = a:str
+    let result = ''
+    let tmp = ''
+    for i in range(strchars(str))
+        let tmp .= matchstr(str, '^.')
+        if strwidth(tmp) > a:width
+            return result
+        else
+            let result = tmp
+        endif
+        let str = substitute(str, '^.', '', 'g')
+    endfor
+    return result
+endfunction
+
+function! s:get_lines_with_width(str, width) abort
+    let str = a:str
+    let lines = []
+    let line = ''
+    let tmp = ''
+    for i in range(strchars(str))
+        let tmp .= matchstr(str, '^.')
+        if strwidth(tmp) > a:width
+            call add(lines, line)
+            let tmp = matchstr(str, '^.')
+        endif
+        let line = tmp
+        let str = substitute(str, '^.', '', 'g')
+    endfor
+    call add(lines, line)
+    return lines
+endfunction
+
 function! s:update_msg_screen() abort
     if index(s:qq_channels, s:current_channel) == -1
         let msgs = filter(deepcopy(s:history), 'len(v:val) == 4 && v:val[3] == s:current_channel')
         let line = [line('.'),line('$')]
         normal! ggdG
         for msg in msgs
-            call append(line('$'), msg[0] . repeat(' ', 13 - strwidth(msg[0])) . ' | ' . msg[2])
+            let name = s:get_str_with_width(msg[0], 13)  " the width of the name must <= 13
+            let message = s:get_lines_with_width(msg[2], winwidth('$') - 16)
+            let first_line = repeat(' ', 13 - strwidth(name)) . name . ' | ' . message[0]
+            call append(line('$'), first_line)
+            if len(message) > 1
+                for l in message[1:]
+                    call append(line('$'), repeat(' ', 13) . ' | ' . l)
+                endfor
+            endif
         endfor
         if line[0] == line[1]
             normal! G
@@ -484,7 +526,15 @@ function! s:update_msg_screen() abort
         let line = [line('.'),line('$')]
         normal! ggdG
         for msg in msgs
-            call append(line('$'), msg[0] . repeat(' ', 13 - strwidth(msg[0])) . ' | ' . msg[2])
+            let name = s:get_str_with_width(msg[0], 13)  " the width of the name must <= 13
+            let message = s:get_lines_with_width(msg[2], winwidth('$') - 16)
+            let first_line = repeat(' ', 13 - strwidth(name)) . name . ' | ' . message[0]
+            call append(line('$'), first_line)
+            if len(message) > 1
+                for l in message[1:]
+                    call append(line('$'), repeat(' ', 13) . ' | ' . l)
+                endfor
+            endif
         endfor
         if line[0] == line[1]
             normal! G
@@ -667,6 +717,7 @@ fu! s:windowsinit() abort
     setl nobuflisted
     setl nolist
     setl nonumber
+    setl norelativenumber
     setl wrap
     setl winfixwidth
     setl winfixheight
@@ -675,6 +726,10 @@ fu! s:windowsinit() abort
     setl nofoldenable
 endf
 
-
+" disable indentline in msg window
+let g:indentLine_bufNameExclude = get(g:, 'indentLine_bufNameExclude', [])
+if index(g:indentLine_bufNameExclude, s:name) == -1
+    call add(g:indentLine_bufNameExclude, s:name)
+endif
 let &cpoptions = s:save_cpo
 unlet s:save_cpo
