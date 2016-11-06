@@ -18,7 +18,7 @@ let s:run_job_id = 0
 let s:irssi_job_id = 0
 let s:feh_code_id = 0
 let s:qq_channels = []
-let s:irssi_commands = ['/join', '/query', '/list', '/quit']
+let s:irssi_commands = ['/join', '/query', '/list', '/quit', '/msg', '/wc']
 let s:history = []
 let s:current_channel = ''
 let s:last_channel = ''
@@ -254,6 +254,10 @@ function! s:send(...) abort
 endfunction
 
 let s:name = '__VimQQ__'
+let s:c_base = '>>>'
+let s:c_begin = ''
+let s:c_char = ''
+let s:c_end = ''
 function! qq#OpenMsgWin() abort
     if bufwinnr('s:name') < 0
         if bufnr('s:name') != -1
@@ -265,18 +269,8 @@ function! qq#OpenMsgWin() abort
         exec bufwinnr('s:name') . 'wincmd w'
     endif
     setl modifiable
-    let s:c_base = '>>>'
-    let s:c_begin = ''
-    let s:c_char = ''
-    let s:c_end = ''
     call s:windowsinit()
-    redraw
     if s:last_channel !=# ''
-        if s:last_channel =~# '^#'
-            call s:send('/join ' . s:last_channel)
-        else
-            call s:send('/query ' . s:last_channel)
-        endif
         let s:current_channel = s:last_channel
         call s:update_statusline()
         call s:update_msg_screen()
@@ -414,37 +408,45 @@ function! s:complete(str, num) abort
         let rsl = filter(copy(s:irssi_commands), "v:val =~# a:str .'[^\ .]*'")
         if len(rsl) > 0
             return rsl[a:num % len(rsl)] . ' '
-        else
-            return a:str
         endif
-    elseif a:str =~# '/join\s\+#\?$'
-        if len(s:qq_channels) > 0
-            return a:str[-1:] ==# '#' ? a:str[:-2] . s:qq_channels[0] : a:str . s:qq_channels[0]
-        else
-            return a:str
+    elseif matchstr(a:str, '@[^\ .]$') !=# ''
+        let n_base = matchstr(a:str, '[^@^\ .]$')
+        let names = filter(deepcopy(s:friends), "v:val[0] ==# s:current_channel && v:val[1] =~# '^' . n_base")
+        if len(names) > 0
+            return substitute(a:str, '[^@^\ .]$', '', 'g') . names[a:num % len(names)][1]
         endif
-    elseif a:str =~# '/join\s\+#.\+$'
+    elseif a:str =~# '/join\s\+#[^\ .]*$' || a:str =~# '^/join\s\+$'
         let results = filter(deepcopy(s:qq_channels), "v:val =~# '" . substitute(a:str , '^/join\s\+', '', 'g') . "'")
         if len(results) > 0
             return '/join ' . results[a:num % len(results)]
         endif
-        return a:str
-    elseif index(s:qq_channels, s:current_channel) != -1 && a:str !~# '^/query'
-        let names = filter(deepcopy(s:friends), "v:val[0] ==# s:current_channel && v:val[1] =~# '^' . a:str")
-        if len(names) > 0
-            return names[a:num % len(names)][1] . ': '
-        endif
-        return a:str
     elseif a:str =~# '^/query\s\+.\+'
         let n_base = substitute(a:str, '^/query\s\+', '', 'g')
         let names = filter(deepcopy(s:friends), "v:val[0] ==# '我的好友' && v:val[1] =~# '^' . n_base")
         if len(names) > 0
             return '/query ' . names[a:num % len(names)][1]
         endif
-        return a:str
-    else
-        return a:str
+    elseif a:str =~# '^/msg\s\+'
+        let n_base = substitute(a:str, '^/msg\s\+', '', 'g')
+        let res = []            " a list of string
+        if matchstr(n_base, '^.') ==# '#'
+            let res = filter(deepcopy(s:qq_channels), "v:val =~# '^' . n_base")
+        else
+            for name in filter(deepcopy(s:friends), "v:val[0] ==# '我的好友' && v:val[1] =~# '^' . n_base")
+                call add(res, name[1])
+            endfor
+            let res += filter(deepcopy(s:qq_channels), "v:val =~# '^' . n_base")
+        endif
+        if len(res) > 0
+            return '/msg ' . res[a:num % len(res)] . ' '
+        endif
+    elseif index(s:qq_channels, s:current_channel) != -1 && a:str !~# '^/query'
+        let names = filter(deepcopy(s:friends), "v:val[0] ==# s:current_channel && v:val[1] =~# '^' . a:str")
+        if len(names) > 0
+            return names[a:num % len(names)][1] . ': '
+        endif
     endif
+    return a:str
 endfunction
 
 function! s:complete_input_history(str,num) abort
@@ -516,6 +518,8 @@ function! s:update_msg_screen() abort
                 endfor
             endif
         endfor
+        normal! gg
+        delete
         if line[0] == line[1]
             normal! G
         else
@@ -536,6 +540,8 @@ function! s:update_msg_screen() abort
                 endfor
             endif
         endfor
+        normal! gg
+        delete
         if line[0] == line[1]
             normal! G
         else
@@ -619,6 +625,16 @@ function! s:parser_input(str) abort
         call s:update_statusline()
         call s:update_msg_screen()
         redraw
+    elseif a:str =~# '^/msg\ \+'
+        call s:send(a:str)
+        let ch = matchstr(substitute(a:str, '^/msg\ \+', '', 'g'), '^[^\ .]*' )
+        if index(s:opened_channels, ch) == -1
+            if index(s:qq_channels, ch) != -1 || index(s:friends, ['我的好友', ch]) != -1
+                call add(s:opened_channels, ch)
+                call s:update_statusline()
+                redraw
+            endif
+        endif
     elseif a:str !~# '^/.*'
         call s:send(a:str)
     endif
