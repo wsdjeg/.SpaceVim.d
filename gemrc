@@ -1,0 +1,8 @@
+---
+:backtrace: false
+:bulk_threshold: 1000
+:sources:
+- https://gems.ruby-china.org/
+:update_sources: true
+:verbose: true
+gem: "--user-install"

@@ -196,6 +196,9 @@ symlink 'vimperatorrc'
 symlink 'backgrounds'
 symlink 'scripts'
 
+# gem
+symlink 'gemrc'
+
 if cat /etc/issue | grep Ubuntu &> /dev/null;then
     printf "$Red""Warning ""$Color_off""$Blue""This is ubuntu,and will skip xinitrc$Color_off\n"
 else

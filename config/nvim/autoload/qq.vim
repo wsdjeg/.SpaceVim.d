@@ -121,7 +121,7 @@ function! s:handler_stdout_data(data) abort
     elseif matchstr(a:data, '\[\d\d/\d\d/\d\d \d\d\:\d\d\:\d\d\] \[群消息\]') !=# ''
         " send:[16/10/22 18:26:58] [群消息] 我->Vim/exVim 开发讨论群 : 测试补全
         " start index 32
-        if matchstr(a:data, '[^\ .]*->[^\ .]*') !=# ''
+        if matchstr(a:data, '[^\ .]*->[^\ .]*\s\:\s') !=# ''
             let idx1 = match(a:data, '->')
             let idx2 = match(a:data, ' : ')
             let msg = [ a:data[32:idx1-1], '#' . a:data[idx1+2:idx2-1], a:data[idx2+3:]]
@@ -135,7 +135,7 @@ function! s:handler_stdout_data(data) abort
                 call s:update_msg_screen()
             endif
         " get:[16/10/22 18:26:58] [群消息] 灰灰|Vim/exVim 开发讨论群 : 测试补全
-        elseif matchstr(a:data, '[^\ .]*|[^\ .]*') !=# ''
+        elseif matchstr(a:data, '[^\ .]*|[^\ .]*\s\:\s') !=# ''
             let idx1 = match(a:data, '|')
             let idx2 = match(a:data, ' : ')
             let msg = [ a:data[32:idx1-1], '#' .a:data[idx1+1:idx2-1], a:data[idx2+3:]]
@@ -508,11 +508,11 @@ function! s:update_msg_screen() abort
         for msg in msgs
             let name = s:get_str_with_width(msg[0], 13)  " the width of the name must <= 13
             let message = s:get_lines_with_width(msg[2], winwidth('$') - 16)
-            let first_line = repeat(' ', 13 - strwidth(name)) . name . ' | ' . message[0]
+            let first_line = repeat(' ', 13 - strwidth(name)) . name . ' ' . nr2char(9474) . ' ' . message[0]
             call append(line('$'), first_line)
             if len(message) > 1
                 for l in message[1:]
-                    call append(line('$'), repeat(' ', 13) . ' | ' . l)
+                    call append(line('$'), repeat(' ', 13) . ' ' . nr2char(9474) . ' ' . l)
                 endfor
             endif
         endfor
@@ -528,11 +528,11 @@ function! s:update_msg_screen() abort
         for msg in msgs
             let name = s:get_str_with_width(msg[0], 13)  " the width of the name must <= 13
             let message = s:get_lines_with_width(msg[2], winwidth('$') - 16)
-            let first_line = repeat(' ', 13 - strwidth(name)) . name . ' | ' . message[0]
+            let first_line = repeat(' ', 13 - strwidth(name)) . name . ' ' . nr2char(9474) . ' ' . message[0]
             call append(line('$'), first_line)
             if len(message) > 1
                 for l in message[1:]
-                    call append(line('$'), repeat(' ', 13) . ' | ' . l)
+                    call append(line('$'), repeat(' ', 13) . ' ' . nr2char(9474) . ' ' . l)
                 endfor
             endif
         endfor
