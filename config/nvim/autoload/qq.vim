@@ -5,7 +5,6 @@ set cpoptions&vim
 let s:server_log = []
 
 let s:run_script = "
-            \ use local::lib;\n
             \ use Mojo::Webqq;\n
             \ my $qq = " . get(g:, 'VimQQaccount', '279834419') . ";\n
             \ my $client = Mojo::Webqq->new(qq=>$qq);\n
@@ -14,6 +13,10 @@ let s:run_script = "
             \ $client->log->handle(\*STDOUT);\n
             \ $client->run();\n
             \ "
+let s:local_Mojo_dir = get(g:, 'local_Mojo_dir', '~/src/Mojo-Webqq/lib')
+if isdirectory(s:local_Mojo_dir)
+    let s:run_script = "use lib '" . s:local_Mojo_dir . "'\n" . s:run_script
+endif
 let s:run_job_id = 0
 let s:irssi_job_id = 0
 let s:feh_code_id = 0
@@ -22,6 +25,7 @@ let s:irssi_commands = ['/join', '/query', '/list', '/quit', '/msg', '/wc']
 let s:history = []
 let s:current_channel = ''
 let s:last_channel = ''
+let s:last_channel_input_methon = ''
 let s:friends = []     " each item is ['channel','nickname']
 let s:input_history = []
 let s:complete_num = 0
@@ -30,6 +34,43 @@ let s:opened_channels = []
 let s:irssi_log = []
 let s:unread_msg_num = {}
 let s:st_sep = ''
+let s:ch_input_method = []                  " [ch_name, input_methon] 1:en 2:cn
+
+function! s:init_hi() abort
+    if get(s:, 'init_hi_done', 0) == 0
+        " current channel
+        hi! VimQQ1 ctermbg=003 ctermfg=Black guibg=#fabd2f guifg=#282828
+        " channel with new msg
+        hi! VimQQ2 ctermbg=005 ctermfg=Black guibg=#b16286 guifg=#282828
+        " normal channel
+        hi! VimQQ3 ctermbg=007 ctermfg=Black guibg=#8ec07c guifg=#282828
+        " end
+        hi! VimQQ4 ctermbg=243 guibg=#7c6f64
+        " current channel + end
+        hi! VimQQ5 guibg=#7c6f64 guifg=#fabd2f
+        " current channel + new msg channel
+        hi! VimQQ6 guibg=#b16286 guifg=#fabd2f
+        " current channel + normal channel
+        hi! VimQQ7 guibg=#8ec07c guifg=#fabd2f
+        " new msg channel + end
+        hi! VimQQ8 guibg=#7c6f64 guifg=#b16286
+        " new msg channel + current channel
+        hi! VimQQ9 guibg=#fabd2f guifg=#b16286
+        " new msg channel + normal channel
+        hi! VimQQ10 guibg=#8ec07c guifg=#b16286
+        " new msg channel + new msg channel
+        hi! VimQQ11 guibg=#b16286 guifg=#b16286
+        " normal channel + end
+        hi! VimQQ12 guibg=#7c6f64 guifg=#8ec07c
+        " normal channel + normal channel
+        hi! VimQQ13 guibg=#8ec07c guifg=#8ec07c
+        " normal channel + new msg channel
+        hi! VimQQ14 guibg=#b16286 guifg=#8ec07c
+        " normal channel + current channel
+        hi! VimQQ15 guibg=#fabd2f guifg=#8ec07c
+        let s:init_hi_done = 1
+    endif
+endfunction
 
 function! s:jobstart(...) abort
     if has('nvim')
@@ -134,7 +175,7 @@ function! s:handler_stdout_data(data) abort
             if msg[1] == s:current_channel
                 call s:update_msg_screen()
             endif
-        " get:[16/10/22 18:26:58] [群消息] 灰灰|Vim/exVim 开发讨论群 : 测试补全
+            " get:[16/10/22 18:26:58] [群消息] 灰灰|Vim/exVim 开发讨论群 : 测试补全
         elseif matchstr(a:data, '[^\ .]*|[^\ .]*\s\:\s') !=# ''
             let idx1 = match(a:data, '|')
             let idx2 = match(a:data, ' : ')
@@ -175,7 +216,7 @@ function! s:handler_stdout_data(data) abort
             if f == s:current_channel
                 call s:update_msg_screen()
             endif
-        " get: [16/10/22 14:25:59] [好友消息] 老婆|我的好友 : 测试
+            " get: [16/10/22 14:25:59] [好友消息] 老婆|我的好友 : 测试
         elseif matchstr(a:data, '[^\ .]*|[^\ .]*') !=# ''
             let msg = split(matchstr(a:data, '[^\ .]*|[^\ .]*'), '|')
             let f = msg[0]
@@ -269,11 +310,17 @@ function! qq#OpenMsgWin() abort
         exec bufwinnr('s:name') . 'wincmd w'
     endif
     setl modifiable
+    call s:init_hi()
     call s:windowsinit()
     if s:last_channel !=# ''
         let s:current_channel = s:last_channel
         call s:update_statusline()
         call s:update_msg_screen()
+        if s:last_channel_input_methon == 1
+            call system('fcitx-remote -c')
+        elseif s:last_channel_input_methon == 2
+            call system('fcitx-remote -o')
+        endif
     endif
     call s:echon()
     while get(s:, 'quit_qq_win', 0) == 0
@@ -289,9 +336,11 @@ function! qq#OpenMsgWin() abort
             let s:c_begin = ''
             let s:c_char = ''
             let s:c_end = ''
-        elseif nr ==# "\<M-Left>"                                               "<Alt>+<Left> 移动到左边一个聊天窗口
+        elseif nr ==# "\<M-Left>" || nr ==# "\<M-h>"
+            "<Alt>+<Left> 移动到左边一个聊天窗口
             call s:previous_channel()
-        elseif nr ==# "\<M-Right>"                                              "<Alt>+<Right> 移动到右边一个聊天窗口
+        elseif nr ==# "\<M-Right>" || nr ==# "\<M-l>"
+            "<Alt>+<Right> 移动到右边一个聊天窗口
             call s:next_channel()
         elseif nr ==# "\<Right>" || nr == 6                                     "<Right> 向右移动光标
             let s:c_begin = s:c_begin . s:c_char
@@ -315,6 +364,9 @@ function! qq#OpenMsgWin() abort
             let s:quit_qq_win = 1
             let s:last_channel = s:current_channel
             let s:current_channel = ''
+            if executable('fcitx-remote')
+                let s:last_channel_input_methon = system('fcitx-remote')
+            endif
         elseif nr == 8 || nr ==# "\<bs>"                                        " ctrl+h or <bs> delete last char
             let s:c_begin = substitute(s:c_begin,'.$','','g')
         elseif nr == 23                                                         " ctrl+w delete last word
@@ -553,35 +605,35 @@ function! s:update_msg_screen() abort
 endfunction
 
 function! s:next_channel() abort
-   let id = index(s:opened_channels, s:current_channel)
-   let id += 1
-   if id > len(s:opened_channels) - 1
-       let id = id - len(s:opened_channels)
-   endif
-   let s:current_channel = s:opened_channels[id]
-   if s:current_channel =~# '^#'
-       call s:send('/join ' . s:current_channel)
-   else
-       call s:send('/query ' . s:current_channel)
-   endif
-   call s:update_msg_screen()
-   call s:update_statusline()
+    let id = index(s:opened_channels, s:current_channel)
+    let id += 1
+    if id > len(s:opened_channels) - 1
+        let id = id - len(s:opened_channels)
+    endif
+    let s:current_channel = s:opened_channels[id]
+    if s:current_channel =~# '^#'
+        call s:send('/join ' . s:current_channel)
+    else
+        call s:send('/query ' . s:current_channel)
+    endif
+    call s:update_msg_screen()
+    call s:update_statusline()
 endfunction
 
 function! s:previous_channel() abort
-   let id = index(s:opened_channels, s:current_channel)
-   let id -= 1
-   if id < 0
-       let id = id + len(s:opened_channels)
-   endif
-   let s:current_channel = s:opened_channels[id]
-   if s:current_channel =~# '^#'
-       call s:send('/join ' . s:current_channel)
-   else
-       call s:send('/query ' . s:current_channel)
-   endif
-   call s:update_msg_screen()
-   call s:update_statusline()
+    let id = index(s:opened_channels, s:current_channel)
+    let id -= 1
+    if id < 0
+        let id = id + len(s:opened_channels)
+    endif
+    let s:current_channel = s:opened_channels[id]
+    if s:current_channel =~# '^#'
+        call s:send('/join ' . s:current_channel)
+    else
+        call s:send('/query ' . s:current_channel)
+    endif
+    call s:update_msg_screen()
+    call s:update_statusline()
 endfunction
 
 function! s:parser_input(str) abort
@@ -592,6 +644,9 @@ function! s:parser_input(str) abort
         let s:quit_qq_win = 1
         let s:last_channel = s:current_channel
         let s:current_channel = ''
+        if executable('fcitx-remote')
+            let s:last_channel_input_methon = system('fcitx-remote')
+        endif
     elseif a:str ==# '/wc'
         let cid = index(s:opened_channels, s:current_channel)
         if cid == -1
@@ -641,37 +696,6 @@ function! s:parser_input(str) abort
 endfunction
 
 function! s:update_statusline() abort
-    " current channel
-    hi! VimQQ1 ctermbg=003 ctermfg=Black guibg=#fabd2f guifg=#282828
-    " channel with new msg
-    hi! VimQQ2 ctermbg=005 ctermfg=Black guibg=#b16286 guifg=#282828
-    " normal channel
-    hi! VimQQ3 ctermbg=007 ctermfg=Black guibg=#8ec07c guifg=#282828
-    " end
-    hi! VimQQ4 ctermbg=243 guibg=#7c6f64
-    " current channel + end
-    hi! VimQQ5 guibg=#7c6f64 guifg=#fabd2f
-    " current channel + new msg channel
-    hi! VimQQ6 guibg=#b16286 guifg=#fabd2f
-    " current channel + normal channel
-    hi! VimQQ7 guibg=#8ec07c guifg=#fabd2f
-    " new msg channel + end
-    hi! VimQQ8 guibg=#7c6f64 guifg=#b16286
-    " new msg channel + current channel
-    hi! VimQQ9 guibg=#fabd2f guifg=#b16286
-    " new msg channel + normal channel
-    hi! VimQQ10 guibg=#8ec07c guifg=#b16286
-    " new msg channel + new msg channel
-    hi! VimQQ11 guibg=#b16286 guifg=#b16286
-    " normal channel + end
-    hi! VimQQ12 guibg=#7c6f64 guifg=#8ec07c
-    " normal channel + normal channel
-    hi! VimQQ13 guibg=#8ec07c guifg=#8ec07c
-    " normal channel + new msg channel
-    hi! VimQQ14 guibg=#b16286 guifg=#8ec07c
-    " normal channel + current channel
-    hi! VimQQ15 guibg=#fabd2f guifg=#8ec07c
-
     let st = ''
     for ch in s:opened_channels
         let ch = substitute(ch, ' ', '\ ', 'g')
@@ -741,6 +765,19 @@ fu! s:windowsinit() abort
     setl nospell
     setl nofoldenable
 endf
+
+" public api
+function! qq#ViewLog(...) abort
+    let nr = str2nr(get(a:000, 0, -1))
+    tabnew +setl\ nobuflisted
+    nnoremap <buffer><silent> q :bd!<CR>
+    for msg in s:server_log
+        call append(line('$'), msg)
+    endfor
+    if nr != -1 && nr < len(s:server_log)
+        exe len(s:server_log) - nr
+    endif
+endfunction
 
 " disable indentline in msg window
 let g:indentLine_bufNameExclude = get(g:, 'indentLine_bufNameExclude', [])
