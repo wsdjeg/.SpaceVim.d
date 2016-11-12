@@ -307,6 +307,7 @@ if zvim#plug#enable_plug()
     let g:JavaComplete_ServerAutoShutdownTime = 300
     let g:JavaComplete_MavenRepositoryDisable = 0
     call zvim#plug#add('wsdjeg/vim-dict',                        { 'on_ft' : 'java'})
+    call zvim#plug#add('wsdjeg/SourceCounter.vim',               { 'on_cmd' : 'SourceCounter'})
     call zvim#plug#add('wsdjeg/java_getset.vim',                 { 'on_ft' : 'java'})
     if zvim#plug#tap('java_getset.vim')
         call zvim#plug#defind_hooks('java_getset.vim')
