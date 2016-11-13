@@ -151,6 +151,8 @@ if zvim#plug#enable_plug()
         inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
         inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
         inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
+        imap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
+        smap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
         if g:settings.autocomplete_method ==# 'ycm' "{{{
             call zvim#plug#add('SirVer/ultisnips')
             let g:UltiSnipsExpandTrigger='<tab>'
@@ -220,19 +222,10 @@ if zvim#plug#enable_plug()
         call zvim#plug#add('Shougo/neoinclude.vim',        { 'on_i' : 1})
         call zvim#plug#add('Shougo/neosnippet-snippets',   { 'merged' : 0})
         call zvim#plug#add('Shougo/neosnippet.vim',        { 'on_i' : 1 , 'on_ft' : 'neosnippet'})
+        if zvim#plug#tap('neosnippet.vim')
+            call zvim#plug#defind_hooks('neosnippet.vim')
+        endif
         call zvim#plug#add('Shougo/neopairs.vim',          { 'on_i' : 1})
-        if isdirectory(expand('~/DotFiles/snippets/'))
-            let g:neosnippet#snippets_directory = expand('~/DotFiles/snippets/')
-        endif
-        let g:neosnippet#enable_snipmate_compatibility=1
-        let g:neosnippet#enable_complete_done = 1
-        let g:neosnippet#completed_pairs= {}
-        let g:neosnippet#completed_pairs.java = {'(' : ')'}
-        if g:neosnippet#enable_complete_done
-            let g:neopairs#enable = 0
-        endif
-        imap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
-        smap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
     endif "}}}
 
     if count(g:settings.plugin_groups, 'colorscheme') "{{{
