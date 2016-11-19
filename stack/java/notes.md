@@ -86,8 +86,10 @@ Java语言规范要求euqals方法具有下面的特征：
 
 ### MVN新建java应用
 ```shell
-mvn archetype:generate -DgroupId=com.howtodoinjava -DartifactId=DemoJavaProject
-\-DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+    mvn -B archetype:generate \
+      -DarchetypeGroupId=org.apache.maven.archetypes \
+      -DgroupId=com.mycompany.app \
+      -DartifactId=my-app
 ```
 ```shell
 mvn archetype:generate -DgroupId=com.test -DartifactId=web-app -DarchetypeArtifactId=maven-archetype-webapp -DinteractiveMode=false
