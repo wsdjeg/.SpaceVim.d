@@ -49,14 +49,24 @@ augroup My_autocmds
     au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
     autocmd InsertEnter * call s:tool()
     if executable('synclient')
+        let s:touchpadoff = 0
         autocmd InsertEnter * call s:disable_touchpad()
         autocmd InsertLeave * call s:enable_touchpad()
+        autocmd FocusLost * call system('synclient touchpadoff=0')
+        autocmd FocusGained * call s:reload_touchpad_status()
     endif
 augroup END
+function! s:reload_touchpad_status()
+    if s:touchpadoff
+        call s:disable_touchpad()
+    endif
+endf
 function! s:disable_touchpad() abort
+    let s:touchpadoff = 1
     call system('synclient touchpadoff=1')
 endfunction
 function! s:enable_touchpad() abort
+    let s:touchpadoff = 0
     call system('synclient touchpadoff=0')
 endfunction
 fu! s:tool()
