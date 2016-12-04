@@ -187,6 +187,9 @@ nnoremap <silent><M-Left> :<C-U>call <SID>tobur("bprev")<CR>
 nnoremap <silent><M-x> :call chat#qq#OpenMsgWin()<CR>
 "weixin hot key
 nnoremap <silent><M-w> :call chat#weixin#OpenMsgWin()<CR>
+"chatting hot key
+nnoremap <silent><M-c> :call chat#chatting#OpenMsgWin()<CR>
+
 
 call zvim#util#defineMap('vnoremap', '<Leader>S', "y:execute @@<CR>:echo 'Sourced selection.'<CR>",
             \ 'Sourced selection.',
