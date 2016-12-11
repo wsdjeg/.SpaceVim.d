@@ -190,6 +190,9 @@ nnoremap <silent><M-w> :call chat#weixin#OpenMsgWin()<CR>
 "chatting hot key
 nnoremap <silent><M-c> :call chat#chatting#OpenMsgWin()<CR>
 
+"format current buffer
+nnoremap <silent> g= :call zvim#format()<cr>
+
 
 call zvim#util#defineMap('vnoremap', '<Leader>S', "y:execute @@<CR>:echo 'Sourced selection.'<CR>",
             \ 'Sourced selection.',
