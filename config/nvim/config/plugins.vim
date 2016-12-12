@@ -331,7 +331,7 @@ if zvim#plug#enable_plug()
     "profile start vim-javacomplete2.log
     "profile! file */vim-javacomplete2/*
     if g:settings.enable_neomake
-        call zvim#plug#add('neomake/neomake',{'on_cmd' : 'Neomake'})
+        call zvim#plug#add('neomake/neomake',{'merged' : 0})
         if zvim#plug#tap('neomake')
             call zvim#plug#defind_hooks('neomake')
             augroup Neomake_wsd
