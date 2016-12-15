@@ -204,8 +204,16 @@ call zvim#util#defineMap('nnoremap <silent>', '<C-c>', ':<c-u>call zvim#util#Cop
             \ 'Copy buffer absolute path to X11 clipboard','call zvim#util#CopyToClipboard()')
 call zvim#util#defineMap('nnoremap <silent>', '<Leader><C-c>',
             \ ':<c-u>call zvim#util#CopyToClipboard(1)<cr>',
-            \ 'Yank the github link to X11 clipboard',
+            \ 'Yank the github link of current file to X11 clipboard',
             \ 'call zvim#util#CopyToClipboard(1)')
+call zvim#util#defineMap('nnoremap <silent>', '<Leader><C-l>',
+            \ ':<c-u>call zvim#util#CopyToClipboard(2)<cr>',
+            \ 'Yank the github link of current line to X11 clipboard',
+            \ 'call zvim#util#CopyToClipboard(2)')
+call zvim#util#defineMap('vnoremap <silent>', '<Leader><C-l>',
+            \ ':<c-u>call zvim#util#CopyToClipboard(3)<cr>',
+            \ 'Yank the github link of current selection to X11 clipboard',
+            \ 'call zvim#util#CopyToClipboard(3)')
 " Window prefix
 call zvim#util#defineMap('nnoremap', '[Window]', '<Nop>'   , 'Defind window prefix'   ,'normal [Window]')
 call zvim#util#defineMap('nmap'    , 's'       , '[Window]', 'Use s as window prefix' ,'normal s')

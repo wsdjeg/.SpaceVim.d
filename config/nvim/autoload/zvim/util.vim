@@ -84,6 +84,12 @@ fu! zvim#util#CopyToClipboard(...) abort
                     if WINDOWS()
                         let f_url = substitute(f_url, '\', '/', 'g')
                     endif
+                    if a:1 == 2
+                        let current_line = line('.')
+                        let f_url .= '#L' . current_line
+                    elseif a:1 == 3
+                        let f_url .= '#L' . getpos("'<")[1] . '-L' . getpos("'>")[1]
+                    endif
                     let @+=f_url
                     echo 'Copied to clipboard'
                 else
