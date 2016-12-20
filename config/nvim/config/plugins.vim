@@ -430,7 +430,7 @@ if zvim#plug#enable_plug()
     let g:rainbow#pairs = [['(', ')'], ['[', ']'],['{','}']]
     " List of colors that you do not want. ANSI code or #RRGGBB
     let g:rainbow#blacklist = [233, 234]
-    call zvim#plug#add('wsdjeg/tagbar')
+    call zvim#plug#add('majutsushi/tagbar')
     if zvim#plug#tap('tagbar')
         call zvim#plug#defind_hooks('tagbar')
         noremap <silent> <F2> :TagbarToggle<CR>
@@ -469,5 +469,7 @@ if zvim#plug#enable_plug()
     call zvim#plug#add('vimperator/vimperator.vim',     {'on_ft' : 'vimperator'})
     call zvim#plug#add('lambdalisue/vim-gita',          {'on_cmd': 'Gita'})
     call zvim#plug#add('tweekmonster/helpful.vim',      {'on_cmd': 'HelpfulVersion'})
+    " google plugins
+    call zvim#plug#add('google/vim-searchindex')
     call zvim#plug#end()
 endif
