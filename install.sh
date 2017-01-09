@@ -122,29 +122,6 @@ fi
 if [ $# -eq 1 ]
 then
     case $1 in
-        nvim)
-            symlink 'config/nvim'
-            exit 0
-            ;;
-        vim)
-            if [ -e ~/.vimrc ]
-            then
-                mv ~/.vimrc ~/.vimrc_back
-                printf "Move $Red~/.vimrc to ~/.vimrc_back$Color_off\n"
-            fi
-            if file ~/.vim | grep $PWD &> /dev/null;then
-                printf "Installed $Red~/.vim$Color_off\n"
-            else
-                if [ -e ~/.vim ]
-                then
-                    mv ~/.vim ~/.vim_back
-                    printf "Move $Red~/.vim to ~/.vim_back$Color_off\n"
-                fi
-                printf "Linking $Cyan~/.vim$Color_off -> $Blue$PWD/config/nvim$Color_off\n"
-                ln -s $PWD/config/nvim ~/.vim
-            fi
-            exit 0
-            ;;
         rust)
             if [ ! -e `which rustc` ]
             then
@@ -167,7 +144,6 @@ symlink 'mailcap'
 symlink 'config/i3/config'
 symlink 'config/i3status/config'
 symlink 'config/vifm'
-symlink 'config/nvim'
 symlink 'config/lilyterm'
 # fcitx
 symlink 'config/fcitx/config'
@@ -196,6 +172,10 @@ symlink 'vimperatorrc'
 symlink 'backgrounds'
 symlink 'scripts'
 
+# for SpaceVim
+symlink 'local.vim'
+symlink 'SpaceVim.d'
+
 # gem
 symlink 'gemrc'
 
@@ -206,13 +186,6 @@ else
     symlink 'xprofile'
 fi
 
-if [ -e ~/.vim ]
-then
-    printf "Installed $Red~/.vim$Color_off\n"
-else
-    printf "Linking $Cyan~/.vim$Color_off -> $Blue$PWD/config/nvim$Color_off\n"
-    ln -s $PWD/config/nvim ~/.vim
-fi
 
 # Install bash-git-prompt
 if [ -e ~/.bash-git-prompt ]
