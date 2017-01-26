@@ -17,7 +17,7 @@ search_wrap = true
 geometry = 1280x800
 
 # "system", "on" or "off"
-cursor_blink = on
+cursor_blink = system
 
 # "block", "underline" or "ibeam"
 cursor_shape = block
