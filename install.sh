@@ -172,8 +172,10 @@ symlink 'vimperatorrc'
 symlink 'backgrounds'
 symlink 'scripts'
 
+# for ctags
+symlink 'ctags'
+
 # for SpaceVim
-symlink 'local.vim'
 symlink 'SpaceVim.d'
 
 # gem
