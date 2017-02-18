@@ -3,11 +3,11 @@ did_you_mean
 io-console
 json
 minitest
-msgpack
-neovim
 net-telnet
+openssl
 power_assert
 psych
 rake
 rdoc
 test-unit
+xmlrpc
