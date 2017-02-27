@@ -1,12 +1,16 @@
 let g:spacevim_enable_debug = 1
 "let g:spacevim_enable_ycm = 1
+let g:spacevim_error_symbol = '✹'
+let g:spacevim_warning_symbol = '✴'
+let g:airline#extensions#neomake#error_symbol = '•:'
+let g:airline#extensions#neomake#warning_symbol = '•:'
 let g:spacevim_realtime_leader_guide = 1
 augroup custom_config
     au!
-    au VimEnter * call s:customMappings()
+    au VimEnter * call s:customSetting()
 augroup END
 set showcmd
-func s:customMappings()
+func s:customSetting()
 endf
 let g:spacevim_custom_plugins = [
             \ ['colepeters/spacemacs-theme.vim', {'merged' : 0}],
@@ -28,4 +32,6 @@ call SpaceVim#layers#load('lang#xml')
 call SpaceVim#layers#load('lang#haskell')
 call SpaceVim#layers#load('lang#elixir')
 call SpaceVim#layers#load('shell')   
-call SpaceVim#layers#load('incsearch')   
+let g:spacevim_guifont='Source\ Code\ Pro:h9'
+let g:spacevim_enable_tabline_filetype_icon = 1
+let g:spacevim_buffer_index_type = 1
