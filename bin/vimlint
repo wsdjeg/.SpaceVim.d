@@ -1,0 +1,17 @@
+#!/bin/sh
+if [ $# -eq 1 ]
+then
+    case $1 in
+        -cache)
+            if [ ! -d "$HOME/.cache/vimlint" ]; then
+                printf "git clone https://github.com/syngan/vim-vimlint.git ~/.cache/vimlint\n"
+                git clone https://github.com/syngan/vim-vimlint.git ~/.cache/vimlint
+            fi
+            if [ ! -d "$HOME/.cache/vimlparser" ]; then
+                printf "git clone https://github.com/ynkdir/vim-vimlparser.git ~/.cache/vim-vimlparser\n"
+                git clone https://github.com/ynkdir/vim-vimlparser.git ~/.cache/vim-vimlparser
+            fi
+            exit 0;
+    esac
+fi
+~/.cache/vimlint/bin/vimlint.sh -l ~/.cache/vimlint -p ~/.cache/vim-vimlparser "$@"
