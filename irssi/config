@@ -409,7 +409,6 @@ settings = {
     awaylog_colors = "no";
     beep_msg_level = "MSGS NOTICES DCC DCCMSGS HILIGHT";
     beep_when_away = "yes";
-    bell_beeps = "yes";
     max_command_history = "1000";
     show_names_on_join = "no";
     theme = "default.theme";

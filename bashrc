@@ -171,3 +171,4 @@ if which perl >/dev/null ;then
 fi
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 export FZF_COMPLETION_TRIGGER='~~'
+export UNCRUSTIFY_CONFIG="$HOME/.uncrustify/ben.cfg"

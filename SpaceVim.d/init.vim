@@ -9,6 +9,9 @@ set showcmd
 func s:customSetting()
 
 endf
+let g:spacevim_custom_plugins = [
+    \ ['tweekmonster/startuptime.vim', {'merged':0}],
+    \ ]
 let g:python_host_prog  = '/usr/bin/python2'
 let g:python3_host_prog = '/usr/bin/python'
 call SpaceVim#layers#load('lang#go')
@@ -32,3 +35,4 @@ let g:spacevim_enable_os_fileformat_icon = 1
 let g:spacevim_buffer_index_type = 1
 set rtp+=~/private/hospital-info
 let g:neomake_vim_enabled_makers = ['vimlint', 'vint']
+let g:spacevim_layer_lang_java_formatter = expand('~/Downloads/google-java-format-1.3-all-deps.jar')
