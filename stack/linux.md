@@ -289,3 +289,6 @@ Optional dependencies for ruby
 ruby-docs: Ruby documentation
 tk: for Ruby/TK
 ```
+
+**code search tools for developers**
+https://beyondgrep.com/more-tools/
