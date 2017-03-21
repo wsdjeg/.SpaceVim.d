@@ -36,3 +36,5 @@ let g:spacevim_buffer_index_type = 1
 set rtp+=~/private/hospital-info
 let g:neomake_vim_enabled_makers = ['vimlint', 'vint']
 let g:spacevim_layer_lang_java_formatter = expand('~/Downloads/google-java-format-1.3-all-deps.jar')
+let g:ctrlp_map = ''
+nnoremap <silent> <C-p> :Denite file_rec<CR>
