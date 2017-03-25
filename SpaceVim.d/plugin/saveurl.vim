@@ -1,1 +1,1 @@
-command! -nargs=1 SaveUrl call saveurl#save(<q-args>)
+command! -nargs=+ SaveUrl call saveurl#save(<f-args>)

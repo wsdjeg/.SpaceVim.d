@@ -1,6 +1,11 @@
-function! saveurl#save(url) abort
-    if index(s:urls, a:url) == -1
-        call add(s:urls, a:url)
+function! saveurl#save(url, ...) abort
+    if a:0 > 0
+        let line = a:url . '  -  ' . a:1
+    else
+        let line = a:url
+    endif
+    if index(s:urls, line) == -1
+        call add(s:urls, line)
     endif
     call s:sync()
 endfunction
