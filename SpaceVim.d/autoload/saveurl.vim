@@ -1,6 +1,6 @@
 function! saveurl#save(url, ...) abort
     if a:0 > 0
-        let line = a:url . '  -  ' . a:1
+        let line = a:url . '  -  ' . join(a:000, ' ')
     else
         let line = a:url
     endif
