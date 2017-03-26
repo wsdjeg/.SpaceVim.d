@@ -119,6 +119,7 @@ alias vim='nvim'
 alias vi='/usr/bin/vim'
 alias vimtest='vim -u NORC --cmd "exe '\''set rtp+='\'' . getcwd()"'
 alias vitest='vi -u NORC --cmd "exe '\''set rtp+='\'' . getcwd()" --cmd "set nocp"'
+alias tmux="env TERM=xterm-256color tmux -2"
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert

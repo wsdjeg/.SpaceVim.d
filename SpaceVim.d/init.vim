@@ -1,4 +1,6 @@
 let g:spacevim_enable_debug = 1
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 "let g:spacevim_enable_ycm = 1
 let g:spacevim_realtime_leader_guide = 1
 augroup custom_config
@@ -14,11 +16,13 @@ let g:spacevim_custom_plugins = [
     \ ]
 let g:python_host_prog  = '/usr/bin/python2'
 let g:python3_host_prog = '/usr/bin/python'
+let g:spacevim_colorscheme = 'jellybeans'
 call SpaceVim#layers#load('lang#go')
 call SpaceVim#layers#load('lang#php')
 call SpaceVim#layers#load('lang#c')
 call SpaceVim#layers#load('lang#lua')
 call SpaceVim#layers#load('lang#perl')
+call SpaceVim#layers#load('lang#swig')
 call SpaceVim#layers#load('lang#rust')
 call SpaceVim#layers#load('lang#java')
 call SpaceVim#layers#load('lang#javascript')
@@ -38,3 +42,4 @@ let g:neomake_vim_enabled_makers = ['vimlint', 'vint']
 let g:spacevim_layer_lang_java_formatter = expand('~/Downloads/google-java-format-1.3-all-deps.jar')
 let g:ctrlp_map = ''
 nnoremap <silent> <C-p> :Denite file_rec<CR>
+set nowrap

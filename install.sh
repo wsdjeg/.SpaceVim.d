@@ -181,6 +181,9 @@ symlink 'SpaceVim.d'
 # gem
 symlink 'gemrc'
 
+# tmux
+symlink 'tmux.conf'
+
 if cat /etc/issue | grep Ubuntu &> /dev/null;then
     printf "$Red""Warning ""$Color_off""$Blue""This is ubuntu,and will skip xinitrc$Color_off\n"
 else
