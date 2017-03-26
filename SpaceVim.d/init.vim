@@ -16,7 +16,6 @@ let g:spacevim_custom_plugins = [
     \ ]
 let g:python_host_prog  = '/usr/bin/python2'
 let g:python3_host_prog = '/usr/bin/python'
-let g:spacevim_colorscheme = 'jellybeans'
 call SpaceVim#layers#load('lang#go')
 call SpaceVim#layers#load('lang#php')
 call SpaceVim#layers#load('lang#c')
