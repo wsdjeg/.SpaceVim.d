@@ -202,6 +202,15 @@ else
     printf "$Blue Finished Downloading$Color_off\n"
 fi
 
+# Install bumblebee-status
+if [ -e ~/.bumblebee-status ]
+then
+    printf "Installed $Red~/.bumblebee-status$Color_off\n"
+else
+    printf "$Cyan Downloading  bumblebee-status -> $Blue$HOME/.bumblebee-status$Color_off\n"
+    git clone https://github.com/wsdjeg/bumblebee-status.git ~/.bumblebee-status
+    printf "$Blue Finished Downloading$Color_off\n"
+fi
 
 # Install FZF
 if [ -e ~/.fzf ]

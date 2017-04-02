@@ -12,7 +12,9 @@ func s:customSetting()
 
 endf
 let g:spacevim_custom_plugins = [
-    \ ['tweekmonster/startuptime.vim', {'merged':0}],
+    \ ['tweekmonster/startuptime.vim', {'merged' : 0}],
+    \ ['SpaceVim/spacemacs-theme.vim', {'merged' : 0}],
+    \ ['mivok/vimtodo', {'merged' : 0}],
     \ ]
 let g:python_host_prog  = '/usr/bin/python2'
 let g:python3_host_prog = '/usr/bin/python'
@@ -42,3 +44,12 @@ let g:spacevim_layer_lang_java_formatter = expand('~/Downloads/google-java-forma
 let g:ctrlp_map = ''
 nnoremap <silent> <C-p> :Denite file_rec<CR>
 set nowrap
+let ack = filter(['ack-grep', 'ack'], 'executable(v:val)')
+if !empty(ack)
+    let &grepprg=ack[0]. ' -H --column'
+    set grepformat^=%f:%l:%c:%m
+elseif executable('ag')
+    let &grepprg='ag --vimgrep'
+    set grepformat^=%f:%l:%c:%m
+endif
+let g:spacevim_snippet_engine = 'ultisnips'

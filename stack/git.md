@@ -142,3 +142,11 @@ A:
 ```sh
 git clone -b gh-pages --single-branch git@github.com:wsdjeg/DotFiles.git
 ```
+
+Q: github 初始化一个仓库，如何和本地不相干的项目合并？
+A:
+```
+git remote add origin ....
+git branch --set-upstream-to=origin/master master
+git merge origin/master --allow-unrelated-histories
+```
