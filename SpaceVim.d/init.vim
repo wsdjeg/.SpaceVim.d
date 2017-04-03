@@ -52,4 +52,3 @@ elseif executable('ag')
     let &grepprg='ag --vimgrep'
     set grepformat^=%f:%l:%c:%m
 endif
-let g:spacevim_snippet_engine = 'ultisnips'
