@@ -21,6 +21,7 @@ let g:python3_host_prog = '/usr/bin/python'
 call SpaceVim#layers#load('lang#go')
 call SpaceVim#layers#load('lang#php')
 call SpaceVim#layers#load('lang#c')
+call SpaceVim#layers#load('incsearch')
 call SpaceVim#layers#load('lang#lua')
 call SpaceVim#layers#load('lang#perl')
 call SpaceVim#layers#load('lang#swig')
@@ -52,3 +53,4 @@ elseif executable('ag')
     let &grepprg='ag --vimgrep'
     set grepformat^=%f:%l:%c:%m
 endif
+let g:spacevim_unite_leader = '<F6>'
