@@ -37,6 +37,9 @@ no label, UUID=836b551a-6814-437c-a3f4-edf2a498f51a
 4. `sudo swapon -a`
 5. `free -m`, check the swap size.
 
+Q:command for system log?
+A: `dmesg` and `journalctl`
+
 Q:How to set localtime in archlinux?
 A:
 ```sh
