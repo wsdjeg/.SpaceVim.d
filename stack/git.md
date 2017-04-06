@@ -150,3 +150,9 @@ git remote add origin ....
 git branch --set-upstream-to=origin/master master
 git merge origin/master --allow-unrelated-histories
 ```
+
+Q: git clone 用于 vim 的job func时如何将进度输入到stdout？
+A:
+```
+git clone --progress ...
+```
