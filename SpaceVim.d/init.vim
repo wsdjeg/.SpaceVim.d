@@ -15,6 +15,7 @@ let g:spacevim_custom_plugins = [
     \ ['tweekmonster/startuptime.vim', {'merged' : 0}],
     \ ['SpaceVim/spacemacs-theme.vim', {'merged' : 0}],
     \ ['mivok/vimtodo', {'merged' : 0}],
+    \ ['rakr/vim-one', {'merged' : 0}],
     \ ]
 let g:python_host_prog  = '/usr/bin/python2'
 let g:python3_host_prog = '/usr/bin/python'
@@ -33,8 +34,10 @@ call SpaceVim#layers#load('lang#python')
 call SpaceVim#layers#load('lang#xml')
 call SpaceVim#layers#load('lang#haskell')
 call SpaceVim#layers#load('lang#elixir')
+call SpaceVim#layers#load('tools#screensaver')
 call SpaceVim#layers#load('shell')   
 let g:spacevim_enable_vimfiler_welcome = 1
+let g:spacevim_enable_debug = 1
 let g:deoplete#auto_complete_delay = 150
 let g:spacevim_enable_tabline_filetype_icon = 1
 let g:spacevim_enable_os_fileformat_icon = 1
@@ -44,7 +47,6 @@ let g:neomake_vim_enabled_makers = ['vimlint', 'vint']
 let g:spacevim_layer_lang_java_formatter = expand('~/Downloads/google-java-format-1.3-all-deps.jar')
 let g:ctrlp_map = ''
 nnoremap <silent> <C-p> :Denite file_rec<CR>
-set nowrap
 let ack = filter(['ack-grep', 'ack'], 'executable(v:val)')
 if !empty(ack)
     let &grepprg=ack[0]. ' -H --column'
@@ -53,4 +55,6 @@ elseif executable('ag')
     let &grepprg='ag --vimgrep'
     set grepformat^=%f:%l:%c:%m
 endif
-let g:spacevim_unite_leader = '<F6>'
+let g:clang2_placeholder_next = ''
+let g:clang2_placeholder_prev = ''
+
