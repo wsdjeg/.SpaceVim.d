@@ -1,13 +1,10 @@
 let g:spacevim_enable_debug = 1
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 "let g:spacevim_enable_ycm = 1
 let g:spacevim_realtime_leader_guide = 1
 augroup custom_config
     au!
     au VimEnter * call s:customSetting()
 augroup END
-set showcmd
 func s:customSetting()
 
 endf
