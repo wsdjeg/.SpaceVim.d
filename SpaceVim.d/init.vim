@@ -42,8 +42,10 @@ let g:spacevim_buffer_index_type = 1
 set rtp+=~/private/hospital-info
 let g:neomake_vim_enabled_makers = ['vimlint', 'vint']
 let g:spacevim_layer_lang_java_formatter = expand('~/Downloads/google-java-format-1.3-all-deps.jar')
-let g:ctrlp_map = ''
-nnoremap <silent> <C-p> :Denite file_rec<CR>
+if has('python3')
+    let g:ctrlp_map = ''
+    nnoremap <silent> <C-p> :Denite file_rec<CR>
+endif
 let ack = filter(['ack-grep', 'ack'], 'executable(v:val)')
 if !empty(ack)
     let &grepprg=ack[0]. ' -H --column'
