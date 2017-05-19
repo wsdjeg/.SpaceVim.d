@@ -17,6 +17,8 @@ let g:spacevim_custom_plugins = [
 let g:python_host_prog  = '/usr/bin/python2'
 let g:python3_host_prog = '/usr/bin/python'
 call SpaceVim#layers#load('lang#go')
+call SpaceVim#layers#load('core#statusline')
+call SpaceVim#layers#load('core#tabline')
 call SpaceVim#layers#load('lang#php')
 call SpaceVim#layers#load('lang#c')
 call SpaceVim#layers#load('incsearch')
@@ -46,14 +48,8 @@ if has('python3')
     let g:ctrlp_map = ''
     nnoremap <silent> <C-p> :Denite file_rec<CR>
 endif
-let ack = filter(['ack-grep', 'ack'], 'executable(v:val)')
-if !empty(ack)
-    let &grepprg=ack[0]. ' -H --column'
-    set grepformat^=%f:%l:%c:%m
-elseif executable('ag')
-    let &grepprg='ag --vimgrep'
-    set grepformat^=%f:%l:%c:%m
-endif
 let g:clang2_placeholder_next = ''
 let g:clang2_placeholder_prev = ''
+let g:spacevim_statusline_separator = 'brace'
+let g:spacevim_guifont = 'Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ Mono\ 12'
 

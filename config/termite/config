@@ -9,7 +9,7 @@ urgent_on_bell = true
 clickable_url = true
 #font = Courier 10 Pitch 13.5
 #font = DejaVu Sans Mono for Powerline:style=Book:size=12
-font = Source Code Pro,Source Code Pro Medium:style=Medium,Regular 11.5
+font = Source Code Pro 11,Droid Sans Mono for Powerline Plus Nerd File Types Mono 11
 #font = Source Code Pro,Source Code Pro ExtraLight:style=ExtraLight Italic,Italic
 scrollback_lines = 10000
 search_wrap = true
