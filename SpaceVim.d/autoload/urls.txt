@@ -3,3 +3,5 @@ https://www.cnblogs.com/dongzhiquan/archive/2009/09/13/1994736.html  -  中文�
 http://blog.csdn.net/sefvang/article/details/8270553  -  正则表达式 匹配中文，英文字母和数字及_的写法！同时控制长度
 https://www.cnblogs.com/heyonggang/p/3476885.html  -  一个正则表达式测试（只可输入中文、字母和数字）
 http://www.linuxdevcenter.com/pub/a/linux/lpt/13_01.html
+http://xahlee.info/comp/unicode_user_interface_icons.html  -  unicode
+http://unicode-search.net/unicode-namesearch.pl?term=circled

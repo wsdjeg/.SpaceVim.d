@@ -7,6 +7,7 @@ augroup custom_config
 augroup END
 func s:customSetting()
 
+    inoremap <silent> <buffer> <leader>UU <esc>bgUwea
 endf
 let g:spacevim_custom_plugins = [
     \ ['tweekmonster/startuptime.vim', {'merged' : 0}],
@@ -17,13 +18,12 @@ let g:spacevim_custom_plugins = [
 let g:python_host_prog  = '/usr/bin/python2'
 let g:python3_host_prog = '/usr/bin/python'
 call SpaceVim#layers#load('lang#go')
-call SpaceVim#layers#load('core#statusline')
-call SpaceVim#layers#load('core#tabline')
 call SpaceVim#layers#load('lang#php')
 call SpaceVim#layers#load('lang#c')
 call SpaceVim#layers#load('incsearch')
 call SpaceVim#layers#load('lang#lua')
 call SpaceVim#layers#load('lang#perl')
+call SpaceVim#layers#load('lang#lisp')
 call SpaceVim#layers#load('lang#swig')
 call SpaceVim#layers#load('lang#rust')
 call SpaceVim#layers#load('lang#java')
@@ -40,7 +40,7 @@ let g:spacevim_enable_debug = 1
 let g:deoplete#auto_complete_delay = 150
 let g:spacevim_enable_tabline_filetype_icon = 1
 let g:spacevim_enable_os_fileformat_icon = 1
-let g:spacevim_buffer_index_type = 1
+let g:spacevim_buffer_index_type = 0
 set rtp+=~/private/hospital-info
 let g:neomake_vim_enabled_makers = ['vimlint', 'vint']
 let g:spacevim_layer_lang_java_formatter = expand('~/Downloads/google-java-format-1.3-all-deps.jar')
@@ -50,6 +50,8 @@ if has('python3')
 endif
 let g:clang2_placeholder_next = ''
 let g:clang2_placeholder_prev = ''
-let g:spacevim_statusline_separator = 'brace'
+let g:spacevim_statusline_separator = 'arrow'
 let g:spacevim_guifont = 'Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ Mono\ 12'
-
+let g:neomake_open_list = 0
+let g:neomake_cpp_enabled_makers=['clang']
+let g:neomake_cpp_clang_args = ["-std=c++11"]

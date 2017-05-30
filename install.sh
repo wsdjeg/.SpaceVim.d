@@ -132,7 +132,7 @@ then
     esac
 fi
 # Install configuration
-symlink 'fonts'
+symlink 'local/share/fonts'
 # mail
 symlink 'mutt'
 symlink 'getmail'
