@@ -156,3 +156,8 @@ A:
 ```
 git clone --progress ...
 ```
+
+类似于github
+
+https://bitbucket.org/
+https://opensource.google.com/

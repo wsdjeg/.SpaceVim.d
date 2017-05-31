@@ -55,3 +55,6 @@ let g:spacevim_guifont = 'Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ T
 let g:neomake_open_list = 0
 let g:neomake_cpp_enabled_makers=['clang']
 let g:neomake_cpp_clang_args = ["-std=c++11"]
+noremap <Leader>[ :tabprev<CR>
+noremap <Leader>] :tabnext<CR>
+let g:spacevim_gitcommit_issue_icon = nr2char(10071)
