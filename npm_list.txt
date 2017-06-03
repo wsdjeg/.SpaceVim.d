@@ -1,4 +1,7 @@
+express
+gitter-irc-bot
 jpm
+npm
 oni-vim
 tern
-vimlint
+ttystudio

@@ -1,2 +1,2 @@
 #!/bin/bash
-pip3 list | awk '{print $1}' > pip3_list.txt
+pip3 list --format=legacy | awk '{print $1}' > pip3_list.txt

@@ -8,8 +8,10 @@ isc
 jedi
 msgpack-python
 neovim
+netifaces
 packaging
 pip
+psutil
 pyparsing
 PyYAML
 setuptools

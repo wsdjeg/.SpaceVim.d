@@ -1,2 +1,2 @@
 #!/bin/bash
-pip2 list | awk '{print $1}' > pip2_list.txt
+pip2 list --format=legacy | awk '{print $1}' > pip2_list.txt

@@ -14,6 +14,7 @@ let g:spacevim_custom_plugins = [
     \ ['SpaceVim/spacemacs-theme.vim', {'merged' : 0}],
     \ ['mivok/vimtodo', {'merged' : 0}],
     \ ['rakr/vim-one', {'merged' : 0}],
+    \ ['AndrewRadev/undoquit.vim', {'merged' : 0}],
     \ ]
 let g:python_host_prog  = '/usr/bin/python2'
 let g:python3_host_prog = '/usr/bin/python'
@@ -58,3 +59,5 @@ let g:neomake_cpp_clang_args = ["-std=c++11"]
 noremap <Leader>[ :tabprev<CR>
 noremap <Leader>] :tabnext<CR>
 let g:spacevim_gitcommit_issue_icon = nr2char(10071)
+let g:indentLine_enabled = 0
+let g:spacevim_github_username = 'wsdjeg'

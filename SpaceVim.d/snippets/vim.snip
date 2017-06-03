@@ -9,3 +9,12 @@ options     head
 
     let &cpoptions = s:save_cpo
     unlet s:save_cpo
+
+snippet  funca
+abbr     autoload function
+options     head
+    function! `bufname('%') =~ '^autoload' ? join(split(bufname('%'), '/')[1:-1], '#')[:-5] . '#' : ''`${1:fname}(${2:#:argv})
+
+    ${0}
+
+    endfunction
