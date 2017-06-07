@@ -220,4 +220,7 @@ bar {
     status_command i3status -c ~/.config/i3status/config
 }
 
+for_window [title="webqqcode" instance="feh"] floating enable
+for_window [instance="termite"] border none
+
 # vim:filetype=i3

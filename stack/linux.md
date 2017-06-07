@@ -295,3 +295,7 @@ tk: for Ruby/TK
 
 **code search tools for developers**
 https://beyondgrep.com/more-tools/
+
+how to check what terminal is useing
+
+`which $(ps -o 'cmd=' -p $(ps -o 'ppid=' -p $$))`
