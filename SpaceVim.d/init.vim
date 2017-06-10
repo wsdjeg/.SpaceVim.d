@@ -61,3 +61,4 @@ noremap <Leader>] :tabnext<CR>
 let g:spacevim_gitcommit_issue_icon = nr2char(10071)
 let g:indentLine_enabled = 0
 let g:spacevim_github_username = 'wsdjeg'
+set mouse=
