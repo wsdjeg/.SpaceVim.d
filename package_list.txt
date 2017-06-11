@@ -565,7 +565,6 @@ ttf-arphic-uming
 ttf-bitstream-vera
 ttf-cheapskate
 ttf-dejavu
-ttf-emojione-color
 ttyrec
 tzdata
 uchardet
