@@ -52,7 +52,6 @@ endif
 let g:clang2_placeholder_next = ''
 let g:clang2_placeholder_prev = ''
 let g:spacevim_statusline_separator = 'arrow'
-let g:spacevim_guifont = 'Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ Mono\ 12'
 let g:neomake_open_list = 0
 let g:neomake_cpp_enabled_makers=['clang']
 let g:neomake_cpp_clang_args = ["-std=c++11"]
@@ -61,4 +60,8 @@ noremap <Leader>] :tabnext<CR>
 let g:spacevim_gitcommit_issue_icon = nr2char(10071)
 let g:indentLine_enabled = 0
 let g:spacevim_github_username = 'wsdjeg'
-set mouse=
+set mouse=nv
+let g:spacevim_auto_disable_touchpad = 0
+set noshowmode
+set shortmess-=c
+"let g:spacevim_enable_googlesuggest = 1

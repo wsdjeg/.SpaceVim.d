@@ -299,3 +299,8 @@ https://beyondgrep.com/more-tools/
 how to check what terminal is useing
 
 `which $(ps -o 'cmd=' -p $(ps -o 'ppid=' -p $$))`
+
+how to mount usb in terminal?
+1. `sudo fdisk -l` to see the drivers.
+2. `sudo mount /dev/sda1 /mnt/` to mount usb
+3. `df -kh` to view the filesystem

@@ -222,5 +222,6 @@ bar {
 
 for_window [title="webqqcode" instance="feh"] floating enable
 for_window [instance="termite"] border none
+for_window [instance="gvim"] border none
 
 # vim:filetype=i3
