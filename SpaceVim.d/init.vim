@@ -65,3 +65,8 @@ let g:spacevim_auto_disable_touchpad = 0
 set noshowmode
 set shortmess-=c
 "let g:spacevim_enable_googlesuggest = 1
+"let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+let g:python_host_skip_check=1
+let g:python_host_prog = '/usr/bin/python2'
+let g:python3_host_skip_check=1
+let g:python3_host_prog = '/usr/bin/python3'
