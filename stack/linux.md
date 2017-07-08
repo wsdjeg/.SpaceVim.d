@@ -304,3 +304,7 @@ how to mount usb in terminal?
 1. `sudo fdisk -l` to see the drivers.
 2. `sudo mount /dev/sda1 /mnt/` to mount usb
 3. `df -kh` to view the filesystem
+
+How to set gamma?
+1. `xrandr` will list all
+2. `xrandr -s` select the gramma you need.
