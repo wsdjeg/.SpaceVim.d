@@ -237,7 +237,7 @@ fi
 irssi_add () {
     SCRIPT=$HOME/.irssi/scripts/$1.pl
     SCRIPTAUTO=$HOME/.irssi/scripts/autorun/$1.pl
-    SCRIPTUP=https://raw.githubusercontent.com/irssi/scripts.irssi.org/gh-pages/scripts/$1.pl
+    SCRIPTUP=https://raw.githubusercontent.com/irssi/scripts.irssi.org/master/scripts/$1.pl
     if [ -e "$SCRIPT" ]
     then
         printf "Installed $Red$SCRIPT$Color_off\n"
