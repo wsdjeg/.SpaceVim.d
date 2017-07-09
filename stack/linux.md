@@ -308,3 +308,7 @@ how to mount usb in terminal?
 How to set gamma?
 1. `xrandr` will list all
 2. `xrandr -s` select the gramma you need.
+
+
+how to clear git https username and password?
+`git config --global --unset credential.helper`

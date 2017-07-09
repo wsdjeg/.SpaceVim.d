@@ -6,7 +6,6 @@
 [merge]
 	tool = vimdiff
 [credential]
-	helper = store
 [diff]
 	tool = nvim
 [difftool]
