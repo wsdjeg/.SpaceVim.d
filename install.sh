@@ -111,6 +111,10 @@ if [ ! -d "$HOME/.config" ];then
     mkdir ~/.config
 fi
 
+if [ ! -d "$HOME/.local/bin" ];then
+    mkdir -p ~/.config/bin
+fi
+
 if [ ! -d "$HOME/.config/termite" ];then
     mkdir ~/.config/termite
 fi
@@ -171,6 +175,9 @@ symlink 'zshrc'
 symlink 'vimperatorrc'
 symlink 'backgrounds'
 symlink 'scripts'
+
+# custom bin
+symlink 'local/bin/vimlint'
 
 # for ctags
 symlink 'ctags'
