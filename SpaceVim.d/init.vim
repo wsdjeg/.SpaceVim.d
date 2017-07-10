@@ -1,6 +1,7 @@
 let g:spacevim_enable_debug = 1
 "let g:spacevim_enable_ycm = 1
 let g:spacevim_realtime_leader_guide = 1
+let s:JOB = SpaceVim#api#import('job')
 augroup custom_config
     au!
     au VimEnter * call s:customSetting()
@@ -10,12 +11,12 @@ func s:customSetting()
     inoremap <silent> <buffer> <leader>UU <esc>bgUwea
 endf
 let g:spacevim_custom_plugins = [
-    \ ['tweekmonster/startuptime.vim', {'merged' : 0}],
-    \ ['SpaceVim/spacemacs-theme.vim', {'merged' : 0}],
-    \ ['mivok/vimtodo', {'merged' : 0}],
-    \ ['rakr/vim-one', {'merged' : 0}],
-    \ ['AndrewRadev/undoquit.vim', {'merged' : 0}],
-    \ ]
+            \ ['tweekmonster/startuptime.vim', {'merged' : 0}],
+            \ ['SpaceVim/spacemacs-theme.vim', {'merged' : 0}],
+            \ ['mivok/vimtodo', {'merged' : 0}],
+            \ ['rakr/vim-one', {'merged' : 0}],
+            \ ['AndrewRadev/undoquit.vim', {'merged' : 0}],
+            \ ]
 let g:python_host_prog  = '/usr/bin/python2'
 let g:python3_host_prog = '/usr/bin/python'
 call SpaceVim#layers#load('lang#go')
@@ -70,3 +71,26 @@ let g:python_host_skip_check=1
 let g:python_host_prog = '/usr/bin/python2'
 let g:python3_host_skip_check=1
 let g:python3_host_prog = '/usr/bin/python3'
+" use slop to get the position and  weidth and heigth
+let s:cmd = ['byzanz-record', '-d', 40, '-x', 0, '-y', 0, '-w', 1366, '-h', 743]
+let s:record_id = 0
+let s:record_file = ''
+function! s:start_record() abort
+    redraw!
+    let time = strftime('%Y-%m-%d-%H-%M-%S')
+    let fname = [expand('~/Pictures/') . time . '.gif']
+    let s:record_file = 'file://' . fname[0]
+    let s:record_id = s:JOB.start(s:cmd + fname, {'on_exit' : funcref('s:record_exit')})
+endfunction
+function! s:stop_record() abort
+    if s:record_id != 0
+        call s:JOB.stop(s:record_id)
+    endif
+endfunction
+function! s:record_exit(...) abort
+    echom 'record done: ' . s:record_file
+    let s:record_id = 0
+    let s:record_file = ''
+endfunction
+nnoremap <silent> <Leader>sr :call <SID>start_record()<cr>
+nnoremap <silent> <Leader>sd :call <SID>stop_record()<cr>
