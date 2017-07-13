@@ -312,3 +312,12 @@ How to set gamma?
 
 how to clear git https username and password?
 `git config --global --unset credential.helper`
+
+how to install vimdoc?
+
+```
+git clone https://github.com/google/vimdoc.git
+python setup.py config
+python setup.py build
+python setup.py install --user
+```
