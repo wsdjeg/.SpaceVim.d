@@ -18,3 +18,8 @@ else
     fi
 fi
 
+if [ -e /etc/resolv.conf ]
+then
+    sudo rm /etc/resolv.conf
+    sudo ln -s $PWD/etc/resolv.conf /etc/resolv.conf
+fi
