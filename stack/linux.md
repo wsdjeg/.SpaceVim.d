@@ -321,3 +321,10 @@ python setup.py config
 python setup.py build
 python setup.py install --user
 ```
+
+
+install gi lib for python3?
+
+```
+sudo pacman -S python-gobject
+```
