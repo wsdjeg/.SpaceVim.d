@@ -66,7 +66,6 @@ let g:spacevim_github_username = 'wsdjeg'
 set mouse=nv
 let g:spacevim_auto_disable_touchpad = 0
 set noshowmode
-set shortmess-=c
 "let g:spacevim_enable_googlesuggest = 1
 "let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 let g:python_host_skip_check=1
