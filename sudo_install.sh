@@ -23,3 +23,9 @@ then
     sudo rm /etc/resolv.conf
     sudo ln -s $PWD/etc/resolv.conf /etc/resolv.conf
 fi
+
+if [ -e /etc/dhcpcd.conf ]
+then
+    sudo rm /etc/dhcpcd.conf
+    sudo ln -s $PWD/etc/dhcpcd.conf /etc/dhcpcd.conf
+fi
