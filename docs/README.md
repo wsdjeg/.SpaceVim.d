@@ -1,3 +1,2 @@
-## My Blog
-
-wsdjeg's blog
+# wsdjeg.github.io
+My blog
