@@ -40,7 +40,12 @@ call SpaceVim#layers#load('lang#xml')
 call SpaceVim#layers#load('lang#haskell')
 call SpaceVim#layers#load('lang#elixir')
 call SpaceVim#layers#load('tools#screensaver')
-call SpaceVim#layers#load('shell', {'foo':1})   
+call SpaceVim#layers#load('shell',
+        \ {
+        \ 'default_position' : 'top',
+        \ 'default_height' : 30,
+        \ }
+        \ )
 call SpaceVim#layers#load('debug')
 let g:spacevim_enable_vimfiler_welcome = 1
 let g:spacevim_enable_debug = 1
