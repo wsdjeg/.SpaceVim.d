@@ -328,3 +328,10 @@ install gi lib for python3?
 ```
 sudo pacman -S python-gobject
 ```
+
+how to install php-msgpack in arch?
+
+```
+git clone https://aur.archlinux.org/packages/php-msgpack/
+makepkg -isr
+```
