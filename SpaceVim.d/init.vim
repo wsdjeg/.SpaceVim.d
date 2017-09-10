@@ -13,7 +13,6 @@ func s:customSetting()
 endf
 let g:spacevim_custom_plugins = [
             \ ['tweekmonster/startuptime.vim', {'merged' : 0}],
-            \ ['SpaceVim/spacemacs-theme.vim', {'merged' : 0}],
             \ ['mivok/vimtodo', {'merged' : 0}],
             \ ['rakr/vim-one', {'merged' : 0}],
             \ ['AndrewRadev/undoquit.vim', {'merged' : 0}],
@@ -33,6 +32,12 @@ call SpaceVim#layers#load('lang#swig')
 call SpaceVim#layers#load('lang#rust')
 call SpaceVim#layers#load('lang#java')
 call SpaceVim#layers#load('lang#javascript')
+call SpaceVim#layers#load('lang#markdown',
+            \ {
+            \ 'enableWcwidth' : 1,
+            \ 'listItemIndent' : 1,
+            \ }
+            \ )
 call SpaceVim#layers#load('lang#vim')
 call SpaceVim#layers#load('lang#perl')
 call SpaceVim#layers#load('lang#python')

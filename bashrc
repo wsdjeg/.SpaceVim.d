@@ -162,6 +162,7 @@ export RUST_SRC_PATH="$HOME/.multirust/toolchains/nightly-i686-unknown-linux-gnu
 export PATH="$HOME/.local/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH"
 export PATH="$HOME/.npm-packages/bin:$PATH"
 export GOPATH=$HOME/goprojects
+export NODE_PATH="/home/wsdjeg/.npm-packages/lib/node_modules"
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$HOME/.config/composer/vendor/bin
 if which ruby >/dev/null && which gem >/dev/null; then
