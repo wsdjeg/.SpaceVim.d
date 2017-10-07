@@ -331,7 +331,15 @@ sudo pacman -S python-gobject
 
 how to install php-msgpack in arch?
 
-```
+```sh
 git clone https://aur.archlinux.org/packages/php-msgpack/
 makepkg -isr
+```
+
+how to build ycm in archlinux?
+
+```sh
+# use system clang instead of download clang 5.0
+# to install xbuild, you need to install extra/mono
+./install.sh --clang-completer --system-libclang
 ```

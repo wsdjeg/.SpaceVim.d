@@ -1,5 +1,5 @@
 let g:spacevim_enable_debug = 1
-"let g:spacevim_enable_ycm = 1
+let g:spacevim_enable_ycm = 1
 let g:spacevim_realtime_leader_guide = 1
 let s:JOB = SpaceVim#api#import('job')
 let s:JSON = SpaceVim#api#import('data#json')
