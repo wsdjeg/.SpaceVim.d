@@ -1,5 +1,5 @@
 let g:spacevim_enable_debug = 1
-let g:spacevim_enable_ycm = 1
+" let g:spacevim_enable_ycm = 1
 let g:spacevim_realtime_leader_guide = 1
 let s:JOB = SpaceVim#api#import('job')
 let s:JSON = SpaceVim#api#import('data#json')
@@ -16,6 +16,7 @@ let g:spacevim_custom_plugins = [
             \ ['mivok/vimtodo', {'merged' : 0}],
             \ ['rakr/vim-one', {'merged' : 0}],
             \ ['AndrewRadev/undoquit.vim', {'merged' : 0}],
+            \ ['junegunn/vader.vim', {'merged' : 0}],
             \ ]
 let g:python_host_prog  = '/usr/bin/python2'
 let g:python3_host_prog = '/usr/bin/python'
@@ -129,3 +130,5 @@ endfunction
 nnoremap <silent> <Leader>sr :call <SID>start_record()<cr>
 nnoremap <silent> <Leader>sd :call <SID>stop_record()<cr>
 nnoremap <silent> <Leader>sw :call <SID>set_record_window()<cr>
+autocmd FileType vader-result nnoremap <buffer> q :bd<cr>
+autocmd FileType vader nnoremap <buffer> [SPC]lr :Vader %<cr>

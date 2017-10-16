@@ -343,3 +343,9 @@ how to build ycm in archlinux?
 # to install xbuild, you need to install extra/mono
 ./install.sh --clang-completer --system-libclang
 ```
+
+
+how to search file insteaded via pacman?
+```
+pacman -Qlq package | grep -v '/$' | xargs du -h | sort -h
+```
