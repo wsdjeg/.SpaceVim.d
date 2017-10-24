@@ -22,6 +22,7 @@ let g:python_host_prog  = '/usr/bin/python2'
 let g:python3_host_prog = '/usr/bin/python'
 call SpaceVim#layers#load('tmux')
 call SpaceVim#layers#load('tags')
+call SpaceVim#layers#load('mail')
 call SpaceVim#layers#load('lang#go')
 call SpaceVim#layers#load('lang#php')
 call SpaceVim#layers#load('lang#c')
@@ -47,11 +48,11 @@ call SpaceVim#layers#load('lang#haskell')
 call SpaceVim#layers#load('lang#elixir')
 call SpaceVim#layers#load('tools#screensaver')
 call SpaceVim#layers#load('shell',
-        \ {
-        \ 'default_position' : 'top',
-        \ 'default_height' : 30,
-        \ }
-        \ )
+            \ {
+            \ 'default_position' : 'top',
+            \ 'default_height' : 30,
+            \ }
+            \ )
 call SpaceVim#layers#load('debug')
 let g:spacevim_enable_vimfiler_welcome = 1
 let g:spacevim_enable_debug = 1
@@ -132,3 +133,4 @@ nnoremap <silent> <Leader>sd :call <SID>stop_record()<cr>
 nnoremap <silent> <Leader>sw :call <SID>set_record_window()<cr>
 autocmd FileType vader-result nnoremap <buffer> q :bd<cr>
 autocmd FileType vader nnoremap <buffer> [SPC]lr :Vader %<cr>
+let g:Pmd_Cmd = ['/home/wsdjeg/src/pmd/pmd-dist/target/pmd-bin-6.0.0-SNAPSHOT/bin/run.sh', 'pmd']
