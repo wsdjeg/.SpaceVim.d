@@ -1,8 +1,7 @@
 title: wsdjeg's blog
-theme: minima
 github_username: wsdjeg
 twitter_username: SpaceVim
 
-gems:
-  - jekyll-redirect-from
-  - jekyll-sitemap
+
+
+theme: jekyll-theme-midnight

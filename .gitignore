@@ -1,4 +1,7 @@
 tags
+./docs/_site
+./docs/Gemfile.lock
+./docs/.sass-cache
 *.html
 *.class
 test/
