@@ -111,6 +111,10 @@ if [ ! -d "$HOME/.config" ];then
     mkdir ~/.config
 fi
 
+if [ ! -d "$HOME/.ssh" ];then
+    mkdir ~/.ssh
+fi
+
 if [ ! -d "$HOME/.local/bin" ];then
     mkdir -p ~/.config/bin
 fi
@@ -197,6 +201,10 @@ else
     symlink 'xinitrc'
     symlink 'xprofile'
 fi
+
+# ssh
+
+symlink 'ssh/config'
 
 
 # Install bash-git-prompt

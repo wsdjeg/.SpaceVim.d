@@ -1,0 +1,5 @@
+Host *.workdomain.com  
+    IdentityFile ~/.ssh/id_rsa.work  
+   
+Host github.com  
+    IdentityFile ~/.ssh/id_rsa.github  
