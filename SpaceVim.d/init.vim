@@ -132,6 +132,11 @@ endfunction
 nnoremap <silent> <Leader>sr :call <SID>start_record()<cr>
 nnoremap <silent> <Leader>sd :call <SID>stop_record()<cr>
 nnoremap <silent> <Leader>sw :call <SID>set_record_window()<cr>
-autocmd FileType vader-result nnoremap <buffer> q :bd<cr>
-autocmd FileType vader nnoremap <buffer> [SPC]lr :Vader %<cr>
+autocmd FileType vader nnoremap <buffer> [SPC]lr :call <SID>run_vader()<cr>
 let g:Pmd_Cmd = ['/home/wsdjeg/src/pmd/pmd-dist/target/pmd-bin-6.0.0-SNAPSHOT/bin/run.sh', 'pmd']
+
+
+function! s:run_vader() abort
+ Vader %
+ nnoremap <buffer> q :bd<cr>
+endfunction
