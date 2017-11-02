@@ -457,6 +457,7 @@ popt
 procps-ng
 protobuf
 psmisc
+pulseaudio
 pygobject-devel
 pygobject2-devel
 pygtk
@@ -517,6 +518,7 @@ renderproto
 reptyr
 rhash
 ripgrep
+rtkit
 rtmpdump
 ruby
 rust
@@ -547,6 +549,7 @@ systemd-sysvcompat
 taglib
 tar
 tcl
+tdb
 termite
 termite-terminfo
 texinfo
