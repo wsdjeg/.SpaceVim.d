@@ -20,6 +20,7 @@ io-console
 jekyll
 jekyll-avatar
 jekyll-coffeescript
+jekyll-data
 jekyll-default-layout
 jekyll-feed
 jekyll-gist
@@ -57,8 +58,11 @@ listen
 mercenary
 mini_portile2
 minima
+minimal-mistakes-jekyll
 minitest
+msgpack
 multipart-post
+neovim
 net-dns
 net-telnet
 nokogiri
@@ -75,6 +79,7 @@ rdoc
 rouge
 safe_yaml
 sass
+sass-listen
 sawyer
 terminal-table
 test-unit

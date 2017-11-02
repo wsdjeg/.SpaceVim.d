@@ -1,7 +1,7 @@
-express
-gitter-irc-bot
-jpm
-npm
-oni-vim
-tern
-ttystudio
+eslint
+js-beautify
+pinyin
+remark-cli
+remark-frontmatter
+remark-stringify
+wcwidth
