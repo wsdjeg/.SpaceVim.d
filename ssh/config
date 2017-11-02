@@ -3,3 +3,6 @@ Host gitee.com
 
 Host github.com
     IdentityFile ~/.ssh/id_rsa.github
+
+Host bitbucket.org
+    IdentityFile ~/.ssh/id_rsa.bitbucket
