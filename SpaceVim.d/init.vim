@@ -34,6 +34,8 @@ call SpaceVim#layers#load('lang#lisp')
 call SpaceVim#layers#load('lang#swig')
 call SpaceVim#layers#load('lang#rust')
 call SpaceVim#layers#load('lang#java')
+call SpaceVim#layers#load('lang#clojure')
+call SpaceVim#layers#load('lang#ps1')
 call SpaceVim#layers#load('lang#javascript')
 call SpaceVim#layers#load('lang#markdown',
             \ {
@@ -141,3 +143,8 @@ function! s:run_vader() abort
  nnoremap <buffer> q :bd<cr>
 endfunction
 let g:bashcomplete_debug = 1
+let g:openbrowser_browser_commands = [
+    \ {'name': 'vimb',
+    \ 'args': ['{browser}', '{uri}'],
+    \ }
+    \ ]

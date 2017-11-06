@@ -43,6 +43,9 @@ bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5% #increase sound vo
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5% #decrease sound volume
 bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle # mute sound
 
+# VGA
+bindsym XF86Display exec --no-startup-id ~/.scripts/xga.sh
+
 # Print screen
 bindsym Print exec --no-startup-id scrot '%Y-%m-%d-%T.png' -e 'mv $f ~/Pictures/'
 bindsym Shift+Print exec "scrot '%Y-%m-%d-%T.png' -e 'mv $f ~/Pictures/ ; feh ~/Pictures/%Y-%m-%d-%T.png'"
