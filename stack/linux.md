@@ -349,3 +349,9 @@ how to search file insteaded via pacman?
 ```
 pacman -Qlq package | grep -v '/$' | xargs du -h | sort -h
 ```
+
+Q: how to print windows info in linux?
+
+```
+xwininfo 和 xprop，返回信息侧重不同，按需求选。
+```
