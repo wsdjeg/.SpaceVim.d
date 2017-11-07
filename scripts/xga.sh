@@ -1,19 +1,19 @@
 #!/bin/bash  
 function show_vga()  
 {  
-    xrandr --output LVDS --mode 1280x800 --output VGA --mode 1024x768  
+    xrandr --output LVDS --mode 1280x800 --output VGA-0 --mode 1024x768  
     echo "vga" > /dev/shm/xscreen-mode  
 }  
 
 function show_novga()  
 {  
-    xrandr --output LVDS --mode 1280x800 --output VGA --off  
+    xrandr --output LVDS --mode 1280x800 --output VGA-0 --off  
     echo "novga" > /dev/shm/xscreen-mode  
 }  
 
 function show_ext()  
 {  
-    xrandr --output LVDS --mode 1024x768 --output VGA --right-of LVDS --mode 1024x768  
+    xrandr --output LVDS --mode 1024x768 --output VGA-0 --right-of LVDS --mode 1024x768  
     echo "ext" > /dev/shm/xscreen-mode  
 }  
 case $1 in  
