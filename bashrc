@@ -165,6 +165,7 @@ export GOPATH=$HOME/goprojects
 export NODE_PATH="/home/wsdjeg/.npm-packages/lib/node_modules"
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$HOME/.config/composer/vendor/bin
+export PATH=$PATH:$HOME/.SpaceVim/bin
 if which ruby >/dev/null && which gem >/dev/null; then
     PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 fi

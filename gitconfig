@@ -17,6 +17,7 @@
 [core]
 	editor = nvim
 	excludesfile = ~/.gitignore
+	autocrlf = input
 [mergetool]
   prompt = true
 [mergetool "vimdiff"]
