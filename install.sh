@@ -192,6 +192,9 @@ symlink 'SpaceVim.d'
 # gem
 symlink 'gemrc'
 
+# wego
+symlink 'wegorc'
+
 # tmux
 symlink 'tmux.conf'
 
