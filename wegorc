@@ -18,7 +18,7 @@ backend=forecast.io
 days=3
 
 # forecast backend: the api KEY to use (default )
-forecast-api-key=
+forecast-api-key=03b1143f5f4696dc9734285cadfc0637
 
 # forecast backend: print raw requests and responses (default false)
 forecast-debug=false
