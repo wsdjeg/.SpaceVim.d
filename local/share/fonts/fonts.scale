@@ -1,4 +1,4 @@
-88
+137
 DejaVu Sans Mono Bold Oblique for Powerline.ttf -misc-dejavu sans mono for powerline-bold-o-normal--0-0-0-0-m-0-ascii-0
 DejaVu Sans Mono Bold Oblique for Powerline.ttf -misc-dejavu sans mono for powerline-bold-o-normal--0-0-0-0-m-0-iso10646-1
 DejaVu Sans Mono Bold Oblique for Powerline.ttf -misc-dejavu sans mono for powerline-bold-o-normal--0-0-0-0-m-0-iso8859-1
@@ -29,6 +29,7 @@ DejaVu Sans Mono Bold for Powerline.ttf -misc-dejavu sans mono for powerline-bol
 DejaVu Sans Mono Bold for Powerline.ttf -misc-dejavu sans mono for powerline-bold-r-normal--0-0-0-0-m-0-iso8859-3
 DejaVu Sans Mono Bold for Powerline.ttf -misc-dejavu sans mono for powerline-bold-r-normal--0-0-0-0-m-0-iso8859-4
 DejaVu Sans Mono Bold for Powerline.ttf -misc-dejavu sans mono for powerline-bold-r-normal--0-0-0-0-m-0-iso8859-5
+DejaVu Sans Mono Bold for Powerline.ttf -misc-dejavu sans mono for powerline-bold-r-normal--0-0-0-0-m-0-iso8859-6
 DejaVu Sans Mono Bold for Powerline.ttf -misc-dejavu sans mono for powerline-bold-r-normal--0-0-0-0-m-0-iso8859-6.16
 DejaVu Sans Mono Bold for Powerline.ttf -misc-dejavu sans mono for powerline-bold-r-normal--0-0-0-0-m-0-iso8859-6.8x
 DejaVu Sans Mono Bold for Powerline.ttf -misc-dejavu sans mono for powerline-bold-r-normal--0-0-0-0-m-0-iso8859-9
@@ -77,6 +78,7 @@ DejaVu Sans Mono for Powerline.ttf -misc-dejavu sans mono for powerline-medium-r
 DejaVu Sans Mono for Powerline.ttf -misc-dejavu sans mono for powerline-medium-r-normal--0-0-0-0-m-0-iso8859-3
 DejaVu Sans Mono for Powerline.ttf -misc-dejavu sans mono for powerline-medium-r-normal--0-0-0-0-m-0-iso8859-4
 DejaVu Sans Mono for Powerline.ttf -misc-dejavu sans mono for powerline-medium-r-normal--0-0-0-0-m-0-iso8859-5
+DejaVu Sans Mono for Powerline.ttf -misc-dejavu sans mono for powerline-medium-r-normal--0-0-0-0-m-0-iso8859-6
 DejaVu Sans Mono for Powerline.ttf -misc-dejavu sans mono for powerline-medium-r-normal--0-0-0-0-m-0-iso8859-6.16
 DejaVu Sans Mono for Powerline.ttf -misc-dejavu sans mono for powerline-medium-r-normal--0-0-0-0-m-0-iso8859-6.8x
 DejaVu Sans Mono for Powerline.ttf -misc-dejavu sans mono for powerline-medium-r-normal--0-0-0-0-m-0-iso8859-9
@@ -87,3 +89,50 @@ DejaVu Sans Mono for Powerline.ttf -misc-dejavu sans mono for powerline-medium-r
 DejaVu Sans Mono for Powerline.ttf -misc-dejavu sans mono for powerline-medium-r-normal--0-0-0-0-m-0-koi8-uni
 DejaVu Sans Mono for Powerline.ttf -misc-dejavu sans mono for powerline-medium-r-normal--0-0-0-0-m-0-microsoft-cp1252
 DejaVu Sans Mono for Powerline.ttf -misc-dejavu sans mono for powerline-medium-r-normal--0-0-0-0-m-0-suneu-greek
+DroidSansMonoForPowerlinePlusNerdFileTypesMono.otf -misc-droid sans mono for powerline plus nerd file types mono-medium-r-normal--0-0-0-0-p-0-ascii-0
+DroidSansMonoForPowerlinePlusNerdFileTypesMono.otf -misc-droid sans mono for powerline plus nerd file types mono-medium-r-normal--0-0-0-0-p-0-iso10646-1
+DroidSansMonoForPowerlinePlusNerdFileTypesMono.otf -misc-droid sans mono for powerline plus nerd file types mono-medium-r-normal--0-0-0-0-p-0-iso8859-1
+DroidSansMonoForPowerlinePlusNerdFileTypesMono.otf -misc-droid sans mono for powerline plus nerd file types mono-medium-r-normal--0-0-0-0-p-0-iso8859-10
+DroidSansMonoForPowerlinePlusNerdFileTypesMono.otf -misc-droid sans mono for powerline plus nerd file types mono-medium-r-normal--0-0-0-0-p-0-iso8859-13
+DroidSansMonoForPowerlinePlusNerdFileTypesMono.otf -misc-droid sans mono for powerline plus nerd file types mono-medium-r-normal--0-0-0-0-p-0-iso8859-15
+DroidSansMonoForPowerlinePlusNerdFileTypesMono.otf -misc-droid sans mono for powerline plus nerd file types mono-medium-r-normal--0-0-0-0-p-0-iso8859-16
+DroidSansMonoForPowerlinePlusNerdFileTypesMono.otf -misc-droid sans mono for powerline plus nerd file types mono-medium-r-normal--0-0-0-0-p-0-iso8859-2
+DroidSansMonoForPowerlinePlusNerdFileTypesMono.otf -misc-droid sans mono for powerline plus nerd file types mono-medium-r-normal--0-0-0-0-p-0-iso8859-3
+DroidSansMonoForPowerlinePlusNerdFileTypesMono.otf -misc-droid sans mono for powerline plus nerd file types mono-medium-r-normal--0-0-0-0-p-0-iso8859-4
+DroidSansMonoForPowerlinePlusNerdFileTypesMono.otf -misc-droid sans mono for powerline plus nerd file types mono-medium-r-normal--0-0-0-0-p-0-iso8859-5
+DroidSansMonoForPowerlinePlusNerdFileTypesMono.otf -misc-droid sans mono for powerline plus nerd file types mono-medium-r-normal--0-0-0-0-p-0-iso8859-9
+DroidSansMonoForPowerlinePlusNerdFileTypesMono.otf -misc-droid sans mono for powerline plus nerd file types mono-medium-r-normal--0-0-0-0-p-0-koi8-e
+DroidSansMonoForPowerlinePlusNerdFileTypesMono.otf -misc-droid sans mono for powerline plus nerd file types mono-medium-r-normal--0-0-0-0-p-0-koi8-r
+DroidSansMonoForPowerlinePlusNerdFileTypesMono.otf -misc-droid sans mono for powerline plus nerd file types mono-medium-r-normal--0-0-0-0-p-0-koi8-ru
+DroidSansMonoForPowerlinePlusNerdFileTypesMono.otf -misc-droid sans mono for powerline plus nerd file types mono-medium-r-normal--0-0-0-0-p-0-koi8-u
+DroidSansMonoForPowerlinePlusNerdFileTypesMono.otf -misc-droid sans mono for powerline plus nerd file types mono-medium-r-normal--0-0-0-0-p-0-koi8-uni
+DroidSansMonoForPowerlinePlusNerdFileTypesMono.otf -misc-droid sans mono for powerline plus nerd file types mono-medium-r-normal--0-0-0-0-p-0-microsoft-cp1252
+Ubuntu Mono derivative Powerline Nerd Font Complete.ttf -misc-ubuntumonoderivativepowerline nerd font-medium-r-normal--0-0-0-0-p-0-adobe-standard
+Ubuntu Mono derivative Powerline Nerd Font Complete.ttf -misc-ubuntumonoderivativepowerline nerd font-medium-r-normal--0-0-0-0-p-0-ascii-0
+Ubuntu Mono derivative Powerline Nerd Font Complete.ttf -misc-ubuntumonoderivativepowerline nerd font-medium-r-normal--0-0-0-0-p-0-iso10646-1
+Ubuntu Mono derivative Powerline Nerd Font Complete.ttf -misc-ubuntumonoderivativepowerline nerd font-medium-r-normal--0-0-0-0-p-0-iso8859-1
+Ubuntu Mono derivative Powerline Nerd Font Complete.ttf -misc-ubuntumonoderivativepowerline nerd font-medium-r-normal--0-0-0-0-p-0-iso8859-10
+Ubuntu Mono derivative Powerline Nerd Font Complete.ttf -misc-ubuntumonoderivativepowerline nerd font-medium-r-normal--0-0-0-0-p-0-iso8859-13
+Ubuntu Mono derivative Powerline Nerd Font Complete.ttf -misc-ubuntumonoderivativepowerline nerd font-medium-r-normal--0-0-0-0-p-0-iso8859-15
+Ubuntu Mono derivative Powerline Nerd Font Complete.ttf -misc-ubuntumonoderivativepowerline nerd font-medium-r-normal--0-0-0-0-p-0-iso8859-16
+Ubuntu Mono derivative Powerline Nerd Font Complete.ttf -misc-ubuntumonoderivativepowerline nerd font-medium-r-normal--0-0-0-0-p-0-iso8859-2
+Ubuntu Mono derivative Powerline Nerd Font Complete.ttf -misc-ubuntumonoderivativepowerline nerd font-medium-r-normal--0-0-0-0-p-0-iso8859-3
+Ubuntu Mono derivative Powerline Nerd Font Complete.ttf -misc-ubuntumonoderivativepowerline nerd font-medium-r-normal--0-0-0-0-p-0-iso8859-4
+Ubuntu Mono derivative Powerline Nerd Font Complete.ttf -misc-ubuntumonoderivativepowerline nerd font-medium-r-normal--0-0-0-0-p-0-iso8859-5
+Ubuntu Mono derivative Powerline Nerd Font Complete.ttf -misc-ubuntumonoderivativepowerline nerd font-medium-r-normal--0-0-0-0-p-0-iso8859-9
+Ubuntu Mono derivative Powerline Nerd Font Complete.ttf -misc-ubuntumonoderivativepowerline nerd font-medium-r-normal--0-0-0-0-p-0-koi8-e
+Ubuntu Mono derivative Powerline Nerd Font Complete.ttf -misc-ubuntumonoderivativepowerline nerd font-medium-r-normal--0-0-0-0-p-0-koi8-r
+Ubuntu Mono derivative Powerline Nerd Font Complete.ttf -misc-ubuntumonoderivativepowerline nerd font-medium-r-normal--0-0-0-0-p-0-koi8-ru
+Ubuntu Mono derivative Powerline Nerd Font Complete.ttf -misc-ubuntumonoderivativepowerline nerd font-medium-r-normal--0-0-0-0-p-0-koi8-u
+Ubuntu Mono derivative Powerline Nerd Font Complete.ttf -misc-ubuntumonoderivativepowerline nerd font-medium-r-normal--0-0-0-0-p-0-koi8-uni
+Ubuntu Mono derivative Powerline Nerd Font Complete.ttf -misc-ubuntumonoderivativepowerline nerd font-medium-r-normal--0-0-0-0-p-0-microsoft-cp1252
+WEBDINGS.TTF -microsoft-webdings-medium-r-normal--0-0-0-0-p-0-iso8859-1
+WEBDINGS.TTF -microsoft-webdings-medium-r-normal--0-0-0-0-p-0-microsoft-symbol
+WINGDNG2.ttf -microsoft-wingdings 2-medium-r-normal--0-0-0-0-p-0-microsoft-symbol
+WINGDNG3.ttf -microsoft-wingdings 3-medium-r-normal--0-0-0-0-p-0-microsoft-symbol
+devicons.ttf -misc-icomoon-medium-r-normal--0-0-0-0-p-0-iso10646-1
+mtextra.ttf -misc-mt extra-medium-r-normal--0-0-0-0-p-0-microsoft-symbol
+symbol.ttf -monotype-symbol-medium-r-normal--0-0-0-0-p-0-iso8859-1
+symbol.ttf -monotype-symbol-medium-r-normal--0-0-0-0-p-0-microsoft-symbol
+wingding.ttf -microsoft-wingdings-medium-r-normal--0-0-0-0-p-0-iso8859-1
+wingding.ttf -microsoft-wingdings-medium-r-normal--0-0-0-0-p-0-microsoft-symbol
