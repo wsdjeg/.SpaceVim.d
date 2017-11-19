@@ -14,6 +14,7 @@ general {
 # order += "ipv6"
 order += "disk /"
 order += "cpu_usage"
+order += "cpu_temperature 0"
 # order += "run_watch DHCP"
 # order += "run_watch VPN"
 order += "wireless _first_"
@@ -23,7 +24,7 @@ order += "load"
 order += "volume master"
 order += "tztime local"
 wireless _first_ {
-    format_up = " (%quality at %essid) %ip"
+    format_up = "%quality  %essid %ip"
     format_down = " down"
 }
 
@@ -34,11 +35,15 @@ ethernet _first_ {
 }
 
 battery 0 {
+    last_full_capacity = true
+    hide_seconds = true
+    integer_battery_capacity = true
     format = "%status %percentage %remaining %emptytime"
     format_down = "No battery"
-    status_chr = "⚇ CHR"
-    status_bat = "⚡ BAT"
-    status_full = "☻ FULL"
+    status_chr = ""
+    status_bat = ""
+    status_full = ""
+    status_unk = ""
     path = "/sys/class/power_supply/BAT%d/uevent"
     low_threshold = 10
 }
@@ -52,7 +57,7 @@ run_watch VPN {
 }
 
 tztime local {
-    format = "%Y-%m-%d %H:%M"
+    format = " %Y-%m-%d %a  %H:%M"
 }
 
 load {
@@ -60,12 +65,15 @@ load {
 }
 
 disk "/" {
-    format = "%avail"
+	format = " %avail"
+	prefix_type	= custom
+	low_threshold = 20
+	threshold_type = percentage_avail
 }
 
 volume master {
-    format = "♪: %volume"
-    format_muted = "♪: muted (%volume)"
+    format = " %volume"
+    format_muted = " muted (%volume)"
     device = "default"
     mixer = "Master"
     mixer_idx = 0
@@ -73,4 +81,8 @@ volume master {
 
 cpu_usage {
     format = "CPU: %usage"
+}
+
+cpu_temperature 0 {
+	format = " %degrees°C"
 }
