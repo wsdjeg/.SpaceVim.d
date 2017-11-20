@@ -142,7 +142,6 @@ fi
 # Install configuration
 symlink 'local/share/fonts'
 # mail
-symlink 'mutt'
 symlink 'getmail'
 symlink 'muttrc'
 symlink 'msmtprc'
@@ -157,6 +156,7 @@ symlink 'config/lilyterm'
 symlink 'config/fcitx/config'
 symlink 'config/fcitx/conf'
 symlink 'config/fcitx/data'
+symlink 'config/fcitx/skin'
 symlink 'config/fcitx/pinyin/pySym.mb'
 # termite
 symlink 'config/termite/config'
