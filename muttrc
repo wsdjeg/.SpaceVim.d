@@ -73,7 +73,7 @@ set edit_headers = no
 # ext app to view attachment
 set mailcap_path="~/.mailcap"
 # 当外部程序退出时, 是否要求用户按一个键才返回
-set wait_key=yes
+set wait_key=no
 # alias
 set alias_file = ~/.mutt/.mutt.alias
 # source ~/.mutt/.mutt.alias
@@ -125,5 +125,5 @@ set use_from=yes
 set reply_to=yes
 set reverse_name=yes
 
-macro index,pager ,G            "!~/.getmail/getmail\n"   "Invoke getmail" 
+macro generic ,G "<shell-escape>$HOME/.getmail/getmail 2>&1 > /dev/null &<return>"
 
