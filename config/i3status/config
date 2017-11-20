@@ -80,7 +80,7 @@ volume master {
 }
 
 cpu_usage {
-    format = "CPU: %usage"
+    format = " %usage"
 }
 
 cpu_temperature 0 {
