@@ -193,7 +193,11 @@ symlink 'SpaceVim.d'
 if [ ! -d "$HOME/.config/qutebrowser" ];then
     mkdir ~/.config/qutebrowser
 fi
+if [ ! -d "$HOME/.local/share/qutebrowser/userscripts" ];then
+    mkdir $HOME/.local/share/qutebrowser/userscripts
+fi
 symlink 'config/qutebrowser/config.py'
+symlink 'local/share/qutebrowser/userscripts/ydcv'
 
 # gem
 symlink 'gemrc'
