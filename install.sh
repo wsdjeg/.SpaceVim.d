@@ -189,6 +189,12 @@ symlink 'ctags'
 # for SpaceVim
 symlink 'SpaceVim.d'
 
+# for qutebrowser
+if [ ! -d "$HOME/.config/qutebrowser" ];then
+    mkdir ~/.config/qutebrowser
+fi
+symlink 'config/qutebrowser/config.py'
+
 # gem
 symlink 'gemrc'
 
