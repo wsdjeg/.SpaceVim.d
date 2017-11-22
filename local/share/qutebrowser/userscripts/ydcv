@@ -1,4 +1,3 @@
 #!/bin/bash
-
 str=`ydcv $QUTE_SELECTED_TEXT`
-echo message-info \"${str//\n/<br>}\" >> "$QUTE_FIFO"
+echo message-info \""${str//$'\n'/<br>}"\" >> "$QUTE_FIFO"
