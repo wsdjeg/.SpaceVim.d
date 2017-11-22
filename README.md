@@ -18,9 +18,8 @@ A list of applications that I use:
 - [irssi](https://irssi.org/) - A IRC Chat Client
 - [neovim](https://neovim.io/) - Vim-fork focused on extensibility and usability 
 - [vifm](https://vifm.info/) - an ncurses based file manager with vi like key bindings
-- [vimb](https://fanglingsu.github.io/vimb/) - A vim like browser
+- [qutebrowser](https://www.qutebrowser.org) - A keyboard-driven, vim-like browser
 - [vimiv](http://karlch.github.io/vimiv/) - An image viewer with vim-like keybindings
-- firefox-esr + vimperator - Vim-like keybindings in firefox
 
 ## Screenshots
 
