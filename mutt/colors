@@ -1,0 +1,60 @@
+# vim: filetype=muttrc
+
+# Colors
+#color  obj         front           back
+#----- ------------ --------------- ---------
+#color hdrdefault   black           cyan     # 邮件头颜色
+#color quoted       blue            white    # 引文颜色
+color normal    default default
+color tree  magenta     default
+color error brightred   default
+color message   brightgreen default
+color indicator brightwhite     black
+color attachment brightyellow default
+color hdrdefault cyan default
+color markers   brightred default
+color quoted    green default
+color signature cyan default
+color status    brightgreen cyan
+color tilde blue default
+color tree  red default
+
+color index yellow default ~N # new messages
+color index yellow default ~U # new messages
+color index red black ~D
+color index magenta black ~T
+
+color body  brightred black [\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+ # identifies email addresses
+color body  brightblue black (https?|ftp)://[\-\.,/%~_:?&=\#a-zA-Z0-9]+ # identifies URLs
+
+
+## Header
+color header green black "^from:"
+color header green black "^to:"
+color header green black "^cc:"
+color header green black "^date:"
+color header yellow black "^newsgroups:"
+color header yellow black "^reply-to:"
+color header brightcyan black "^subject:"
+color header red black "^x-spam-rule:"
+color header green black "^x-mailer:"
+color header yellow black "^message-id:"
+color header yellow black "^Organization:"
+color header yellow black "^Organisation:"
+color header yellow black "^User-Agent:"
+color header yellow black "^message-id: .*pine"
+color header yellow black "^X-Fnord:"
+color header yellow black "^X-WebTV-Stationery:"
+color header red black "^x-spam-rule:"
+color header green black "^x-mailer:"
+color header yellow black "^message-id:"
+color header yellow black "^Organization:"
+color header yellow black "^Organisation:"
+color header yellow black "^User-Agent:"
+color header yellow black "^message-id: .*pine"
+color header yellow black "^X-Fnord:"
+color header yellow black "^X-WebTV-Stationery:"
+color header yellow black "^X-Message-Flag:"
+color header yellow black "^X-Spam-Status:"
+color header yellow black "^X-SpamProbe:"
+color header red black "^X-SpamProbe: SPAM"

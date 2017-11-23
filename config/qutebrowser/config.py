@@ -12,12 +12,20 @@
 # Valid values:
 #   - system: Use the system wide proxy.
 #   - none: Don't use any proxy
+c.content.proxy = 'socks://127.0.0.1:33247/'
 
 # The page(s) to open at the start.
 # Type: List of FuzzyUrl, or FuzzyUrl
 c.url.start_pages = ['https://www.baidu.com/']
 
 # Bindings for normal mode
+config.bind('<ctrl+i>', 'open-editor')
 config.bind('<ctrl+o>', 'back')
 config.bind('\\;', 'spawn --userscript ydcv')
+config.bind('jk', '<Esc> --mode INSERT')
 config.bind('t', 'set-cmd-text -s :open -t')
+
+# Bindings for insert mode
+config.bind('<ctrl+k>', 'fake-key <Shift-End> ;; fake-key <Delete>', mode='insert')
+config.bind('<ctrl+u>', 'fake-key <Shift+Home> ;; fake-key <Delete>', mode='insert')
+config.bind('<ctrl+w>', 'fake-key <Ctrl-backspace>', mode='insert')

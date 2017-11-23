@@ -141,10 +141,11 @@ then
 fi
 # Install configuration
 symlink 'local/share/fonts'
+
 # mail
 symlink 'getmail'
 symlink 'muttrc'
-
+symlink 'mutt'
 if [ ! -f ~/.msmtprc ];
 then
     cp msmtprc ~/.msmtprc
@@ -152,9 +153,10 @@ then
     printf "You need to run chmod 0600 ~/.msmtprc after edit password"
     
 fi
-
 symlink 'procmailrc'
 symlink 'mailcap'
+
+
 # windows manager
 symlink 'config/i3/config'
 symlink 'config/i3status/config'

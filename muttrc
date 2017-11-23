@@ -82,30 +82,6 @@ set attach_sep = "\n"
 set attach_split = yes
 alternative_order text/enriched text/plain text application/postscript image/*
 
-# Colors
-#color  obj         front           back
-#----- ------------ --------------- ---------
-#color hdrdefault   black           cyan     # 邮件头颜色
-#color quoted       blue            white    # 引文颜色
-#color signature    brightblack     white
- color indicator    brightwhite     magenta
- color attachment   black           green
-#color error        red             white
-#color message      blue            white
- color search       black           brightyellow
- color status       brightyellow    blue
- color tree         red             white
-#color normal       blue            white
- color tilde        green           white
-#color bold         brightyellow    white
-#color markers      red             white
- color index        brightwhite     red ~N
- color index        red             default ~O
- color index        brightblack     default ~D
- mono  bold         bold
- mono  underline    underline
- mono  indicator    reverse
-
 # 让mutt可以更好的阅读html邮件
 auto_view text/html
 #view word
@@ -126,3 +102,4 @@ set reverse_name=yes
 
 macro generic ,G "<shell-escape>$HOME/.getmail/getmail 2>&1 > /dev/null &<return>"
 
+source ~/.mutt/colors

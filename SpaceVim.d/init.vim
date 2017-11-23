@@ -147,4 +147,4 @@ let g:openbrowser_browser_commands = [
     \ 'args': ['{browser}', '{uri}'],
     \ }
     \ ]
-let g:spacevim_autocomplete_method = 'completor'
+let g:spacevim_autocomplete_method = 'asyncomplete'
