@@ -6,6 +6,10 @@
 # Uncomment this to still load settings configured via autoconfig.yml
 # config.load_autoconfig()
 
+# Foreground color of the matched text in the completion.
+# Type: QssColor
+c.colors.completion.match.fg = '#fabd2f'
+
 # Background color of the tab bar.
 # Type: QtColor
 c.colors.tabs.bar.bg = '#555555'
