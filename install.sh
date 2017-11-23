@@ -144,7 +144,15 @@ symlink 'local/share/fonts'
 # mail
 symlink 'getmail'
 symlink 'muttrc'
-symlink 'msmtprc'
+
+if [ ! -f ~/.msmtprc ];
+then
+    cp msmtprc ~/.msmtprc
+    printf "Copy ${Red}msmtprc to ~/.msmtprc ${Color_off}\n"
+    printf "You need to run chmod 0600 ~/.msmtprc after edit password"
+    
+fi
+
 symlink 'procmailrc'
 symlink 'mailcap'
 # windows manager
