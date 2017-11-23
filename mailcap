@@ -1,1 +1,7 @@
-text/html; lynx --dump %s; nametemplate=%s.html; copiousoutput
+text/html ;\
+w3m -T text/html -I %{charset} -dump %s ;\
+nametemplate=%s.html ;\
+copiousoutput
+
+
+image/* ; feh %s

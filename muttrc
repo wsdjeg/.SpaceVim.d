@@ -17,7 +17,6 @@ set quit=ask-yes
 set timeout = 600
 # locale
 set charset = UTF-8
-set locale  = zh_CN.UTF-8
 # hook charset
 charset-hook gb2312 gb2312
 charset-hook GB2312 GB2312
