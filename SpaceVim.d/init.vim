@@ -1,6 +1,6 @@
 let g:spacevim_enable_debug = 1
-" let g:spacevim_enable_ycm = 1
-let g:spacevim_lint_on_the_fly = 1
+let g:spacevim_enable_ycm = 0
+let g:spacevim_lint_on_the_fly = 0
 let g:spacevim_realtime_leader_guide = 1
 let s:JOB = SpaceVim#api#import('job')
 let s:JSON = SpaceVim#api#import('data#json')
@@ -141,10 +141,3 @@ function! s:run_vader() abort
  Vader %
  nnoremap <buffer> q :bd<cr>
 endfunction
-let g:bashcomplete_debug = 1
-let g:openbrowser_browser_commands = [
-    \ {'name': 'vimb',
-    \ 'args': ['{browser}', '{uri}'],
-    \ }
-    \ ]
-let g:spacevim_autocomplete_method = 'asyncomplete'
