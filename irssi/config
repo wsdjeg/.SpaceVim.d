@@ -418,10 +418,11 @@ settings = {
     beep_when_away = "yes";
     max_command_history = "1000";
     show_names_on_join = "no";
-    theme = "default.theme";
+    theme = "weed";
     use_msgs_window = "no";
     use_status_window = "yes";
     window_history = "yes";
+    emphasis_italics = "yes";
   };
   "perl/core/scripts" = {
     awl_shared_sbar = "OFF";
