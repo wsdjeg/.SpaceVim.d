@@ -400,7 +400,11 @@ statusbar = {
   };
 };
 settings = {
-  "fe-text" = { actlist_sort = "refnum"; term_force_colors = "yes"; };
+  "fe-text" = {
+    actlist_sort = "refnum";
+    term_force_colors = "yes";
+    scroll_page_count = "2";
+  };
   core = {
     real_name = "Wang Shidong";
     user_name = "wsdjeg";
@@ -425,13 +429,16 @@ settings = {
     awl_maxlines = "1";
     awl_placement = "bottom";
     awl_position = "3";
+    awl_mouse = "yes";
+    mouse_scroll = "1";
   };
 };
 ignores = ( { level = "JOINS QUITS"; } );
 logs = { };
 keyboard = (
   { key = "meta-h"; id = "left_window"; data = ""; },
-  { key = "meta-l"; id = "right_window"; data = ""; }
+  { key = "meta-l"; id = "right_window"; data = ""; },
+  { key = "meta-[M"; id = "command"; data = "mouse_xterm"; }
 );
 
 # vim:filetype=irssi

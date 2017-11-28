@@ -122,7 +122,7 @@ function! s:set_record_window() abort
     call s:JOB.start(['slop', '-f', '{"x":%x, "y":%y, "w":%w, "h":%h}'], {'on_stdout' : funcref('s:slop_stdout')})
 endfunction
 function! s:slop_stdout(...) abort
-    if len(a:2) == 1
+    if len(a:2) == 1 && !empty(a:2[0])
         let slop_data = s:JSON.json_decode(a:2[0])
         let s:record_window_x = slop_data.x
         let s:record_window_y = slop_data.y

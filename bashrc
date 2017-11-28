@@ -27,8 +27,8 @@ shopt -s checkwinsize
 shopt -s autocd
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=100000
-HISTFILESIZE=200000
+HISTSIZE=10000000
+HISTFILESIZE=20000000
 
 # enable zsh like auto nd 'set show-all-if-ambiguous on'
 bind 'set show-all-if-ambiguous on'
@@ -177,3 +177,4 @@ export FZF_COMPLETION_TRIGGER='~~'
 export UNCRUSTIFY_CONFIG="$HOME/.uncrustify/ben.cfg"
 export NO_AT_BRIDGE=1
 alias pmd="$HOME/src/pmd/pmd-dist/target/pmd-bin-6.0.0-SNAPSHOT/bin/run.sh pmd"
+export TERM=xterm-color
