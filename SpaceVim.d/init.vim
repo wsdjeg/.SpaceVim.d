@@ -141,3 +141,4 @@ function! s:run_vader() abort
  Vader %
  nnoremap <buffer> q :bd<cr>
 endfunction
+let g:spacevim_filemanager             = 'nerdtree'
