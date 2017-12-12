@@ -3,13 +3,13 @@
 [![Gitter](https://badges.gitter.im/wsdjeg/DotFiles.svg)](https://gitter.im/wsdjeg/DotFiles?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![Build Status](https://travis-ci.org/wsdjeg/DotFiles.svg?branch=master)](https://travis-ci.org/wsdjeg/DotFiles)
 
-### Install
+## Install
 
 ```sh
 ./install.sh
 ```
 
-### Apps
+## Apps
 
 A list of applications that I use:
 
@@ -24,6 +24,8 @@ A list of applications that I use:
 ## Screenshots
 
 ![SpaceVim](https://user-images.githubusercontent.com/13142418/32991414-145bcade-cd76-11e7-81d4-9cb2107ab421.png)
+
+![Markdown](http://i2.kiimg.com/1949/c18404d7afdc7f3a.gif)
 
 ![irssi](https://user-images.githubusercontent.com/13142418/32991690-51397e6a-cd7b-11e7-8b98-b5db89798a19.png)
 
