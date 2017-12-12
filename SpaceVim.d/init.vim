@@ -34,6 +34,7 @@ call SpaceVim#layers#load('lang#lisp')
 call SpaceVim#layers#load('lang#swig')
 call SpaceVim#layers#load('lang#rust')
 call SpaceVim#layers#load('lang#java')
+call SpaceVim#layers#load('lang#ruby')
 call SpaceVim#layers#load('lang#clojure')
 call SpaceVim#layers#load('lang#ps1')
 call SpaceVim#layers#load('lang#javascript')
@@ -66,10 +67,6 @@ let g:spacevim_buffer_index_type = 0
 set rtp+=~/private/hospital-info
 let g:neomake_vim_enabled_makers = ['vimlint', 'vint']
 let g:spacevim_layer_lang_java_formatter = expand('~/Downloads/google-java-format-1.3-all-deps.jar')
-if has('python3')
-    let g:ctrlp_map = ''
-    nnoremap <silent> <C-p> :Denite file_rec<CR>
-endif
 let g:clang2_placeholder_next = ''
 let g:clang2_placeholder_prev = ''
 let g:spacevim_statusline_separator = 'arrow'
@@ -141,4 +138,3 @@ function! s:run_vader() abort
  Vader %
  nnoremap <buffer> q :bd<cr>
 endfunction
-let g:spacevim_filemanager             = 'nerdtree'
