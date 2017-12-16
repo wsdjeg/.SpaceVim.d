@@ -3,7 +3,7 @@ github_username: wsdjeg
 twitter_username: SpaceVim
 google_analytics: UA-78080586-1
 
-permalink: /:title/
+permalink: /:categories/:title/
 
 show_downloads: false
 
