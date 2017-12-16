@@ -15,4 +15,4 @@ plugins:
 github: [metadata]
 
 
-theme: minima
+theme: minimal-mistakes-jekyll

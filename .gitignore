@@ -1,5 +1,6 @@
 tags
-./docs/_site
+docs/_site
+docs/Gemfile.lock
 ./docs/Gemfile.lock
 ./docs/.sass-cache
 *.html
