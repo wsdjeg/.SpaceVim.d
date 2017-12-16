@@ -1,7 +1,18 @@
 title: wsdjeg's blog
 github_username: wsdjeg
 twitter_username: SpaceVim
+google_analytics: UA-78080586-1
+
+permalink: /:title/
+
+show_downloads: false
+
+plugins:
+  - jekyll-redirect-from
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+github: [metadata]
 
 
-
-theme: jekyll-theme-midnight
+theme: minima
