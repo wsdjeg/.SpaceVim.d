@@ -44,6 +44,7 @@ shopt -s checkwinsize
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+[ -x /usr/bin/luarocks ] && eval $(luarocks path --bin)
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
@@ -166,6 +167,7 @@ export NODE_PATH="/home/wsdjeg/.npm-packages/lib/node_modules"
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$HOME/.config/composer/vendor/bin
 export PATH=$PATH:$HOME/.SpaceVim/bin
+export PATH=$PATH:$HOME/.luarocks/bin
 if which ruby >/dev/null && which gem >/dev/null; then
     PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 fi
