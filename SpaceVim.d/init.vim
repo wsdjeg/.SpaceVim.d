@@ -1,4 +1,5 @@
 let g:spacevim_enable_debug = 1
+let g:spacevim_enable_ale = 0
 let g:spacevim_enable_ycm = 0
 let g:spacevim_lint_on_the_fly = 0
 let g:spacevim_realtime_leader_guide = 1
@@ -18,14 +19,17 @@ let g:spacevim_custom_plugins = [
       \ ['rakr/vim-one', {'merged' : 0}],
       \ ['AndrewRadev/undoquit.vim', {'merged' : 0}],
       \ ['junegunn/vader.vim', {'merged' : 0}],
+      \ ['mhartington/oceanic-next', {'merged' : 0}],
       \ ]
 let g:python_host_prog  = '/usr/bin/python2'
 let g:python3_host_prog = '/usr/bin/python'
 call SpaceVim#layers#load('tmux')
 call SpaceVim#layers#load('tags')
+call SpaceVim#layers#load('cscope')
 call SpaceVim#layers#load('mail')
 call SpaceVim#layers#load('lang#go')
 call SpaceVim#layers#load('lang#php')
+call SpaceVim#layers#load('lang#dart')
 call SpaceVim#layers#load('lang#c')
 call SpaceVim#layers#load('incsearch')
 call SpaceVim#layers#load('lang#lua')
@@ -54,19 +58,20 @@ call SpaceVim#layers#load('lang#lua',
 call SpaceVim#layers#load('lang#perl')
 call SpaceVim#layers#load('lang#python')
 call SpaceVim#layers#load('lang#xml')
+call SpaceVim#layers#load('lang#html')
 call SpaceVim#layers#load('lang#haskell')
 call SpaceVim#layers#load('lang#elixir')
 call SpaceVim#layers#load('tools#screensaver')
 call SpaceVim#layers#load('shell',
       \ {
-      \ 'default_position' : 'bottom',
+      \ 'default_position' : 'top',
       \ 'default_height' : 30,
       \ }
       \ )
 call SpaceVim#layers#load('debug')
 call SpaceVim#layers#load('lsp',
       \ {
-      \ 'filetypes' : ['javascript', 'php']
+      \ 'filetypes' : ['javascript', 'php', 'python']
       \ }
       \ )
 let g:spacevim_enable_vimfiler_welcome = 1
@@ -149,3 +154,7 @@ function! s:run_vader() abort
   Vader %
   nnoremap <buffer> q :bd<cr>
 endfunction
+let g:lsp_log_verbose = 1
+let g:lsp_log_file = expand('~/vim-lsp.log')
+let g:neomake_css_enabled_makers = ['stylelint']
+let g:spacevim_enable_statusline_display_mode = 1
