@@ -16,7 +16,6 @@ endf
 let g:spacevim_custom_plugins = [
       \ ['tweekmonster/startuptime.vim', {'merged' : 0}],
       \ ['mivok/vimtodo', {'merged' : 0}],
-      \ ['rakr/vim-one', {'merged' : 0}],
       \ ['AndrewRadev/undoquit.vim', {'merged' : 0}],
       \ ['junegunn/vader.vim', {'merged' : 0}],
       \ ['mhartington/oceanic-next', {'merged' : 0}],
@@ -71,7 +70,7 @@ call SpaceVim#layers#load('shell',
 call SpaceVim#layers#load('debug')
 call SpaceVim#layers#load('lsp',
       \ {
-      \ 'filetypes' : ['javascript', 'php', 'python']
+      \ 'filetypes' : ['javascript', 'php', 'python', 'html']
       \ }
       \ )
 let g:spacevim_enable_vimfiler_welcome = 1
@@ -157,4 +156,3 @@ endfunction
 let g:lsp_log_verbose = 1
 let g:lsp_log_file = expand('~/vim-lsp.log')
 let g:neomake_css_enabled_makers = ['stylelint']
-let g:spacevim_enable_statusline_display_mode = 1

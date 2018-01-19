@@ -14,13 +14,13 @@ font = Droid Sans Mono for Powerline Plus Nerd File Types Mono 11,Source Code Pr
 scrollback_lines = 10000
 search_wrap = true
 #icon_name = terminal
-geometry = 1280x800
+geometry = 800x540
 
 # "system", "on" or "off"
 cursor_blink = system
 
 # "block", "underline" or "ibeam"
-cursor_shape = block
+cursor_shape = ibeam
 
 # $BROWSER is used by default if set, with xdg-open as a fallback
 #browser = xdg-open
