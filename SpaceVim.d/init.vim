@@ -57,7 +57,6 @@ call SpaceVim#layers#load('lang#lua',
 call SpaceVim#layers#load('lang#perl')
 call SpaceVim#layers#load('lang#python')
 call SpaceVim#layers#load('lang#xml')
-call SpaceVim#layers#load('lang#html')
 call SpaceVim#layers#load('lang#haskell')
 call SpaceVim#layers#load('lang#elixir')
 call SpaceVim#layers#load('tools#screensaver')
@@ -122,6 +121,10 @@ function! s:stop_record() abort
   endif
 endfunction
 function! s:record_exit(...) abort
+  call s:fix_cycle(s:record_file)
+endfunction
+
+function! s:gifsicle_exit(...) abort
   echom 'record done: ' . s:record_file
   let s:record_id = 0
   let s:record_file = ''
@@ -130,6 +133,11 @@ function! s:record_exit(...) abort
   let s:record_window_w = 1366
   let s:record_window_h = 743
 endfunction
+
+function! s:fix_cycle(file) abort
+  call s:JOB.start(['gifsicle', '--loopcount', a:file, '-o', a:file], {'on_exit' : funcref('s:gifsicle_exit')})
+endfunction
+
 function! s:set_record_window() abort
   call s:JOB.start(['slop', '-f', '{"x":%x, "y":%y, "w":%w, "h":%h}'], {'on_stdout' : funcref('s:slop_stdout')})
 endfunction
