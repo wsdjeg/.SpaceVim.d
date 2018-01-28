@@ -1,18 +1,22 @@
 title: wsdjeg's blog
+description: A community-driven vim distribution
 github_username: wsdjeg
 twitter_username: SpaceVim
 google_analytics: UA-78080586-1
-
-permalink: /:categories/:title/
-
 show_downloads: false
+permalink: /:title/
 
 plugins:
   - jekyll-redirect-from
   - jekyll-sitemap
   - jekyll-seo-tag
+  - jekyll-feed
 
 github: [metadata]
 
 
-theme: minimal-mistakes-jekyll
+theme: jekyll-theme-midnight
+
+sass:
+ sass_dir: _sass
+ style: compressed
