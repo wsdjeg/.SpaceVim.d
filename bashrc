@@ -169,7 +169,7 @@ export PATH=$PATH:$HOME/.config/composer/vendor/bin
 export PATH=$PATH:$HOME/.SpaceVim/bin
 export PATH=$PATH:$HOME/.luarocks/bin
 if which ruby >/dev/null && which gem >/dev/null; then
-    PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
+    PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
 fi
 if which perl >/dev/null ;then
     eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
