@@ -46,7 +46,7 @@ c.colors.tabs.selected.odd.bg = '#a89984'
 # Type: QtColor
 c.colors.tabs.selected.odd.fg = 'black'
 
-# The proxy to use. In addition to the listed values, you can use a
+# Proxy to use. In addition to the listed values, you can use a
 # `socks://...` or `http://...` URL.
 # Type: Proxy
 # Valid values:
@@ -54,7 +54,7 @@ c.colors.tabs.selected.odd.fg = 'black'
 #   - none: Don't use any proxy
 c.content.proxy = 'socks://127.0.0.1:33247/'
 
-# The page(s) to open at the start.
+# Page(s) to open at the start.
 # Type: List of FuzzyUrl, or FuzzyUrl
 c.url.start_pages = ['https://www.baidu.com/']
 
@@ -63,6 +63,10 @@ config.bind('<ctrl+i>', 'open-editor')
 config.bind('<ctrl+o>', 'back')
 config.bind('\\;', 'spawn --userscript ydcv')
 config.bind('t', 'set-cmd-text -s :open -t')
+
+# Bindings for command mode
+config.bind('<down>', 'command-history-next', mode='command')
+config.bind('<up>', 'command-history-prev', mode='command')
 
 # Bindings for insert mode
 config.bind('<ctrl+k>', 'fake-key <Shift-End> ;; fake-key <Delete>', mode='insert')
