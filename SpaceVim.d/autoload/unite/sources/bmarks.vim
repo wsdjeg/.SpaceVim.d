@@ -8,7 +8,7 @@ let s:unite_source = {
       \ }
 
 function! s:openurl(url) abort
-  
+ return printf('OpenBrowser %s', a:url)
 endfunction
 
 function! s:unite_source.gather_candidates(args, context)
@@ -26,7 +26,7 @@ function! s:unite_source.gather_candidates(args, context)
         \ "word": v:val[0],
         \ "source": "bmarks",
         \ "kind": [ "command"],
-        \ "action__command": s:openurl(v:val[0]),
+        \ "action__command": s:openurl(v:val[1]),
         \ "action__type": ": ",
         \ }')
 endfunction
