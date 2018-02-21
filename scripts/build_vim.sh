@@ -6,7 +6,7 @@
     --enable-multibyte \
     --enable-gui=gtk2 \
     --enable-gpm \
-    --prefix=/usr \
+    --prefix=/usr/local \
     --enable-cscope \
     --enable-fontset \
     --enable-sniff \
@@ -18,6 +18,6 @@
     --enable-tclinterp\
     --enable-rubyinterp \
     --enable-pythoninterp \
-    --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu \
+    --with-python-config-dir=/usr/lib/python2.7/config/ \
     --enable-python3interp \
-    --with-python3-config-dir=/usr/lib/python3.4/config-3.4m-x86_64-linux-gnu
+    --with-python3-config-dir=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu/

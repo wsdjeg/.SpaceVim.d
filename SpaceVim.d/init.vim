@@ -67,11 +67,6 @@ call SpaceVim#layers#load('shell',
       \ }
       \ )
 call SpaceVim#layers#load('debug')
-call SpaceVim#layers#load('lsp',
-      \ {
-      \ 'filetypes' : ['javascript', 'php', 'python', 'html']
-      \ }
-      \ )
 let g:spacevim_enable_vimfiler_welcome = 1
 let g:spacevim_enable_debug = 1
 let g:deoplete#auto_complete_delay = 150
