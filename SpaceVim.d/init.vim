@@ -1,28 +1,33 @@
+"=============================================================================
+" init.vim --- My SpaceVim config
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+"=============================================================================
+
+" Load SpaceVim APIs: {{{
+let s:JOB = SpaceVim#api#import('job')
+let s:JSON = SpaceVim#api#import('data#json')
+" }}}
+
+" SpaceVim Options: {{{
 let g:spacevim_enable_debug = 1
 let g:spacevim_enable_ale = 0
 let g:spacevim_enable_ycm = 0
 let g:spacevim_lint_on_the_fly = 0
 let g:spacevim_realtime_leader_guide = 1
-let s:JOB = SpaceVim#api#import('job')
-let s:JSON = SpaceVim#api#import('data#json')
-augroup custom_config
-  au!
-  au VimEnter * call s:customSetting()
-augroup END
-func s:customSetting()
+let g:spacevim_enable_vimfiler_welcome = 1
+let g:spacevim_enable_debug = 1
+let g:spacevim_enable_tabline_filetype_icon = 1
+let g:spacevim_enable_os_fileformat_icon = 1
+let g:spacevim_buffer_index_type = 0
+let g:spacevim_statusline_separator = 'arrow'
+let g:spacevim_github_username = 'wsdjeg'
+let g:spacevim_auto_disable_touchpad = 0
+let g:spacevim_layer_lang_java_formatter = expand('~/Downloads/google-java-format-1.3-all-deps.jar')
+" }}}
 
-  inoremap <silent> <buffer> <leader>UU <esc>bgUwea
-endf
-let g:spacevim_custom_plugins = [
-      \ ['tweekmonster/startuptime.vim', {'merged' : 0}],
-      \ ['mivok/vimtodo', {'merged' : 0}],
-      \ ['AndrewRadev/undoquit.vim', {'merged' : 0}],
-      \ ['junegunn/vader.vim', {'merged' : 0}],
-      \ ['mhartington/oceanic-next', {'merged' : 0}],
-      \ ]
-let g:python_host_prog  = '/usr/bin/python2'
-let g:python3_host_prog = '/usr/bin/python'
-call SpaceVim#layers#load('tmux')
+" SpaceVim Layers: {{{
 call SpaceVim#layers#load('tags')
 call SpaceVim#layers#load('cscope')
 call SpaceVim#layers#load('mail')
@@ -67,34 +72,11 @@ call SpaceVim#layers#load('shell',
       \ }
       \ )
 call SpaceVim#layers#load('debug')
-let g:spacevim_enable_vimfiler_welcome = 1
-let g:spacevim_enable_debug = 1
-let g:deoplete#auto_complete_delay = 150
-let g:spacevim_enable_tabline_filetype_icon = 1
-let g:spacevim_enable_os_fileformat_icon = 1
-let g:spacevim_buffer_index_type = 0
-set rtp+=~/private/hospital-info
-let g:neomake_vim_enabled_makers = ['vimlint', 'vint']
-let g:spacevim_layer_lang_java_formatter = expand('~/Downloads/google-java-format-1.3-all-deps.jar')
-let g:clang2_placeholder_next = ''
-let g:clang2_placeholder_prev = ''
-let g:spacevim_statusline_separator = 'arrow'
-let g:neomake_open_list = 0
-let g:neomake_cpp_enabled_makers=['clang']
-let g:neomake_cpp_clang_args = ["-std=c++11"]
-noremap <Leader>[ :tabprev<CR>
-noremap <Leader>] :tabnext<CR>
-let g:indentLine_enabled = 0
-let g:spacevim_github_username = 'wsdjeg'
-set mouse=nv
-let g:spacevim_auto_disable_touchpad = 0
-set noshowmode
-"let g:spacevim_enable_googlesuggest = 1
-"let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-let g:python_host_skip_check=1
-let g:python_host_prog = '/usr/bin/python2'
-let g:python3_host_skip_check=1
-let g:python3_host_prog = '/usr/bin/python3'
+" }}}
+
+" My Privite Config: {{{
+"
+" record window {{{
 " use slop to get the position and  weidth and heigth
 let s:record_window_x = 0
 let s:record_window_y = 0
@@ -148,6 +130,10 @@ endfunction
 nnoremap <silent> <Leader>sr :call <SID>start_record()<cr>
 nnoremap <silent> <Leader>sd :call <SID>stop_record()<cr>
 nnoremap <silent> <Leader>sw :call <SID>set_record_window()<cr>
+" }}}
+
+" }}}
+
 autocmd FileType vader nnoremap <buffer> [SPC]lr :call <SID>run_vader()<cr>
 let g:Pmd_Cmd = ['/home/wsdjeg/src/pmd/pmd-dist/target/pmd-bin-6.0.0-SNAPSHOT/bin/run.sh', 'pmd']
 
@@ -156,6 +142,3 @@ function! s:run_vader() abort
   Vader %
   nnoremap <buffer> q :bd<cr>
 endfunction
-let g:lsp_log_verbose = 1
-let g:lsp_log_file = expand('~/vim-lsp.log')
-let g:neomake_css_enabled_makers = ['stylelint']
