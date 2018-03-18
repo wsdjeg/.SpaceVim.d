@@ -72,6 +72,10 @@ call SpaceVim#layers#load('shell',
       \ }
       \ )
 call SpaceVim#layers#load('debug')
+call SpaceVim#layers#load('github')
+call SpaceVim#layers#load('git')
+call SpaceVim#layers#load('VersionControl')
+call SpaceVim#layers#load('fzf')
 " }}}
 
 " My Privite Config: {{{
@@ -127,9 +131,9 @@ function! s:slop_stdout(...) abort
     let s:record_window_h = slop_data.h
   endif
 endfunction
-nnoremap <silent> <Leader>sr :call <SID>start_record()<cr>
-nnoremap <silent> <Leader>sd :call <SID>stop_record()<cr>
-nnoremap <silent> <Leader>sw :call <SID>set_record_window()<cr>
+" nnoremap <silent> <Leader>sr :call <SID>start_record()<cr>
+" nnoremap <silent> <Leader>sd :call <SID>stop_record()<cr>
+" nnoremap <silent> <Leader>sw :call <SID>set_record_window()<cr>
 " }}}
 
 " }}}
