@@ -355,3 +355,8 @@ Q: how to print windows info in linux?
 ```
 xwininfo 和 xprop，返回信息侧重不同，按需求选。
 ```
+
+" TODO: 加入全半角转化
+" https://blog.csdn.net/u012968002/article/details/64440836
+" http://www.cnblogs.com/kaituorensheng/p/3554571.html
+" https://blog.csdn.net/yuan892173701/article/details/8731490

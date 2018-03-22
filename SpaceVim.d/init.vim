@@ -28,54 +28,9 @@ let g:spacevim_layer_lang_java_formatter = expand('~/Downloads/google-java-forma
 " }}}
 
 " SpaceVim Layers: {{{
-call SpaceVim#layers#load('tags')
-call SpaceVim#layers#load('cscope')
-call SpaceVim#layers#load('mail')
-call SpaceVim#layers#load('lang#go')
-call SpaceVim#layers#load('lang#php')
-call SpaceVim#layers#load('lang#dart')
-call SpaceVim#layers#load('lang#c')
-call SpaceVim#layers#load('incsearch')
-call SpaceVim#layers#load('lang#lua')
-call SpaceVim#layers#load('lang#perl')
-call SpaceVim#layers#load('lang#lisp')
-call SpaceVim#layers#load('lang#swig')
-call SpaceVim#layers#load('lang#rust')
-call SpaceVim#layers#load('lang#java')
-call SpaceVim#layers#load('lang#ruby')
-call SpaceVim#layers#load('lang#clojure')
-call SpaceVim#layers#load('lang#ps1')
-call SpaceVim#layers#load('lang#javascript')
-call SpaceVim#layers#load('lang#typescript',)
-call SpaceVim#layers#load('lang#markdown',
-      \ {
-      \ 'enableWcwidth' : 1,
-      \ 'listItemIndent' : 1,
-      \ }
-      \ )
-call SpaceVim#layers#load('lang#vim')
-call SpaceVim#layers#load('lang#lua',
-      \ {
-      \ 'repl_command' : '~/.luarocks/lib/luarocks/rocks-5.3/luarepl/0.8-1/bin/rep.lua',
-      \ }
-      \ )
-call SpaceVim#layers#load('lang#perl')
-call SpaceVim#layers#load('lang#python')
-call SpaceVim#layers#load('lang#xml')
-call SpaceVim#layers#load('lang#haskell')
-call SpaceVim#layers#load('lang#elixir')
-call SpaceVim#layers#load('tools#screensaver')
-call SpaceVim#layers#load('shell',
-      \ {
-      \ 'default_position' : 'top',
-      \ 'default_height' : 30,
-      \ }
-      \ )
-call SpaceVim#layers#load('debug')
+call SpaceVim#layers#load('denite')
 call SpaceVim#layers#load('github')
-call SpaceVim#layers#load('git')
-call SpaceVim#layers#load('VersionControl')
-call SpaceVim#layers#load('fzf')
+call SpaceVim#layers#load('tags')
 " }}}
 
 " My Privite Config: {{{
@@ -131,12 +86,13 @@ function! s:slop_stdout(...) abort
     let s:record_window_h = slop_data.h
   endif
 endfunction
-" nnoremap <silent> <Leader>sr :call <SID>start_record()<cr>
-" nnoremap <silent> <Leader>sd :call <SID>stop_record()<cr>
-" nnoremap <silent> <Leader>sw :call <SID>set_record_window()<cr>
+nnoremap <silent> <Leader>sr :call <SID>start_record()<cr>
+nnoremap <silent> <Leader>sd :call <SID>stop_record()<cr>
+nnoremap <silent> <Leader>sw :call <SID>set_record_window()<cr>
 " }}}
 
 " }}}
+
 
 autocmd FileType vader nnoremap <buffer> [SPC]lr :call <SID>run_vader()<cr>
 let g:Pmd_Cmd = ['/home/wsdjeg/src/pmd/pmd-dist/target/pmd-bin-6.0.0-SNAPSHOT/bin/run.sh', 'pmd']
