@@ -6,6 +6,30 @@
 # Uncomment this to still load settings configured via autoconfig.yml
 # config.load_autoconfig()
 
+# Enable JavaScript.
+# Type: Bool
+config.set('content.javascript.enabled', True, 'file://*')
+
+# Enable JavaScript.
+# Type: Bool
+config.set('content.javascript.enabled', True, 'chrome://*/*')
+
+# Enable JavaScript.
+# Type: Bool
+config.set('content.javascript.enabled', True, 'qute://*/*')
+
+# Proxy to use. In addition to the listed values, you can use a
+# `socks://...` or `http://...` URL.
+# Type: Proxy
+# Valid values:
+#   - system: Use the system wide proxy.
+#   - none: Don't use any proxy
+c.content.proxy = 'none'
+
+# Page(s) to open at the start.
+# Type: List of FuzzyUrl, or FuzzyUrl
+c.url.start_pages = ['https://www.baidu.com/']
+
 # Foreground color of the matched text in the completion.
 # Type: QssColor
 c.colors.completion.match.fg = '#fabd2f'
@@ -14,61 +38,49 @@ c.colors.completion.match.fg = '#fabd2f'
 # Type: QtColor
 c.colors.tabs.bar.bg = '#555555'
 
-# Background color of unselected even tabs.
+# Foreground color of unselected odd tabs.
 # Type: QtColor
-c.colors.tabs.even.bg = '#504945'
-
-# Foreground color of unselected even tabs.
-# Type: QtColor
-c.colors.tabs.even.fg = '#a89984'
+c.colors.tabs.odd.fg = '#a89984'
 
 # Background color of unselected odd tabs.
 # Type: QtColor
 c.colors.tabs.odd.bg = '#504945'
 
-# Foreground color of unselected odd tabs.
+# Foreground color of unselected even tabs.
 # Type: QtColor
-c.colors.tabs.odd.fg = '#a89984'
+c.colors.tabs.even.fg = '#a89984'
 
-# Background color of selected even tabs.
+# Background color of unselected even tabs.
 # Type: QtColor
-c.colors.tabs.selected.even.bg = '#a89984'
-
-# Foreground color of selected even tabs.
-# Type: QtColor
-c.colors.tabs.selected.even.fg = '#282828'
-
-# Background color of selected odd tabs.
-# Type: QtColor
-c.colors.tabs.selected.odd.bg = '#a89984'
+c.colors.tabs.even.bg = '#504945'
 
 # Foreground color of selected odd tabs.
 # Type: QtColor
 c.colors.tabs.selected.odd.fg = 'black'
 
-# Proxy to use. In addition to the listed values, you can use a
-# `socks://...` or `http://...` URL.
-# Type: Proxy
-# Valid values:
-#   - system: Use the system wide proxy.
-#   - none: Don't use any proxy
-c.content.proxy = 'socks://127.0.0.1:33247/'
+# Background color of selected odd tabs.
+# Type: QtColor
+c.colors.tabs.selected.odd.bg = '#a89984'
 
-# Page(s) to open at the start.
-# Type: List of FuzzyUrl, or FuzzyUrl
-c.url.start_pages = ['https://www.baidu.com/']
+# Foreground color of selected even tabs.
+# Type: QtColor
+c.colors.tabs.selected.even.fg = '#282828'
+
+# Background color of selected even tabs.
+# Type: QtColor
+c.colors.tabs.selected.even.bg = '#a89984'
 
 # Bindings for normal mode
-config.bind('<ctrl+i>', 'open-editor')
-config.bind('<ctrl+o>', 'back')
+config.bind('<Ctrl+i>', 'open-editor')
+config.bind('<Ctrl+o>', 'back')
 config.bind('\\;', 'spawn --userscript ydcv')
 config.bind('t', 'set-cmd-text -s :open -t')
 
 # Bindings for command mode
-config.bind('<down>', 'command-history-next', mode='command')
-config.bind('<up>', 'command-history-prev', mode='command')
+config.bind('<Down>', 'command-history-next', mode='command')
+config.bind('<Up>', 'command-history-prev', mode='command')
 
 # Bindings for insert mode
-config.bind('<ctrl+k>', 'fake-key <Shift-End> ;; fake-key <Delete>', mode='insert')
-config.bind('<ctrl+u>', 'fake-key <Shift+Home> ;; fake-key <Delete>', mode='insert')
-config.bind('<ctrl+w>', 'fake-key <Ctrl-backspace>', mode='insert')
+config.bind('<Ctrl+k>', 'fake-key <Shift-End> ;; fake-key <Delete>', mode='insert')
+config.bind('<Ctrl+u>', 'fake-key <Shift+Home> ;; fake-key <Delete>', mode='insert')
+config.bind('<Ctrl+w>', 'fake-key <Ctrl-backspace>', mode='insert')
