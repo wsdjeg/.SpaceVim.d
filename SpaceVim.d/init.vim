@@ -18,6 +18,7 @@ let g:spacevim_lint_on_the_fly = 0
 let g:spacevim_realtime_leader_guide = 1
 let g:spacevim_enable_vimfiler_welcome = 1
 let g:spacevim_enable_debug = 1
+let g:spacevim_enable_statusline_display_mode = 1
 let g:spacevim_enable_tabline_filetype_icon = 1
 let g:spacevim_enable_os_fileformat_icon = 1
 let g:spacevim_buffer_index_type = 0
@@ -25,7 +26,7 @@ let g:spacevim_statusline_separator = 'arrow'
 let g:spacevim_github_username = 'wsdjeg'
 let g:spacevim_auto_disable_touchpad = 0
 let g:spacevim_layer_lang_java_formatter = expand('~/Downloads/google-java-format-1.3-all-deps.jar')
-let g:spacevim_colorscheme = 'nord'
+let g:spacevim_colorscheme = 'gruvbox'
 let g:spacevim_custom_plugins = [
       \ ['lilydjwg/colorizer', {'merged' : 0}]
       \ ]
@@ -35,6 +36,7 @@ let g:spacevim_custom_plugins = [
 call SpaceVim#layers#load('fzf')
 call SpaceVim#layers#load('github')
 call SpaceVim#layers#load('tags')
+call SpaceVim#layers#load('lang#go')
 call SpaceVim#layers#load('colorscheme',
       \ {
       \ 'random-theme' : 0,
@@ -46,6 +48,7 @@ call SpaceVim#layers#load('lang#markdown',
       \ 'listItemIndent' : 1,
       \ }
       \ )
+" call SpaceVim#layers#disable('core#statusline')
 " }}}
 
 " My Privite Config: {{{
@@ -117,5 +120,5 @@ function! s:run_vader() abort
   Vader %
   nnoremap <buffer> q :bd<cr>
 endfunction
-
+set rtp+=~/SpaceVim/fzy.vim
 " vim:set nofoldenable:
