@@ -1,12 +1,14 @@
----
-layout: page
-title: About
-permalink: /about/
----
+# About Me
 
-### Projects
+My name is wang shidong. I'm an amateur programmer.
 
-- [SpaceVim](https://github.com/SpaceVim/SpaceVim): A community-driven vim distribution
-- [vim-chat](https://github.com/vim-chat/vim-chat): Chatting plugin for neovim and vim8
+## Follow Me
 
+- twitter: @wsdtty
+- github: @wsdjeg
+
+
+## Contact
+
+- Email: wsdjeg(at)outlook.com
 
