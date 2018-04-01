@@ -18,6 +18,17 @@
           <p align="center">{{ site.title | default: site.github.repository_name }}</p>
         </div>
 
+        <div id="title">
+          <p>{{ site.description | default: site.github.project_tagline }}</p>
+          <hr>
+          <p align="center">
+          <b><a href="{{ site.url }}">Home</a></b> |
+          <b><a href="{{ site.url }}/projects">Projects</a></b>
+          <b><a href="{{ site.url }}/about">About</a></b> |
+          </p>
+          <hr>
+        </div>
+
         {{ content }}
 
       </section>
