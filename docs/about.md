@@ -4,11 +4,10 @@ My name is wang shidong. I'm an amateur programmer.
 
 ## Follow Me
 
-- twitter: @wsdtty
-- github: @wsdjeg
+- <i class="fab fa-github"></i> [GitHub](https://github.com/wsdjeg)
+- <i class="fab fa-twitter"></i> [Twitter](https://twitter.com/wsdtty)
 
 
 ## Contact
 
-- Email: wsdjeg(at)outlook.com
-
+- <i class="fas fa-envelope"></i> Email: wsdjeg(at)outlook.com
