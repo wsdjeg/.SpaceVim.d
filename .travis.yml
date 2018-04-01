@@ -1,6 +1,11 @@
 # TODO: move to Makefile
 language: python
 
+notifications:
+  email:
+    on_success: never
+    on_failure: never
+
 cache:
   pip: true
 

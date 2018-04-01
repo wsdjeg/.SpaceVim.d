@@ -18,7 +18,7 @@ let g:spacevim_lint_on_the_fly = 0
 let g:spacevim_realtime_leader_guide = 1
 let g:spacevim_enable_vimfiler_welcome = 1
 let g:spacevim_enable_debug = 1
-let g:spacevim_enable_statusline_display_mode = 1
+" let g:spacevim_enable_statusline_display_mode = 1
 let g:spacevim_enable_tabline_filetype_icon = 1
 let g:spacevim_enable_os_fileformat_icon = 1
 let g:spacevim_buffer_index_type = 0
@@ -33,10 +33,12 @@ let g:spacevim_custom_plugins = [
 " }}}
 
 " SpaceVim Layers: {{{
-call SpaceVim#layers#load('fzf')
+call SpaceVim#layers#load('ctrlp')
 call SpaceVim#layers#load('github')
 call SpaceVim#layers#load('tags')
 call SpaceVim#layers#load('lang#go')
+call SpaceVim#layers#load('lang#python')
+call SpaceVim#layers#load('lang#vim')
 call SpaceVim#layers#load('colorscheme',
       \ {
       \ 'random-theme' : 0,
