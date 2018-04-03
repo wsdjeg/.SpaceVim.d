@@ -11,6 +11,7 @@ let s:JSON = SpaceVim#api#import('data#json')
 " }}}
 
 " SpaceVim Options: {{{
+let g:spacevim_default_indent = 4
 let g:spacevim_enable_debug = 1
 let g:spacevim_enable_ale = 0
 let g:spacevim_enable_ycm = 0

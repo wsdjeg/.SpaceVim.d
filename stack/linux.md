@@ -360,3 +360,15 @@ xwininfo 和 xprop，返回信息侧重不同，按需求选。
 " https://blog.csdn.net/u012968002/article/details/64440836
 " http://www.cnblogs.com/kaituorensheng/p/3554571.html
 " https://blog.csdn.net/yuan892173701/article/details/8731490
+
+Ubuntu 16.04 新机器加用户，并快速搭建机器人！
+
+```
+$ curl -O https://storage.googleapis.com/golang/go1.9.linux-amd64.tar.gz  
+$ tar -C /usr/local -zxvf go1.9.linux-amd64.tar.gz  
+$ mkdir -p ~/go/src  
+$ echo "export GOPATH=$HOME/go" >> ~/.bashrc  
+$ echo "export PATH=$PATH:$GOPATH/bin:/usr/local/go/bin" >> ~/.bashrc  
+$ source ~/.bashrc  
+$ go version 
+```
