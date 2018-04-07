@@ -28,6 +28,7 @@ let g:spacevim_github_username = 'wsdjeg'
 let g:spacevim_auto_disable_touchpad = 0
 let g:spacevim_layer_lang_java_formatter = expand('~/Downloads/google-java-format-1.3-all-deps.jar')
 let g:spacevim_colorscheme = 'gruvbox'
+let g:spacevim_guifont = 'DejaVu Sans Mono for Powerline 9'
 let g:spacevim_custom_plugins = [
       \ ['lilydjwg/colorizer', {'merged' : 0}]
       \ ]
@@ -35,9 +36,13 @@ let g:spacevim_custom_plugins = [
 
 " SpaceVim Layers: {{{
 call SpaceVim#layers#load('ctrlp')
+call SpaceVim#layers#load('shell')
 call SpaceVim#layers#load('github')
+call SpaceVim#layers#load('git')
+call SpaceVim#layers#load('VersionControl')
 call SpaceVim#layers#load('tags')
 call SpaceVim#layers#load('lang#go')
+call SpaceVim#layers#load('lang#php')
 call SpaceVim#layers#load('lang#python')
 call SpaceVim#layers#load('lang#vim')
 call SpaceVim#layers#load('colorscheme',
