@@ -1,0 +1,78 @@
+#=============================================================================
+# init.vim --- My SpaceVim config
+# Copyright (c) 2016-2017 Wang Shidong & Contributors
+# Author: Wang Shidong < wsdjeg at 163.com >
+# URL: https://spacevim.org
+#=============================================================================
+
+# SpaceVim options {{{
+[options]
+    default_indent = 4
+    enable_debug = 1
+    enable_ale = 0
+    # enable_ycm = 1
+    # snippet_engine = "ultisnips"
+    line_on_the_fly = 0
+    realtime_leader_guide = 1
+    enable_tabline_filetype_icon = 1
+    enable_os_fileformat_icon = 1
+    buffer_index_type = 0
+    statusline_separator = 'arrow'
+    github_username = 'wsdjeg'
+    auto_disable_touchpad = 0
+    colorscheme = 'gruvbox'
+    guifont = 'DejaVu Sans Mono for Powerline 9'
+# }}}
+
+# SpaceVim layer config {{{
+[[layers]]
+name = 'denite'
+[[layers]]
+name = 'github'
+[[layers]]
+name = 'git'
+[[layers]]
+name = 'VersionControl'
+[[layers]]
+name = 'lang#go'
+[[layers]]
+name = 'lang#json'
+[[layers]]
+name = 'lang#java'
+[[layers]]
+name = 'lang#c'
+[[layers]]
+name = 'chat'
+[[layers]]
+name = 'tags'
+[[layers]]
+name = 'lang#toml'
+[[layers]]
+name = 'lang#lua'
+[[layers]]
+name = 'lang#php'
+[[layers]]
+name = 'lang#python'
+[[layers]]
+name = 'lang#vim'
+[[layers]]
+name = 'colorscheme'
+[[layers]]
+name = 'autocomplete'
+auto-completion-return-key-behavior = "complete"
+auto-completion-tab-key-behavior = "cycle"
+[[layers]]
+name = 'lang#markdown'
+enableWcwidth = 1
+listItemIndent = 1
+[[layers]]
+name = 'shell'
+default_position = 'top'
+default_height = 30
+# }}}
+
+# custom plugins {{{
+[[custom_plugins]]
+neme = 'lilydjwg/colorizer'
+merged = 0
+# }}}
