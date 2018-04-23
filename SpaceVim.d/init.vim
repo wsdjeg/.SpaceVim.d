@@ -14,7 +14,8 @@ let s:JSON = SpaceVim#api#import('data#json')
 let g:spacevim_default_indent = 4
 let g:spacevim_enable_debug = 1
 let g:spacevim_enable_ale = 0
-let g:spacevim_enable_ycm = 0
+" let g:spacevim_enable_ycm = 1
+" let g:spacevim_snippet_engine = 'ultisnips'
 let g:spacevim_lint_on_the_fly = 0
 let g:spacevim_realtime_leader_guide = 1
 let g:spacevim_enable_vimfiler_welcome = 1
@@ -26,23 +27,31 @@ let g:spacevim_buffer_index_type = 0
 let g:spacevim_statusline_separator = 'arrow'
 let g:spacevim_github_username = 'wsdjeg'
 let g:spacevim_auto_disable_touchpad = 0
-let g:spacevim_layer_lang_java_formatter = expand('~/Downloads/google-java-format-1.3-all-deps.jar')
+let g:spacevim_layer_lang_java_formatter = expand('~/Downloads/google-java-format-1.5-all-deps.jar')
 let g:spacevim_colorscheme = 'gruvbox'
 let g:spacevim_guifont = 'DejaVu Sans Mono for Powerline 9'
 let g:spacevim_custom_plugins = [
       \ ['lilydjwg/colorizer', {'merged' : 0}]
       \ ]
+" let g:spacevim_autocomplete_method = 'ycm'
+" let g:spacevim_snippet_engine = 'ultisnips'
 " }}}
 
 " SpaceVim Layers: {{{
-call SpaceVim#layers#load('ctrlp')
+call SpaceVim#layers#load('denite')
 call SpaceVim#layers#load('shell')
 call SpaceVim#layers#load('github')
 call SpaceVim#layers#load('git')
 call SpaceVim#layers#load('VersionControl')
-call SpaceVim#layers#load('tags')
 call SpaceVim#layers#load('lang#go')
+call SpaceVim#layers#load('lang#json')
+call SpaceVim#layers#load('lang#java')
+call SpaceVim#layers#load('lang#c')
+call SpaceVim#layers#load('chat')
+call SpaceVim#layers#load('tags')
+call SpaceVim#layers#load('lang#toml')
 call SpaceVim#layers#load('lang#php')
+call SpaceVim#layers#load('lang#lua')
 call SpaceVim#layers#load('lang#python')
 call SpaceVim#layers#load('lang#vim')
 call SpaceVim#layers#load('colorscheme',
@@ -57,6 +66,7 @@ call SpaceVim#layers#load('lang#markdown',
       \ }
       \ )
 " call SpaceVim#layers#disable('core#statusline')
+" call SpaceVim#layers#disable('core#tabline')
 " }}}
 
 " My Privite Config: {{{
@@ -129,4 +139,7 @@ function! s:run_vader() abort
   nnoremap <buffer> q :bd<cr>
 endfunction
 set rtp+=~/SpaceVim/fzy.vim
+set rtp+=~/SpaceVim/GitHub.vim
+set rtp+=~/SpaceVim/toml-indent.vim
+let g:spacevim_disabled_plugins = ['GitHub-api.vim']
 " vim:set nofoldenable:
