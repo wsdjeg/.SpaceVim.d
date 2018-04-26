@@ -58,9 +58,11 @@ name = 'lang#vim'
 [[layers]]
 name = 'colorscheme'
 [[layers]]
+name = 'debug'
+[[layers]]
 name = 'autocomplete'
 auto-completion-return-key-behavior = "complete"
-auto-completion-tab-key-behavior = "cycle"
+auto-completion-tab-key-behavior = "smart"
 [[layers]]
 name = 'lang#markdown'
 enableWcwidth = 1
