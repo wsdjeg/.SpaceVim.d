@@ -26,6 +26,14 @@ config.set('content.javascript.enabled', True, 'qute://*/*')
 #   - none: Don't use any proxy
 c.content.proxy = 'none'
 
+# Validate SSL handshakes.
+# Type: BoolAsk
+# Valid values:
+#   - true
+#   - false
+#   - ask
+c.content.ssl_strict = True
+
 # Page(s) to open at the start.
 # Type: List of FuzzyUrl, or FuzzyUrl
 c.url.start_pages = ['https://www.baidu.com/']
