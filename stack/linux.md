@@ -372,3 +372,9 @@ $ echo "export PATH=$PATH:$GOPATH/bin:/usr/local/go/bin" >> ~/.bashrc
 $ source ~/.bashrc  
 $ go version 
 ```
+
+Q: How to fuck archlinux shutdown?
+
+```
+systemctl mask mkinitcpio-generate-shutdown-ramfs.service
+```
