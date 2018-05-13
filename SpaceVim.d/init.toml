@@ -9,6 +9,7 @@
 [options]
     default_indent = 4
     enable_debug = 1
+    bootstrap_before = "TestFoo"
     enable_ale = 0
     # enable_ycm = 1
     # snippet_engine = "ultisnips"
@@ -22,11 +23,14 @@
     auto_disable_touchpad = 0
     colorscheme = 'gruvbox'
     guifont = 'DejaVu Sans Mono for Powerline 9'
+    enable_tabline_filetype_icon = true
 # }}}
 
 # SpaceVim layer config {{{
 [[layers]]
 name = 'denite'
+[[layers]]
+name = 'floobits'
 [[layers]]
 name = 'github'
 [[layers]]
@@ -53,6 +57,8 @@ name = 'lang#lua'
 name = 'lang#php'
 [[layers]]
 name = 'lang#python'
+[[layers]]
+name = 'tools'
 [[layers]]
 name = 'lang#vim'
 [[layers]]
