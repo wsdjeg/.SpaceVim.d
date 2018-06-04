@@ -111,3 +111,19 @@ SpaceVim 中大部分快捷键以空格键为前缀，内置一个快捷键导�
 当需要了解一个快捷键详细功能以及定义的时候，可以使用该功能快速打开快捷键功能描述，并且可以跳转到快捷键定义处。
 
 ![describe key bindings](https://user-images.githubusercontent.com/13142418/35568829-e3c8e74c-058f-11e8-8fa8-c0e046d8add3.gif)
+
+### 优雅的工作界面
+
+SpaceVim 内置了一个实用的状态栏及标签栏插件，可以在状态栏上实时提示多种信息，包括语法检查、版本控制信息以及功能启用状态。
+
+### 多光标编辑及高亮
+
+SpaceVim 支持智能高亮光标函数，并可以切换高亮范围（整个文件、当前方法、当前屏幕），选中高亮函数后，可启用多光标编辑。
+
+![highlight cursor symbol](https://user-images.githubusercontent.com/13142418/36210381-e6dffde6-1163-11e8-9b35-0bf262e6f22b.gif)
+
+### 实时代码检索
+
+内置 FlyGrep 插件，异步调用后台命令，根据用户的输入，实时搜索项目，展示搜索结果，已支持工具包括 ag、rg、pt、grep、ack 这五种工具。
+
+![searching project](https://user-images.githubusercontent.com/13142418/35278709-7856ed62-0010-11e8-8b1e-e6cc6374b0dc.gif)
