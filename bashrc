@@ -118,6 +118,8 @@ alias la='ls -A'
 alias l='ls -CF'
 alias vim='nvim'
 alias vi='/usr/bin/vim'
+alias vi741689='~/.vims/741689/bin/vim'
+alias vi74052='~/.vims/74052/bin/vim'
 alias vimtest='vim -u NORC --cmd "exe '\''set rtp+='\'' . getcwd()" --cmd "set termguicolors"'
 alias vitest='vi -u NORC --cmd "exe '\''set rtp+='\'' . getcwd()" --cmd "set nocp"'
 alias tmux="env TERM=xterm-256color tmux -2"
