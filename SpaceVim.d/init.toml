@@ -11,6 +11,7 @@
     enable_debug = 1
     bootstrap_before = "TestFoo"
     enable_ale = 0
+    filemanager = "nerdtree"
     # enable_ycm = 1
     # snippet_engine = "ultisnips"
     line_on_the_fly = 0
@@ -21,26 +22,17 @@
     statusline_separator = 'arrow'
     github_username = 'wsdjeg'
     auto_disable_touchpad = 0
-    colorscheme = 'gruvbox'
+    colorscheme = 'material'
     guifont = 'DejaVu Sans Mono for Powerline 9'
     enable_tabline_filetype_icon = true
     bootstrap_before = "myspacevim#before"
-custom_color_palette = [
-    ["#282828", "#a89984", 246, 235],
-    ["#a89984", "#504945", 239, 246],
-    ["#a89984", "#3c3836", 237, 246],
-    ["#665c54", 241],
-    ["#282828", "#83a598", 235, 109],
-    ["#282828", "#fe8019", 235, 208],
-    ["#282828", "#8ec07c", 235, 108],
-    ["#282828", "#689d6a", 235, 72],
-    ["#282828", "#8f3f71", 235, 132],
-    ]
 # }}}
 
 # SpaceVim layer config {{{
 [[layers]]
 name = 'denite'
+[[layers]]
+name = 'incsearch'
 [[layers]]
 name = 'floobits'
 [[layers]]
@@ -74,7 +66,15 @@ name = 'tools'
 [[layers]]
 name = 'lang#vim'
 [[layers]]
+name = 'lang#typescript'
+[[layers]]
 name = 'colorscheme'
+[[layers]]
+name = 'core#statusline'
+enable = true
+[[layers]]
+name = 'core#tabline'
+enable = true
 [[layers]]
 name = 'debug'
 [[layers]]
@@ -100,6 +100,10 @@ rust = ['rustup', 'run', 'nightly', 'rls']
 
 # custom plugins {{{
 [[custom_plugins]]
-name = 'lilydjwg/colorizer'
-merged = 0
+ name = 'lilydjwg/colorizer'
+ merged = 0
+ on_cmd = ['ColorHighlight']
+[[custom_plugins]]
+ name = 'kien/tabman.vim'
+ merged = 0
 # }}}
