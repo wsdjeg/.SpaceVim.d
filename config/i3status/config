@@ -40,7 +40,7 @@ battery 0 {
     integer_battery_capacity = true
     format = "%status %percentage %remaining %emptytime"
     format_down = "No battery"
-    status_chr = ""
+    status_chr = ""
     status_bat = ""
     status_full = ""
     status_unk = ""

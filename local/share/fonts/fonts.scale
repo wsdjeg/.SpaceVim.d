@@ -1,4 +1,4 @@
-137
+138
 DejaVu Sans Mono Bold Oblique for Powerline.ttf -misc-dejavu sans mono for powerline-bold-o-normal--0-0-0-0-m-0-ascii-0
 DejaVu Sans Mono Bold Oblique for Powerline.ttf -misc-dejavu sans mono for powerline-bold-o-normal--0-0-0-0-m-0-iso10646-1
 DejaVu Sans Mono Bold Oblique for Powerline.ttf -misc-dejavu sans mono for powerline-bold-o-normal--0-0-0-0-m-0-iso8859-1
@@ -131,6 +131,7 @@ WEBDINGS.TTF -microsoft-webdings-medium-r-normal--0-0-0-0-p-0-microsoft-symbol
 WINGDNG2.ttf -microsoft-wingdings 2-medium-r-normal--0-0-0-0-p-0-microsoft-symbol
 WINGDNG3.ttf -microsoft-wingdings 3-medium-r-normal--0-0-0-0-p-0-microsoft-symbol
 devicons.ttf -misc-icomoon-medium-r-normal--0-0-0-0-p-0-iso10646-1
+fontawesome-webfont.ttf -misc-fontawesome-medium-r-normal--0-0-0-0-p-0-iso10646-1
 mtextra.ttf -misc-mt extra-medium-r-normal--0-0-0-0-p-0-microsoft-symbol
 symbol.ttf -monotype-symbol-medium-r-normal--0-0-0-0-p-0-iso8859-1
 symbol.ttf -monotype-symbol-medium-r-normal--0-0-0-0-p-0-microsoft-symbol

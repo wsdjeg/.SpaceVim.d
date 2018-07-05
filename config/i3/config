@@ -128,7 +128,7 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 set $w1 1: 
 set $w2 2: 
-set $w3 3: 
+set $w3 3: 
 set $w4 4: 
 set $w5 5: 
 set $w6 6: 
