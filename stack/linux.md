@@ -378,3 +378,12 @@ Q: How to fuck archlinux shutdown?
 ```
 systemctl mask mkinitcpio-generate-shutdown-ramfs.service
 ```
+
+Q: Failed to connect to X server?
+
+I am using nvidia GT 520M, just replace package `nvidia` with `nvidia-390xx`, the error log is:
+
+```
+sudo pacman -R nvidia
+sudo pacman -Syu nvidia-390xx
+```
