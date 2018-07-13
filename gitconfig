@@ -22,3 +22,5 @@
   prompt = true
 [mergetool "vimdiff"]
   cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+[http]
+	proxy = socks5://127.0.0.1:33247

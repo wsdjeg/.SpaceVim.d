@@ -11,7 +11,7 @@
     enable_debug = 1
     bootstrap_before = "TestFoo"
     enable_ale = 0
-    filemanager = "nerdtree"
+    # filemanager = "nerdtree"
     # enable_ycm = 1
     # snippet_engine = "ultisnips"
     line_on_the_fly = 0
@@ -22,7 +22,7 @@
     statusline_separator = 'arrow'
     github_username = 'wsdjeg'
     auto_disable_touchpad = 0
-    colorscheme = 'material'
+    colorscheme = 'gruvbox'
     guifont = 'DejaVu Sans Mono for Powerline 9'
     enable_tabline_filetype_icon = true
     bootstrap_before = "myspacevim#before"
@@ -79,7 +79,7 @@ enable = true
 name = 'debug'
 [[layers]]
 name = 'autocomplete'
-auto-completion-return-key-behavior = "complete"
+auto-completion-return-key-behavior = "smart"
 auto-completion-tab-key-behavior = "smart"
 [[layers]]
 name = 'lang#markdown'
