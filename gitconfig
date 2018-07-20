@@ -22,3 +22,9 @@
   prompt = true
 [mergetool "vimdiff"]
   cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+[https "https://github.com"]
+	proxy = https://127.0.0.1:39397
+[http "http://github.com"]
+	proxy = http://127.0.0.1:39397
+[http]
+	postBuffer = 524288000
