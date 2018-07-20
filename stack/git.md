@@ -161,3 +161,23 @@ git clone --progress ...
 
 https://bitbucket.org/
 https://opensource.google.com/
+
+
+加速 git 体验：
+
+修改 hosts 加入：
+
+```
+151.101.72.249 http://global-ssl.fastly.Net
+192.30.253.112 http://github.com
+```
+
+执行：
+
+```
+git config --global --unset http.proxy
+git config --global --unset https.proxy
+git config --global https.https://github.com.proxy https://127.0.0.1:39397
+git config --global http.http://github.com.proxy http://127.0.0.1:39397
+git config --global http.postBuffer 524288000
+```
