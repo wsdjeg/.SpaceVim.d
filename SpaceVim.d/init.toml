@@ -30,72 +30,76 @@
 
 # SpaceVim layer config {{{
 [[layers]]
-name = 'denite'
+    name = 'denite'
 [[layers]]
-name = 'incsearch'
+    name = 'tmux'
 [[layers]]
-name = 'floobits'
+    name = 'lang#tmux'
 [[layers]]
-name = 'github'
+    name = 'incsearch'
 [[layers]]
-name = 'git'
+    name = 'floobits'
 [[layers]]
-name = 'VersionControl'
+    name = 'github'
 [[layers]]
-name = 'lang#go'
+    name = 'git'
 [[layers]]
-name = 'lang#json'
+    name = 'VersionControl'
 [[layers]]
-name = 'lang#java'
+    name = 'lang#go'
 [[layers]]
-name = 'lang#c'
+    name = 'lang#json'
 [[layers]]
-name = 'chat'
+    name = 'lang#java'
 [[layers]]
-name = 'tags'
+    name = 'lang#c'
 [[layers]]
-name = 'lang#toml'
+    name = 'chat'
 [[layers]]
-name = 'lang#lua'
+    name = 'tags'
 [[layers]]
-name = 'lang#php'
+    name = 'lang#toml'
 [[layers]]
-name = 'lang#python'
+    name = 'lang#lua'
 [[layers]]
-name = 'tools'
+    name = 'lang#php'
 [[layers]]
-name = 'lang#vim'
+    name = 'lang#python'
 [[layers]]
-name = 'lang#typescript'
+    name = 'tools'
 [[layers]]
-name = 'colorscheme'
+    name = 'lang#vim'
 [[layers]]
-name = 'core#statusline'
-enable = true
+    name = 'lang#typescript'
 [[layers]]
-name = 'core#tabline'
-enable = true
+    name = 'colorscheme'
 [[layers]]
-name = 'debug'
+    name = 'core#statusline'
+    enable = true
 [[layers]]
-name = 'autocomplete'
-auto-completion-return-key-behavior = "smart"
-auto-completion-tab-key-behavior = "smart"
+    name = 'core#tabline'
+    enable = true
 [[layers]]
-name = 'lang#markdown'
-enableWcwidth = 1
-listItemIndent = 1
+    name = 'debug'
 [[layers]]
-name = 'shell'
-default_position = 'top'
-default_height = 30
+    name = 'autocomplete'
+    auto-completion-return-key-behavior = "smart"
+    auto-completion-tab-key-behavior = "smart"
 [[layers]]
-name = 'lsp'
-filetypes = [
-'javascript'
-]
-[layers.override_cmd]
-rust = ['rustup', 'run', 'nightly', 'rls']
+    name = 'lang#markdown'
+    enableWcwidth = 1
+    listItemIndent = 1
+[[layers]]
+    name = 'shell'
+    default_position = 'top'
+    default_height = 30
+[[layers]]
+    name = 'lsp'
+    filetypes = [
+        'javascript'
+        ]
+    [layers.override_cmd]
+        rust = ['rustup', 'run', 'nightly', 'rls']
 # }}}
 
 # custom plugins {{{
