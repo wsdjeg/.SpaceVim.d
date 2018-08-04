@@ -22,7 +22,7 @@
     statusline_separator = 'arrow'
     github_username = 'wsdjeg'
     auto_disable_touchpad = 0
-    colorscheme = 'gruvbox'
+    colorscheme = 'one'
     guifont = 'DejaVu Sans Mono for Powerline 9'
     enable_tabline_filetype_icon = true
     bootstrap_before = "myspacevim#before"
@@ -109,5 +109,8 @@
  on_cmd = ['ColorHighlight']
 [[custom_plugins]]
  name = 'kien/tabman.vim'
+ merged = 0
+[[custom_plugins]]
+ name = 'tweekmonster/startuptime.vim'
  merged = 0
 # }}}
