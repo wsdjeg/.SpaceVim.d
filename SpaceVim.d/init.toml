@@ -15,6 +15,7 @@
     # enable_ycm = 1
     # snippet_engine = "ultisnips"
     line_on_the_fly = 0
+    enable_statusline_mode = true
     realtime_leader_guide = 1
     enable_tabline_filetype_icon = 1
     enable_os_fileformat_icon = 1
@@ -22,10 +23,11 @@
     statusline_separator = 'arrow'
     github_username = 'wsdjeg'
     auto_disable_touchpad = 0
-    colorscheme = 'one'
+    colorscheme = 'gruvbox'
     guifont = 'DejaVu Sans Mono for Powerline 9'
     enable_tabline_filetype_icon = true
     bootstrap_before = "myspacevim#before"
+    search_tools = ["ag", "rg", "pt", "ack", "grep"]
 # }}}
 
 # SpaceVim layer config {{{
@@ -35,6 +37,10 @@
     name = 'tmux'
 [[layers]]
     name = 'lang#tmux'
+[[layers]]
+    name = 'lang#nim'
+[[layers]]
+    name = 'lang#julia'
 [[layers]]
     name = 'incsearch'
 [[layers]]
@@ -49,6 +55,10 @@
     name = 'lang#go'
 [[layers]]
     name = 'lang#json'
+[[layers]]
+    name = 'lang#agda'
+[[layers]]
+    name = 'lang#perl'
 [[layers]]
     name = 'lang#java'
 [[layers]]
