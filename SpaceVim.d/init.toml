@@ -32,7 +32,7 @@
 
 # SpaceVim layer config {{{
 [[layers]]
-    name = 'denite'
+    name = 'fzf'
 [[layers]]
     name = 'tmux'
 [[layers]]
@@ -74,6 +74,10 @@
 [[layers]]
     name = 'lang#php'
 [[layers]]
+    name = 'lang#sh'
+[[layers]]
+    name = 'lang#purescript'
+[[layers]]
     name = 'lang#python'
 [[layers]]
     name = 'tools'
@@ -106,7 +110,8 @@
 [[layers]]
     name = 'lsp'
     filetypes = [
-        'javascript'
+        'javascript',
+        'sh'
         ]
     [layers.override_cmd]
         rust = ['rustup', 'run', 'nightly', 'rls']

@@ -387,3 +387,16 @@ I am using nvidia GT 520M, just replace package `nvidia` with `nvidia-390xx`, th
 sudo pacman -R nvidia
 sudo pacman -Syu nvidia-390xx
 ```
+
+Q: Failed to install purescript in archlinux?
+
+The problem is Arch uses ncurses6 where as PS is using ncurses5.
+I was able to build PS from sources and that worked, but then when I tried to
+use pulp init it failed saying it couldn't find libtinfo.so.5. The solution
+ncurses 5 was to install ncurses5-compat-libs after doing so now pulp 
+init worked with my purs compiled from sources.
+
+```
+sudo pacman -S ncurses5-compat-libs
+npm install -g purescript
+```
