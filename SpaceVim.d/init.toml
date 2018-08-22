@@ -32,11 +32,13 @@
 
 # SpaceVim layer config {{{
 [[layers]]
-    name = 'fzf'
+    name = 'denite'
 [[layers]]
     name = 'tmux'
 [[layers]]
     name = 'lang#tmux'
+[[layers]]
+    name = 'lang#erlang'
 [[layers]]
     name = 'lang#nim'
 [[layers]]
@@ -127,5 +129,8 @@
  merged = 0
 [[custom_plugins]]
  name = 'tweekmonster/startuptime.vim'
+ merged = 0
+[[custom_plugins]]
+ name = 'Shougo/defx.nvim'
  merged = 0
 # }}}
