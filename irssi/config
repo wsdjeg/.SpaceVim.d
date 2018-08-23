@@ -123,11 +123,11 @@ chatnets = {
 channels = (
   { name = "#neovim"; chatnet = "Freenode"; autojoin = "yes"; },
   { name = "#spacevim"; chatnet = "Freenode"; autojoin = "yes"; },
+  { name = "#spacevim-cn"; chatnet = "Freenode"; autojoin = "yes"; },
   { name = "#vim-china"; chatnet = "Freenode"; autojoin = "yes"; },
   { name = "#irssi"; chatnet = "Freenode"; autojoin = "yes"; },
   { name = "#i3"; chatnet = "Freenode"; autojoin = "yes"; },
-  { name = "#qutebrowser"; chatnet = "Freenode"; autojoin = "yes"; },
-  { name = "#vim"; chatnet = "Freenode"; autojoin = "No"; },
+  { name = "#vim"; chatnet = "Freenode"; autojoin = "yes"; },
   { name = "#archlinux-cn"; chatnet = "Freenode"; autojoin = "yes"; },
   { name = "#freenode"; chatnet = "Freenode"; autojoin = "No"; },
   { name = "#linux"; chatnet = "Freenode"; autojoin = "no"; },
