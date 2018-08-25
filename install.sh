@@ -303,3 +303,8 @@ irssi_add 'go' '1'
 irssi_add 'queryresume' '1'
 irssi_add 'trackbar' '1'
 irssi_add 'nickcolor' '1'
+
+
+# setup spacevim dev
+
+bash scripts/setup_spacevim_dev.sh
