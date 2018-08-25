@@ -17,3 +17,8 @@ fi
 if [ ! -d "$HOME/SpaceVim/vim-markdown" ];then
     git clone git@github.com:SpaceVim/vim-markdown.git ~/SpaceVim/vim-markdown
 fi
+
+# lang#elm layer
+if [ ! -d "$HOME/SpaceVim/vim-elm" ];then
+    git clone git@github.com:wsdjeg/vim-elm.git ~/SpaceVim/vim-elm
+fi

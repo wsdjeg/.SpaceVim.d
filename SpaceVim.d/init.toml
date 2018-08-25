@@ -36,6 +36,8 @@
 [[layers]]
     name = 'tmux'
 [[layers]]
+    name = 'lang#elm'
+[[layers]]
     name = 'lang#plantuml'
 [[layers]]
     name = 'lang#tmux'
