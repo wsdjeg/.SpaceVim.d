@@ -6,6 +6,9 @@ function! myspacevim#before() abort
     " lang#plantuml
     call add(g:spacevim_disabled_plugins, 'vim-slumlord')
     set rtp+=~/SpaceVim/vim-slumlord
+    " lang#markdown
+    call add(g:spacevim_disabled_plugins, 'vim-markdown')
+    set rtp+=~/SpaceVim/vim-markdown
     let g:vim_json_syntax_conceal = 0
     let g:delimitMate_expand_cr = 1
     call add(g:spacevim_project_rooter_patterns, 'package.json')

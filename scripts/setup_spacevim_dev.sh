@@ -12,3 +12,8 @@ if [ ! -d "$HOME/SpaceVim/SpaceVim" ];then
     # Add upstream remote
     git remote add upstream https://github.com/SpaceVim/SpaceVim.git
 fi
+
+# lang#markdown layer
+if [ ! -d "$HOME/SpaceVim/vim-markdown" ];then
+    git clone git@github.com:SpaceVim/vim-markdown.git ~/SpaceVim/vim-markdown
+fi
