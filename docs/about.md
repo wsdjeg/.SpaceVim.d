@@ -1,6 +1,6 @@
 # About Me
 
-My name is wang shidong. I'm an amateur programmer.
+My name is Wang Shidong. I'm an amateur programmer.
 
 ## Follow Me
 
