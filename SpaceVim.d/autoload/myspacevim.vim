@@ -12,7 +12,7 @@ function! myspacevim#before() abort
     " lang#elm
     call add(g:spacevim_disabled_plugins, 'vim-elm')
     set rtp+=~/SpaceVim/vim-elm
-    let g:vim_json_syntax_conceal = 0
+    set rtp+=~/SpaceVim/ChineseLinter.vim
     let g:delimitMate_expand_cr = 1
     call add(g:spacevim_project_rooter_patterns, 'package.json')
     augroup myspacevim

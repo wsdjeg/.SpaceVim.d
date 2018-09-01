@@ -11,7 +11,7 @@
     enable_debug = 1
     bootstrap_before = "TestFoo"
     enable_ale = 0
-    # filemanager = "nerdtree"
+    filemanager = "nerdtree"
     # enable_ycm = 1
     # snippet_engine = "ultisnips"
     line_on_the_fly = 0
@@ -35,6 +35,8 @@
     name = 'denite'
 [[layers]]
     name = 'tmux'
+[[layers]]
+    name = 'lang#elixir'
 [[layers]]
     name = 'lang#elm'
 [[layers]]
@@ -115,6 +117,7 @@
     default_height = 30
 [[layers]]
     name = 'lsp'
+    enable = false
     filetypes = [
         'javascript',
         'sh'
