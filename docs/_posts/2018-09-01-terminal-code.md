@@ -8,3 +8,11 @@
 - `\e`
 - `\033`
 - `\x1B`
+
+示例：
+
+| Code (Bash)                        | preview                                                                         |
+| ---------------------------------- | ------------------------------------------------------------------------------- |
+| `echo -e "\e[31mHello World\e[0m"` | ![](https://misc.flogisoft.com/_media/bash/colors_format/escape_example_01.png) |
+
+原文链接： <https://misc.flogisoft.com/bash/tip_colors_and_formatting>
