@@ -13,6 +13,8 @@ function! myspacevim#before() abort
     call add(g:spacevim_disabled_plugins, 'vim-elm')
     set rtp+=~/SpaceVim/vim-elm
     set rtp+=~/SpaceVim/ChineseLinter.vim
+    call add(g:spacevim_disabled_plugins, 'SourceCounter.vim')
+    set rtp+=~/SpaceVim/SourceCounter.vim
     let g:delimitMate_expand_cr = 1
     call add(g:spacevim_project_rooter_patterns, 'package.json')
     augroup myspacevim

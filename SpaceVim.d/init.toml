@@ -11,7 +11,7 @@
     enable_debug = 1
     bootstrap_before = "TestFoo"
     enable_ale = 0
-    filemanager = "nerdtree"
+    filemanager = "vimfiler"
     # enable_ycm = 1
     # snippet_engine = "ultisnips"
     line_on_the_fly = 0
@@ -37,6 +37,8 @@
     name = 'tmux'
 [[layers]]
     name = 'lang#elixir'
+[[layers]]
+    name = 'lang#latex'
 [[layers]]
     name = 'lang#elm'
 [[layers]]
