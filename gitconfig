@@ -1,6 +1,7 @@
 [user]
 	name = wsdjeg
 	email = wsdjeg@outlook.com
+	signingkey = CA9BC6E06EA8C070
 [push]
 	default = simple
 [merge]

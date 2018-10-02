@@ -17,12 +17,15 @@ function! myspacevim#before() abort
     set rtp+=~/SpaceVim/SourceCounter.vim
     call add(g:spacevim_disabled_plugins, 'GitHub-api.vim')
     set rtp+=~/SpaceVim/GitHub.vim
+    call add(g:spacevim_disabled_plugins, 'vim-asciidoc')
+    set rtp+=~/SpaceVim/vim-asciidoc
     let g:delimitMate_expand_cr = 1
     call add(g:spacevim_project_rooter_patterns, 'package.json')
     augroup myspacevim
         autocmd!
         autocmd FileType defx call s:defx_my_settings()
     augroup END
+    let g:spacevim_layer_lang_java_formatter = '/home/wsdjeg/Downloads/google-java-format-1.5-all-deps.jar'
 endfunction
 function! s:defx_my_settings() abort
     " Define mappings

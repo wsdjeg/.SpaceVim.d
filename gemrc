@@ -2,7 +2,7 @@
 :backtrace: false
 :bulk_threshold: 1000
 :sources:
-- https://gems.ruby-china.org/
+- https://gems.ruby-china.com/
 :update_sources: true
 :verbose: true
 gem: "--user-install"

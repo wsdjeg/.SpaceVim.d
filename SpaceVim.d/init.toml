@@ -15,7 +15,7 @@
     # enable_ycm = 1
     # snippet_engine = "ultisnips"
     line_on_the_fly = 0
-    enable_statusline_mode = true
+    enable_statusline_mode = false
     realtime_leader_guide = 1
     enable_tabline_filetype_icon = 1
     enable_os_fileformat_icon = 1
@@ -28,6 +28,8 @@
     enable_tabline_filetype_icon = true
     bootstrap_before = "myspacevim#before"
     search_tools = ["ag", "rg", "pt", "ack", "grep"]
+    # vimcompatible = true
+    # enable_language_specific_leader = false
 # }}}
 
 # SpaceVim layer config {{{
@@ -37,6 +39,8 @@
     name = 'tmux'
 [[layers]]
     name = 'lang#elixir'
+[[layers]]
+    name = 'lang#asciidoc'
 [[layers]]
     name = 'lang#latex'
 [[layers]]
@@ -97,6 +101,8 @@
     name = 'lang#typescript'
 [[layers]]
     name = 'colorscheme'
+    random_theme = true
+    frequency = '3h'
 [[layers]]
     name = 'core#statusline'
     enable = true
@@ -105,6 +111,10 @@
     enable = true
 [[layers]]
     name = 'debug'
+[[layers]]
+    name = 'chinese'
+[[layers]]
+    name = 'lang#puppet'
 [[layers]]
     name = 'autocomplete'
     auto-completion-return-key-behavior = "smart"
@@ -117,6 +127,8 @@
     name = 'shell'
     default_position = 'top'
     default_height = 30
+[[layers]]
+    name = 'cscope'
 [[layers]]
     name = 'lsp'
     enable = false
@@ -141,5 +153,8 @@
  merged = 0
 [[custom_plugins]]
  name = 'Shougo/defx.nvim'
+ merged = 0
+[[custom_plugins]]
+ name = 'srcery-colors/srcery-vim'
  merged = 0
 # }}}
