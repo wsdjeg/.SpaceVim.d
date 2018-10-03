@@ -19,6 +19,8 @@ function! myspacevim#before() abort
     set rtp+=~/SpaceVim/GitHub.vim
     call add(g:spacevim_disabled_plugins, 'vim-asciidoc')
     set rtp+=~/SpaceVim/vim-asciidoc
+    call add(g:spacevim_disabled_plugins, 'perldoc-vim')
+    set rtp+=~/SpaceVim/perldoc-vim
     let g:delimitMate_expand_cr = 1
     call add(g:spacevim_project_rooter_patterns, 'package.json')
     augroup myspacevim

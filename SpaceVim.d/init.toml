@@ -34,7 +34,7 @@
 
 # SpaceVim layer config {{{
 [[layers]]
-    name = 'denite'
+    name = 'ctrlp'
 [[layers]]
     name = 'tmux'
 [[layers]]
@@ -53,8 +53,6 @@
     name = 'lang#erlang'
 [[layers]]
     name = 'lang#nim'
-[[layers]]
-    name = 'lang#julia'
 [[layers]]
     name = 'incsearch'
 [[layers]]
@@ -75,8 +73,6 @@
     name = 'lang#perl'
 [[layers]]
     name = 'lang#java'
-[[layers]]
-    name = 'lang#c'
 [[layers]]
     name = 'chat'
 [[layers]]
@@ -111,8 +107,6 @@
     enable = true
 [[layers]]
     name = 'debug'
-[[layers]]
-    name = 'chinese'
 [[layers]]
     name = 'lang#puppet'
 [[layers]]
