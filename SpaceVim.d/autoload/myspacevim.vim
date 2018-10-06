@@ -21,6 +21,8 @@ function! myspacevim#before() abort
     set rtp+=~/SpaceVim/vim-asciidoc
     call add(g:spacevim_disabled_plugins, 'perldoc-vim')
     set rtp+=~/SpaceVim/perldoc-vim
+    call add(g:spacevim_disabled_plugins, 'JavaUnite.vim')
+    set rtp+=~/SpaceVim/JavaUnit.vim
     let g:delimitMate_expand_cr = 1
     call add(g:spacevim_project_rooter_patterns, 'package.json')
     augroup myspacevim
@@ -28,7 +30,15 @@ function! myspacevim#before() abort
         autocmd FileType defx call s:defx_my_settings()
     augroup END
     let g:spacevim_layer_lang_java_formatter = '/home/wsdjeg/Downloads/google-java-format-1.5-all-deps.jar'
+    command! CursorHighlight call s:cursor_highlight()
 endfunction
+
+let s:HI = SpaceVim#api#import('vim#highlight')
+
+function! s:cursor_highlight() abort
+    echo s:HI.syntax_at()
+endfunction
+
 function! s:defx_my_settings() abort
     " Define mappings
     nnoremap <silent><buffer><expr> <CR>

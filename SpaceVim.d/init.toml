@@ -27,14 +27,14 @@
     guifont = 'DejaVu Sans Mono for Powerline 9'
     enable_tabline_filetype_icon = true
     bootstrap_before = "myspacevim#before"
-    search_tools = ["ag", "rg", "pt", "ack", "grep"]
+    search_tools = ["rg", "ag", "pt", "ack", "grep"]
     # vimcompatible = true
     # enable_language_specific_leader = false
 # }}}
 
 # SpaceVim layer config {{{
 [[layers]]
-    name = 'ctrlp'
+    name = 'denite'
 [[layers]]
     name = 'tmux'
 [[layers]]
@@ -52,7 +52,7 @@
 [[layers]]
     name = 'lang#erlang'
 [[layers]]
-    name = 'lang#nim'
+    name = 'lang#julia'
 [[layers]]
     name = 'incsearch'
 [[layers]]
@@ -73,6 +73,8 @@
     name = 'lang#perl'
 [[layers]]
     name = 'lang#java'
+[[layers]]
+    name = 'lang#c'
 [[layers]]
     name = 'chat'
 [[layers]]
@@ -108,9 +110,12 @@
 [[layers]]
     name = 'debug'
 [[layers]]
+    name = 'chinese'
+[[layers]]
     name = 'lang#puppet'
 [[layers]]
     name = 'autocomplete'
+    auto-completion-delay = 10
     auto-completion-return-key-behavior = "smart"
     auto-completion-tab-key-behavior = "smart"
 [[layers]]
