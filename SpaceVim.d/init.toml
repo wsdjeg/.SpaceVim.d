@@ -24,9 +24,10 @@
     github_username = 'wsdjeg'
     auto_disable_touchpad = 0
     colorscheme = 'gruvbox'
+    checkinstall = false
     guifont = 'DejaVu Sans Mono for Powerline 9'
     enable_tabline_filetype_icon = true
-    bootstrap_before = "myspacevim#before"
+    bootstrap_before = "bootstrap_before#init"
     search_tools = ["rg", "ag", "pt", "ack", "grep"]
     # vimcompatible = true
     # enable_language_specific_leader = false
@@ -128,6 +129,8 @@
     default_height = 30
 [[layers]]
     name = 'cscope'
+[[layers]]
+    name = 'lang#scheme'
 [[layers]]
     name = 'lsp'
     enable = false
