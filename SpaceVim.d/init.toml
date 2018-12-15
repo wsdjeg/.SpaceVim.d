@@ -25,7 +25,7 @@
     auto_disable_touchpad = 0
     colorscheme = 'gruvbox'
     checkinstall = false
-    guifont = 'DejaVu Sans Mono for Powerline 9'
+    guifont = 'SauceCodePro Nerd Font Mono:h11:cANSI:qDRAFT'
     enable_tabline_filetype_icon = true
     bootstrap_before = "bootstrap_before#init"
     search_tools = ["rg", "ag", "pt", "ack", "grep"]
