@@ -39,40 +39,55 @@ function! myspacevim#before() abort
 
     " here is a list of plugins which are used in SpaceVim, and I need to
     " debug locally:
+    " All plugins arg cloned into $MYSRCDIR default is ~/SpaceVim
+    let $MYSRCDIR = '~/SpaceVim'
     " defind global var before using it:
     let g:spacevim_disabled_plugins = []
     " vim-nim           {{{
     call add(g:spacevim_disabled_plugins, 'vim-nim')
-    set rtp+=~/SpaceVim/vim-nim
+    set rtp+=$MYSRCDIR/vim-nim
     " }}}
     " gtags.vim         {{{
     call add(g:spacevim_disabled_plugins, 'gtags.vim')
-    set rtp+=~/SpaceVim/gtags.vim
+    set rtp+=$MYSRCDIR/gtags.vim
     " }}}
     " vim-markdown      {{{
     call add(g:spacevim_disabled_plugins, 'vim-markdown')
-    set rtp+=~/SpaceVim/vim-markdown
+    set rtp+=$MYSRCDIR/vim-markdown
+    " }}}
+    " vim-slumlord      {{{
+    call add(g:spacevim_disabled_plugins, 'vim-slumlord')
+    set rtp+=$MYSRCDIR/vim-slumlord
+    " }}}
+    " SourceCounter     {{{
+    call add(g:spacevim_disabled_plugins, 'SourceCounter.vim')
+    set rtp+=$MYSRCDIR/SourceCounter.vim
+    " }}}
+    " Github.vim        {{{
+    call add(g:spacevim_disabled_plugins, 'GitHub-api.vim')
+    set rtp+=$MYSRCDIR/GitHub.vim
+    " }}}
+    " vim-elm           {{{
+    call add(g:spacevim_disabled_plugins, 'vim-elm')
+    set rtp+=$MYSRCDIR/vim-elm
+    " }}}
+    " vim-asciidoc      {{{
+    call add(g:spacevim_disabled_plugins, 'vim-asciidoc')
+    set rtp+=$MYSRCDIR/vim-asciidoc
+    " }}}
+    " perldoc-vim       {{{
+    call add(g:spacevim_disabled_plugins, 'perldoc-vim')
+    set rtp+=$MYSRCDIR/perldoc-vim
+    " }}}
+    " JavaUnit.vim      {{{
+    call add(g:spacevim_disabled_plugins, 'JavaUnite.vim')
+    set rtp+=$MYSRCDIR/JavaUnit.vim
     " }}}
 
-    " lang#plantuml
-    call add(g:spacevim_disabled_plugins, 'vim-slumlord')
-    set rtp+=~/SpaceVim/vim-slumlord
-    " lang#elm
-    call add(g:spacevim_disabled_plugins, 'vim-elm')
-    set rtp+=~/SpaceVim/vim-elm
-    set rtp+=~/SpaceVim/ChineseLinter.vim
-    call add(g:spacevim_disabled_plugins, 'SourceCounter.vim')
-    set rtp+=~/SpaceVim/SourceCounter.vim
-    call add(g:spacevim_disabled_plugins, 'GitHub-api.vim')
-    set rtp+=~/SpaceVim/GitHub.vim
-    call add(g:spacevim_disabled_plugins, 'vim-asciidoc')
-    set rtp+=~/SpaceVim/vim-asciidoc
-    call add(g:spacevim_disabled_plugins, 'perldoc-vim')
-    set rtp+=~/SpaceVim/perldoc-vim
-    call add(g:spacevim_disabled_plugins, 'JavaUnite.vim')
-    set rtp+=~/SpaceVim/JavaUnit.vim
+
     let g:delimitMate_expand_cr = 1
     call add(g:spacevim_project_rooter_patterns, 'package.json')
+    set rtp+=~/SpaceVim/ChineseLinter.vim
     augroup myspacevim
         autocmd!
         autocmd FileType defx call s:defx_my_settings()
