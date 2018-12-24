@@ -3,6 +3,7 @@ let s:SYS = SpaceVim#api#import('system')
 function! myspacevim#before() abort
     call SpaceVim#logger#info('myspacevim#before called')
     if s:SYS.isWindows
+        " Windows bin utils {{{
         " Downloads gun global from:
         " http://adoxa.altervista.org/global/
         " GLOBAL 6.6.3 Win32 (938k)
@@ -14,6 +15,18 @@ function! myspacevim#before() abort
         " Downloads grep from
         " https://nchc.dl.sourceforge.net/project/gnuwin32/grep/2.5.4/grep-2.5.4-setup.exe
         let $PATH .= ';D:\Program Files\GnuWin32\bin'
+        " Add bin path, in this path, there are ag, rg, pt, etc.
+        " ag: 
+        "   sources: https://github.com/ggreer/the_silver_searcher
+        "   bin:     https://github.com/k-takata/the_silver_searcher-win32/releases
+        " rg:
+        "   sources: https://github.com/BurntSushi/ripgrep
+        "   bin:     https://github.com/BurntSushi/ripgrep/releases
+        " pt:
+        "   sources: https://github.com/monochromegane/the_platinum_searcher
+        "   bin:     https://github.com/monochromegane/the_platinum_searcher/releases
+        let $PATH .= ';D:\bin'
+        " }}}
     endif
 
     let g:spacevim_disabled_plugins = ['vim-nim']
