@@ -1,9 +1,11 @@
 let s:SYS = SpaceVim#api#import('system')
 
 function! myspacevim#before() abort
+    set rtp+=~/SpaceVim/SpaceVim/build/vader
     call SpaceVim#logger#info('myspacevim#before called')
+
+    " Windows bin utils {{{
     if s:SYS.isWindows
-        " Windows bin utils {{{
         " Downloads gun global from:
         " http://adoxa.altervista.org/global/
         " GLOBAL 6.6.3 Win32 (938k)
@@ -32,18 +34,29 @@ function! myspacevim#before() abort
         " C:\Python27\python.exe
         " PYTHON3_HOST_PROG
         " C:\Users\Administrator\AppData\Local\Programs\Python\Python37\python.exe
-        " }}}
     endif
+    " }}}
 
-    let g:spacevim_disabled_plugins = ['vim-nim']
-    set rtp+=~/SpaceVim/SpaceVim/build/vader
+    " here is a list of plugins which are used in SpaceVim, and I need to
+    " debug locally:
+    " defind global var before using it:
+    let g:spacevim_disabled_plugins = []
+    " vim-nim           {{{
+    call add(g:spacevim_disabled_plugins, 'vim-nim')
     set rtp+=~/SpaceVim/vim-nim
+    " }}}
+    " gtags.vim         {{{
+    call add(g:spacevim_disabled_plugins, 'gtags.vim')
+    set rtp+=~/SpaceVim/gtags.vim
+    " }}}
+    " vim-markdown      {{{
+    call add(g:spacevim_disabled_plugins, 'vim-markdown')
+    set rtp+=~/SpaceVim/vim-markdown
+    " }}}
+
     " lang#plantuml
     call add(g:spacevim_disabled_plugins, 'vim-slumlord')
     set rtp+=~/SpaceVim/vim-slumlord
-    " lang#markdown
-    call add(g:spacevim_disabled_plugins, 'vim-markdown')
-    set rtp+=~/SpaceVim/vim-markdown
     " lang#elm
     call add(g:spacevim_disabled_plugins, 'vim-elm')
     set rtp+=~/SpaceVim/vim-elm
