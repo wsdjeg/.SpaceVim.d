@@ -1,5 +1,21 @@
+let s:SYS = SpaceVim#api#import('system')
+
 function! myspacevim#before() abort
     call SpaceVim#logger#info('myspacevim#before called')
+    if s:SYS.isWindows
+        " Downloads gun global from:
+        " http://adoxa.altervista.org/global/
+        " GLOBAL 6.6.3 Win32 (938k)
+        let $PATH .= ';D:\Program Files\gtags\bin'
+        " Downloads coreutils from
+        " https://nchc.dl.sourceforge.net/project/gnuwin32/coreutils/5.3.0/coreutils-5.3.0-bin.zip
+        " coreutils-5.3.0-bin.zip
+        let $PATH .= ';D:\Program Files\coreutils\bin'
+        " Downloads grep from
+        " https://nchc.dl.sourceforge.net/project/gnuwin32/grep/2.5.4/grep-2.5.4-setup.exe
+        let $PATH .= ';D:\Program Files\GnuWin32\bin'
+    endif
+
     let g:spacevim_disabled_plugins = ['vim-nim']
     set rtp+=~/SpaceVim/SpaceVim/build/vader
     set rtp+=~/SpaceVim/vim-nim
