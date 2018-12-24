@@ -26,6 +26,12 @@ function! myspacevim#before() abort
         "   sources: https://github.com/monochromegane/the_platinum_searcher
         "   bin:     https://github.com/monochromegane/the_platinum_searcher/releases
         let $PATH .= ';D:\bin'
+        "
+        " When using neovim in windows the only var need to be set is:
+        " PYTHON_HOST_PROG 
+        " C:\Python27\python.exe
+        " PYTHON3_HOST_PROG
+        " C:\Users\Administrator\AppData\Local\Programs\Python\Python37\python.exe
         " }}}
     endif
 
