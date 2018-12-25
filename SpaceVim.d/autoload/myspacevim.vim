@@ -90,8 +90,8 @@ function! myspacevim#before() abort
     set rtp+=$MYSRCDIR/perldoc-vim
     " }}}
     " JavaUnit.vim      {{{
-    call add(g:spacevim_disabled_plugins, 'JavaUnite.vim')
-    call s:add_load_repo('wsdjeg/JavaUnite.vim')
+    call add(g:spacevim_disabled_plugins, 'JavaUnit.vim')
+    call s:add_load_repo('wsdjeg/JavaUnit.vim')
     set rtp+=$MYSRCDIR/JavaUnit.vim
     " }}}
     "
@@ -151,7 +151,16 @@ endfunction
 
 function! s:check_local_repo(repo) abort
     let dir = $MYSRCDIR . '/' . split(a:repo, '/')[1]
-    if !isdirectory(dir)
-        call s:JOB.start(['git', 'clone', 'https://github.com/' . a:repo], {'cwd' : $MYSRCDIR})
+    if !isdirectory(expand(dir))
+        call s:JOB.start(['git', 'clone', 'https://github.com/' . a:repo], {'cwd' : expand($MYSRCDIR), 
+                    \ 'on_stdout' : function('s:clone_std'),
+                    \ 'on_stderr' : function('s:clone_std'),
+                    \ })
     endif
+endfunction
+
+let g:_mylog = []
+
+function! s:clone_std(id, data, event) abort
+    call add(g:_mylog, a:data)
 endfunction
