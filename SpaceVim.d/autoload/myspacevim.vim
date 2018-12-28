@@ -35,6 +35,12 @@ function! myspacevim#before() abort
         " C:\Python27\python.exe
         " PYTHON3_HOST_PROG
         " C:\Users\Administrator\AppData\Local\Programs\Python\Python37\python.exe
+
+        " In windows neovim, if there is space in PATH, the executable()
+        " function will not work
+        if 1 " here, I do not know which patch will fix this issue
+            let $PATH = substitute($PATH, ' ', '\\ ', 'g')
+        endif
     endif
     " }}}
 
@@ -58,6 +64,16 @@ function! myspacevim#before() abort
     call add(g:spacevim_disabled_plugins, 'vim-markdown')
     call s:add_load_repo('SpaceVim/vim-markdown')
     set rtp+=$MYSRCDIR/vim-markdown
+    " }}}
+    " vim-hug-neovim-rpc      {{{
+    call add(g:spacevim_disabled_plugins, 'vim-hug-neovim-rpc')
+    call s:add_load_repo('SpaceVim/vim-hug-neovim-rpc')
+    set rtp+=$MYSRCDIR/vim-hug-neovim-rpc
+    " }}}
+    " nvim-yarp      {{{
+    call add(g:spacevim_disabled_plugins, 'nvim-yarp')
+    call s:add_load_repo('SpaceVim/nvim-yarp')
+    set rtp+=$MYSRCDIR/nvim-yarp
     " }}}
     " vim-slumlord      {{{
     call add(g:spacevim_disabled_plugins, 'vim-slumlord')
