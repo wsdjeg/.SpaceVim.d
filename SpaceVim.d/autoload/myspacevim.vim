@@ -39,7 +39,7 @@ function! myspacevim#before() abort
         " In windows neovim, if there is space in PATH, the executable()
         " function will not work
         if 1 " here, I do not know which patch will fix this issue
-            let $PATH = substitute($PATH, ' ', '\\ ', 'g')
+            " let $PATH = substitute($PATH, ' ', '\\ ', 'g')
         endif
     endif
     " }}}
