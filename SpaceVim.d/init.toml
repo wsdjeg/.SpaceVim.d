@@ -30,6 +30,7 @@
     guifont = 'DroidSansMono_NF:h11:cANSI:qDRAFT'
     enable_tabline_filetype_icon = false
     bootstrap_before = "myspacevim#before"
+    bootstrap_after = "myspacevim#after"
     search_tools = ["rg", "pt", "ack", "grep", "findstr"]
     # autocomplete_method = "coc"
     commandline_prompt = '>'
