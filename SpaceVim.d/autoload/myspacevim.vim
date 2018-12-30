@@ -10,7 +10,7 @@ function! myspacevim#before() abort
     " Windows bin utils {{{
     if s:SYS.isWindows
         if !has('nvim')
-            " set rop=type:directx
+            set rop=type:directx
             let g:githubapi_curl_exe = 'D:\Program Files\Neovim\bin\curl.exe'
         endif
         " Downloads gun global from:
