@@ -7,6 +7,10 @@ function! myspacevim#before() abort
 
     " Windows bin utils {{{
     if s:SYS.isWindows
+        if !has('nvim')
+            " set rop=type:directx
+            let g:githubapi_curl_exe = 'D:\Program Files\Neovim\bin\curl.exe'
+        endif
         " Downloads gun global from:
         " http://adoxa.altervista.org/global/
         " GLOBAL 6.6.3 Win32 (938k)
@@ -126,6 +130,9 @@ function! myspacevim#before() abort
     let profile = SpaceVim#mapping#search#getprofile('rg')
     let default_opt = profile.default_opts + ['--no-ignore-vcs']
     call SpaceVim#mapping#search#profile({'rg' : {'default_opts' : default_opt}})
+
+    let g:vimfiler_tree_opened_icon = ''
+    let g:vimfiler_tree_closed_icon = ''
 endfunction
 
 let s:HI = SpaceVim#api#import('vim#highlight')
