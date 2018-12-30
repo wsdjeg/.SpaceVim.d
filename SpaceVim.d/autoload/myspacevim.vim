@@ -1,9 +1,11 @@
+scriptencoding utf-8
 let s:SYS = SpaceVim#api#import('system')
 let s:JOB = SpaceVim#api#import('job')
 
 function! myspacevim#before() abort
     set rtp+=~/SpaceVim/SpaceVim/build/vader
-    call SpaceVim#logger#info('myspacevim#before called')
+    set history=10000
+    let g:neomru#file_mru_ignore_pattern = '^[a-z]\+://'
 
     " Windows bin utils {{{
     if s:SYS.isWindows
@@ -45,6 +47,40 @@ function! myspacevim#before() abort
         if 1 " here, I do not know which patch will fix this issue
             " let $PATH = substitute($PATH, ' ', '\\ ', 'g')
         endif
+        " SpaceVim development
+        " lint:  vint
+        " install: pip install --pre vim-vint
+        let g:neomake_vim_vint_maker = {
+                    \ 'exe': 'C:\Users\Administrator\AppData\Local\Programs\Python\Python37\Scripts\vint',
+                    \ 'args': ['--style-problem', '--no-color',
+                    \          '-f', '{file_path}:{line_number}:{column_number}:{severity}:{description} ({policy_name})'],
+                    \ 'errorformat': '%f:%l:%c: %m',
+                    \ 'output_stream': 'stdout',
+                    \ }
+        " lint:  vint-errors
+        let g:neomake_vim_vinterrors_maker = {
+                    \ 'exe': 'C:\Users\Administrator\AppData\Local\Programs\Python\Python37\Scripts\vint',
+                    \ 'args': ['--style-problem', '--no-color',
+                    \          '-f', '{file_path}:{line_number}:{column_number}:{severity}:{description} ({policy_name})'],
+                    \ 'errorformat': '%f:%l:%c: %m',
+                    \ 'output_stream': 'stdout',
+                    \ }
+        " lint:  vimlint
+        let g:neomake_vim_vimlint_maker = {
+                    \ 'exe': 'C:\Users\Administrator\AppData\Local\Programs\Python\Python37\Scripts\vint',
+                    \ 'args': ['--style-problem', '--no-color',
+                    \          '-f', '{file_path}:{line_number}:{column_number}:{severity}:{description} ({policy_name})'],
+                    \ 'errorformat': '%f:%l:%c: %m',
+                    \ 'output_stream': 'stdout',
+                    \ }
+        " lint:  vimlint-errors
+        let g:neomake_vim_vimlinterrors_maker = {
+                    \ 'exe': 'C:\Users\Administrator\AppData\Local\Programs\Python\Python37\Scripts\vint',
+                    \ 'args': ['--style-problem', '--no-color',
+                    \          '-f', '{file_path}:{line_number}:{column_number}:{severity}:{description} ({policy_name})'],
+                    \ 'errorformat': '%f:%l:%c: %m',
+                    \ 'output_stream': 'stdout',
+                    \ }
     endif
     " }}}
 
