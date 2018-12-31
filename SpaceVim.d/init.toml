@@ -36,6 +36,7 @@
     commandline_prompt = '>'
     # vimcompatible = true
     # enable_language_specific_leader = false
+    enable_statusline_tag = false
 # }}}
 
 # SpaceVim layer config {{{
@@ -51,6 +52,8 @@
     name = 'lang#vim'
 [[layers]]
     name = 'lang#python'
+[[layers]]
+    name = 'lang#javascript'
 [[layers]]
     name = 'colorscheme'
     random_theme = true

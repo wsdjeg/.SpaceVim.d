@@ -6,7 +6,7 @@ function! myspacevim#before() abort
     set rtp+=~/SpaceVim/SpaceVim/build/vader
     set history=10000
     let g:neomru#file_mru_ignore_pattern = '^[a-z]\+://'
-
+    let g:deoplete#enable_at_startup = 1
     " Windows bin utils {{{
     if s:SYS.isWindows
         if !has('nvim')
