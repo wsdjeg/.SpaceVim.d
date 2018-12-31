@@ -126,70 +126,60 @@ function! myspacevim#before() abort
     " vim-nim           {{{
     call add(g:spacevim_disabled_plugins, 'vim-nim')
     call s:add_load_repo('wsdjeg/vim-nim')
-    set rtp+=$MYSRCDIR/vim-nim
     " }}}
     " gtags.vim         {{{
     call add(g:spacevim_disabled_plugins, 'gtags.vim')
     call s:add_load_repo('SpaceVim/gtags.vim')
-    set rtp+=$MYSRCDIR/gtags.vim
     " }}}
     " vim-markdown      {{{
     call add(g:spacevim_disabled_plugins, 'vim-markdown')
     call s:add_load_repo('SpaceVim/vim-markdown')
-    set rtp+=$MYSRCDIR/vim-markdown
     " }}}
     " vim-hug-neovim-rpc      {{{
     call add(g:spacevim_disabled_plugins, 'vim-hug-neovim-rpc')
     call s:add_load_repo('SpaceVim/vim-hug-neovim-rpc')
-    set rtp+=$MYSRCDIR/vim-hug-neovim-rpc
     " }}}
     " nvim-yarp      {{{
     call add(g:spacevim_disabled_plugins, 'nvim-yarp')
     call s:add_load_repo('SpaceVim/nvim-yarp')
-    set rtp+=$MYSRCDIR/nvim-yarp
     " }}}
     " vim-slumlord      {{{
     call add(g:spacevim_disabled_plugins, 'vim-slumlord')
     call s:add_load_repo('wsdjeg/vim-slumlord')
-    set rtp+=$MYSRCDIR/vim-slumlord
     " }}}
     " SourceCounter     {{{
     call add(g:spacevim_disabled_plugins, 'SourceCounter.vim')
     call s:add_load_repo('wsdjeg/SourceCounter.vim')
-    set rtp+=$MYSRCDIR/SourceCounter.vim
     " }}}
     " Github.vim        {{{
     call add(g:spacevim_disabled_plugins, 'GitHub-api.vim')
     call s:add_load_repo('wsdjeg/GitHub.vim')
-    set rtp+=$MYSRCDIR/GitHub.vim
     " }}}
     " vim-elm           {{{
     call add(g:spacevim_disabled_plugins, 'vim-elm')
     call s:add_load_repo('wsdjeg/vim-elm')
-    set rtp+=$MYSRCDIR/vim-elm
     " }}}
     " vim-asciidoc      {{{
     call add(g:spacevim_disabled_plugins, 'vim-asciidoc')
     call s:add_load_repo('wsdjeg/vim-asciidoc')
-    set rtp+=$MYSRCDIR/vim-asciidoc
     " }}}
     " perldoc-vim       {{{
     call add(g:spacevim_disabled_plugins, 'perldoc-vim')
     call s:add_load_repo('wsdjeg/perldoc-vim')
-    set rtp+=$MYSRCDIR/perldoc-vim
     " }}}
     " JavaUnit.vim      {{{
     call add(g:spacevim_disabled_plugins, 'JavaUnit.vim')
     call s:add_load_repo('wsdjeg/JavaUnit.vim')
-    set rtp+=$MYSRCDIR/JavaUnit.vim
     " }}}
-    "
+    " ChineseLinter.vim      {{{
+    call add(g:spacevim_disabled_plugins, 'ChineseLinter.vim')
+    call s:add_load_repo('wsdjeg/ChineseLinter.vim')
+    " }}}
     for repo in s:repos
         call s:check_local_repo(repo)
     endfor
     let g:delimitMate_expand_cr = 1
     call add(g:spacevim_project_rooter_patterns, 'package.json')
-    set rtp+=~/SpaceVim/ChineseLinter.vim
     augroup myspacevim
         autocmd!
         autocmd FileType defx call s:defx_my_settings()
@@ -239,6 +229,7 @@ endfunction
 let s:repos = []
 function! s:add_load_repo(repo) abort
     call add(s:repos, a:repo)
+    exe 'set rtp+=' . expand($MYSRCDIR) . '\' . split(a:repo, '/')[1]
 endfunction
 
 function! s:check_local_repo(repo) abort
