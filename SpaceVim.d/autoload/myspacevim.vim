@@ -35,6 +35,15 @@ function! myspacevim#before() abort
         "   sources: https://github.com/monochromegane/the_platinum_searcher
         "   bin:     https://github.com/monochromegane/the_platinum_searcher/releases
         let $PATH .= ';D:\bin'
+        " go language
+        "
+        let $PATH .= ';D:\Go\bin'
+        let $PATH .= ';D:\goprojects\bin'
+        let $GOPATH = 'D:\goprojects'
+        " Java language
+        let $PATH .= ';D:\Program Files\Java\jdk1.8.0_191\bin'
+        " Lua language
+        let $PATH .= ';D:\Program Files\lua-5.3.4_Win64_bin'
         " Add php
         let $PATH .= ';D:\Program Files\php'
         let g:tagbar_type_markdown = {
@@ -250,4 +259,27 @@ endfunction
 
 
 function! myspacevim#after()
+    let s:CMD = SpaceVim#api#import('vim#command')
+    let s:CMD.options = {
+                \ '-f' : {
+                \ 'description' : '',
+                \ 'complete' : ['text'],
+                \ },
+                \ '-d' : {
+                \ 'description' : 'Root directory for sources',
+                \ 'complete' : 'file',
+                \ },
+                \ }
+    function! CompleteTest(a, b, c)
+        return s:CMD.complete(a:a, a:b, a:c)
+    endfunction
+    function! CompleteTestList(a, b, c)
+        return s:CMD.completelist(a:a, a:b, a:c)
+    endfunction
+    function! Test(...)
+    endfunction
+    command! -nargs=* -complete=custom,CompleteTest
+                \ Edit :call Test(<f-args>)
+    command! -nargs=* -complete=customlist,CompleteTestList
+                \ EditList :call Test(<f-args>)
 endfunction

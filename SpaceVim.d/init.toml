@@ -25,7 +25,7 @@
     statusline_separator = 'arrow'
     github_username = 'wsdjeg'
     auto_disable_touchpad = 0
-    colorscheme = 'gruvbox'
+    colorscheme = 'one'
     checkinstall = false
     guifont = 'DroidSansMono_NF:h11:cANSI:qDRAFT'
     enable_tabline_filetype_icon = false
@@ -47,11 +47,22 @@
 [[layers]]
     name = 'git'
 [[layers]]
+    name = 'tags'
+[[layers]]
     name = 'VersionControl'
 [[layers]]
     name = 'lang#vim'
 [[layers]]
+    name = 'lang#lua'
+[[layers]]
+    name = 'lang#rust'
+[[layers]]
+    name = 'lang#go'
+[[layers]]
+    name = 'lang#java'
+[[layers]]
     name = 'lang#python'
+    format-on-save = 1
 [[layers]]
     name = 'lang#javascript'
 [[layers]]
@@ -93,6 +104,6 @@
  name = 'Shougo/defx.nvim'
  merged = 0
 [[custom_plugins]]
- name = 'srcery-colors/srcery-vim'
+ name = 'tpope/vim-scriptease'
  merged = 0
 # }}}

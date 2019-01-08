@@ -13,7 +13,7 @@ options     head
 snippet  funca
 abbr     autoload function
 options     head
-    function! `bufname('%') =~ '^autoload' ? join(split(bufname('%'), '/')[1:-1], '#')[:-5] . '#' : ''`${1:fname}(${2:#:argv})
+    function! `bufname('%') =~ '^autoload' ? join(split(bufname('%'), SpaceVim#api#import('file').separator)[1:-1], '#')[:-5] . '#' : ''`${1:fname}(${2:#:argv})
 
     ${0}
 
