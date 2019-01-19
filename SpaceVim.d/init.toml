@@ -25,7 +25,7 @@
     statusline_separator = 'arrow'
     github_username = 'wsdjeg'
     auto_disable_touchpad = 0
-    colorscheme = 'one'
+    colorscheme = 'gruvbox'
     checkinstall = false
     guifont = 'DroidSansMono_NF:h11:cANSI:qDRAFT'
     enable_tabline_filetype_icon = false
@@ -43,9 +43,13 @@
 [[layers]]
     name = 'denite'
 [[layers]]
+    name = 'incsearch'
+[[layers]]
     name = 'format'
 [[layers]]
     name = 'git'
+[[layers]]
+    name = 'tools'
 [[layers]]
     name = 'tags'
 [[layers]]
@@ -53,7 +57,13 @@
 [[layers]]
     name = 'lang#vim'
 [[layers]]
+    name = 'lang#php'
+[[layers]]
+    name = 'lang#elixir'
+[[layers]]
     name = 'lang#lua'
+[[layers]]
+    name = 'lang#perl'
 [[layers]]
     name = 'lang#rust'
 [[layers]]
