@@ -42,10 +42,15 @@ function! myspacevim#before() abort
         let $GOPATH = 'D:\goprojects'
         " Java language
         let $PATH .= ';D:\Program Files\Java\jdk1.8.0_191\bin'
+        let $PATH .= ';D:\Program Files\maven\bin'
         " Lua language
         let $PATH .= ';D:\Program Files\lua-5.3.4_Win64_bin'
+        " red language: https://www.red-lang.org/
+        let $PATH .= ';D:\red'
         " Add php
         let $PATH .= ';D:\Program Files\php'
+        " SpaceVim server client
+        let $PATH .= ';C:\Users\Administrator\.SpaceVim\bin'
         let g:tagbar_type_markdown = {
                     \ 'ctagsbin'  : 'D:\Program Files\php\php.exe',
                     \ 'ctagsargs' : 'C:\Users\Administrator\.cache\vimfiles\repos\github.com\lvht\tagbar-markdown\bin\mdctags',
@@ -152,6 +157,10 @@ function! myspacevim#before() abort
     call add(g:spacevim_disabled_plugins, 'nvim-yarp')
     call s:add_load_repo('SpaceVim/nvim-yarp')
     " }}}
+    " cscope.vim      {{{
+    call add(g:spacevim_disabled_plugins, 'cscope.vim')
+    call s:add_load_repo('SpaceVim/cscope.vim')
+    " }}}
     " vim-slumlord      {{{
     call add(g:spacevim_disabled_plugins, 'vim-slumlord')
     call s:add_load_repo('wsdjeg/vim-slumlord')
@@ -183,6 +192,22 @@ function! myspacevim#before() abort
     " ChineseLinter.vim      {{{
     call add(g:spacevim_disabled_plugins, 'ChineseLinter.vim')
     call s:add_load_repo('wsdjeg/ChineseLinter.vim')
+    " }}}
+    " gtags.vim         {{{
+    call add(g:spacevim_disabled_plugins, 'vim-lua')
+    call s:add_load_repo('wsdjeg/vim-lua')
+    " }}}
+    " gtags.vim         {{{
+    call add(g:spacevim_disabled_plugins, 'Nvim-R')
+    call s:add_load_repo('wsdjeg/Nvim-R')
+    " }}}
+    " vim-coffeescript         {{{
+    call add(g:spacevim_disabled_plugins, 'vim-coffeescript')
+    call s:add_load_repo('wsdjeg/vim-coffeescript')
+    " }}}
+    " vim-lookup         {{{
+    call add(g:spacevim_disabled_plugins, 'vim-lookup')
+    call s:add_load_repo('wsdjeg/vim-lookup')
     " }}}
     for repo in s:repos
         call s:check_local_repo(repo)

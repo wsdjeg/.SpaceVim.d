@@ -1,4 +1,4 @@
-#=============================================================================
+#============================================================================
 # init.vim --- My SpaceVim config
 # Copyright (c) 2016-2017 Wang Shidong & Contributors
 # Author: Wang Shidong < wsdjeg at 163.com >
@@ -53,7 +53,10 @@
 [[layers]]
     name = 'tags'
 [[layers]]
+    name = 'cscope'
+[[layers]]
     name = 'VersionControl'
+    enable_gtm_status = true
 [[layers]]
     name = 'lang#vim'
 [[layers]]
@@ -71,10 +74,19 @@
 [[layers]]
     name = 'lang#java'
 [[layers]]
+    name = 'lang#r'
+[[layers]]
+    name = 'lang#red'
+[[layers]]
+    name = 'lang#latex'
+[[layers]]
     name = 'lang#python'
     format-on-save = 1
 [[layers]]
     name = 'lang#javascript'
+    enable_flow_syntax = true
+[[layers]]
+    name = 'lang#coffeescript'
 [[layers]]
     name = 'colorscheme'
     random_theme = true
