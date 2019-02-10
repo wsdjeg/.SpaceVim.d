@@ -46,6 +46,7 @@ function! myspacevim#before() abort
         let $GOPATH = 'D:\goprojects'
         " Perl language
         " http://strawberryperl.com/download/5.28.1.1/strawberry-perl-5.28.1.1-64bit.zip
+        let $PATH .= ';D:\strawberry-perl\perl\bin'
         " Java language
         let $PATH .= ';D:\Program Files\Java\jdk1.8.0_191\bin'
         let $PATH .= ';D:\Program Files\maven\bin'
