@@ -13,6 +13,10 @@ function! myspacevim#before() abort
             set rop=type:directx
             let g:githubapi_curl_exe = 'D:\Program Files\Neovim\bin\curl.exe'
         endif
+        " mingw
+        let $PATH .= ';D:\Program Files\mingw-w64\i686-8.1.0-posix-dwarf-rt_v6-rev0\mingw32\bin'
+        " llvm
+        let $PATH .= ';D:\Program Files\LLVM\bin'
         " Downloads gun global from:
         " http://adoxa.altervista.org/global/
         " GLOBAL 6.6.3 Win32 (938k)
@@ -40,6 +44,8 @@ function! myspacevim#before() abort
         let $PATH .= ';D:\Go\bin'
         let $PATH .= ';D:\goprojects\bin'
         let $GOPATH = 'D:\goprojects'
+        " Perl language
+        " http://strawberryperl.com/download/5.28.1.1/strawberry-perl-5.28.1.1-64bit.zip
         " Java language
         let $PATH .= ';D:\Program Files\Java\jdk1.8.0_191\bin'
         let $PATH .= ';D:\Program Files\maven\bin'

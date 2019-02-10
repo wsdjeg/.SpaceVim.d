@@ -76,6 +76,8 @@
 [[layers]]
     name = 'lang#r'
 [[layers]]
+    name = 'lang#c'
+[[layers]]
     name = 'lang#red'
 [[layers]]
     name = 'lang#latex'
