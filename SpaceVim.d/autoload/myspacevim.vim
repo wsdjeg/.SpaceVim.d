@@ -28,6 +28,9 @@ function! myspacevim#before() abort
         " Downloads grep from
         " https://nchc.dl.sourceforge.net/project/gnuwin32/grep/2.5.4/grep-2.5.4-setup.exe
         let $PATH .= ';D:\Program Files\GnuWin32\bin'
+        " Downloads make from
+        " https://nchc.dl.sourceforge.net/project/gnuwin32/make/3.81/make-3.81-bin.zip
+        let $PATH .= ';D:\Program Files\GnuWin32-make\bin'
         " Add bin path, in this path, there are ag, rg, pt, etc.
         " ag: 
         "   sources: https://github.com/ggreer/the_silver_searcher
