@@ -57,6 +57,10 @@ function! myspacevim#before() abort
         let $PATH .= ';D:\Program Files\lua-5.3.4_Win64_bin'
         " red language: https://www.red-lang.org/
         let $PATH .= ';D:\red'
+        " kotlin native
+        " let $PATH .=';D:\kotlin\bin'
+        " kotlin compiler
+        let $PATH .=';D:\kotlinc\bin'
         " Add php
         let $PATH .= ';D:\Program Files\php'
         " SpaceVim server client

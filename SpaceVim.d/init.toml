@@ -70,6 +70,8 @@
 [[layers]]
     name = 'lang#rust'
 [[layers]]
+    name = 'lang#kotlin'
+[[layers]]
     name = 'lang#go'
 [[layers]]
     name = 'lang#java'
