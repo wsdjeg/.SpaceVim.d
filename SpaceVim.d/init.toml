@@ -11,7 +11,7 @@
     enable_debug = 1
     bootstrap_before = "TestFoo"
     enable_ale = 0
-    filemanager = "vimfiler"
+    filemanager = "defx"
     # enable_ycm = 1
     # snippet_engine = "ultisnips"
     line_on_the_fly = 0

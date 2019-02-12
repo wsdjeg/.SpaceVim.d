@@ -9,6 +9,8 @@ function! myspacevim#before() abort
     let g:deoplete#enable_at_startup = 1
     " Windows bin utils {{{
     if s:SYS.isWindows
+        " Neovim default layout
+        " D:\Program Files\Neovim\bin\nvim-qt.exe" -qwindowgeometry 1300x650+20+20
         if !has('nvim')
             set rop=type:directx
             let g:githubapi_curl_exe = 'D:\Program Files\Neovim\bin\curl.exe'
