@@ -1,6 +1,7 @@
 scriptencoding utf-8
 let s:SYS = SpaceVim#api#import('system')
 let s:JOB = SpaceVim#api#import('job')
+let s:FILE = SpaceVim#api#import('file')
 
 function! myspacevim#before() abort
     set rtp+=~/SpaceVim/SpaceVim/build/vader
@@ -11,28 +12,34 @@ function! myspacevim#before() abort
     if s:SYS.isWindows
         " Neovim default layout
         " D:\Program Files\Neovim\bin\nvim-qt.exe" -qwindowgeometry 1300x650+20+20
-        if !has('nvim')
-            set rop=type:directx
-            let g:githubapi_curl_exe = 'D:\Program Files\Neovim\bin\curl.exe'
-        endif
+        " if !has('nvim')
+            " set rop=type:directx
+            " let g:githubapi_curl_exe = 'D:\Program Files\Neovim\bin\curl.exe'
+        " endif
         " mingw
-        let $PATH .= ';D:\Program Files\mingw-w64\i686-8.1.0-posix-dwarf-rt_v6-rev0\mingw32\bin'
+        " let $PATH .= ';D:\Program Files\mingw-w64\i686-8.1.0-posix-dwarf-rt_v6-rev0\mingw32\bin'
         " llvm
-        let $PATH .= ';D:\Program Files\LLVM\bin'
+        " let $PATH .= ';D:\Program Files\LLVM\bin'
         " Downloads gun global from:
         " http://adoxa.altervista.org/global/
         " GLOBAL 6.6.3 Win32 (938k)
-        let $PATH .= ';D:\Program Files\gtags\bin'
+        " let $PATH .= ';D:\Program Files\gtags\bin'
         " Downloads coreutils from
         " https://nchc.dl.sourceforge.net/project/gnuwin32/coreutils/5.3.0/coreutils-5.3.0-bin.zip
         " coreutils-5.3.0-bin.zip
-        let $PATH .= ';D:\Program Files\coreutils\bin'
+        " let $PATH .= ';D:\Program Files\coreutils\bin'
         " Downloads grep from
         " https://nchc.dl.sourceforge.net/project/gnuwin32/grep/2.5.4/grep-2.5.4-setup.exe
-        let $PATH .= ';D:\Program Files\GnuWin32\bin'
+        " let $PATH .= ';D:\Program Files\GnuWin32\bin'
         " Downloads make from
         " https://nchc.dl.sourceforge.net/project/gnuwin32/make/3.81/make-3.81-bin.zip
-        let $PATH .= ';D:\Program Files\GnuWin32-make\bin'
+        " let $PATH .= ';D:\Program Files\GnuWin32-make\bin'
+        " Downloads gawk awk from
+        " https://iweb.dl.sourceforge.net/project/gnuwin32/gawk/3.1.6-1/gawk-3.1.6-1-bin.zip
+        " let $PATH .= ';D:\Program Files\GnuWin32-gawk\bin'
+        " Downloads sed from
+        " https://nchc.dl.sourceforge.net/project/gnuwin32/sed/4.2.1/sed-4.2.1-bin.zip
+        " let $PATH .= ';D:\Program Files\GnuWin32-sed\bin'
         " Add bin path, in this path, there are ag, rg, pt, etc.
         " ag: 
         "   sources: https://github.com/ggreer/the_silver_searcher
@@ -43,26 +50,26 @@ function! myspacevim#before() abort
         " pt:
         "   sources: https://github.com/monochromegane/the_platinum_searcher
         "   bin:     https://github.com/monochromegane/the_platinum_searcher/releases
-        let $PATH .= ';D:\bin'
+        " let $PATH .= ';D:\bin'
         " go language
         "
-        let $PATH .= ';D:\Go\bin'
-        let $PATH .= ';D:\goprojects\bin'
-        let $GOPATH = 'D:\goprojects'
+        " let $PATH .= ';D:\Go\bin'
+        " let $PATH .= ';D:\goprojects\bin'
+        " let $GOPATH = 'D:\goprojects'
         " Perl language
         " http://strawberryperl.com/download/5.28.1.1/strawberry-perl-5.28.1.1-64bit.zip
-        let $PATH .= ';D:\strawberry-perl\perl\bin'
+        " let $PATH .= ';D:\strawberry-perl\perl\bin'
         " Java language
-        let $PATH .= ';D:\Program Files\Java\jdk1.8.0_191\bin'
-        let $PATH .= ';D:\Program Files\maven\bin'
+        " let $PATH .= ';D:\Program Files\Java\jdk1.8.0_191\bin'
+        " let $PATH .= ';D:\Program Files\maven\bin'
         " Lua language
-        let $PATH .= ';D:\Program Files\lua-5.3.4_Win64_bin'
+        " let $PATH .= ';D:\Program Files\lua-5.3.4_Win64_bin'
         " red language: https://www.red-lang.org/
         let $PATH .= ';D:\red'
         " kotlin native
         " let $PATH .=';D:\kotlin\bin'
         " kotlin compiler
-        let $PATH .=';D:\kotlinc\bin'
+        " let $PATH .=';D:\kotlinc\bin'
         " Add php
         let $PATH .= ';D:\Program Files\php'
         " SpaceVim server client
@@ -279,7 +286,7 @@ endfunction
 let s:repos = []
 function! s:add_load_repo(repo) abort
     call add(s:repos, a:repo)
-    exe 'set rtp+=' . expand($MYSRCDIR) . '\' . split(a:repo, '/')[1]
+    let &rtp = s:FILE.unify_path(expand($MYSRCDIR)) . split(a:repo, '/')[1]  . ',' . &rtp
 endfunction
 
 function! s:check_local_repo(repo) abort

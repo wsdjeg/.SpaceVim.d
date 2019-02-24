@@ -11,7 +11,7 @@
     enable_debug = 1
     bootstrap_before = "TestFoo"
     enable_ale = 0
-    filemanager = "defx"
+    filemanager = "vimfiler"
     # enable_ycm = 1
     # snippet_engine = "ultisnips"
     line_on_the_fly = 0
@@ -27,7 +27,7 @@
     auto_disable_touchpad = 0
     colorscheme = 'gruvbox'
     checkinstall = false
-    guifont = 'DroidSansMono_NF:h11:cANSI:qDRAFT'
+    guifont = 'SauceCodePro Nerd Font:h11:cANSI:qDRAFT'
     enable_tabline_filetype_icon = false
     bootstrap_before = "myspacevim#before"
     bootstrap_after = "myspacevim#after"
@@ -56,7 +56,6 @@
     name = 'cscope'
 [[layers]]
     name = 'VersionControl'
-    enable_gtm_status = true
 [[layers]]
     name = 'lang#vim'
 [[layers]]
@@ -64,9 +63,13 @@
 [[layers]]
     name = 'lang#elixir'
 [[layers]]
+    name = 'lang#toml'
+[[layers]]
     name = 'lang#lua'
 [[layers]]
     name = 'lang#perl'
+[[layers]]
+    name = 'lang#ruby'
 [[layers]]
     name = 'lang#rust'
 [[layers]]
@@ -93,8 +96,6 @@
     name = 'lang#coffeescript'
 [[layers]]
     name = 'colorscheme'
-    random_theme = true
-    frequency = '3h'
 [[layers]]
     name = 'core#statusline'
     enable = true
@@ -114,6 +115,28 @@
     name = 'shell'
     default_position = 'top'
     default_height = 30
+[[layers]]
+  name = "lsp"
+  filetypes = [
+    "java"
+  ]
+  [layers.override_cmd]
+    java = [
+    "java",
+    "-Declipse.application=org.eclipse.jdt.ls.core.id1",
+    "-Dosgi.bundles.defaultStartLevel=4",
+    "-Declipse.product=org.eclipse.jdt.ls.core.product",
+    "-Dlog.protocol=true",
+    "-Dlog.level=NONE",
+    "-noverify",
+    "-Xmx1G",
+    "-jar",
+    "D:\dev\jdt-language-server-latest\plugins\org.eclipse.equinox.launcher_1.5.200.v20180922-1751.jar",
+    "-configuration",
+    "D:\dev\jdt-language-server-latest\config_win",
+    "-data",
+    "C:\Users\Administrator\.cache\javalsp"
+    ]
 
 # custom plugins {{{
 [[custom_plugins]]
