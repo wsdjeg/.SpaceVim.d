@@ -6,6 +6,7 @@ let s:FILE = SpaceVim#api#import('file')
 function! myspacevim#before() abort
     set rtp+=~/SpaceVim/SpaceVim/build/vader
     set history=10000
+    let g:LanguageClient_loggingFile = expand('~/LanguageClient.log')
     let g:neomru#file_mru_ignore_pattern = '^[a-z]\+://'
     let g:deoplete#enable_at_startup = 1
     " Windows bin utils {{{
@@ -13,8 +14,8 @@ function! myspacevim#before() abort
         " Neovim default layout
         " D:\Program Files\Neovim\bin\nvim-qt.exe" -qwindowgeometry 1300x650+20+20
         " if !has('nvim')
-            " set rop=type:directx
-            " let g:githubapi_curl_exe = 'D:\Program Files\Neovim\bin\curl.exe'
+        " set rop=type:directx
+        " let g:githubapi_curl_exe = 'D:\Program Files\Neovim\bin\curl.exe'
         " endif
         " mingw
         " let $PATH .= ';D:\Program Files\mingw-w64\i686-8.1.0-posix-dwarf-rt_v6-rev0\mingw32\bin'
@@ -70,12 +71,12 @@ function! myspacevim#before() abort
         " let $PATH .=';D:\kotlin\bin'
         " kotlin compiler
         " let $PATH .=';D:\kotlinc\bin'
-        " Add php
-        let $PATH .= ';D:\Program Files\php'
+        " Add php, scoop install php
+        " let $PATH .= ';D:\Program Files\php'
         " SpaceVim server client
         let $PATH .= ';C:\Users\Administrator\.SpaceVim\bin'
         let g:tagbar_type_markdown = {
-                    \ 'ctagsbin'  : 'D:\Program Files\php\php.exe',
+                    \ 'ctagsbin'  : 'php',
                     \ 'ctagsargs' : 'C:\Users\Administrator\.cache\vimfiles\repos\github.com\lvht\tagbar-markdown\bin\mdctags',
                     \ 'kinds'     : [
                     \     'a:h1:0:0',

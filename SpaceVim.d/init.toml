@@ -11,7 +11,8 @@
     enable_debug = 1
     bootstrap_before = "TestFoo"
     enable_ale = 0
-    filemanager = "vimfiler"
+    filemanager = "defx"
+    filetree_direction = "right"
     # enable_ycm = 1
     # snippet_engine = "ultisnips"
     line_on_the_fly = 0
@@ -25,7 +26,7 @@
     statusline_separator = 'arrow'
     github_username = 'wsdjeg'
     auto_disable_touchpad = 0
-    colorscheme = 'gruvbox'
+    colorscheme = 'one'
     checkinstall = false
     guifont = 'SauceCodePro Nerd Font:h11:cANSI:qDRAFT'
     enable_tabline_filetype_icon = false
@@ -58,8 +59,6 @@
     name = 'VersionControl'
 [[layers]]
     name = 'lang#vim'
-[[layers]]
-    name = 'lang#php'
 [[layers]]
     name = 'lang#elixir'
 [[layers]]
@@ -118,7 +117,8 @@
 [[layers]]
   name = "lsp"
   filetypes = [
-    "java"
+    "java",
+    "ruby"
   ]
   [layers.override_cmd]
     java = [
