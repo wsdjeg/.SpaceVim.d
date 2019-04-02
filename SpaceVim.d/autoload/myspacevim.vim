@@ -75,6 +75,7 @@ function! myspacevim#before() abort
         " let $PATH .= ';D:\Program Files\php'
         " SpaceVim server client
         let $PATH .= ';C:\Users\Administrator\.SpaceVim\bin'
+        let $PATH .= ';C:\Users\Administrator\SpaceVim\bin'
         let g:tagbar_type_markdown = {
                     \ 'ctagsbin'  : 'php',
                     \ 'ctagsargs' : 'C:\Users\Administrator\.cache\vimfiles\repos\github.com\lvht\tagbar-markdown\bin\mdctags',

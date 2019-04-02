@@ -42,7 +42,7 @@
 
 # SpaceVim layer config {{{
 [[layers]]
-    name = 'denite'
+    name = 'fzf'
 [[layers]]
     name = 'incsearch'
 [[layers]]
@@ -117,7 +117,6 @@
 [[layers]]
   name = "lsp"
   filetypes = [
-    "java",
     "ruby"
   ]
   [layers.override_cmd]
