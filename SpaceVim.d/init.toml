@@ -33,7 +33,7 @@
     bootstrap_before = "myspacevim#before"
     bootstrap_after = "myspacevim#after"
     search_tools = ["rg", "pt", "ack", "grep", "findstr"]
-    # autocomplete_method = "coc"
+    # autocomplete_method = "completor"
     commandline_prompt = '>'
     # vimcompatible = true
     # enable_language_specific_leader = false
@@ -84,6 +84,8 @@
 [[layers]]
     name = 'lang#red'
 [[layers]]
+    name = 'lang#ipynb'
+[[layers]]
     name = 'lang#latex'
 [[layers]]
     name = 'lang#python'
@@ -117,7 +119,8 @@
 [[layers]]
   name = "lsp"
   filetypes = [
-    "ruby"
+    "ruby",
+    "java"
   ]
   [layers.override_cmd]
     java = [
@@ -147,9 +150,6 @@
  merged = 0
 [[custom_plugins]]
  name = 'tweekmonster/startuptime.vim'
- merged = 0
-[[custom_plugins]]
- name = 'Shougo/defx.nvim'
  merged = 0
 [[custom_plugins]]
  name = 'tpope/vim-scriptease'

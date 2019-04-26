@@ -234,6 +234,14 @@ function! myspacevim#before() abort
     call add(g:spacevim_disabled_plugins, 'vim-lookup')
     call s:add_load_repo('wsdjeg/vim-lookup')
     " }}}
+    " gina.vim         {{{
+    call add(g:spacevim_disabled_plugins, 'gina.vim')
+    call s:add_load_repo('wsdjeg/gina.vim')
+    " }}}
+    " vimpyter         {{{
+    call add(g:spacevim_disabled_plugins, 'vimpyter')
+    call s:add_load_repo('wsdjeg/vimpyter')
+    " }}}
     for repo in s:repos
         call s:check_local_repo(repo)
     endfor
