@@ -76,37 +76,39 @@ function! myspacevim#before() abort
         " SpaceVim server client
         let $PATH .= ';C:\Users\Administrator\.SpaceVim\bin'
         let $PATH .= ';C:\Users\Administrator\SpaceVim\bin'
-        let g:tagbar_type_markdown = {
-                    \ 'ctagsbin'  : 'php',
-                    \ 'ctagsargs' : 'C:\Users\Administrator\.cache\vimfiles\repos\github.com\lvht\tagbar-markdown\bin\mdctags',
-                    \ 'kinds'     : [
-                    \     'a:h1:0:0',
-                    \     'b:h2:0:0',
-                    \     'c:h3:0:0',
-                    \     'd:h4:0:0',
-                    \     'e:h5:0:0',
-                    \     'f:h6:0:0',
-                    \ ],
-                    \ 'sro'        : '::',
-                    \ 'kind2scope' : {
-                    \     'a' : 'h1',
-                    \     'b' : 'h2',
-                    \     'c' : 'h3',
-                    \     'd' : 'h4',
-                    \     'e' : 'h5',
-                    \     'f' : 'h6',
-                    \ },
-                    \ 'scope2kind' : {
-                    \     'h1' : 'a',
-                    \     'h2' : 'b',
-                    \     'h3' : 'c',
-                    \     'h4' : 'd',
-                    \     'h5' : 'e',
-                    \     'h6' : 'f',
-                    \}
-                    \}
-        let g:tagbar_type_ghmarkdown = g:tagbar_type_markdown
-        let g:tagbar_type_rmd = g:tagbar_type_markdown
+        " fuck the Python37 PATH
+        let $PATH .= ';C:\Users\Administrator\AppData\Roaming\Python\Python37\Scripts'
+        " let g:tagbar_type_markdown = {
+                    " \ 'ctagsbin'  : 'php',
+                    " \ 'ctagsargs' : 'C:\Users\Administrator\.cache\vimfiles\repos\github.com\lvht\tagbar-markdown\bin\mdctags',
+                    " \ 'kinds'     : [
+                    " \     'a:h1:0:0',
+                    " \     'b:h2:0:0',
+                    " \     'c:h3:0:0',
+                    " \     'd:h4:0:0',
+                    " \     'e:h5:0:0',
+                    " \     'f:h6:0:0',
+                    " \ ],
+                    " \ 'sro'        : '::',
+                    " \ 'kind2scope' : {
+                    " \     'a' : 'h1',
+                    " \     'b' : 'h2',
+                    " \     'c' : 'h3',
+                    " \     'd' : 'h4',
+                    " \     'e' : 'h5',
+                    " \     'f' : 'h6',
+                    " \ },
+                    " \ 'scope2kind' : {
+                    " \     'h1' : 'a',
+                    " \     'h2' : 'b',
+                    " \     'h3' : 'c',
+                    " \     'h4' : 'd',
+                    " \     'h5' : 'e',
+                    " \     'h6' : 'f',
+                    " \}
+                    " \}
+        " let g:tagbar_type_ghmarkdown = g:tagbar_type_markdown
+        " let g:tagbar_type_rmd = g:tagbar_type_markdown
         "
         " When using neovim in windows the only var need to be set is:
         " PYTHON_HOST_PROG 
@@ -241,6 +243,14 @@ function! myspacevim#before() abort
     " vimpyter         {{{
     call add(g:spacevim_disabled_plugins, 'vimpyter')
     call s:add_load_repo('wsdjeg/vimpyter')
+    " }}}
+    " tagbar-markdown         {{{
+    call add(g:spacevim_disabled_plugins, 'tagbar-markdown')
+    call s:add_load_repo('wsdjeg/tagbar-markdown')
+    " }}}
+    " vim-translate-me         {{{
+    " call add(g:spacevim_disabled_plugins, 'vim-translate-me')
+    " call s:add_load_repo('wsdjeg/vim-translate-me')
     " }}}
     for repo in s:repos
         call s:check_local_repo(repo)

@@ -9,14 +9,16 @@
 [options]
     default_indent = 4
     enable_debug = 1
-    bootstrap_before = "TestFoo"
     enable_ale = 0
     filemanager = "defx"
     filetree_direction = "right"
     # enable_ycm = 1
     # snippet_engine = "ultisnips"
     line_on_the_fly = 0
-    enable_statusline_mode = false
+    # default_custom_leader = "e"
+    enable_statusline_mode = true
+    # enable_ale = false
+    # enable_neomake = false
     realtime_leader_guide = 1
     enable_tabline_filetype_icon = false
     enable_os_fileformat_icon = false
@@ -33,7 +35,7 @@
     bootstrap_before = "myspacevim#before"
     bootstrap_after = "myspacevim#after"
     search_tools = ["rg", "pt", "ack", "grep", "findstr"]
-    # autocomplete_method = "completor"
+    # autocomplete_method = "coc"
     commandline_prompt = '>'
     # vimcompatible = true
     # enable_language_specific_leader = false
@@ -42,9 +44,7 @@
 
 # SpaceVim layer config {{{
 [[layers]]
-    name = 'fzf'
-[[layers]]
-    name = 'incsearch'
+    name = 'denite'
 [[layers]]
     name = 'format'
 [[layers]]
@@ -54,47 +54,11 @@
 [[layers]]
     name = 'tags'
 [[layers]]
-    name = 'cscope'
-[[layers]]
     name = 'VersionControl'
 [[layers]]
     name = 'lang#vim'
 [[layers]]
-    name = 'lang#elixir'
-[[layers]]
     name = 'lang#toml'
-[[layers]]
-    name = 'lang#lua'
-[[layers]]
-    name = 'lang#perl'
-[[layers]]
-    name = 'lang#ruby'
-[[layers]]
-    name = 'lang#rust'
-[[layers]]
-    name = 'lang#kotlin'
-[[layers]]
-    name = 'lang#go'
-[[layers]]
-    name = 'lang#java'
-[[layers]]
-    name = 'lang#r'
-[[layers]]
-    name = 'lang#c'
-[[layers]]
-    name = 'lang#red'
-[[layers]]
-    name = 'lang#ipynb'
-[[layers]]
-    name = 'lang#latex'
-[[layers]]
-    name = 'lang#python'
-    format-on-save = 1
-[[layers]]
-    name = 'lang#javascript'
-    enable_flow_syntax = true
-[[layers]]
-    name = 'lang#coffeescript'
 [[layers]]
     name = 'colorscheme'
 [[layers]]
@@ -116,42 +80,3 @@
     name = 'shell'
     default_position = 'top'
     default_height = 30
-[[layers]]
-  name = "lsp"
-  filetypes = [
-    "ruby",
-    "java"
-  ]
-  [layers.override_cmd]
-    java = [
-    "java",
-    "-Declipse.application=org.eclipse.jdt.ls.core.id1",
-    "-Dosgi.bundles.defaultStartLevel=4",
-    "-Declipse.product=org.eclipse.jdt.ls.core.product",
-    "-Dlog.protocol=true",
-    "-Dlog.level=NONE",
-    "-noverify",
-    "-Xmx1G",
-    "-jar",
-    "D:\dev\jdt-language-server-latest\plugins\org.eclipse.equinox.launcher_1.5.200.v20180922-1751.jar",
-    "-configuration",
-    "D:\dev\jdt-language-server-latest\config_win",
-    "-data",
-    "C:\Users\Administrator\.cache\javalsp"
-    ]
-
-# custom plugins {{{
-[[custom_plugins]]
- name = 'lilydjwg/colorizer'
- merged = 0
- on_cmd = ['ColorHighlight']
-[[custom_plugins]]
- name = 'kien/tabman.vim'
- merged = 0
-[[custom_plugins]]
- name = 'tweekmonster/startuptime.vim'
- merged = 0
-[[custom_plugins]]
- name = 'tpope/vim-scriptease'
- merged = 0
-# }}}
