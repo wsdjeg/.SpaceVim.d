@@ -44,7 +44,7 @@
 
 # SpaceVim layer config {{{
 [[layers]]
-    name = 'denite'
+    name = 'ctrlp'
 [[layers]]
     name = 'format'
 [[layers]]
@@ -57,6 +57,14 @@
     name = 'VersionControl'
 [[layers]]
     name = 'lang#vim'
+[[layers]]
+    name = 'lang#c'
+[[layers]]
+    name = 'lang#lua'
+[[layers]]
+    name = 'lang#xml'
+[[layers]]
+    name = 'debug'
 [[layers]]
     name = 'lang#toml'
 [[layers]]
