@@ -18,7 +18,9 @@
 [core]
 	editor = nvim
 	excludesfile = ~/.gitignore
-	autocrlf = input
+	autocrlf = false
+	filemode = false
+	safecrlf = true
 [mergetool]
   prompt = true
 [mergetool "vimdiff"]

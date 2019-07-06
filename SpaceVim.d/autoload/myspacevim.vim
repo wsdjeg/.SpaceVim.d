@@ -77,10 +77,9 @@ function! myspacevim#before() abort
         " Add php, scoop install php
         " let $PATH .= ';D:\Program Files\php'
         " SpaceVim server client
-        let $PATH .= ';C:\Users\Administrator\.SpaceVim\bin'
-        let $PATH .= ';C:\Users\Administrator\SpaceVim\bin'
+        let $PATH .= ';C:\Users\wsdjeg\.SpaceVim\bin'
+        let $PATH .= ';C:\Users\wsdjeg\SpaceVim\bin'
         " fuck the Python37 PATH
-        let $PATH .= ';C:\Users\Administrator\AppData\Roaming\Python\Python37\Scripts'
         " let g:tagbar_type_markdown = {
         " \ 'ctagsbin'  : 'php',
         " \ 'ctagsargs' : 'C:\Users\Administrator\.cache\vimfiles\repos\github.com\lvht\tagbar-markdown\bin\mdctags',
@@ -165,11 +164,16 @@ function! myspacevim#before() abort
     " debug locally:
     " All plugins arg cloned into $MYSRCDIR default is ~/SpaceVim
     let $MYSRCDIR = '~/SpaceVim'
+    " 某些情况下该目录需要手动新建。
     " defind global var before using it:
     let g:spacevim_disabled_plugins = []
     " vim-nim           {{{
     call add(g:spacevim_disabled_plugins, 'vim-nim')
     call s:add_load_repo('wsdjeg/vim-nim')
+    " }}}
+    " vim-powershell           {{{
+    call add(g:spacevim_disabled_plugins, 'vim-powershell')
+    call s:add_load_repo('wsdjeg/vim-powershell')
     " }}}
     " gtags.vim         {{{
     call add(g:spacevim_disabled_plugins, 'gtags.vim')
