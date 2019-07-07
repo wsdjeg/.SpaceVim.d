@@ -6,7 +6,7 @@ options     head
 snippet     Slayerp
 options     head
 abbr        SpaceVimlayerplugins
-    function! SpaceVim#layers#`join(split(fnamemodify(substitute(expand('%'),'autoload/SpaceVim/layers/','','g'),':r'),'/'),'#')`#plugins() abort
+    function! SpaceVim#layers#`join(split(fnamemodify(substitute(SpaceVim#api#import('file').unify_path(expand('%'), ':.'),'autoload/SpaceVim/layers/','','g'),':r'),'/'),'#')`#plugins() abort
         let plugins = []
         ${1}
         return plugins
@@ -15,7 +15,7 @@ abbr        SpaceVimlayerplugins
 snippet     Slayerc
 options     head
 abbr        SpaceVimlayerconfig
-    function! SpaceVim#layers#`join(split(fnamemodify(substitute(expand('%'),'autoload/SpaceVim/layers/','','g'),':r'),'/'),'#')`#config() abort
+    function! SpaceVim#layers#`join(split(fnamemodify(substitute(SpaceVim#api#import('file').unify_path(expand('%'), ':.'),'autoload/SpaceVim/layers/','','g'),':r'),'/'),'#')`#config() abort
         ${1}
     endfunction
 

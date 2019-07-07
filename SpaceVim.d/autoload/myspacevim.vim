@@ -79,6 +79,11 @@ function! myspacevim#before() abort
         " SpaceVim server client
         let $PATH .= ';C:\Users\wsdjeg\.SpaceVim\bin'
         let $PATH .= ';C:\Users\wsdjeg\SpaceVim\bin'
+        " forth language PATH
+        let $PATH .= ';D:\Program Files\bigforth'
+        " v language PATH
+        let $VROOT = 'D:\Program Files\v'
+        let $PATH .= ';D:\Program Files\v'
         " fuck the Python37 PATH
         " let g:tagbar_type_markdown = {
         " \ 'ctagsbin'  : 'php',
@@ -236,20 +241,24 @@ function! myspacevim#before() abort
     call s:add_load_repo('wsdjeg/Nvim-R')
     " }}}
     " vim-coffeescript         {{{
-    call add(g:spacevim_disabled_plugins, 'vim-coffeescript')
-    call s:add_load_repo('wsdjeg/vim-coffeescript')
+    if SpaceVim#layers#isLoaded('lang#coffeescript')
+        call add(g:spacevim_disabled_plugins, 'vim-coffeescript')
+        call s:add_load_repo('wsdjeg/vim-coffeescript')
+    endif
     " }}}
     " vim-lookup         {{{
     call add(g:spacevim_disabled_plugins, 'vim-lookup')
     call s:add_load_repo('wsdjeg/vim-lookup')
     " }}}
     " gina.vim         {{{
-    call add(g:spacevim_disabled_plugins, 'gina.vim')
-    call s:add_load_repo('wsdjeg/gina.vim')
+    " call add(g:spacevim_disabled_plugins, 'gina.vim')
+    " call s:add_load_repo('wsdjeg/gina.vim')
     " }}}
     " vimpyter         {{{
-    call add(g:spacevim_disabled_plugins, 'vimpyter')
-    call s:add_load_repo('wsdjeg/vimpyter')
+    if SpaceVim#layers#isLoaded('lang#ipynb')
+        call add(g:spacevim_disabled_plugins, 'vimpyter')
+        call s:add_load_repo('wsdjeg/vimpyter')
+    endif
     " }}}
     " debug.vim         {{{
     call add(g:spacevim_disabled_plugins, 'debug.vim')

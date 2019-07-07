@@ -60,7 +60,7 @@
 [[layers]]
     name = 'lang#c'
 [[layers]]
-    name = 'lang#d'
+    name = 'lang#v'
 [[layers]]
     name = 'lang#xml'
 [[layers]]
