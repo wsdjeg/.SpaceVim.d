@@ -260,6 +260,12 @@ function! myspacevim#before() abort
         call s:add_load_repo('wsdjeg/vimpyter')
     endif
     " }}}
+    " lang#pony layer local config
+    if SpaceVim#layers#isLoaded('lang#pony')
+        let $PATH .= ';D:\Program Files\pony\ponyc\bin'
+        call add(g:spacevim_disabled_plugins, 'vim-pony')
+        call s:add_load_repo('wsdjeg/vim-pony')
+    endif
     " debug.vim         {{{
     call add(g:spacevim_disabled_plugins, 'debug.vim')
     call s:add_load_repo('wsdjeg/debug.vim')
@@ -278,10 +284,6 @@ function! myspacevim#before() abort
     endfor
     let g:delimitMate_expand_cr = 1
     call add(g:spacevim_project_rooter_patterns, 'package.json')
-    augroup myspacevim
-        autocmd!
-        autocmd FileType defx call s:defx_my_settings()
-    augroup END
     let g:spacevim_layer_lang_java_formatter = '/home/wsdjeg/Downloads/google-java-format-1.5-all-deps.jar'
     command! CursorHighlight call s:cursor_highlight()
     let profile = SpaceVim#mapping#search#getprofile('rg')
@@ -296,32 +298,6 @@ let s:HI = SpaceVim#api#import('vim#highlight')
 
 function! s:cursor_highlight() abort
     echo s:HI.syntax_at()
-endfunction
-
-function! s:defx_my_settings() abort
-    " Define mappings
-    nnoremap <silent><buffer><expr> <CR>
-                \ defx#do_action('open')
-    nnoremap <silent><buffer><expr> K
-                \ defx#do_action('new_directory')
-    nnoremap <silent><buffer><expr> N
-                \ defx#do_action('new_file')
-    nnoremap <silent><buffer><expr> d
-                \ defx#do_action('remove')
-    nnoremap <silent><buffer><expr> r
-                \ defx#do_action('rename')
-    nnoremap <silent><buffer><expr> h
-                \ defx#do_action('cd', ['..'])
-    nnoremap <silent><buffer><expr> ~
-                \ defx#do_action('cd')
-    nnoremap <silent><buffer><expr> <Space>
-                \ defx#do_action('toggle_select') . 'j'
-    nnoremap <silent><buffer><expr> j
-                \ line('.') == line('$') ? 'gg' : 'j'
-    nnoremap <silent><buffer><expr> k
-                \ line('.') == 1 ? 'G' : 'k'
-    nnoremap <silent><buffer><expr> <C-l>
-                \ defx#do_action('redraw')
 endfunction
 
 let s:repos = []
