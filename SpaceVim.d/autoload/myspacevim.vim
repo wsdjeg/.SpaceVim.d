@@ -260,8 +260,27 @@ function! myspacevim#before() abort
         call s:add_load_repo('wsdjeg/vimpyter')
     endif
     " }}}
+    " lang#pact layer local config
+    if SpaceVim#layers#isLoaded('lang#pact')
+        call add(g:spacevim_disabled_plugins, 'vim-pact')
+        call s:add_load_repo('wsdjeg/vim-pact')
+    endif
+    " lang#assembly layer local config
+    if SpaceVim#layers#isLoaded('lang#assembly')
+        call add(g:spacevim_disabled_plugins, 'vim-assembly')
+        call s:add_load_repo('wsdjeg/vim-assembly')
+    endif
+    " debug layer local config
+    if SpaceVim#layers#isLoaded('debug')
+        call add(g:spacevim_disabled_plugins, 'vim-debug')
+        call s:add_load_repo('wsdjeg/vim-debug')
+    endif
     " lang#pony layer local config
     if SpaceVim#layers#isLoaded('lang#pony')
+        " download pony.zip from https://dl.bintray.com/pony-language/ponyc-win/
+        " install .net framwork 4.5.1 https://www.microsoft.com/en-us/download/details.aspx?id=40779
+        " install MSVC 2015 build tools https://visualstudio.microsoft.com/vs/older-downloads/
+        " Microsoft Build Tools 2015 Update 3 
         let $PATH .= ';D:\Program Files\pony\ponyc\bin'
         call add(g:spacevim_disabled_plugins, 'vim-pony')
         call s:add_load_repo('wsdjeg/vim-pony')
