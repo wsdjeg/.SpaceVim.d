@@ -9,15 +9,15 @@
 title: My Life
 brief-intro: Front-end Dev Engineer
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://wsdjeg.github.io" # the base hostname & protocol for your site
+url: "https://wsdjeg.spacevim.org" # the base hostname & protocol for your site
 
-permalink: /:year/:month/:day/:title/
+permalink: /:title/
 
 # other links
 github_username:  wsdjeg
 email: wsdjeg@outlook.com
 
-description_footer: 本站记录我前端之旅的沿途风景！
+description_footer: ""
 
 # comments
 # two ways to comment, only choose one, and use your own short name
