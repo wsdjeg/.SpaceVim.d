@@ -1,21 +1,14 @@
-# Welcome to Jekyll!
-#
-# This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely need to edit after that.
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'jekyll serve'. If you change this file, please restart the server process.
-
 # Site settings
 title: My Life
-brief-intro: Front-end Dev Engineer
+brief-intro: An amateur developer.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://wsdjeg.spacevim.org" # the base hostname & protocol for your site
+url: "https://wsdjeg.spacevim.org"
 
 permalink: /:title/
 
 # other links
 github_username:  wsdjeg
-email: wsdjeg@outlook.com
+email: wsdjeg@163.com
 
 description_footer: ""
 
@@ -30,7 +23,7 @@ description_footer: ""
 # hm.src = "//hm.baidu.com/hm.js?xxxxxxxxxxxx";
 # xxxxx字符串
 # baidu_tongji_id: cf8506e0ef223e57ff6239944e5d46a4
-# google_analytics_id: UA-72449510-4 # google 分析追踪id
+google_analytics_id: UA-78080586-1
 
 # Build settings
 markdown: kramdown
