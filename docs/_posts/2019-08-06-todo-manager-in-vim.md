@@ -19,7 +19,7 @@ author: wsdjeg
 call add(plugins, ['wsdjeg/prolog.vim', { 'merged' : 0}])
 ```
 
-![]h(ttps://user-images.githubusercontent.com/13142418/61044482-5342e800-a40b-11e9-9d6c-88cc20b06095.png)
+![](https://user-images.githubusercontent.com/13142418/61044482-5342e800-a40b-11e9-9d6c-88cc20b06095.png)
 
 ## 安装
 
