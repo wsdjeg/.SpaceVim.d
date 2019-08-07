@@ -6,10 +6,7 @@ icon: heart
 type: page
 ---
 
-* content
 {:toc}
-
-## 关于我
 
 - 姓名：王世东
 - 性别：男
