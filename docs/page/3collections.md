@@ -1,13 +1,14 @@
 ---
 layout: page
-title: Collections
+title: 收藏夹
 permalink: /collection/
 icon: bookmark
 type: page
 ---
 
-- content
-  {:toc}
+* 目录
+
+{:toc}
 
 ## 编辑器
 
