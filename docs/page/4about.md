@@ -16,4 +16,4 @@ type: page
 ## 联系我
 
 * GitHub：[wsdjeg](https://github.com/wsdjeg)
-* Email：wsdjeg@163.com
+* Email：[wsdjeg@163.com](mailto:wsdjeg@163.com)
