@@ -71,7 +71,7 @@ layout: default
             <div class="side">
                 <div>
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                    Recent Posts
+                    最新发布
                 </div>
                 <ul class="content-ul" recent>
                     {% for post in site.posts offset: 0 limit: 10  %}
@@ -84,7 +84,7 @@ layout: default
             <div class="side ">
                 <div>
                     <i class="fa fa-th-list"></i>
-                    Categories
+                    分类
                 </div>
                 <ul class="content-ul" cate>
                     {% for category in site.categories %}
@@ -103,7 +103,7 @@ layout: default
             <div class="side">
                 <div>
                     <i class="fa fa-tags"></i>
-                    Tags
+                    标签
                 </div>
                 <div class="tags-cloud">
                     {% assign first = site.tags.first %}
