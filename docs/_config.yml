@@ -18,9 +18,9 @@ description_footer: ""
 # 评论系统，支持 duoshuo disque
 # duoshuo_shortname: 
 # disqus_shortname: 
-gitment_client_id: 8f0cd1f544d1e4219798
+gitment_client_id: 6c79187cc361fbea8bbd
 comment_repo: DotFiles
-gitment_client_secret: b8ac9c26cc5ab8cff84adda7a491ba24ca869688
+gitment_client_secret: b6e258a565fcf991048f3b4a769e88574f46596a
 
 # statistic analysis 统计代码
 # 百度统计 id，将统计代码替换为自己的百度统计id，即
