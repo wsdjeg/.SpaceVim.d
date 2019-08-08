@@ -1,6 +1,6 @@
 # Site settings
 title: My Life
-brief-intro: An amateur developer.
+brief-intro: 时光荏苒，岁月如梭
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://wsdjeg.spacevim.org"
 
