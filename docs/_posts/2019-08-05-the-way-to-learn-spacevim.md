@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "如何学习并使用 SpaceVim"
-categories: SpaceVim
+categories: 学习笔记
 tags: vim neovim spacevim
 author: wsdjeg
 ---
