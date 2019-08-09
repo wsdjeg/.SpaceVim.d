@@ -2,7 +2,7 @@
 layout: post
 title:  "使用 Vim 管理待办事项"
 categories: 学习笔记
-tags: vim neovim spacevim
+tags: vim
 author: wsdjeg
 ---
 

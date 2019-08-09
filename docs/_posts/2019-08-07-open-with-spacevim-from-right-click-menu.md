@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "右键使用 SpaceVim 打开文件"
-categories: vim
-tags: vim neovim spacevim
+categories: 学习笔记
+tags: spacevim
 author: wsdjeg
 ---
 
