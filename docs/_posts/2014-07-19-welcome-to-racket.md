@@ -37,6 +37,8 @@ Scheme趋于极致的优雅，并作为计算机教学语言在教育界广泛�
 而启用Python进行基础教学。同时美国东北大学另立炉灶，其主导的科学计算系统PLT Scheme开始迅猛发展；
 2010年，PLT Scheme改名为Racket。近几年，The Racket Language连续成为年度最活跃语言网站，并驾齐驱的还有haskell网站。
 
+![lisp](https://user-images.githubusercontent.com/13142418/62820991-907fce80-bb9f-11e9-9975-1cd92f9cfe79.jpg)
+
 ## 安装
 
 在 Racket 官网下载对应系统的安装包，安装完成后，就可以在命令行里使用 racket 命令。
