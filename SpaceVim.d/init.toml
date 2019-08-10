@@ -62,6 +62,8 @@
 [[layers]]
     name = 'lang#ruby'
 [[layers]]
+    name = 'lang#racket'
+[[layers]]
     name = 'lang#xml'
 [[layers]]
     name = 'debug'
