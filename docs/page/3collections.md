@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: collection
 title: 收藏夹
 permalink: /collection/
 icon: bookmark
@@ -21,7 +21,3 @@ type: page
   - [lua 入门指南](https://github.com/wsdjeg/lua-tutorial-cn)
 - ruby
   - [ruby 入门指南](https://github.com/wsdjeg/ruby-tutorial-cn)
-
-## Comments
-
-{% include comments.html %}
