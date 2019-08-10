@@ -2,12 +2,12 @@
 layout: post
 title: "Vim 中文文档规范检查插件"
 categories: 工具分享
-tags: lisp
+tags: vim
 author: 王世东
 ---
 
-- content
-  {:toc}
+* content
+{:toc}
 
 ## 初心
 
