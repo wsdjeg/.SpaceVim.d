@@ -6,7 +6,8 @@ tags: vim
 author: wsdjeg
 ---
 
-1. content
+* content
+
 {:toc}
 
 ## 简介

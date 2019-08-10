@@ -184,9 +184,11 @@ function! myspacevim#before() abort
     call add(g:spacevim_disabled_plugins, 'gtags.vim')
     call s:add_load_repo('SpaceVim/gtags.vim')
     " }}}
-    " vim-markdown      {{{
-    call add(g:spacevim_disabled_plugins, 'vim-markdown')
-    call s:add_load_repo('SpaceVim/vim-markdown')
+    " markdown layer      {{{
+    if SpaceVim#layers#isLoaded('lang#markdown')
+        call add(g:spacevim_disabled_plugins, 'vim-markdown')
+        call s:add_load_repo('SpaceVim/vim-markdown')
+    endif
     " }}}
     " vim-hug-neovim-rpc      {{{
     call add(g:spacevim_disabled_plugins, 'vim-hug-neovim-rpc')
@@ -366,4 +368,5 @@ function! myspacevim#after()
                 \ Edit :call Test(<f-args>)
     command! -nargs=* -complete=customlist,CompleteTestList
                 \ EditList :call Test(<f-args>)
+    " let g:neoformat_enabled_markdown = ['remark']
 endfunction
