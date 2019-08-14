@@ -60,7 +60,7 @@
 [[layers]]
     name = 'lang#c'
 [[layers]]
-    name = 'lang#ruby'
+    name = 'lang#lua'
 [[layers]]
     name = 'lang#racket'
 [[layers]]
