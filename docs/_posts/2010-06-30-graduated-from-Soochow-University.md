@@ -2,7 +2,7 @@
 layout: post
 title: "大学毕业了"
 categories: 生活随笔
-tags: lua
+tags: 苏大
 author: 王世东
 ---
 
