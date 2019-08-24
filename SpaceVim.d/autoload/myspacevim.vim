@@ -190,6 +190,14 @@ function! myspacevim#before() abort
         call s:add_load_repo('SpaceVim/vim-markdown')
     endif
     " }}}
+    " ctrlp layer      {{{
+    if SpaceVim#layers#isLoaded('ctrlp')
+        call add(g:spacevim_disabled_plugins, 'ctrlp-menu')
+        call s:add_load_repo('wsdjeg/ctrlp-menu')
+        call add(g:spacevim_disabled_plugins, 'ctrlp-yank')
+        call s:add_load_repo('wsdjeg/ctrlp-yank')
+    endif
+    " }}}
     " vim-hug-neovim-rpc      {{{
     call add(g:spacevim_disabled_plugins, 'vim-hug-neovim-rpc')
     call s:add_load_repo('SpaceVim/vim-hug-neovim-rpc')
