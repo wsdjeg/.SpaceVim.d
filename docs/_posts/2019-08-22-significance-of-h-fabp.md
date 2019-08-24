@@ -41,6 +41,22 @@ author: 王世东
  
 区分心肌或骨骼肌损伤：H-FABP主要来自心肌，少部分来自骨骼肌。心脏电除颤、器官衰竭、手术后、强体力活动如跑步、划船，骨骼肌受损伤，也会引起血中H-FABP 浓度升高。Mb/H-FABP比值可用于鉴别心肌损伤(比值=2～10)和骨骼肌损伤(比值=20～70)。AMI患者，血浆Mb/H-FABP比值为0～5。
 
+### 急性冠脉综合征的预后价值
+
+除了对急性冠脉综合征有重要的诊断价值外，H-FABP在这些患者的长期预后中也显示出巨大的价值，
+即使与高灵敏度肌钙蛋白测定相比也是如此。
+
+Kilcullen（JACC 2007）在2007年美国心脏病学会杂志上发表了一项前瞻性观察研究的详细资料，
+详细介绍了在英国11家医院中1448名确诊急性冠脉综合征患者的队列。
+患者在ACS症状出现12-24小时后，从单个血液样本中测量肌钙蛋白I和H-Fabp。
+随访1年后，发现H-Fabp浓度的升高对急性冠脉综合征后的死亡率具有很强的预测作用，
+H-Fabp能够在整个TNI浓度范围内识别高危患者。
+6个月时h-fabp和肌钙蛋白I均为阴性的患者死亡率为0%，
+因此被认为是非常低的风险。
+然而，与H-Fabp阴性的患者相比，H-Fabp阳性和肌钙蛋白阴性的患者在1年后死亡的风险明显较高。
+
+![pg11](https://user-images.githubusercontent.com/13142418/63637793-9a332700-c6b3-11e9-9d54-c18e4ee81878.jpg)
+> Fig 5: Kaplan-Meier mortality curves for patients with either TnI≤0.06 μg/l (unstable angina) or TnI>0.06 μg/l (MI inclusive of STEMI/BBBMI) according to the H-FABP cut-off value of 5.8μg/l.
 
 ## H-FABP 与其他项目联合检查
 
