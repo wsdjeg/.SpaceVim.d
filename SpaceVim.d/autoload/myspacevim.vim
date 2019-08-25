@@ -196,6 +196,8 @@ function! myspacevim#before() abort
         call s:add_load_repo('wsdjeg/ctrlp-menu')
         call add(g:spacevim_disabled_plugins, 'ctrlp-yank')
         call s:add_load_repo('wsdjeg/ctrlp-yank')
+        call add(g:spacevim_disabled_plugins, 'vim-ctrlp-message')
+        call s:add_load_repo('wsdjeg/vim-ctrlp-message')
     endif
     " }}}
     " vim-hug-neovim-rpc      {{{
@@ -207,8 +209,10 @@ function! myspacevim#before() abort
     call s:add_load_repo('SpaceVim/nvim-yarp')
     " }}}
     " cscope.vim      {{{
-    call add(g:spacevim_disabled_plugins, 'cscope.vim')
-    call s:add_load_repo('SpaceVim/cscope.vim')
+    if SpaceVim#layers#isLoaded('cscope')
+        call add(g:spacevim_disabled_plugins, 'cscope.vim')
+        call s:add_load_repo('SpaceVim/cscope.vim')
+    endif
     " }}}
     " vim-slumlord      {{{
     call add(g:spacevim_disabled_plugins, 'vim-slumlord')
