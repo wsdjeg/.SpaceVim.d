@@ -1,3 +1,14 @@
+---
+layout: post
+title: "Lua 垃圾回收"
+categories: 学习笔记
+tags: lua
+author: 王世东
+---
+
+* content
+{:toc}
+
 
 Lua 采用了自动内存管理。 这意味着你不用操心新创建的对象需要的内存如何分配出来， 也不用考虑在对象不再被使用后怎样释放它们所占用的内存。
 

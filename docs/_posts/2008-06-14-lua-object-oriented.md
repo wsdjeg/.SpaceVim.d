@@ -1,3 +1,15 @@
+---
+layout: post
+title: "Lua 面向对象"
+categories: 学习笔记
+tags: lua
+author: 王世东
+---
+
+* content
+{:toc}
+
+
 
 面向对象编程（Object Oriented Programming，OOP）是一种非常流行的计算机编程架构。
 

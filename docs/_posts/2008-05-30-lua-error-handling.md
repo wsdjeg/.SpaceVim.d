@@ -1,3 +1,13 @@
+---
+layout: post
+title: "Lua 异常处理"
+categories: 学习笔记
+tags: lua
+author: 王世东
+---
+
+* content
+{:toc}
 
 程序运行中错误处理是必要的，在我们进行文件操作，数据转移及web service
 调用过程中都会出现不可预期的错误。如果不注重错误信息的处理，

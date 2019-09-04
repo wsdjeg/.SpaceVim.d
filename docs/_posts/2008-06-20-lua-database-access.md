@@ -1,3 +1,15 @@
+---
+layout: post
+title: "Lua 数据库访问"
+categories: 学习笔记
+tags: lua
+author: 王世东
+---
+
+* content
+{:toc}
+
+
 
 本文主要为大家介绍 Lua 数据库的操作库：LuaSQL。他是开源的，支持的数据库有：ODBC, ADO, Oracle, MySQL, SQLite 和 PostgreSQL。
 

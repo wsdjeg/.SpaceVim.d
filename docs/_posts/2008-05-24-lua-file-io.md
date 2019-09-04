@@ -1,3 +1,13 @@
+---
+layout: post
+title: "Lua 文件 IO"
+categories: 学习笔记
+tags: lua
+author: 王世东
+---
+
+* content
+{:toc}
 
 Lua I/O 库用于读取和处理文件。分为简单模式（和C一样）、完全模式。
 
