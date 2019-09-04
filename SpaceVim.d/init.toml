@@ -52,7 +52,10 @@
 [[layers]]
     name = 'tools'
 [[layers]]
-    name = 'tags'
+    name = 'gtags'
+    gtagslabel = 'pygments'
+[[layers]]
+    name = 'cscope'
 [[layers]]
     name = 'VersionControl'
 [[layers]]
@@ -90,3 +93,7 @@
     name = 'shell'
     default_position = 'top'
     default_height = 30
+
+[[custom_plugins]]
+    name = "907th/vim-auto-save"
+    merged = false

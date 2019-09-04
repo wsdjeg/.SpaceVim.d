@@ -181,8 +181,10 @@ function! myspacevim#before() abort
     call s:add_load_repo('wsdjeg/vim-powershell')
     " }}}
     " gtags.vim         {{{
-    call add(g:spacevim_disabled_plugins, 'gtags.vim')
-    call s:add_load_repo('SpaceVim/gtags.vim')
+    if SpaceVim#layers#isLoaded('gtags')
+        call add(g:spacevim_disabled_plugins, 'gtags.vim')
+        call s:add_load_repo('SpaceVim/gtags.vim')
+    endif
     " }}}
     " markdown layer      {{{
     if SpaceVim#layers#isLoaded('lang#markdown')
