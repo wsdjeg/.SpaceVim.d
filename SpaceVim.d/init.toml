@@ -63,7 +63,17 @@
 [[layers]]
     name = 'lang#c'
 [[layers]]
+    name = 'lang#j'
+    jconsole-bin = 'D:\Program Files\j\bin\jconsole.exe'
+[[layers]]
     name = 'lang#lua'
+[[layers]]
+    name = 'lang#sh'
+    bash-file-head = [
+        '#!/usr/bin/env bash',
+        '# Time: `strftime("%Y-%m-%d %T")`',
+        ''
+    ]
 [[layers]]
     name = 'lang#racket'
 [[layers]]
@@ -93,7 +103,3 @@
     name = 'shell'
     default_position = 'top'
     default_height = 30
-
-[[custom_plugins]]
-    name = "907th/vim-auto-save"
-    merged = false

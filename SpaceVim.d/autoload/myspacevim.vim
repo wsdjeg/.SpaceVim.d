@@ -191,9 +191,17 @@ function! myspacevim#before() abort
         call add(g:spacevim_disabled_plugins, 'vim-markdown')
         call s:add_load_repo('SpaceVim/vim-markdown')
     endif
+    " lang#j layer      {{{
+    if SpaceVim#layers#isLoaded('lang#j')
+        let $PATH .= ';D:\Program Files\j\bin'
+        call add(g:spacevim_disabled_plugins, 'vim-j')
+        call s:add_load_repo('wsdjeg/vim-j')
+    endif
     " }}}
     " ctrlp layer      {{{
     if SpaceVim#layers#isLoaded('ctrlp')
+        call add(g:spacevim_disabled_plugins, 'ctrlp.vim')
+        call s:add_load_repo('wsdjeg/ctrlp.vim')
         call add(g:spacevim_disabled_plugins, 'ctrlp-menu')
         call s:add_load_repo('wsdjeg/ctrlp-menu')
         call add(g:spacevim_disabled_plugins, 'ctrlp-yank')
