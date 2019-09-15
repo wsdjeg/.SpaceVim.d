@@ -52,11 +52,6 @@ function! myspacevim#before() abort
         "   sources: https://github.com/monochromegane/the_platinum_searcher
         "   bin:     https://github.com/monochromegane/the_platinum_searcher/releases
         " let $PATH .= ';D:\bin'
-        " go language
-        "
-        " let $PATH .= ';D:\Go\bin'
-        " let $PATH .= ';D:\goprojects\bin'
-        " let $GOPATH = 'D:\goprojects'
         " Perl language
         " http://strawberryperl.com/download/5.28.1.1/strawberry-perl-5.28.1.1-64bit.zip
         " let $PATH .= ';D:\strawberry-perl\perl\bin'
@@ -288,6 +283,21 @@ function! myspacevim#before() abort
     if SpaceVim#layers#isLoaded('lang#pact')
         call add(g:spacevim_disabled_plugins, 'vim-pact')
         call s:add_load_repo('wsdjeg/vim-pact')
+    endif
+    " go language config
+    let $PATH .= ';D:\GOPATH\bin'
+    let $GOPATH = 'D:\GOPATH'
+    if SpaceVim#layers#isLoaded('lang#go')
+    endif
+    if SpaceVim#layers#isLoaded('denite')
+        call add(g:spacevim_disabled_plugins, 'denite.nvim')
+        call s:add_load_repo('SpaceVim/denite.nvim')
+        so ~\.Spacevim\config\plugins\denite.vim
+    endif
+    if SpaceVim#layers#isLoaded('autocomplete')
+        call add(g:spacevim_disabled_plugins, 'deoplete.nvim')
+        call s:add_load_repo('SpaceVim/deoplete.nvim')
+        so ~\.Spacevim\config\plugins\deoplete.vim
     endif
     " lang#assembly layer local config
     if SpaceVim#layers#isLoaded('lang#assembly')

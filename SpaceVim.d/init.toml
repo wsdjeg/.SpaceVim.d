@@ -44,7 +44,7 @@
 
 # SpaceVim layer config {{{
 [[layers]]
-    name = 'ctrlp'
+    name = 'denite'
 [[layers]]
     name = 'format'
 [[layers]]
