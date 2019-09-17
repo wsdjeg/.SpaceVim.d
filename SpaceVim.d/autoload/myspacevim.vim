@@ -166,7 +166,7 @@ function! myspacevim#before() abort
     let $MYSRCDIR = '~/SpaceVim'
     " 某些情况下该目录需要手动新建。
     " defind global var before using it:
-    let g:spacevim_disabled_plugins = []
+    let g:spacevim_disabled_plugins = get(g:, 'spacevim_disabled_plugins', [])
     " vim-nim           {{{
     call add(g:spacevim_disabled_plugins, 'vim-nim')
     call s:add_load_repo('wsdjeg/vim-nim')
@@ -290,14 +290,14 @@ function! myspacevim#before() abort
     if SpaceVim#layers#isLoaded('lang#go')
     endif
     if SpaceVim#layers#isLoaded('denite')
-        call add(g:spacevim_disabled_plugins, 'denite.nvim')
-        call s:add_load_repo('SpaceVim/denite.nvim')
-        so ~\.Spacevim\config\plugins\denite.vim
+        " call add(g:spacevim_disabled_plugins, 'denite.nvim')
+        " call s:add_load_repo('SpaceVim/denite.nvim')
+        " so ~\.Spacevim\config\plugins\denite.vim
     endif
     if SpaceVim#layers#isLoaded('autocomplete')
-        call add(g:spacevim_disabled_plugins, 'deoplete.nvim')
-        call s:add_load_repo('SpaceVim/deoplete.nvim')
-        so ~\.Spacevim\config\plugins\deoplete.vim
+        " call add(g:spacevim_disabled_plugins, 'deoplete.nvim')
+        " call s:add_load_repo('SpaceVim/deoplete.nvim')
+        " so ~\.Spacevim\config\plugins\deoplete.vim
     endif
     " lang#assembly layer local config
     if SpaceVim#layers#isLoaded('lang#assembly')

@@ -72,8 +72,6 @@ function! s:run_vader() abort
   Vader %
   nnoremap <buffer> q :bd<cr>
 endfunction
-set rtp+=~/SpaceVim/fzy.vim
-set rtp+=~/SpaceVim/GitHub.vim
-set rtp+=~/SpaceVim/toml-indent.vim
-let g:spacevim_disabled_plugins = ['GitHub-api.vim']
+
+
 " vim:set nofoldenable:
