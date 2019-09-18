@@ -40,7 +40,6 @@
     # vimcompatible = true
     # enable_language_specific_leader = false
     enable_statusline_tag = false
-    disabled_plugins = ["denite.nvim"]
 # }}}
 
 # SpaceVim layer config {{{
@@ -103,8 +102,3 @@
     name = 'shell'
     default_position = 'top'
     default_height = 30
-
-[[custom_plugins]]
-  name = "SpaceVim/denite.nvim"
-  merged = false
-  loadconf = true
