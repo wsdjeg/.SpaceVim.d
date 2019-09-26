@@ -44,7 +44,7 @@
 
 # SpaceVim layer config {{{
 [[layers]]
-    name = 'denite'
+    name = 'ctrlp'
 [[layers]]
     name = 'format'
 [[layers]]
@@ -74,7 +74,7 @@
         ''
     ]
 [[layers]]
-    name = 'lang#racket'
+    name = 'lang#supercollider'
 [[layers]]
     name = 'lang#xml'
 [[layers]]
