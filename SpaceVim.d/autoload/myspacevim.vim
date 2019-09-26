@@ -193,6 +193,32 @@ function! myspacevim#before() abort
         call s:add_load_repo('wsdjeg/vim-j')
     endif
     " }}}
+    " lang#io layer      {{{
+    if SpaceVim#layers#isLoaded('lang#io')
+        let $PATH .= ';D:\Program Files\io\bin'
+        call add(g:spacevim_disabled_plugins, 'vim-iolang')
+        call s:add_load_repo('wsdjeg/vim-iolang')
+    endif
+    " }}}
+    " lang#batch layer      {{{
+    if SpaceVim#layers#isLoaded('lang#batch')
+        call add(g:spacevim_disabled_plugins, 'vim-batch')
+        call s:add_load_repo('wsdjeg/vim-batch')
+    endif
+    " }}}
+    " lang#idris layer      {{{
+    if SpaceVim#layers#isLoaded('lang#idris')
+        let $PATH .= ';D:\idris;D:\idris\mingw\bin'
+        call add(g:spacevim_disabled_plugins, 'vim-idris')
+        call s:add_load_repo('wsdjeg/vim-idris')
+    endif
+    " }}}
+    " lang#supercollider layer      {{{
+    if SpaceVim#layers#isLoaded('lang#supercollider')
+        call add(g:spacevim_disabled_plugins, 'vim-supercollider')
+        call s:add_load_repo('wsdjeg/vim-supercollider')
+    endif
+    " }}}
     " ctrlp layer      {{{
     if SpaceVim#layers#isLoaded('ctrlp')
         call add(g:spacevim_disabled_plugins, 'ctrlp.vim')
