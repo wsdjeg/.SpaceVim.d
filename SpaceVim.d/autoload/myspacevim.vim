@@ -216,8 +216,14 @@ function! myspacevim#before() abort
     " lang#gosu layer      {{{
     if SpaceVim#layers#isLoaded('lang#gosu')
         let $PATH .= ';D:\gosu\bin'
-        " call add(g:spacevim_disabled_plugins, 'vim-idris')
-        " call s:add_load_repo('wsdjeg/vim-idris')
+        call add(g:spacevim_disabled_plugins, 'vim-gosu')
+        call s:add_load_repo('wsdjeg/vim-gosu')
+    endif
+    " }}}
+    " lang#lisp layer      {{{
+    if SpaceVim#layers#isLoaded('lang#lisp')
+        call add(g:spacevim_disabled_plugins, 'vim-lisp')
+        call s:add_load_repo('wsdjeg/vim-lisp')
     endif
     " }}}
     " lang#supercollider layer      {{{

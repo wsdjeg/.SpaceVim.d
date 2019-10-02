@@ -77,7 +77,7 @@
         ''
     ]
 [[layers]]
-    name = 'lang#supercollider'
+    name = 'lang#lisp'
 [[layers]]
     name = 'lang#xml'
 [[layers]]
