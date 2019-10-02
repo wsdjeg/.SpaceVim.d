@@ -44,6 +44,9 @@
 
 # SpaceVim layer config {{{
 [[layers]]
+    name = 'core'
+    # filetree_show_hidden = true
+[[layers]]
     name = 'ctrlp'
 [[layers]]
     name = 'format'

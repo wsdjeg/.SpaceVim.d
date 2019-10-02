@@ -213,6 +213,13 @@ function! myspacevim#before() abort
         call s:add_load_repo('wsdjeg/vim-idris')
     endif
     " }}}
+    " lang#gosu layer      {{{
+    if SpaceVim#layers#isLoaded('lang#gosu')
+        let $PATH .= ';D:\gosu\bin'
+        " call add(g:spacevim_disabled_plugins, 'vim-idris')
+        " call s:add_load_repo('wsdjeg/vim-idris')
+    endif
+    " }}}
     " lang#supercollider layer      {{{
     if SpaceVim#layers#isLoaded('lang#supercollider')
         call add(g:spacevim_disabled_plugins, 'vim-supercollider')
