@@ -14,8 +14,8 @@ let s:win_is_open = v:false
 function! s:close(...) abort
     if len(s:shown) == 1
         noautocmd call nvim_win_close(s:notification_winid, v:true)
+        let s:win_is_open = v:false
     endif
-    let s:win_is_open = v:false
     if !empty(s:shown)
         call add(s:messages, remove(s:shown, 0))
     endif
