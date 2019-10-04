@@ -44,6 +44,7 @@ function! s:notification(msg, color) abort
                     \ 'row': 2,
                     \ 'col': &columns - strwidth(a:msg) - 3
                     \ })
+        let s:win_is_open = v:true
     endif
     call s:BUFFER.buf_set_lines(s:buffer_id, 0 , -1, 0, s:shown)
     call setbufvar(s:buffer_id, '&winhighlight', 'Normal:' . a:color)
