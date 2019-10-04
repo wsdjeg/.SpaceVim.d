@@ -27,7 +27,7 @@ function! s:notification(msg, color) abort
     endtry
     call add(s:shown, a:msg)
     if s:win_is_open
-        call s:FLOATING.win_config(s:buffer_id,
+        call s:FLOATING.win_config(s:notification_winid,
                     \ {
                     \ 'relative': 'editor',
                     \ 'width'   : strwidth(a:msg), 
