@@ -4,20 +4,22 @@ let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
 let s:buffer_id = nvim_create_buf(v:false, v:false)
 
-function! s:close() abort
-
+function! s:close(...) abort
+    call nvim_win_close(s:notification_winid, v:true)
 endfunction
 
 function! s:notification(msg, color) abort
-    let s:notification_winid =  s:FLOATING.open_win(s:buffer_id, v:true,
+    let s:notification_winid =  s:FLOATING.open_win(s:buffer_id, v:false,
                 \ {
                 \ 'relative': 'editor',
                 \ 'width'   : strlen(a:msg), 
                 \ 'height'  : 1,
                 \ 'row': 2,
-                \ 'col': &columns - strlen(a:msg)
+                \ 'col': &columns - strlen(a:msg) - 3
                 \ })
-  call s:BUFFER.buf_set_lines(s:buffer_id, 0 , -1, 0, [a:msg])
+    call s:BUFFER.buf_set_lines(s:buffer_id, 0 , -1, 0, [a:msg])
+    call nvim_buf_set_var(s:buffer_id, '&winhighlight', 'Normal:' . a:color)
+    call timer_start(2000, function('s:close'), {'repeat' : 1})
 endfunction
 
 
