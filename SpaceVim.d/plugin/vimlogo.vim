@@ -5,9 +5,6 @@ let s:color4 = '#121212'
 let s:color5 = '#121212'
 let s:color6 = '#121212'
 let s:color7 = '#121212'
-let s:color8 = '#121212'
-let s:color9 = '#121212'
-let s:color0 = '#121212'
 
 
 function! s:def_color() abort
