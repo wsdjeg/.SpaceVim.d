@@ -9,6 +9,14 @@ let s:color8 = '#121212'
 let s:color9 = '#121212'
 let s:color0 = '#121212'
 
+
+function! s:def_color() abort
+    for i in range(1, 7)
+        let color = get(s:, 'color' . i, '')
+        exe 'hi VimLogoColor' . i . ' guibg=' . color . ' guifg=' . color  
+    endfor
+endfunction
+
 " 32 列 16                                                  |                                               |       
 
 let s:logo = 
@@ -72,6 +80,7 @@ function! s:clear_colors() abort
 endfunction
 
 function! s:show_logo() abort
+    call s:def_color()
     call s:set_bg_color()
     let l = line('w0')
     for pos in s:logo
