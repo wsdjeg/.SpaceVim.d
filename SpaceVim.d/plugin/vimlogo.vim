@@ -55,6 +55,9 @@ let s:colorids = []
 
 function! s:set_bg_color() abort
     " clear all color in current buffer
+    for line in range(line('w0'), line('w$'))
+        call nvim_buf_add_highlight(bufnr('%'), s:logo_hi_id, 'VimLogoColor' . column, line, 0, -1)
+    endfor
 endfunction
 
 
