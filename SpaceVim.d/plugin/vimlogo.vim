@@ -60,27 +60,23 @@ function! s:set_bg_color() abort
     " clear all color in current buffer
 endfunction
 
-let s:logo_hi_id = 0
 
 function! s:set_color(pos, line) abort
-      let bas_col = 10
-      for column in a:pos
-          if s:logo_hi_id == 0
-              let s:logo_hi_id = nvim_buf_add_highlight(bufnr('%'), 0, 'VimLogoColor' . column, a:line, bas_col, bas_col + 1)
-          else
-              call nvim_buf_add_highlight(bufnr('%'), s:logo_hi_id, 'VimLogoColor' . column, a:line, bas_col, bas_col + 1)
-          endif
-          let bas_col += 2
-      endfor
+    let bas_col = 10
+    for column in a:pos
+        call nvim_buf_add_highlight(bufnr('%'), s:logo_hi_id, 'VimLogoColor' . column, a:line, bas_col, bas_col + 2)
+        let bas_col += 2
+    endfor
 
 endfunction
 
-function! s:clear_colors() abort
-
+function! s:clear_colors(...) abort
+    call nvim_buf_clear_namespace(bufnr('%'), s:logo_hi_id, 0, -1)
 endfunction
 
 function! s:show_logo() abort
     call s:def_color()
+    let s:logo_hi_id = nvim_create_namespace('')
     call s:set_bg_color()
     let l = line('w0')
     for pos in s:logo
