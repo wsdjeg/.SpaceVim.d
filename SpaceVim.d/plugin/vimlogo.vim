@@ -1,10 +1,10 @@
-let s:color1 = '#121212'
-let s:color2 = '#121212'
-let s:color3 = '#121212'
-let s:color4 = '#121212'
-let s:color5 = '#121212'
-let s:color6 = '#121212'
-let s:color7 = '#121212'
+let s:color1 = '#000000'
+let s:color2 = '#02f78e'
+let s:color3 = '#adadad'
+let s:color4 = '#009100'
+let s:color5 = '#ffffff'
+let s:color6 = '#7b7b7b'
+let s:color7 = '#006030'
 
 
 function! s:def_color() abort
@@ -72,8 +72,8 @@ function! s:clear_colors(...) abort
 endfunction
 
 function! s:show_logo() abort
-    call s:def_color()
     let s:logo_hi_id = nvim_create_namespace('')
+    call s:def_color()
     call s:set_bg_color()
     let l = line('w0')
     for pos in s:logo
