@@ -1,3 +1,7 @@
+if !has('nvim')
+    finish
+endif
+
 let s:FLOATING = SpaceVim#api#import('neovim#floating')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
