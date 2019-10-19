@@ -329,9 +329,11 @@ function! myspacevim#before() abort
     if SpaceVim#layers#isLoaded('lang#go')
     endif
     if SpaceVim#layers#isLoaded('denite')
-        call add(g:spacevim_disabled_plugins, 'denite.nvim')
-        call s:add_load_repo('SpaceVim/denite.nvim')
-        so ~\.Spacevim\config\plugins\denite.vim
+        " call add(g:spacevim_disabled_plugins, 'denite.nvim')
+        " call s:add_load_repo('SpaceVim/denite.nvim')
+        " so ~\.Spacevim\config\plugins\denite.vim
+        call add(g:spacevim_disabled_plugins, 'Unite-sources')
+        call s:add_load_repo('SpaceVim/Unite-sources')
     endif
     if SpaceVim#layers#isLoaded('autocomplete')
         " call add(g:spacevim_disabled_plugins, 'deoplete.nvim')

@@ -66,7 +66,7 @@
 [[layers]]
     name = 'lang#c'
 [[layers]]
-    name = 'lang#goby'
+    name = 'lang#scala'
 [[layers]]
     name = 'lang#lua'
 [[layers]]

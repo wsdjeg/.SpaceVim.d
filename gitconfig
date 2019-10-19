@@ -21,6 +21,7 @@
 	autocrlf = false
 	filemode = false
 	safecrlf = true
+	ignorecase = false
 [mergetool]
   prompt = true
 [mergetool "vimdiff"]
