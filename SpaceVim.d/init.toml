@@ -47,7 +47,7 @@
     name = 'core'
     # filetree_show_hidden = true
 [[layers]]
-    name = 'denite'
+    name = 'leaderf'
 [[layers]]
     name = 'format'
 [[layers]]
