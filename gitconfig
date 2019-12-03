@@ -9,6 +9,8 @@
 [credential]
 [diff]
 	tool = nvim
+[commit]
+	tool = nvim
 [difftool]
 	prompt = false
 [color]

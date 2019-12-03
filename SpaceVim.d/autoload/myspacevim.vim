@@ -5,6 +5,7 @@ let s:FILE = SpaceVim#api#import('file')
 
 function! myspacevim#before() abort
     set rtp+=~/SpaceVim/SpaceVim/build/vader
+    set dictionary+=C:\\Users\\wsdjeg\\DotFiles\\dict\\words.txt
     set history=10000
     let g:LanguageClient_loggingFile = expand('~/LanguageClient.log')
     let g:neomru#file_mru_ignore_pattern = '^[a-z]\+://'
@@ -12,7 +13,7 @@ function! myspacevim#before() abort
     " Windows bin utils {{{
     if s:SYS.isWindows
         " Neovim default layout
-        " D:\Program Files\Neovim\bin\nvim-qt.exe" -qwindowgeometry 1300x650+20+20
+        "D:\Program Files\Neovim\bin\nvim-qt.exe" -qwindowgeometry 1300x650+20+20
         " if !has('nvim')
         " set rop=type:directx
         " let g:githubapi_curl_exe = 'D:\Program Files\Neovim\bin\curl.exe'
@@ -63,6 +64,8 @@ function! myspacevim#before() abort
         if exists('+luadll')
             set luadll=D:\\scoop\\apps\\lua53\\current\\lua53.dll
         endif
+        " Add D:\bin to PATH
+        let $PATH .= ';D:\bin'
         " red language: https://www.red-lang.org/
         let $PATH .= ';D:\red'
         " kotlin native
@@ -244,6 +247,12 @@ function! myspacevim#before() abort
         call s:add_load_repo('wsdjeg/vim-ctrlp-message')
     endif
     " }}}
+    " ctrlp layer      {{{
+    if SpaceVim#layers#isLoaded('git')
+        call add(g:spacevim_disabled_plugins, 'git.vim')
+        call s:add_load_repo('wsdjeg/git.vim')
+    endif
+    " }}}
     " vim-hug-neovim-rpc      {{{
     call add(g:spacevim_disabled_plugins, 'vim-hug-neovim-rpc')
     call s:add_load_repo('SpaceVim/vim-hug-neovim-rpc')
@@ -367,6 +376,7 @@ function! myspacevim#before() abort
     " tagbar-markdown         {{{
     call add(g:spacevim_disabled_plugins, 'tagbar-markdown')
     call s:add_load_repo('wsdjeg/tagbar-markdown')
+    call s:add_load_repo('wsdjeg/vim-fuzzy-search')
     " }}}
     " vim-translate-me         {{{
     " call add(g:spacevim_disabled_plugins, 'vim-translate-me')

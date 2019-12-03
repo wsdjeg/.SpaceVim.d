@@ -20,18 +20,21 @@
     # enable_ale = false
     # enable_neomake = false
     realtime_leader_guide = 1
-    enable_tabline_filetype_icon = false
-    enable_os_fileformat_icon = false
-    statusline_unicode_symbols = false
-    buffer_index_type = 4
+    enable_tabline_filetype_icon = true
+    enable_os_fileformat_icon = true
+    statusline_unicode_symbols = true
+    buffer_index_type = 0
     windows_index_type = 3
     statusline_separator = 'arrow'
     github_username = 'wsdjeg'
     auto_disable_touchpad = 0
     colorscheme = 'one'
     checkinstall = false
-    guifont = 'SauceCodePro Nerd Font:h11:cANSI:qDRAFT'
-    enable_tabline_filetype_icon = false
+    guifont = 'SauceCodePro NF:h12:cANSI:qDRAFT'
+    # guifont = 'SauceCodePro Nerd Font Mono:h12:cANSI:qDRAFT'
+    # guifont = 'DejaVuSansMono NF:h12:cANSI:qDRAFT'
+    # guifont = 'Hasklug NF:h12:cANSI:qDRAFT'
+    enable_tabline_filetype_icon = true
     bootstrap_before = "myspacevim#before"
     bootstrap_after = "myspacevim#after"
     search_tools = ["rg", "pt", "ack", "grep", "findstr"]
@@ -47,7 +50,9 @@
     name = 'core'
     # filetree_show_hidden = true
 [[layers]]
-    name = 'leaderf'
+  name = "lang#python"
+[[layers]]
+    name = 'denite'
 [[layers]]
     name = 'format'
 [[layers]]
@@ -105,3 +110,7 @@
     name = 'shell'
     default_position = 'top'
     default_height = 30
+
+[[custom_plugins]]
+    name = 'jreybert/vimagit'
+    merged = false
