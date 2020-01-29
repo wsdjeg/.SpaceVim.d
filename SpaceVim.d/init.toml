@@ -71,7 +71,7 @@
 [[layers]]
     name = 'lang#c'
 [[layers]]
-    name = 'lang#scala'
+    name = 'lang#typescript'
 [[layers]]
     name = 'lang#lua'
 [[layers]]
@@ -82,13 +82,22 @@
         ''
     ]
 [[layers]]
-    name = 'lang#lisp'
+    name = 'lang#haskell'
+[[layers]]
+    name = 'lang#javascript'
 [[layers]]
     name = 'lang#xml'
+[[layers]]
+    name = 'lang#scheme'
+    scheme_dialect = 'chez'
+    scheme_interpreter = 'C:\Program Files\Chez Scheme 9.5\bin\ta6nt\scheme.exe'
 [[layers]]
     name = 'debug'
 [[layers]]
     name = 'lang#toml'
+[[layers]]
+    name = 'lang#ring'
+    ring_repl = 'C:\Users\wsdjeg\SpaceVim\ringrepl\repl.ring'
 [[layers]]
     name = 'colorscheme'
 [[layers]]
@@ -110,7 +119,14 @@
     name = 'shell'
     default_position = 'top'
     default_height = 30
+[[layers]]
+    name = 'incsearch'
+    enable = true
 
 [[custom_plugins]]
     name = 'jreybert/vimagit'
+    merged = false
+
+[[custom_plugins]]
+    name = 'liuchengxu/vim-clap'
     merged = false

@@ -196,6 +196,13 @@ function! myspacevim#before() abort
         call s:add_load_repo('wsdjeg/vim-j')
     endif
     " }}}
+    " lang#ring layer      {{{
+    if SpaceVim#layers#isLoaded('lang#ring')
+        let $PATH .= ';D:\Program Files\ring\bin'
+        call add(g:spacevim_disabled_plugins, 'vim-ring')
+        call s:add_load_repo('wsdjeg/vim-ring')
+    endif
+    " }}}
     " lang#io layer      {{{
     if SpaceVim#layers#isLoaded('lang#io')
         let $PATH .= ';D:\Program Files\io\bin'
@@ -387,7 +394,6 @@ function! myspacevim#before() abort
         call s:check_local_repo(repo)
     endfor
     let g:delimitMate_expand_cr = 1
-    call add(g:spacevim_project_rooter_patterns, 'package.json')
     let g:spacevim_layer_lang_java_formatter = '/home/wsdjeg/Downloads/google-java-format-1.5-all-deps.jar'
     command! CursorHighlight call s:cursor_highlight()
     let profile = SpaceVim#mapping#search#getprofile('rg')
