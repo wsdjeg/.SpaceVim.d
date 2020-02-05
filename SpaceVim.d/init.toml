@@ -82,6 +82,13 @@
         ''
     ]
 [[layers]]
+  name = "lsp"
+  filetypes = [
+    "typescript"
+  ]
+  [layers.override_cmd]
+    rust = ["rustup", "run", "nightly", "rls"]
+[[layers]]
     name = 'lang#haskell'
 [[layers]]
     name = 'lang#javascript'
@@ -122,11 +129,17 @@
 [[layers]]
     name = 'incsearch'
     enable = true
+[[layers]]
+    name = 'lang#xquery'
+    enable = true
+[[layers]]
+    name = 'lang#janet'
+    enable = true
 
 [[custom_plugins]]
     name = 'jreybert/vimagit'
     merged = false
 
 [[custom_plugins]]
-    name = 'liuchengxu/vim-clap'
+    name = 'liuchengxu/vista.vim'
     merged = false

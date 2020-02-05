@@ -361,6 +361,13 @@ function! myspacevim#before() abort
         call add(g:spacevim_disabled_plugins, 'vim-assembly')
         call s:add_load_repo('wsdjeg/vim-assembly')
     endif
+    if SpaceVim#layers#isLoaded('lang#xquery')
+        call add(g:spacevim_disabled_plugins, 'vim-xquery')
+        call s:add_load_repo('wsdjeg/vim-xquery')
+    endif
+    if SpaceVim#layers#isLoaded('lang#janet')
+        let $PATH .= ';D:\janet'
+    endif
     " debug layer local config
     if SpaceVim#layers#isLoaded('debug')
         call add(g:spacevim_disabled_plugins, 'vim-debug')
