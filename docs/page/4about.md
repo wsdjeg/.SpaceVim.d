@@ -17,3 +17,4 @@ type: page
 - Email：[wsdjeg@outlook.com](mailto:wsdjeg@outlook.com)
 - GitHub：[wsdjeg](https://github.com/wsdjeg)
 - 简书：[wsdjeg](https://www.jianshu.com/u/46366586ab89)
+- 黑客派：[wsdjeg](https://hacpai.com/member/wsdjeg)
