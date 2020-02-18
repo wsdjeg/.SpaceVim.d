@@ -135,6 +135,9 @@
 [[layers]]
     name = 'lang#janet'
     enable = true
+[[layers]]
+    name = 'lang#zig'
+    enable = true
 
 [[custom_plugins]]
     name = 'jreybert/vimagit'

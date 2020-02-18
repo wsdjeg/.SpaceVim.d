@@ -203,6 +203,11 @@ function! myspacevim#before() abort
         call s:add_load_repo('wsdjeg/vim-ring')
     endif
     " }}}
+    " lang#zig layer      {{{
+    if SpaceVim#layers#isLoaded('lang#zig')
+        let $PATH .= ';D:\zig'
+    endif
+    " }}}
     " lang#io layer      {{{
     if SpaceVim#layers#isLoaded('lang#io')
         let $PATH .= ';D:\Program Files\io\bin'
