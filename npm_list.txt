@@ -1,7 +1,0 @@
-eslint
-js-beautify
-pinyin
-remark-cli
-remark-frontmatter
-remark-stringify
-wcwidth

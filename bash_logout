@@ -1,3 +1,0 @@
-#
-# ~/.bash_logout
-#

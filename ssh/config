@@ -1,8 +1,0 @@
-Host gitee.com
-    IdentityFile ~/.ssh/id_rsa.gitee
-
-Host github.com
-    IdentityFile ~/.ssh/id_rsa.github
-
-Host bitbucket.org
-    IdentityFile ~/.ssh/id_rsa.bitbucket
