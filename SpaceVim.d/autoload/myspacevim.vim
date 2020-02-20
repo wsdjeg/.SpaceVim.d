@@ -203,6 +203,14 @@ function! myspacevim#before() abort
         call s:add_load_repo('wsdjeg/vim-ring')
     endif
     " }}}
+    " lang#vbnet layer      {{{
+    if SpaceVim#layers#isLoaded('lang#vbnet')
+        " visual basic .net
+        let $PATH .= ';C:\Windows\Microsoft.NET\Framework\v3.5'
+        call add(g:spacevim_disabled_plugins, 'vim-vbnet')
+        call s:add_load_repo('wsdjeg/vim-vbnet')
+    endif
+    " }}}
     " lang#zig layer      {{{
     if SpaceVim#layers#isLoaded('lang#zig')
         let $PATH .= ';D:\zig'

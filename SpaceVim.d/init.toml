@@ -24,6 +24,7 @@
     enable_os_fileformat_icon = true
     statusline_unicode_symbols = true
     buffer_index_type = 0
+    todo_labels = ['@bug', '@question', '@idea', '@fixme']
     windows_index_type = 3
     statusline_separator = 'arrow'
     github_username = 'wsdjeg'
@@ -137,6 +138,9 @@
     enable = true
 [[layers]]
     name = 'lang#zig'
+    enable = true
+[[layers]]
+    name = 'lang#vbnet'
     enable = true
 
 [[custom_plugins]]
