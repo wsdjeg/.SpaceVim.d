@@ -44,7 +44,7 @@ function! myspacevim#before() abort
     let g:neomru#file_mru_ignore_pattern = '^[a-z]\+://'
     let g:deoplete#enable_at_startup = 1
     " let g:bookmark_save_per_working_dir = 1
-    let g:tagbar_width = 60
+    " let g:tagbar_width = 60
     " Windows bin utils {{{
     if s:SYS.isWindows
         " Neovim default layout
@@ -479,6 +479,9 @@ function! s:clone_std(id, data, event) abort
     call add(g:_mylog, a:data)
 endfunction
 function! myspacevim#after()
+    if has('nvim-0.7.0')
+      autocmd InsertLeave * lua require('spacevim.plugin.imselect').english()
+    endif
     let s:CMD = SpaceVim#api#import('vim#command')
     let s:CMD.options = {
                 \ '-f' : {
