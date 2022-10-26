@@ -1,1 +1,3 @@
-## My custom config scripts with SpaceVim
+## My spacevim configuration file
+
+
