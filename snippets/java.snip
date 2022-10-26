@@ -1,0 +1,87 @@
+snippet pmain
+    public static void main (String[] args) {
+        ${1}
+    }
+
+snippet pmte
+    public static void main (String[] args) throws ${1:#:Exception} {
+        ${2}
+    }
+
+snippet pl
+alias   syso
+options head
+    System.out.println(${1:#:output});${2}
+
+snippet prt
+options head
+    System.out.print(${1:#:output});${2}
+
+
+snippet cl
+    class ${1:`expand('%:t:r')`} {
+        ${0}
+    }
+
+snippet     pac
+abbr        package
+alias       pa
+options     head
+    package ${1}
+
+snippet     pcl
+abbr        class
+options     head
+    public class ${1:`expand('%:t:r')`} {
+        ${1}
+    }
+
+snippet     voi
+abbr        void
+alias       vo
+    void ${1}
+
+snippet     str
+abbr        str
+options     word
+    String ${1}
+
+snippet     cle
+abbr        cle
+alias       class
+options     head
+    public class ${1:`expand('%:t:r')`} ${2:extends ${3:parentClass\}} ${4:implements ${5:interfaces\}} {
+        ${6}
+    }
+
+
+snippet     m
+abbr        method
+options     head
+    ${1:public ${2:static\}} ${3:void} ${4:methodName}(${5:#:args}) {
+        ${6}
+    }
+
+
+
+snippet     while
+abbr        while
+alias       wh,wil
+options     head
+    while (${1:#:true}) {
+        ${2}
+    }
+
+snippet     interface
+    interfaces `expand('%:t:r')` ${1:extends ${2:parent\}} {
+        ${3}
+    }
+
+snippet     im
+options     head
+    import ${0}
+
+snippet     svuid
+abbr        UID
+options     head
+    private static final long serialVersionUID = 1L;${1}
