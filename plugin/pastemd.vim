@@ -14,4 +14,4 @@ function! TestPaste() abort
 endfunction
 
 
-nnoremap \p <cmd>call TestPaste()<Cr>
+" nnoremap \p <cmd>call TestPaste()<Cr>
