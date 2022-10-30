@@ -86,7 +86,7 @@ let g:fuck_f = 2
 
 [[layers]]
     name = 'ui'
-    enable_scrollbar = true
+    enable_scrollbar = false
     enable_indentline = false
     # filetree_show_hidden = true
     cursorword_delay = 200
