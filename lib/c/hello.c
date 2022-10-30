@@ -1,7 +1,4 @@
-#include <stdio.h>
-
 int
-hello()
+hello(int d)
 {
-  printf ("Hello World!\n");
 }  
