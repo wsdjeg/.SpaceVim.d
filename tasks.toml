@@ -1,0 +1,3 @@
+[say-hello]
+    command = 'echo'
+    args = ['hello']

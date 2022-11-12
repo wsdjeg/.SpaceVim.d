@@ -34,7 +34,7 @@
     file_searching_tools = ['fd', 'fd']
     colorscheme = 'one'
     checkinstall = false
-    guifont = 'SauceCodePro NF:h12:cANSI:qDRAFT'
+    guifont = 'SauceCodePro NF:h10:cANSI:qDRAFT'
     # guifont = 'SauceCodePro Nerd Font Mono:h12:cANSI:qDRAFT'
     # guifont = 'DejaVuSansMono NF:h12:cANSI:qDRAFT'
     # guifont = 'Hasklug NF:h12:cANSI:qDRAFT'
@@ -86,7 +86,7 @@ let g:fuck_f = 2
 
 [[layers]]
     name = 'ui'
-    enable_scrollbar = false
+    enable_scrollbar = true
     enable_indentline = false
     # filetree_show_hidden = true
     cursorword_delay = 200
@@ -198,26 +198,9 @@ let g:fuck_f = 2
     ctags_bin = 'C:\Users\wsdjeg\.SpaceVim\bundle\phpcomplete.vim\bin\ctags.exe'
 [[layers]]
     name = 'lsp'
-    enabled_clients = ['vimls', 'jdtls', 'clangd']
+    enabled_clients = ['vimls', 'clangd']
     filetypes = ['vim']
     enable = true
-    [layers.override_client_cmds]
-    jdtls = [
-    "java",
-    "-Declipse.application=org.eclipse.jdt.ls.core.id1",
-    "-Dosgi.bundles.defaultStartLevel=4",
-    "-Declipse.product=org.eclipse.jdt.ls.core.product",
-    "-Dlog.protocol=true",
-    "-Dlog.level=NONE",
-    "-noverify",
-    "-Xmx1G",
-    "-jar",
-    "D:\\dev\\jdt-language-server-latest\\plugins\\org.eclipse.equinox.launcher_1.5.200.v20180922-1751.jar",
-    "-configuration",
-    "D:\\dev\\jdt-language-server-latest\\config_win",
-    "-data",
-    "C:\\Users\\Administrator\\.cache\\javalsp"
-    ]
 [[layers]]
     name = 'tools#mpv'
     mpv_interpreter = 'D:\Program Files\mpv\mpv.exe'
