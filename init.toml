@@ -32,9 +32,9 @@
     github_username = 'wsdjeg'
     auto_disable_touchpad = 0
     file_searching_tools = ['fd', 'fd']
-    colorscheme = 'one'
+    colorscheme = 'SpaceVim'
     checkinstall = false
-    guifont = 'SauceCodePro NF:h11:cANSI:qDRAFT'
+    guifont = 'SauceCodePro NF:h14:cANSI:qDRAFT'
     # guifont = 'SauceCodePro Nerd Font Mono:h12:cANSI:qDRAFT'
     # guifont = 'DejaVuSansMono NF:h12:cANSI:qDRAFT'
     # guifont = 'Hasklug NF:h12:cANSI:qDRAFT'
