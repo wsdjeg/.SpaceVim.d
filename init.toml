@@ -32,7 +32,7 @@
     github_username = 'wsdjeg'
     auto_disable_touchpad = 0
     file_searching_tools = ['fd', 'fd']
-    colorscheme = 'SpaceVim'
+    colorscheme = 'one'
     checkinstall = false
     guifont = 'SauceCodePro NF:h14:cANSI:qDRAFT'
     # guifont = 'SauceCodePro Nerd Font Mono:h12:cANSI:qDRAFT'
@@ -68,6 +68,7 @@ let g:fuck_f = 2
     name = 'core'
     enable_filetree_gitstatus = true
     enable_filetree_filetypeicon = true
+    # enable_netrw = true
 
 [[layers]]
     name = 'checkers'
