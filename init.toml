@@ -204,3 +204,8 @@ let g:fuck_f = 2
     name = 'tools#mpv'
     mpv_interpreter = 'D:\Program Files\mpv\mpv.exe'
     musics_directory = 'E:\我的坚果云\音乐'
+[[layers]]     
+name = "lang#plantuml"
+[[custom_plugins]]
+  repo = "inkarkat/vim-SyntaxRange"
+  merged = false
