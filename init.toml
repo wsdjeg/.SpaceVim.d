@@ -14,18 +14,19 @@
     # default_custom_leader = 'Q'
     statusline_separator='arrow'
     statusline_iseparator='arrow'
-    autocomplete_method = 'deoplete'
+    autocomplete_method = 'nvim-cmp'
     buffer_index_type = 0
     default_indent = 2
     debug_level = 0
     enable_key_frequency = 1
     use_lua = 1
-    filemanager = "defx"
+    filemanager = "neo-tree"
     filetree_direction = "right"
     # enable_ycm = 1
     # snippet_engine = "ultisnips"
     line_on_the_fly = false
     enable_filetree_gitstatus = true
+    src_root = 'D:\repos'
     # default_custom_leader = "e"
     realtime_leader_guide = 1
     windows_index_type = 3
@@ -34,7 +35,7 @@
     file_searching_tools = ['fd', 'fd']
     colorscheme = 'one'
     checkinstall = false
-    guifont = 'SauceCodePro NF:h14:cANSI:qDRAFT'
+    guifont = 'SauceCodePro NF:h10:cANSI:qDRAFT'
     # guifont = 'SauceCodePro Nerd Font Mono:h12:cANSI:qDRAFT'
     # guifont = 'DejaVuSansMono NF:h12:cANSI:qDRAFT'
     # guifont = 'Hasklug NF:h12:cANSI:qDRAFT'
@@ -56,7 +57,7 @@
     ]
     todo_prefix = '@'
     todo_labels = ['bug', 'question', 'fixme', 'todo']
-    project_non_root = 'current'
+    project_non_root = ''
     bootstrap_script = '''
 let g:fuck_s = 1
 let g:fuck_f = 2
@@ -94,13 +95,6 @@ let g:fuck_f = 2
     cursorword_exclude_filetype = ['markdown']
     indentline_exclude_filetyps = ['startify', 'help']
 
-# python 
-[[layers]]
-  name = 'lang#ruby'
-[[layers]]
-  name = 'lang#javascript'
-
-# python 
 [[layers]]
   name = 'lang#vim'
 
@@ -119,7 +113,10 @@ let g:fuck_f = 2
     enable = 'has("nvim")'
 [[layers]]
     name = 'leaderf'
-    enable = '!has("nvim")'
+    enable = '!has("nvim") && has("python")'
+[[layers]]
+    name = 'fzf'
+    enable = '!has("nvim") && !has("python")'
 [[layers]]
     name = 'format'
 [[layers]]
@@ -136,12 +133,6 @@ let g:fuck_f = 2
     name = 'lang#vim'
     auto_generate_doc = true
 [[layers]]
-    name = 'lang#postscript'
-[[layers]]
-    name = 'lang#e'
-    e_interpreter = 'D:\Program Files\e\rune.bat'
-    e_jar_path = 'D:\Program Files\e\e.jar'
-[[layers]]
     name = 'lang#java'
 [[layers]]
     name = 'lang#lua'
@@ -156,6 +147,8 @@ let g:fuck_f = 2
     ]
 [[layers]]
     name = 'lang#toml'
+[[layers]]
+    name = 'lang#clojure'
 [[layers]]
     name = 'colorscheme'
 [[layers]]
@@ -175,14 +168,11 @@ let g:fuck_f = 2
     listItemIndent = 1
     enabled_formater = ['prettier']
 [[layers]]
-    name = 'lang#liquid'
-[[layers]]
     name = 'shell'
     default_position = 'float'
     default_height = 35
 [[layers]]
-    name = 'incsearch'
-    enable = true
+    name = 'chat'
 [[layers]]
     name = 'foldsearch'
     enable = true
@@ -197,15 +187,10 @@ let g:fuck_f = 2
     ctags_bin = 'C:\Users\wsdjeg\.SpaceVim\bundle\phpcomplete.vim\bin\ctags.exe'
 [[layers]]
     name = 'lsp'
-    enabled_clients = ['vimls', 'clangd']
+    enabled_clients = ['vimls', 'clangd', 'jdtls', 'clojure_lsp', 'lua_ls']
     filetypes = ['vim']
     enable = true
 [[layers]]
     name = 'tools#mpv'
     mpv_interpreter = 'D:\Program Files\mpv\mpv.exe'
     musics_directory = 'E:\我的坚果云\音乐'
-[[layers]]     
-name = "lang#plantuml"
-[[custom_plugins]]
-  repo = "inkarkat/vim-SyntaxRange"
-  merged = false
