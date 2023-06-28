@@ -9,3 +9,9 @@ options     head
     -- License: GPLv3
     --=============================================================================
 
+snippet func
+abbr    function name(args)...end
+options word
+	function ${1:#:function_name}(${2:#:argument})
+		${0:TARGET}
+	end

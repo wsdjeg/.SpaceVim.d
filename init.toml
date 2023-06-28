@@ -14,6 +14,7 @@
     # default_custom_leader = 'Q'
     statusline_separator='arrow'
     statusline_iseparator='arrow'
+    leader_guide_theme = 'whichkey'
     autocomplete_method = 'nvim-cmp'
     buffer_index_type = 0
     default_indent = 2
