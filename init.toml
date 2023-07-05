@@ -21,7 +21,7 @@
     debug_level = 0
     enable_key_frequency = 1
     use_lua = 1
-    filemanager = "neo-tree"
+    filemanager = "defx"
     filetree_direction = "right"
     # enable_ycm = 1
     # snippet_engine = "ultisnips"
@@ -83,6 +83,8 @@ let g:fuck_f = 2
     # autosave_events = ['InsertLeave', 'TextChanged']
     # autosave_all_buffers = true
     enable_hop = false
+[[layers]]
+    name = 'chinese'
 
 [[layers]]
     name = 'treesitter'
@@ -90,7 +92,8 @@ let g:fuck_f = 2
 [[layers]]
     name = 'ui'
     enable_scrollbar = true
-    enable_indentline = false
+    enable_indentline = true
+    indentline_char = '│'
     # filetree_show_hidden = true
     cursorword_delay = 200
     cursorword_exclude_filetype = ['markdown']
