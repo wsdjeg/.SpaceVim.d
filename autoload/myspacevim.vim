@@ -366,10 +366,6 @@ function! myspacevim#before() abort
         \ "alternate" : "scr/{}.c",
         \ }
         \ }
-  call SpaceVim#custom#SPCGroupName(['S'], '+StaySharp0 Custom')
-  call SpaceVim#custom#SPC('noremap', ['S','a'], 'ggvG$', 'all selection', 0)
-  call SpaceVim#custom#SPC('nmap', ['S','y'], '<Space>Sa<leader>y', 'all copy', 0)
-  call SpaceVim#custom#SPC('nmap', ['S','d'], '<Space>Sy<Space>Sad', 'all cut', 0)
 endfunction
 
 function! s:update_defx() abort
