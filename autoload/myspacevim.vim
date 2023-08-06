@@ -8,31 +8,31 @@ function! myspacevim#before() abort
         \ 'ctagsbin'  : 'D:\bin\mdctags.exe',
         \ 'ctagsargs' : '',
         \ 'kinds'     : [
-          \     'a:h1:0:0',
-          \     'b:h2:0:0',
-          \     'c:h3:0:0',
-          \     'd:h4:0:0',
-          \     'e:h5:0:0',
-          \     'f:h6:0:0',
-          \ ],
-          \ 'sro'        : '::',
-          \ 'kind2scope' : {
-            \     'a' : 'h1',
-            \     'b' : 'h2',
-            \     'c' : 'h3',
-            \     'd' : 'h4',
-            \     'e' : 'h5',
-            \     'f' : 'h6',
-            \ },
-            \ 'scope2kind' : {
-              \     'h1' : 'a',
-              \     'h2' : 'b',
-              \     'h3' : 'c',
-              \     'h4' : 'd',
-              \     'h5' : 'e',
-              \     'h6' : 'f',
-              \}
-              \}
+        \     'a:h1:0:0',
+        \     'b:h2:0:0',
+        \     'c:h3:0:0',
+        \     'd:h4:0:0',
+        \     'e:h5:0:0',
+        \     'f:h6:0:0',
+        \ ],
+        \ 'sro'        : '::',
+        \ 'kind2scope' : {
+        \     'a' : 'h1',
+        \     'b' : 'h2',
+        \     'c' : 'h3',
+        \     'd' : 'h4',
+        \     'e' : 'h5',
+        \     'f' : 'h6',
+        \ },
+        \ 'scope2kind' : {
+        \     'h1' : 'a',
+        \     'h2' : 'b',
+        \     'h3' : 'c',
+        \     'h4' : 'd',
+        \     'h5' : 'e',
+        \     'h6' : 'f',
+        \}
+        \}
   set rtp+=~/.SpaceVim/build/vader/
   set rtp+=~/Desktop/vim-floaterm-master
   " set rtp+=f:\\minigrep\target\debug\minigrep.exe
@@ -307,23 +307,23 @@ function! myspacevim#before() abort
       for cmd in commands
         call extend(conf, {
               \ cmd : {
-                \ 'command': 'cargo',
-                \ 'args' : [cmd],
-                \ 'isDetected' : 1,
-                \ 'detectedName' : 'cargo:',
-                \ 'options' : {'cwd' : fnamemodify(cargo_conf, ':p:h') },
-                \ }
-                \ })
-      endfor
-      call extend(conf, {
-            \ 'build-relase' : {
               \ 'command': 'cargo',
-              \ 'args' : ['build', '--release'],
+              \ 'args' : [cmd],
               \ 'isDetected' : 1,
               \ 'detectedName' : 'cargo:',
               \ 'options' : {'cwd' : fnamemodify(cargo_conf, ':p:h') },
               \ }
               \ })
+      endfor
+      call extend(conf, {
+            \ 'build-relase' : {
+            \ 'command': 'cargo',
+            \ 'args' : ['build', '--release'],
+            \ 'isDetected' : 1,
+            \ 'detectedName' : 'cargo:',
+            \ 'options' : {'cwd' : fnamemodify(cargo_conf, ':p:h') },
+            \ }
+            \ })
       return conf
     else
       return {}
@@ -338,14 +338,14 @@ function! myspacevim#before() abort
       for cmd in commands
         call extend(conf, {
               \ cmd : {
-                \ 'command': 'mdbook',
-                \ 'args' : [cmd],
-                \ 'isDetected' : 1,
-                \ 'detectedName' : 'mdbook:',
-                \ 'isBackground' : 1,
-                \ 'options' : {'cwd' : fnamemodify(mdbook_conf, ':p:h') },
-                \ }
-                \ })
+              \ 'command': 'mdbook',
+              \ 'args' : [cmd],
+              \ 'isDetected' : 1,
+              \ 'detectedName' : 'mdbook:',
+              \ 'isBackground' : 1,
+              \ 'options' : {'cwd' : fnamemodify(mdbook_conf, ':p:h') },
+              \ }
+              \ })
       endfor
       return conf
     else
@@ -356,16 +356,20 @@ function! myspacevim#before() abort
 
   autocmd BufNewFile,BufEnter *.c let b:alternate_file_config = {
         \ "src/*.c" : {
-          \ "doc" : "docs/{}.md",
-          \ "alternate" : "include/{}.h",
-          \ }
-          \ }
+        \ "doc" : "docs/{}.md",
+        \ "alternate" : "include/{}.h",
+        \ }
+        \ }
   " autocmd BufEnter * call s:update_defx()
   autocmd BufNewFile,BufEnter *.h let b:alternate_file_config = {
         \ "include/*.h" : {
-          \ "alternate" : "scr/{}.c",
-          \ }
-          \ }
+        \ "alternate" : "scr/{}.c",
+        \ }
+        \ }
+  call SpaceVim#custom#SPCGroupName(['S'], '+StaySharp0 Custom')
+  call SpaceVim#custom#SPC('noremap', ['S','a'], 'ggvG$', 'all selection', 0)
+  call SpaceVim#custom#SPC('nmap', ['S','y'], '<Space>Sa<leader>y', 'all copy', 0)
+  call SpaceVim#custom#SPC('nmap', ['S','d'], '<Space>Sy<Space>Sad', 'all cut', 0)
 endfunction
 
 function! s:update_defx() abort
@@ -409,14 +413,14 @@ function! myspacevim#after()
   let s:CMD = SpaceVim#api#import('vim#command')
   let s:CMD.options = {
         \ '-f' : {
-          \ 'description' : '',
-          \ 'complete' : ['text'],
-          \ },
-          \ '-d' : {
-            \ 'description' : 'Root directory for sources',
-            \ 'complete' : 'file',
-            \ },
-            \ }
+        \ 'description' : '',
+        \ 'complete' : ['text'],
+        \ },
+        \ '-d' : {
+        \ 'description' : 'Root directory for sources',
+        \ 'complete' : 'file',
+        \ },
+        \ }
   function! CompleteTest(a, b, c)
     return s:CMD.complete(a:a, a:b, a:c)
   endfunction
