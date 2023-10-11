@@ -9,7 +9,7 @@ local str = require("spacevim.api.data.string")
 local key = 5
 
 local function encode(char)
-  return vim.fn.char2nr(char) + key
+  return vim.fn.nr2char(vim.fn.char2nr(char) + key)
   
 end
 
