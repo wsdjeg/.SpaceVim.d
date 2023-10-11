@@ -13,6 +13,10 @@ local function encode(char)
   
 end
 
+local function decode(char)
+  return vim.fn.nr2char(vim.fn.char2nr(char) - key)
+end
+
 function M.encrypt()
 	local text = table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), "\n")
 	local chars = str.string2chars(text)
@@ -21,10 +25,19 @@ function M.encrypt()
 		table.insert(rst, encode(c))
 	end
 
-	vim.api.nvim_buf_set_lines(0, 1, -1, false, rst)
+	vim.api.nvim_buf_set_lines(0, 0, -1, false, rst)
 end
 
-function M.decrypt() end
+function M.decrypt()
+	local text = table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), "")
+	local chars = str.string2chars(text)
+	local rst = {}
+	for _, c in ipairs(chars) do
+		table.insert(rst, decode(c))
+	end
+
+	vim.api.nvim_buf_set_lines(0, 0, -1, false, rst)
+end
 
 function M.setup(config) end
 
