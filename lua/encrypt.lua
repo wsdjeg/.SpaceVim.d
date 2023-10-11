@@ -29,14 +29,13 @@ function M.encrypt()
 end
 
 function M.decrypt()
-	local text = table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), "")
-	local chars = str.string2chars(text)
+	local chars = vim.api.nvim_buf_get_lines(0, 0, -1, false)
 	local rst = {}
 	for _, c in ipairs(chars) do
 		table.insert(rst, decode(c))
 	end
 
-	vim.api.nvim_buf_set_lines(0, 0, -1, false, rst)
+	vim.api.nvim_buf_set_lines(0, 0, -1, false, vim.fn.split(table.concat(rst, ''), '\n'))
 end
 
 function M.setup(config) end
