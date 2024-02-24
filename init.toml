@@ -198,3 +198,9 @@ let g:fuck_f = 2
     name = 'tools#mpv'
     mpv_interpreter = 'D:\Program Files\mpv\mpv.exe'
     musics_directory = 'E:\我的坚果云\音乐'
+
+
+[[custom_plugins]]
+    repo = "sainnhe/sonokai"
+    # note: you need to disable merged feature
+    merged = false
