@@ -178,6 +178,8 @@ let g:fuck_f = 2
 [[layers]]
     name = 'chat'
 [[layers]]
+    name = 'zettelkasten'
+[[layers]]
     name = 'foldsearch'
     enable = true
 [[layers]]

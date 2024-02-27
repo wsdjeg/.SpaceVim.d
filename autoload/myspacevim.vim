@@ -405,6 +405,7 @@ endfunction
 function! myspacevim#after()
   if has('nvim-0.7.0')
     autocmd InsertLeave * lua require('spacevim.plugin.imselect').english()
+    lua require('wsdjeg.ftplugin.lua')
   endif
   let s:CMD = SpaceVim#api#import('vim#command')
   let s:CMD.options = {
@@ -433,5 +434,4 @@ function! myspacevim#after()
   let g:async_dicts = 'D:\me\dict\words.txt'
   let &dictionary = g:async_dicts
   let  g:LanguageClient_useVirtualText="No"
-  lua require('wsdjeg.ftplugin.lua')
 endfunction
