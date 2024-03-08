@@ -17,6 +17,7 @@
     leader_guide_theme = 'whichkey'
     autocomplete_method = 'nvim-cmp'
     buffer_index_type = 0
+    enable_guicolors = true
     default_indent = 2
     debug_level = 0
     enable_key_frequency = 1
