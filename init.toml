@@ -102,6 +102,9 @@ let g:fuck_f = 2
 [[layers]]
   name = 'lang#vim'
 
+[[layers]]
+  name = 'lang#go'
+
 # python 
 [[layers]]
   name = 'lang#python'
