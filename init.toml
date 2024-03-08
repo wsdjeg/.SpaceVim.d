@@ -196,7 +196,7 @@ let g:fuck_f = 2
     ctags_bin = 'C:\Users\wsdjeg\.SpaceVim\bundle\phpcomplete.vim\bin\ctags.exe'
 [[layers]]
     name = 'lsp'
-    enabled_clients = ['vimls', 'clangd', 'jdtls', 'clojure_lsp', 'lua_ls']
+    enabled_clients = ['vimls', 'clangd', 'jdtls', 'clojure_lsp', 'lua_ls', 'gopls']
     filetypes = ['vim']
     enable = true
 [[layers]]
