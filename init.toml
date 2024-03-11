@@ -84,11 +84,6 @@ let g:fuck_f = 2
     # autosave_events = ['InsertLeave', 'TextChanged']
     # autosave_all_buffers = true
     enable_hop = false
-[[layers]]
-    name = 'chinese'
-
-[[layers]]
-    name = 'treesitter'
 
 [[layers]]
     name = 'ui'
