@@ -100,10 +100,12 @@ let g:fuck_f = 2
 
 [[layers]]
   name = 'lang#sql'
-  enabled_formater = ['sqlfmtorg']
+  enabled_formater = ['sqlformat']
   sql_formatter_command = 'sql-formatter.CMD'
   sql_dialect = 'sql'
   sql_formatter_config = ''
+  sqlformat_cmd = 'c:\users\wsdjeg\appdata\roaming\python\python310\scripts\sqlformat.exe'
+  sqlformat_output_encode = 'cp936'
 
 
 # python 
