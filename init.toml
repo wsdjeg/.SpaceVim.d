@@ -21,7 +21,6 @@
     default_indent = 2
     debug_level = 0
     enable_key_frequency = 1
-    use_lua = 1
     filemanager = "defx"
     filetree_direction = "right"
     # enable_ycm = 1
@@ -97,6 +96,9 @@ let g:fuck_f = 2
 
 [[layers]]
   name = 'lang#vim'
+
+[[layers]]
+  name = 'lang#scheme'
 
 [[layers]]
   name = 'lang#sql'
