@@ -58,6 +58,7 @@
     ]
   todo_prefix = '@'
   todo_labels = ['bug', 'question', 'fixme', 'todo']
+  todo_close_list = false
   project_non_root = ''
   bootstrap_script = '''
 let g:fuck_s = 1
@@ -211,6 +212,9 @@ let g:fuck_f = 2
 
 
 [[custom_plugins]]
+  repo = "NLKNguyen/papercolor-theme"
+  merged = false
+
+[[custom_plugins]]
   repo = "sainnhe/sonokai"
-# note: you need to disable merged feature
   merged = false
