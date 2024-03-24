@@ -7,59 +7,59 @@
 
 # SpaceVim options {{{
 [options]
-    enable_statusline_mode = true
-    enable_tabline_filetype_icon = true
-    enable_os_fileformat_icon = true
-    statusline_unicode_symbols = true
-    # default_custom_leader = 'Q'
-    statusline_separator='arrow'
-    statusline_iseparator='arrow'
-    leader_guide_theme = 'whichkey'
-    autocomplete_method = 'nvim-cmp'
-    buffer_index_type = 0
-    enable_guicolors = true
-    default_indent = 2
-    debug_level = 0
-    enable_key_frequency = 1
-    filemanager = "defx"
-    filetree_direction = "right"
-    # enable_ycm = 1
-    # snippet_engine = "ultisnips"
-    line_on_the_fly = false
-    enable_filetree_gitstatus = true
-    src_root = 'D:\repos'
-    # default_custom_leader = "e"
-    realtime_leader_guide = 1
-    windows_index_type = 3
-    github_username = 'wsdjeg'
-    auto_disable_touchpad = 0
-    file_searching_tools = ['fd', 'fd']
-    colorscheme = 'one'
-    checkinstall = false
-    guifont = 'SauceCodePro Nerd Font Propo:h14:cANSI:qDRAFT'
-    # guifont = 'SauceCodePro Nerd Font Mono:h12:cANSI:qDRAFT'
-    # guifont = 'DejaVuSansMono NF:h12:cANSI:qDRAFT'
-    # guifont = 'Hasklug NF:h12:cANSI:qDRAFT'
-    enable_tabline_filetype_icon = true
-    bootstrap_before = "myspacevim#before"
-    bootstrap_after = "myspacevim#after"
-    search_tools = ["rg", "pt", "ack", "grep", "findstr"]
-    # autocomplete_method = "coc"
-    commandline_prompt = '>'
-    # vimcompatible = true
-    # enable_language_specific_leader = false
-    enable_statusline_tag = false
-    project_rooter_outermost = false
-    # disabled_plugins = ["startify", 'deoplete-dictionary']
-    relativenumber = false
-    statusline_right_sections = [
-        'fileformat',
-        'totallines'
+  enable_statusline_mode = true
+  enable_tabline_filetype_icon = true
+  enable_os_fileformat_icon = true
+  statusline_unicode_symbols = true
+  # default_custom_leader = 'Q'
+  statusline_separator='arrow'
+  statusline_iseparator='arrow'
+  leader_guide_theme = 'whichkey'
+  autocomplete_method = 'nvim-cmp'
+  buffer_index_type = 0
+  enable_guicolors = true
+  default_indent = 2
+  debug_level = 0
+  enable_key_frequency = 1
+  filemanager = "defx"
+  filetree_direction = "right"
+  # enable_ycm = 1
+  # snippet_engine = "ultisnips"
+  line_on_the_fly = false
+  enable_filetree_gitstatus = true
+  src_root = 'D:\repos'
+  # default_custom_leader = "e"
+  realtime_leader_guide = 1
+  windows_index_type = 3
+  github_username = 'wsdjeg'
+  auto_disable_touchpad = 0
+  file_searching_tools = ['fd', 'fd']
+  colorscheme = 'one'
+  checkinstall = false
+  guifont = 'SauceCodePro Nerd Font Propo:h14:cANSI:qDRAFT'
+  # guifont = 'SauceCodePro Nerd Font Mono:h12:cANSI:qDRAFT'
+  # guifont = 'DejaVuSansMono NF:h12:cANSI:qDRAFT'
+  # guifont = 'Hasklug NF:h12:cANSI:qDRAFT'
+  enable_tabline_filetype_icon = true
+  bootstrap_before = "myspacevim#before"
+  bootstrap_after = "myspacevim#after"
+  search_tools = ["rg", "pt", "ack", "grep", "findstr"]
+  # autocomplete_method = "coc"
+  commandline_prompt = '>'
+  # vimcompatible = true
+  # enable_language_specific_leader = false
+  enable_statusline_tag = false
+  project_rooter_outermost = false
+  # disabled_plugins = ["startify", 'deoplete-dictionary']
+  relativenumber = false
+  statusline_right_sections = [
+    'fileformat',
+    'totallines'
     ]
-    todo_prefix = '@'
-    todo_labels = ['bug', 'question', 'fixme', 'todo']
-    project_non_root = ''
-    bootstrap_script = '''
+  todo_prefix = '@'
+  todo_labels = ['bug', 'question', 'fixme', 'todo']
+  project_non_root = ''
+  bootstrap_script = '''
 let g:fuck_s = 1
 let g:fuck_f = 2
 '''
@@ -67,32 +67,32 @@ let g:fuck_f = 2
 
 # SpaceVim layer config {{{
 [[layers]]
-    name = 'core'
-    enable_filetree_gitstatus = true
-    enable_filetree_filetypeicon = true
-    # enable_netrw = true
+  name = 'core'
+  enable_filetree_gitstatus = true
+  enable_filetree_filetypeicon = true
+  # enable_netrw = true
 
 [[layers]]
-    name = 'checkers'
-    lint_on_the_fly  = true
-    lint_on_save = true
+  name = 'checkers'
+  lint_on_the_fly  = true
+  lint_on_save = true
 
 [[layers]]
-    name = 'edit'
-    autosave_timeout = 300000
-    # autosave_events = ['InsertLeave', 'TextChanged']
-    # autosave_all_buffers = true
-    enable_hop = true
+  name = 'edit'
+  autosave_timeout = 300000
+  # autosave_events = ['InsertLeave', 'TextChanged']
+  # autosave_all_buffers = true
+  enable_hop = true
 
 [[layers]]
-    name = 'ui'
-    enable_scrollbar = true
-    enable_indentline = true
-    indentline_char = '│'
-    # filetree_show_hidden = true
-    cursorword_delay = 200
-    cursorword_exclude_filetype = ['markdown']
-    indentline_exclude_filetyps = ['startify', 'help']
+  name = 'ui'
+  enable_scrollbar = true
+  enable_indentline = true
+  indentline_char = '│'
+  # filetree_show_hidden = true
+  cursorword_delay = 200
+  cursorword_exclude_filetype = ['markdown']
+  indentline_exclude_filetyps = ['startify', 'help']
 
 [[layers]]
   name = 'lang#vim'
@@ -114,103 +114,103 @@ let g:fuck_f = 2
 [[layers]]
   name = 'lang#python'
   python_file_head = [      
-      '# -*- coding: utf-8 -*-',
-      '# Author: xxx',
-      '# Mail: xxx@xx'
-      '# Created Time: `strftime("%a %b %d")`'
-      ''
-  ]
-[[layers]]
-    name = 'telescope'
-    enable = 'has("nvim")'
-[[layers]]
-    name = 'leaderf'
-    enable = '!has("nvim") && has("python")'
-[[layers]]
-    name = 'fzf'
-    enable = '!has("nvim") && !has("python")'
-[[layers]]
-    name = 'format'
-[[layers]]
-    name = 'github'
-[[layers]]
-    name = 'git'
-[[layers]]
-    name = 'cscope'
-[[layers]]
-    name = 'tools'
-[[layers]]
-    name = 'VersionControl'
-[[layers]]
-    name = 'lang#vim'
-    auto_generate_doc = true
-[[layers]]
-    name = 'lang#java'
-[[layers]]
-    name = 'lang#lua'
-[[layers]]
-    name = 'lang#c'
-[[layers]]
-    name = 'lang#sh'
-    bash-file-head = [
-        '#!/usr/bin/env bash',
-        '# Time: `strftime("%Y-%m-%d %T")`',
-        ''
+    '# -*- coding: utf-8 -*-',
+    '# Author: xxx',
+    '# Mail: xxx@xx'
+    '# Created Time: `strftime("%a %b %d")`'
+    ''
     ]
 [[layers]]
-    name = 'lang#toml'
+  name = 'telescope'
+  enable = 'has("nvim")'
 [[layers]]
-    name = 'lang#clojure'
+  name = 'leaderf'
+  enable = '!has("nvim") && has("python")'
 [[layers]]
-    name = 'colorscheme'
+  name = 'fzf'
+  enable = '!has("nvim") && !has("python")'
 [[layers]]
-    name = 'core#statusline'
-    enable = true
+  name = 'format'
 [[layers]]
-    name = 'core#tabline'
-    enable = true
+  name = 'github'
 [[layers]]
-    name = 'autocomplete'
-    auto-completion-delay = 10
-    auto-completion-return-key-behavior = "smart"
-    auto-completion-tab-key-behavior = "smart"
+  name = 'git'
 [[layers]]
-    name = 'lang#markdown'
-    enableWcwidth = 1
-    listItemIndent = 1
-    enabled_formater = ['prettier']
+  name = 'cscope'
 [[layers]]
-    name = 'shell'
-    default_position = 'float'
-    default_height = 35
+  name = 'tools'
 [[layers]]
-    name = 'chat'
+  name = 'VersionControl'
 [[layers]]
-    name = 'zettelkasten'
+  name = 'lang#vim'
+  auto_generate_doc = true
 [[layers]]
-    name = 'foldsearch'
-    enable = true
+  name = 'lang#java'
 [[layers]]
-    name = 'zettelkasten'
-    zettel_dir = 'D:\me\zettelkasten'
-    zettel_template_dir = 'D:\me\zettelkasten_template'
-    enable = true
+  name = 'lang#lua'
 [[layers]]
-    name = 'gtags'
-    enable = true
-    # ctags_bin = 'C:\Users\wsdjeg\.SpaceVim\bundle\phpcomplete.vim\bin\ctags.exe'
+  name = 'lang#c'
 [[layers]]
-    name = 'lsp'
-    enabled_clients = ['vimls', 'clangd', 'jdtls', 'clojure_lsp', 'lua_ls', 'gopls']
-    filetypes = ['vim']
-    enable = true
+  name = 'lang#sh'
+  bash-file-head = [
+    '#!/usr/bin/env bash',
+    '# Time: `strftime("%Y-%m-%d %T")`',
+    ''
+    ]
 [[layers]]
-    name = 'tools#mpv'
-    mpv_interpreter = 'D:\Program Files\mpv\mpv.exe'
-    musics_directory = 'E:\我的坚果云\音乐'
+  name = 'lang#toml'
+[[layers]]
+  name = 'lang#clojure'
+[[layers]]
+  name = 'colorscheme'
+[[layers]]
+  name = 'core#statusline'
+  enable = true
+[[layers]]
+  name = 'core#tabline'
+  enable = true
+[[layers]]
+  name = 'autocomplete'
+  auto-completion-delay = 10
+  auto-completion-return-key-behavior = "smart"
+  auto-completion-tab-key-behavior = "smart"
+[[layers]]
+  name = 'lang#markdown'
+  enableWcwidth = 1
+  listItemIndent = 1
+  enabled_formater = ['prettier']
+[[layers]]
+  name = 'shell'
+  default_position = 'float'
+  default_height = 35
+[[layers]]
+  name = 'chat'
+[[layers]]
+  name = 'zettelkasten'
+[[layers]]
+  name = 'foldsearch'
+  enable = true
+[[layers]]
+  name = 'zettelkasten'
+  zettel_dir = 'D:\me\zettelkasten'
+  zettel_template_dir = 'D:\me\zettelkasten_template'
+  enable = true
+[[layers]]
+  name = 'gtags'
+  enable = true
+  # ctags_bin = 'C:\Users\wsdjeg\.SpaceVim\bundle\phpcomplete.vim\bin\ctags.exe'
+[[layers]]
+  name = 'lsp'
+  enabled_clients = ['vimls', 'clangd', 'jdtls', 'clojure_lsp', 'lua_ls', 'gopls']
+  filetypes = ['vim']
+  enable = true
+[[layers]]
+  name = 'tools#mpv'
+  mpv_interpreter = 'D:\Program Files\mpv\mpv.exe'
+  musics_directory = 'E:\我的坚果云\音乐'
 
 
 [[custom_plugins]]
-    repo = "sainnhe/sonokai"
-    # note: you need to disable merged feature
-    merged = false
+  repo = "sainnhe/sonokai"
+# note: you need to disable merged feature
+  merged = false
