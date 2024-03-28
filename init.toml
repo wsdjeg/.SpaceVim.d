@@ -140,6 +140,8 @@ let g:fuck_f = 2
   name = 'cscope'
 [[layers]]
   name = 'tools'
+  bookmarks_sign_text = '⚑'
+  bookmarks_sign_highlight = 'Normal'
 [[layers]]
   name = 'VersionControl'
 [[layers]]
