@@ -2,7 +2,9 @@
 
 local M = {}
 
-local quit = false
+local wait_for_input = true
+local bufnr = -1
+local winnr = -1
 
 local function insert_box(w)
 	local box_top = "+--------------------------------------+"
@@ -13,17 +15,34 @@ local function insert_box(w)
 end
 
 local function open_win()
-	vim.cmd("tabnew")
-	vim.cmd("set buftype=nofile")
-
-	vim.api.nvim_buf_set_lines(0, 1, -1, false, insert_box())
+  if vim.api.nvim_buf_is_valid(bufnr) then
+    bufnr = vim.api.nvim_create_buf(false, true)
+  end
+  return vim.api.nvim_open_win(bufnr, false, {
+    relative = 'editor',
+    width = 10,
+    height = 10,
+    row = 10,
+    col = 10,
+    focusable = false,
+    border = 'single'
+  })
 end
 
 function M.start()
-	open_win()
-	while quit do
+	winnr = open_win()
+  local char
+	while wait_for_input do
+    char = vim.fn.getchar()
+    if char == 27 then
+      wait_for_input = false
+    end
+    
 		--body
 	end
+  if vim.api.nvim_win_is_valid(winnr) then
+    vim.api.nvim_win_close(winnr, true)
+  end
 end
 
 return M
