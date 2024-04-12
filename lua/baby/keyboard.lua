@@ -15,34 +15,41 @@ local function insert_box(w)
 end
 
 local function open_win()
-  if vim.api.nvim_buf_is_valid(bufnr) then
-    bufnr = vim.api.nvim_create_buf(false, true)
-  end
-  return vim.api.nvim_open_win(bufnr, false, {
-    relative = 'editor',
-    width = 10,
-    height = 10,
-    row = 10,
-    col = 10,
-    focusable = false,
-    border = 'single'
-  })
+	if not vim.api.nvim_buf_is_valid(bufnr) then
+		bufnr = vim.api.nvim_create_buf(false, true)
+	end
+	return vim.api.nvim_open_win(bufnr, false, {
+		relative = "editor",
+		width = 10,
+		height = 10,
+		row = 10,
+		col = 10,
+		focusable = false,
+		border = "single",
+	})
 end
 
 function M.start()
 	winnr = open_win()
-  local char
+	vim.cmd.redraw()
+	local char
+	local context = ""
 	while wait_for_input do
-    char = vim.fn.getchar()
-    if char == 27 then
-      wait_for_input = false
-    end
-    
+		char = vim.fn.getchar()
+		if char == 27 then
+			wait_for_input = false
+		end
+
+		context = context .. vim.fn.nr2char(char)
+
+		vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { context })
+
+		vim.cmd.redraw()
 		--body
 	end
-  if vim.api.nvim_win_is_valid(winnr) then
-    vim.api.nvim_win_close(winnr, true)
-  end
+	if vim.api.nvim_win_is_valid(winnr) then
+		vim.api.nvim_win_close(winnr, true)
+	end
 end
 
 return M
