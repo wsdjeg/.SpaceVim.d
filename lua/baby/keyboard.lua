@@ -37,11 +37,19 @@ local function open_win()
   return win
 end
 
+local n = 0
+local function next_word()
+  n = n + 1
+  local t = vim.split('The next error mapping and the error transient state can be used to browse errors from syntax checkers', ' ')
+  if n > #t then n = n - #t end
+  return t[n]
+end
+
 function M.start()
   winnr = open_win()
   local char
   local status = string.format('                 按键速度 %s/分钟     ', speed)
-  local orgtext = 'The next error mapping and the error transient state can be used to browse errors from syntax checkers'
+  local orgtext = next_word()
   local context = ""
   local wait_for_input = true
   vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, {status, orgtext, context })
@@ -60,6 +68,10 @@ function M.start()
       vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, {status, orgtext, context })
     else
       context = context .. char
+      if context == orgtext then
+        orgtext = next_word()
+        context = ''
+      end
       vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, {status, orgtext, context })
     end
     vim.cmd.redraw()
