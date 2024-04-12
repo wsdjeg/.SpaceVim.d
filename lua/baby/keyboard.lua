@@ -23,7 +23,7 @@ local function open_win()
   end
   return vim.api.nvim_open_win(bufnr, false, {
     relative = "editor",
-    width = 10,
+    width = vim.o.columns - 20,
     height = 10,
     row = 10,
     col = 10,
@@ -36,6 +36,7 @@ function M.start()
   winnr = open_win()
   vim.cmd.redraw()
   local char
+  local orgtext = 'The next error mapping and the error transient state can be used to browse errors from syntax checkers'
   local context = ""
   local wait_for_input = true
   while wait_for_input do
@@ -46,7 +47,7 @@ function M.start()
 
     context = context .. vim.fn.nr2char(char)
 
-    vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { context })
+    vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { orgtext, context })
 
     vim.cmd.redraw()
     --body
