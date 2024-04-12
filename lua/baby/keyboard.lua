@@ -2,6 +2,9 @@
 
 local M = {}
 
+local K = require('spacevim.api.vim.keys')
+local v = require('spacevim.api').import('vim')
+
 local bufnr = -1
 local winnr = -1
 
@@ -35,23 +38,24 @@ end
 
 function M.start()
   winnr = open_win()
-  vim.cmd.redraw()
   local char
   local orgtext = 'The next error mapping and the error transient state can be used to browse errors from syntax checkers'
   local context = ""
   local wait_for_input = true
+  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { orgtext, context })
+  vim.cmd.redraw()
   while wait_for_input do
-    char = vim.fn.getchar()
-    if char == 27 then
+    char = v.getchar()
+    if char == K.t('<Esc>') then
       wait_for_input = false
+    elseif char == K.t('<Bs>') then
+      context = vim.fn.substitute(context, '.$', '', 'g')
+      vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { orgtext, context })
+    else
+      context = context .. char
+      vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { orgtext, context })
     end
-
-    context = context .. vim.fn.nr2char(char)
-
-    vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { orgtext, context })
-
     vim.cmd.redraw()
-    --body
   end
   if vim.api.nvim_win_is_valid(winnr) then
     vim.api.nvim_win_close(winnr, true)
