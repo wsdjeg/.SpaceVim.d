@@ -16,12 +16,8 @@ end
 local function open_win()
   if not vim.api.nvim_buf_is_valid(bufnr) then
     bufnr = vim.api.nvim_create_buf(false, true)
-    vim.fn.setbufvar(bufnr, '&number', 0)
-    vim.fn.setbufvar(bufnr, '&relativenumber', 0)
-    vim.fn.setbufvar(bufnr, '&cursorline', 0)
-    vim.fn.setbufvar(bufnr, '&bufhidden', 'wipe')
   end
-  return vim.api.nvim_open_win(bufnr, false, {
+  local win =  vim.api.nvim_open_win(bufnr, false, {
     relative = "editor",
     width = vim.o.columns - 20,
     height = 10,
@@ -30,6 +26,11 @@ local function open_win()
     focusable = false,
     border = "single",
   })
+  vim.fn.setbufvar(bufnr, '&number', 0)
+  vim.fn.setbufvar(bufnr, '&relativenumber', 0)
+  vim.fn.setbufvar(bufnr, '&cursorline', 0)
+  vim.fn.setbufvar(bufnr, '&bufhidden', 'wipe')
+  return win
 end
 
 function M.start()
