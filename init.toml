@@ -132,6 +132,7 @@ let g:fuck_f = 2
   enable = '!has("nvim") && !has("python")'
 [[layers]]
   name = 'format'
+  format_method = 'format.nvim'
 [[layers]]
   name = 'github'
 [[layers]]
