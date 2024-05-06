@@ -12,8 +12,8 @@
   enable_os_fileformat_icon = true
   statusline_unicode_symbols = true
   # default_custom_leader = 'Q'
-  statusline_separator='curve'
-  statusline_iseparator='curve'
+  statusline_separator='slant'
+  statusline_iseparator='slant'
   leader_guide_theme = 'whichkey'
   autocomplete_method = 'nvim-cmp'
   buffer_index_type = 0
@@ -54,7 +54,7 @@
   relativenumber = false
   statusline_right_sections = [
     'fileformat',
-    'totallines'
+    'percentage'
     ]
   todo_prefix = '@'
   todo_labels = ['bug', 'question', 'fixme', 'todo']
