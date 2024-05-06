@@ -12,8 +12,8 @@
   enable_os_fileformat_icon = true
   statusline_unicode_symbols = true
   # default_custom_leader = 'Q'
-  statusline_separator='slant'
-  statusline_iseparator='slant'
+  statusline_separator='arrow'
+  statusline_iseparator='arrow'
   leader_guide_theme = 'whichkey'
   autocomplete_method = 'nvim-cmp'
   buffer_index_type = 0
