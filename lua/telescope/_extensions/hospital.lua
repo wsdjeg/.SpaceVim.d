@@ -26,7 +26,7 @@ local function get_hospital()
 				hospital.leval = string.sub(line, 16)
 			end
 		end
-		if in_hospital_context then
+		if not vim.startswith(line, '### ') and in_hospital_context then
 			table.insert(hospital.context, line)
 		end
 		-- process markdown code blocks
