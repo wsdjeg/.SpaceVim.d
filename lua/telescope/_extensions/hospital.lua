@@ -11,15 +11,15 @@ vim.fn.bufload(hospital_bufnr)
 
 local function get_hospital()
 	local headings = {}
-  local city = ''
+	local city = ""
 	local is_code_block = false
 	local index, total = 1, vim.api.nvim_buf_line_count(hospital_bufnr)
 	local filepath = vim.api.nvim_buf_get_name(hospital_bufnr)
 	while index <= total do
 		local line = vim.fn.getbufline(hospital_bufnr, index)[1]
-    if not is_code_block and vim.startswith(line, '# ') then
-      city = string.sub(line, 3)
-    end
+		if not is_code_block and vim.startswith(line, "# ") then
+			city = string.sub(line, 3)
+		end
 		-- process markdown code blocks
 		if vim.startswith(line, "```") then
 			is_code_block = not is_code_block
@@ -29,14 +29,12 @@ local function get_hospital()
 				goto next
 			end
 		end
-		-- match heading
 		if vim.startswith(line, "### ") then
 			table.insert(headings, {
-				heading = vim.trim(line),
-        name = string.sub(line, 5),
+				name = string.sub(line, 5),
 				line = index,
 				path = filepath,
-        city = city,
+				city = city,
 			})
 		end
 
@@ -57,7 +55,7 @@ local function pick_hospital(opts)
 	pickers
 		.new(opts, {
 			prompt_title = "输入筛选",
-      results_title = '医院列表',
+			results_title = "医院列表",
 			finder = finders.new_table({
 				results = headings,
 				entry_maker = function(entry)
@@ -75,10 +73,10 @@ local function pick_hospital(opts)
 				define_preview = function(self, entry, status)
 					local preview_text = {}
 					for _, v in ipairs(vim.api.nvim_buf_get_lines(hospital_bufnr, entry.value, -1, false)) do
-            table.insert(preview_text, v)
-						if vim.startswith(v, "### ") then
-              table.remove(preview_text, #preview_text)
-              break
+						table.insert(preview_text, v)
+						if vim.startswith(v, "#") then
+							table.remove(preview_text, #preview_text)
+							break
 						end
 					end
 					vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, false, preview_text)
@@ -90,7 +88,7 @@ local function pick_hospital(opts)
 					local entry = actions_state.get_selected_entry()
 					actions.close(prompt_bufnr)
 					vim.cmd(string.format("e +%d " .. entry.filename, entry.value))
-          vim.cmd('set buflisted')
+					vim.cmd("set buflisted")
 				end)
 				return true
 			end,
