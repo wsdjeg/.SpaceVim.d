@@ -47,7 +47,7 @@ local function get_hospital()
 				city = city,
 				line = linenr + 1,
 				path = filepath,
-        leval = ''
+        leval = '',
 				context = {},
 			}
       in_hospital_context = true
@@ -66,8 +66,8 @@ end
 local function pick_hospital(opts)
 	opts = opts or {}
 
-	local headings = get_hospital()
-	if headings == nil then
+	local hospitals = get_hospital()
+	if hospitals == nil then
 		return
 	end
 	pickers
@@ -75,7 +75,7 @@ local function pick_hospital(opts)
 			prompt_title = "输入筛选",
 			results_title = "医院列表",
 			finder = finders.new_table({
-				results = headings,
+				results = hospitals,
 				entry_maker = function(entry)
 					return {
 						value = entry.line,
@@ -83,6 +83,7 @@ local function pick_hospital(opts)
 						ordinal = entry.name .. " " .. entry.leval,
 						filename = entry.path,
 						lnum = entry.line,
+            context = entry.context,
 					}
 				end,
 			}),
