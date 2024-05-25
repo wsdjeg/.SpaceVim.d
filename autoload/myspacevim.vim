@@ -2,6 +2,7 @@ scriptencoding utf-8
 
 nmap <M-j> <Plug>(SmoothieDownwards)
 nmap <M-k> <Plug>(SmoothieUpwards)
+nnoremap <silent> <F8> <cmd>Telescop hospital<cr>
 
 let s:SYS = SpaceVim#api#import('system')
 let s:JOB = SpaceVim#api#import('job')
