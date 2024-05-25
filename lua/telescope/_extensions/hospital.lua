@@ -22,7 +22,9 @@ local function get_hospital()
 			if vim.startswith(line, "# ") then
 				city = string.sub(line, 3)
       elseif vim.startswith(line, '- 医院等级：') then
-        hospital_leval = string.sub(line, 9)
+        hospital_leval = string.sub(line, 18)
+      elseif vim.startswith(line, '- 医院等级:') then
+        hospital_leval = string.sub(line, 16)
 			end
 		end
 		-- process markdown code blocks
@@ -67,7 +69,7 @@ local function pick_hospital(opts)
 				entry_maker = function(entry)
 					return {
 						value = entry.line,
-						display = entry.name,
+						display = entry.name .. ' ' .. entry.leval,
 						ordinal = entry.name,
 						filename = entry.path,
 						lnum = entry.line,
