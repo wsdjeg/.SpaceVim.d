@@ -11,11 +11,15 @@ vim.fn.bufload(hospital_bufnr)
 
 local function get_hospital()
 	local headings = {}
+  local city = ''
 	local is_code_block = false
 	local index, total = 1, vim.api.nvim_buf_line_count(hospital_bufnr)
 	local filepath = vim.api.nvim_buf_get_name(hospital_bufnr)
 	while index <= total do
 		local line = vim.fn.getbufline(hospital_bufnr, index)[1]
+    if not is_code_block and vim.startswith(line, '# ') then
+      city = string.sub(line, 3)
+    end
 		-- process markdown code blocks
 		if vim.startswith(line, "```") then
 			is_code_block = not is_code_block
@@ -29,8 +33,10 @@ local function get_hospital()
 		if vim.startswith(line, "### ") then
 			table.insert(headings, {
 				heading = vim.trim(line),
+        name = string.sub(line, 5),
 				line = index,
 				path = filepath,
+        city = city,
 			})
 		end
 
@@ -50,8 +56,8 @@ local function pick_hospital(opts)
 	end
 	pickers
 		.new(opts, {
-			prompt_title = "医院信息",
-			-- results_title = 'Headings',
+			prompt_title = "输入筛选",
+      results_title = '医院列表',
 			finder = finders.new_table({
 				results = headings,
 				entry_maker = function(entry)
