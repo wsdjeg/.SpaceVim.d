@@ -11,17 +11,23 @@ local function get_hospital()
 	vim.fn.bufload(hospital_bufnr)
 	local hospitals = {}
 	local hospital = {}
+	local in_hospital_context = false
+	local city = ""
 	local is_code_block = false
 	local filepath = vim.api.nvim_buf_get_name(hospital_bufnr)
 	for linenr, line in ipairs(vim.api.nvim_buf_get_lines(hospital_bufnr, 0, -1, false)) do
 		if not is_code_block then
 			if vim.startswith(line, "# ") then
-				hospital.city = string.sub(line, 3)
+				city = string.sub(line, 3)
+				in_hospital_context = false
 			elseif vim.startswith(line, "- 医院等级：") then
 				hospital.leval = string.sub(line, 18)
 			elseif vim.startswith(line, "- 医院等级:") then
 				hospital.leval = string.sub(line, 16)
 			end
+		end
+		if in_hospital_context then
+			table.insert(hospital.context, line)
 		end
 		-- process markdown code blocks
 		if vim.startswith(line, "```") then
@@ -38,9 +44,13 @@ local function get_hospital()
 			end
 			hospital = {
 				name = string.sub(line, 5),
+				city = city,
 				line = linenr + 1,
 				path = filepath,
+        leval = ''
+				context = {},
 			}
+      in_hospital_context = true
 		end
 
 		::next::
@@ -79,15 +89,7 @@ local function pick_hospital(opts)
 			previewer = previewers.new_buffer_previewer({
 				title = "客户信息",
 				define_preview = function(self, entry, status)
-					local preview_text = {}
-					for _, v in ipairs(vim.api.nvim_buf_get_lines(hospital_bufnr, entry.value, -1, false)) do
-						table.insert(preview_text, v)
-						if vim.startswith(v, "#") then
-							table.remove(preview_text, #preview_text)
-							break
-						end
-					end
-					vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, false, preview_text)
+					vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, false, entry.context)
 				end,
 			}),
 			sorter = conf.file_sorter(opts),
