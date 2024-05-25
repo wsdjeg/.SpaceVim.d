@@ -6,25 +6,21 @@ local pickers = require("telescope.pickers")
 local conf = require("telescope.config").values
 local previewers = require("telescope.previewers")
 
-local hospital_bufnr = vim.fn.bufadd("d:/me/work.md")
-vim.fn.bufload(hospital_bufnr)
-
 local function get_hospital()
-	local headings = {}
-	local city = ""
-	local hospital_leval = ""
+	local hospital_bufnr = vim.fn.bufadd("d:/me/work.md")
+	vim.fn.bufload(hospital_bufnr)
+	local hospitals = {}
+	local hospital = {}
 	local is_code_block = false
-	local index, total = 1, vim.api.nvim_buf_line_count(hospital_bufnr)
 	local filepath = vim.api.nvim_buf_get_name(hospital_bufnr)
-	while index <= total do
-		local line = vim.fn.getbufline(hospital_bufnr, index)[1]
+	for linenr, line in ipairs(vim.api.nvim_buf_get_lines(hospital_bufnr, 0, -1, false)) do
 		if not is_code_block then
 			if vim.startswith(line, "# ") then
-				city = string.sub(line, 3)
-      elseif vim.startswith(line, '- 医院等级：') then
-        hospital_leval = string.sub(line, 18)
-      elseif vim.startswith(line, '- 医院等级:') then
-        hospital_leval = string.sub(line, 16)
+				hospital.city = string.sub(line, 3)
+			elseif vim.startswith(line, "- 医院等级：") then
+				hospital.leval = string.sub(line, 18)
+			elseif vim.startswith(line, "- 医院等级:") then
+				hospital.leval = string.sub(line, 16)
 			end
 		end
 		-- process markdown code blocks
@@ -37,20 +33,24 @@ local function get_hospital()
 			end
 		end
 		if vim.startswith(line, "### ") then
-			table.insert(headings, {
+			if hospital.name then
+				table.insert(hospitals, hospital)
+			end
+			hospital = {
 				name = string.sub(line, 5),
-				line = index,
+				line = linenr + 1,
 				path = filepath,
-				city = city,
-        leval = hospital_leval,
-			})
+			}
 		end
 
 		::next::
-		index = index + 1
 	end
 
-	return headings
+	if hospital.name then
+		table.insert(hospitals, hospital)
+	end
+
+	return hospitals
 end
 
 local function pick_hospital(opts)
@@ -69,8 +69,8 @@ local function pick_hospital(opts)
 				entry_maker = function(entry)
 					return {
 						value = entry.line,
-						display = entry.name .. ' ' .. entry.leval,
-						ordinal = entry.name .. ' ' .. entry.leval,
+						display = entry.name .. " " .. entry.leval,
+						ordinal = entry.name .. " " .. entry.leval,
 						filename = entry.path,
 						lnum = entry.line,
 					}
