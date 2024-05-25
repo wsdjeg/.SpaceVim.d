@@ -12,13 +12,18 @@ vim.fn.bufload(hospital_bufnr)
 local function get_hospital()
 	local headings = {}
 	local city = ""
+	local hospital_leval = ""
 	local is_code_block = false
 	local index, total = 1, vim.api.nvim_buf_line_count(hospital_bufnr)
 	local filepath = vim.api.nvim_buf_get_name(hospital_bufnr)
 	while index <= total do
 		local line = vim.fn.getbufline(hospital_bufnr, index)[1]
-		if not is_code_block and vim.startswith(line, "# ") then
-			city = string.sub(line, 3)
+		if not is_code_block then
+			if vim.startswith(line, "# ") then
+				city = string.sub(line, 3)
+      elseif vim.startswith(line, '- 医院等级：') then
+        hospital_leval = string.sub(line, 9)
+			end
 		end
 		-- process markdown code blocks
 		if vim.startswith(line, "```") then
@@ -35,6 +40,7 @@ local function get_hospital()
 				line = index,
 				path = filepath,
 				city = city,
+        leval = hospital_leval,
 			})
 		end
 
