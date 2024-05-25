@@ -13,12 +13,16 @@ local function get_hospital()
 	local hospital = {}
 	local in_hospital_context = false
 	local city = ""
+  local quxian = ''
 	local is_code_block = false
 	local filepath = vim.api.nvim_buf_get_name(hospital_bufnr)
 	for linenr, line in ipairs(vim.api.nvim_buf_get_lines(hospital_bufnr, 0, -1, false)) do
 		if not is_code_block then
 			if vim.startswith(line, "# ") then
 				city = string.sub(line, 3)
+				in_hospital_context = false
+      elseif vim.startswith(line, "## ") then
+				quxian = string.sub(line, 4)
 				in_hospital_context = false
 			elseif vim.startswith(line, "- 医院等级：") then
 				hospital.leval = string.sub(line, 18)
@@ -45,6 +49,7 @@ local function get_hospital()
 			hospital = {
 				name = string.sub(line, 5),
 				city = city,
+        quxian = quxian,
 				line = linenr + 1,
 				path = filepath,
         leval = '',
