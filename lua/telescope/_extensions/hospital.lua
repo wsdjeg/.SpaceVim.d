@@ -70,7 +70,7 @@ local function pick_hospital(opts)
 					return {
 						value = entry.line,
 						display = entry.name .. ' ' .. entry.leval,
-						ordinal = entry.name,
+						ordinal = entry.name .. ' ' .. entry.leval,
 						filename = entry.path,
 						lnum = entry.line,
 					}
