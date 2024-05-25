@@ -63,8 +63,8 @@ local function pick_hospital(opts)
 				entry_maker = function(entry)
 					return {
 						value = entry.line,
-						display = entry.heading,
-						ordinal = entry.heading,
+						display = entry.name,
+						ordinal = entry.name,
 						filename = entry.path,
 						lnum = entry.line,
 					}
@@ -74,7 +74,7 @@ local function pick_hospital(opts)
 				title = "客户信息",
 				define_preview = function(self, entry, status)
 					local preview_text = {}
-					for _, v in ipairs(vim.api.nvim_buf_get_lines(hospital_bufnr, entry.value - 1, -1, false)) do
+					for _, v in ipairs(vim.api.nvim_buf_get_lines(hospital_bufnr, entry.value, -1, false)) do
             table.insert(preview_text, v)
 						if vim.startswith(v, "### ") then
               table.remove(preview_text, #preview_text)
@@ -90,6 +90,7 @@ local function pick_hospital(opts)
 					local entry = actions_state.get_selected_entry()
 					actions.close(prompt_bufnr)
 					vim.cmd(string.format("e +%d " .. entry.filename, entry.value))
+          vim.cmd('set buflisted')
 				end)
 				return true
 			end,
