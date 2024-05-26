@@ -5,6 +5,7 @@ local finders = require("telescope.finders")
 local pickers = require("telescope.pickers")
 local conf = require("telescope.config").values
 local previewers = require("telescope.previewers")
+local entry_display = require('telescope.pickers.entry_display')
 
 local function get_hospital()
 	local hospital_bufnr = vim.fn.bufadd("d:/me/work.md")
@@ -75,6 +76,25 @@ local function pick_hospital(opts)
 	if hospitals == nil then
 		return
 	end
+  local displayer = entry_display.create({
+    separator = ' ',
+    items = {
+      { width = 50 },
+      { width = 6 },
+      { remaining = true },
+    },
+  })
+  local function make_display(entry)
+    -- print(vim.inspect(entry))
+    return displayer({
+      { entry.value.name or '', 'TelescopeResultsVariable' },
+      { entry.value.leval or '', 'TelescopeResultsComment' },
+      {
+        entry.value.city .. ' ' .. entry.value.quxian,
+        'TelescopeResultsComment',
+      },
+    })
+  end
 	pickers
 		.new(opts, {
 			prompt_title = "输入筛选",
@@ -83,8 +103,8 @@ local function pick_hospital(opts)
 				results = hospitals,
 				entry_maker = function(entry)
 					return {
-						value = entry.line,
-						display = entry.name .. " " .. entry.leval,
+            value = entry,
+            display = make_display,
 						ordinal = entry.name .. " " .. entry.leval,
 						filename = entry.path,
 						lnum = entry.line,
@@ -103,7 +123,7 @@ local function pick_hospital(opts)
 				actions_set.select:replace(function()
 					local entry = actions_state.get_selected_entry()
 					actions.close(prompt_bufnr)
-					vim.cmd(string.format("e +%d " .. entry.filename, entry.value))
+					vim.cmd(string.format("e +%d " .. entry.filename, entry.lnum))
 					vim.cmd("set buflisted")
 				end)
 				return true
