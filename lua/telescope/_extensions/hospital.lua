@@ -29,6 +29,10 @@ local function get_hospital()
 				hospital.leval = string.sub(line, 18)
 			elseif vim.startswith(line, "- 医院等级:") then
 				hospital.leval = string.sub(line, 16)
+			elseif vim.startswith(line, "- 血栓四项：") then
+				hospital.xueshuansixiang = string.sub(line, 18)
+			elseif vim.startswith(line, "- 血栓四项:") then
+				hospital.xueshuansixiang = string.sub(line, 16)
 			end
 		end
 		if not vim.startswith(line, '### ') and in_hospital_context then
@@ -105,7 +109,7 @@ local function pick_hospital(opts)
 					return {
             value = entry,
             display = make_display,
-						ordinal = entry.name .. " " .. entry.leval,
+						ordinal = entry.name .. " " .. entry.leval .. (entry.xueshuansixiang or ''),
 						filename = entry.path,
 						lnum = entry.line,
             context = entry.context,
