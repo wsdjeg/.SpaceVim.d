@@ -80,7 +80,7 @@ local function pick_hospital(opts)
     separator = ' ',
     items = {
       { width = 50 },
-      { width = 6 },
+      { width = 10 },
       { remaining = true },
     },
   })
