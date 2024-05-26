@@ -109,7 +109,7 @@ local function pick_hospital(opts)
 					return {
             value = entry,
             display = make_display,
-						ordinal = entry.city .. entry.name .. entry.leval .. (entry.xueshuansixiang or ''),
+						ordinal = entry.name .. entry.leval .. (entry.xueshuansixiang or '') .. entry.city,
 						filename = entry.path,
 						lnum = entry.line,
             context = entry.context,
