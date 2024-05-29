@@ -1,0 +1,45 @@
+- [x] Python https://spacevim.org/use-vim-as-a-python-ide/
+- [x] C/C++ https://spacevim.org/use-vim-as-a-c-cpp-ide/
+- [x] Java https://spacevim.org/use-vim-as-a-java-ide/
+- [ ] C#
+- [ ] Visual Basic .NET
+- [x] JavaScript https://spacevim.org/use-vim-as-a-javascript-ide/
+- [ ] SQL
+- [ ] Assembly language
+- [x] PHP https://spacevim.org/use-vim-as-a-php-ide/
+- [ ] R
+- [x] Go https://spacevim.org/use-vim-as-a-go-ide/
+- [ ] Classic Visual Basic
+- [ ] MATLAB
+- [x] Swift https://spacevim.org/use-vim-as-a-swift-ide/
+- [ ] Delphi/Object Pascal
+- [x] Ruby https://spacevim.org/use-vim-as-a-ruby-ide/
+- [x] Perl https://spacevim.org/use-vim-as-a-perl-ide/
+- [ ] Objective-C
+- [ ] Rust
+- [ ] Scratch
+- [ ] SAS
+- [x] Kotlin https://spacevim.org/use-vim-as-a-kotlin-ide/
+- [ ] Julia
+- [x] Lua https://spacevim.org/use-vim-as-a-lua-ide/
+- [ ] Fortran
+- [ ] COBOL
+- [ ] Lisp
+- [ ] (Visual) FoxPro
+- [ ] Ada
+- [ ] Dart
+- [x] Scala https://spacevim.org/use-vim-as-a-scala-ide/
+- [x] Nim https://spacevim.org/use-vim-as-a-nim-ide/
+- [x] Clojure https://spacevim.org/use-vim-as-a-clojure-ide/
+- [ ] Prolog
+- [ ] D
+- [ ] PL/SQL
+- [ ] Bash
+- [ ] Powershell
+- [ ] Haskell
+- [ ] Logo
+- [ ] Transact SQL
+- [x] Elixir https://spacevim.org/use-vim-as-a-elixir-ide/
+- [x] TypeScript https://spacevim.org/use-vim-as-a-typescript-ide/
+- [x] Rust https://spacevim.org/use-vim-as-a-rust-ide/
+- [x] CoffeeScipt https://spacevim.org/use-vim-as-a-coffeescript-ide/
