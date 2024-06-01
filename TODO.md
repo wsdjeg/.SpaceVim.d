@@ -16,7 +16,6 @@
 - [x] Ruby https://spacevim.org/use-vim-as-a-ruby-ide/
 - [x] Perl https://spacevim.org/use-vim-as-a-perl-ide/
 - [ ] Objective-C
-- [ ] Rust
 - [ ] Scratch
 - [ ] SAS
 - [x] Kotlin https://spacevim.org/use-vim-as-a-kotlin-ide/
