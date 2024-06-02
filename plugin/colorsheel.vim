@@ -1,3 +1,6 @@
+if exists(':const') != 2
+  finish
+endif
 const s:pi2 = 2 * 3.14159265
 " pixel_ratio means the ratio of the character size.
 const s:pixel_ratio = 2.0 / 1.0
