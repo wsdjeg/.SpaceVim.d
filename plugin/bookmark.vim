@@ -1,4 +1,4 @@
-if !has('nvim')
+if !has('nvim') || !exists('*sign_define')
   finish
 endif
 " 存储所有书签。
