@@ -15,3 +15,8 @@ options word
 	function ${1:#:function_name}(${2:#:argument})
 		${0:TARGET}
 	end
+
+snippet ftodo
+abbr    todo status
+options word
+	${1:#:function_name} = function() end, -- todo${0:TARGET}
