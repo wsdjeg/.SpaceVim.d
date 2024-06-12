@@ -23,7 +23,14 @@ require("lspconfig").lua_ls.setup({
 			},
 			workspace = {
 				-- Make the server aware of Neovim runtime files
-				library = vim.api.nvim_get_runtime_file("", true),
+				library = vim.tbl_filter(function(var)
+					if string.match(var, "SpaceVim\\bundle") then
+						return false
+					elseif string.match(var, "wsdjeg\\.cache") then
+						return false
+					end
+					return true
+				end, vim.api.nvim_get_runtime_file("", true)),
 				preloadFileSize = 2000,
 			},
 			-- Do not send telemetry data containing a randomized but unique identifier
@@ -33,5 +40,3 @@ require("lspconfig").lua_ls.setup({
 		},
 	},
 })
-
-
