@@ -32,6 +32,7 @@ require("lspconfig").lua_ls.setup({
 					return true
 				end, vim.api.nvim_get_runtime_file("", true)),
 				preloadFileSize = 2000,
+        ignoreDir = {'bundle'}
 			},
 			-- Do not send telemetry data containing a randomized but unique identifier
 			telemetry = {
