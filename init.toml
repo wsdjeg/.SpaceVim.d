@@ -221,3 +221,7 @@ let g:fuck_f = 2
 [[custom_plugins]]
   repo = "sainnhe/sonokai"
   merged = false
+
+[[custom_plugins]]
+  repo = 'dstein64/vim-startuptime'
+  merged = false
