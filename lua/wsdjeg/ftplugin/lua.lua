@@ -1,3 +1,4 @@
+local M = {}
 local lua_rtp = vim.split(package.path, ";")
 table.insert(lua_rtp, "lua/?.lua")
 table.insert(lua_rtp, "lua/?/init.lua")
@@ -44,3 +45,5 @@ if lua_ls then
 		},
 	})
 end
+
+return M
