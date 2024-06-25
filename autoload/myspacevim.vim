@@ -410,7 +410,7 @@ function! myspacevim#after()
   if has('nvim-0.7.0')
     augroup myspacevim_after
       autocmd InsertLeave * lua require('spacevim.plugin.imselect').english()
-      autocmd BufReadPost *.lua lua require('wsdjeg.ftplugin.lua')
+      autocmd User SpaceVimLspSetup lua require('wsdjeg.ftplugin.lua')
     augroup end
   endif
   let s:CMD = SpaceVim#api#import('vim#command')
