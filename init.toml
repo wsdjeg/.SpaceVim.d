@@ -21,7 +21,7 @@
   default_indent = 2
   debug_level = 0
   enable_key_frequency = 1
-  filemanager = "nvim-tree"
+  filemanager = "defx"
   filetree_direction = "right"
   # enable_ycm = 1
   # snippet_engine = "ultisnips"
