@@ -166,6 +166,8 @@ let g:fuck_f = 2
 [[layers]]
   name = 'lang#clojure'
 [[layers]]
+  name = 'lang#julia'
+[[layers]]
   name = 'colorscheme'
 [[layers]]
   name = 'core#statusline'
