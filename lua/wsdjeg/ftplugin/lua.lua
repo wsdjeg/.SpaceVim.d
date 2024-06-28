@@ -27,7 +27,9 @@ if lua_ls then
 				workspace = {
 					-- Make the server aware of Neovim runtime files
 					library = vim.tbl_filter(function(var)
-						if string.match(var, "SpaceVim\\bundle") then
+						if string.match(var, "SpaceVim\\bundle\\neodev.nvim") then
+							return true
+						elseif string.match(var, "SpaceVim\\bundle") then
 							return false
 						elseif string.match(var, "wsdjeg\\.cache") then
 							return false
