@@ -20,6 +20,7 @@
   enable_guicolors = true
   default_indent = 2
   debug_level = 0
+  if_ruby = false
   enable_key_frequency = 1
   filemanager = "defx"
   filetree_direction = "right"
