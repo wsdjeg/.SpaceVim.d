@@ -188,7 +188,7 @@ let g:fuck_f = 2
   enabled_formater = ['prettier']
 [[layers]]
   name = 'shell'
-  default_position = 'float'
+  default_position = 'center-float'
   default_height = 35
 [[layers]]
   name = 'chat'
