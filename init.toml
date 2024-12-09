@@ -179,7 +179,7 @@ let g:fuck_f = 2
 [[layers]]
   name = 'autocomplete'
   auto-completion-delay = 10
-  auto-completion-return-key-behavior = "smart"
+  auto-completion-return-key-behavior = "complete"
   auto-completion-tab-key-behavior = "smart"
 [[layers]]
   name = 'lang#markdown'
