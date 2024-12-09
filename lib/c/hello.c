@@ -1,4 +1,0 @@
-int
-hello(int d)
-{
-}  
