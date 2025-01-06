@@ -407,6 +407,7 @@ function! s:clone_std(id, data, event) abort
   call add(g:_mylog, a:data)
 endfunction
 function! myspacevim#after()
+  unmap J
   if has('nvim-0.7.0')
     augroup myspacevim_after
       autocmd InsertLeave * lua require('spacevim.plugin.imselect').english()

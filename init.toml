@@ -51,7 +51,7 @@
   # enable_language_specific_leader = false
   enable_statusline_tag = false
   project_rooter_outermost = false
-  # disabled_plugins = ["startify", 'deoplete-dictionary']
+  # disabled_plugins = ['vim-jplus']
   relativenumber = false
   statusline_right_sections = [
     'fileformat',
@@ -72,6 +72,7 @@ let g:fuck_f = 2
   name = 'core'
   enable_filetree_gitstatus = true
   enable_filetree_filetypeicon = true
+  enable_quickfix_key_bindings = true
   # enable_netrw = true
 
 [[layers]]
@@ -211,7 +212,7 @@ let g:fuck_f = 2
   # ctags_bin = 'C:\Users\wsdjeg\.SpaceVim\bundle\phpcomplete.vim\bin\ctags.exe'
 [[layers]]
   name = 'lsp'
-  enabled_clients = ['vimls', 'clangd', 'jdtls', 'clojure_lsp', 'lua_ls', 'gopls']
+  enabled_clients = ['vimls', 'clangd', 'jdtls', 'clojure_lsp', 'lua_ls', 'gopls', 'pyright']
   filetypes = ['vim']
   enable = true
 [[layers]]
