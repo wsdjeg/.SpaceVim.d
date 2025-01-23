@@ -26,6 +26,14 @@ local function open_win()
     -- noautocmd = true,
   })
 
+  vim.api.nvim_set_option_value('number', false, { win = prompt_winid })
+  vim.api.nvim_set_option_value('relativenumber', false, { win = prompt_winid })
+  local extns = vim.api.nvim_create_namespace('floatgrep_ext')
+  vim.api.nvim_buf_set_extmark(prompt_bufid, extns, 0, 0, {
+    sign_text = '>',
+    sign_hl_group = 'Error',
+  })
+
   local result_bufid = vim.api.nvim_create_buf(false, true)
   local result_winid = vim.api.nvim_open_win(result_bufid, false, {
     relative = 'editor',
@@ -62,13 +70,8 @@ local function open_win()
       local text = vim.api.nvim_buf_get_lines(prompt_bufid, 0, 1, false)[1]
       if text ~= '' then
         pcall(vim.fn.matchdelete, search_hi_id, result_winid)
-        search_hi_id = vim.fn.matchadd(
-          'Search',
-          text,
-          10,
-          -1,
-          { window = result_winid }
-        )
+        search_hi_id =
+          vim.fn.matchadd('Search', text, 10, -1, { window = result_winid })
         local grep_cmd = {
           'rg',
           '--no-heading',
