@@ -39,8 +39,8 @@ local function open_win()
     title_pos = 'center',
     -- noautocmd = true,
   })
-  local cmp = require('cmp')
-  if cmp then
+  local ok, cmp = pcall(require, 'cmp')
+  if ok then
     cmp.setup.buffer({
       completion = {
         autocomplete = false,
