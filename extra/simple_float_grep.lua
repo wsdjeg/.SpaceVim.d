@@ -10,6 +10,8 @@ local function open_win()
 
   local job = require('spacevim.api.job')
 
+  local search_jobid = -1
+
   local prompt_bufid = vim.api.nvim_create_buf(false, true)
   local prompt_winid = vim.api.nvim_open_win(prompt_bufid, true, {
     relative = 'editor',
@@ -81,12 +83,16 @@ local function open_win()
           '.',
         }
 
-        job.start(grep_cmd, {
+        vim.api.nvim_buf_set_lines(result_bufid, 0, -1, false, {})
+        job.stop(search_jobid)
+        search_jobid = job.start(grep_cmd, {
           on_stdout = function(id, data)
-            if vim.fn.getbufline(result_bufid, 1)[1] == '' then
-              vim.api.nvim_buf_set_lines(result_bufid, 0, -1, false, data)
-            else
-              vim.api.nvim_buf_set_lines(result_bufid, -1, -1, false, data)
+            if id == search_jobid then
+              if vim.fn.getbufline(result_bufid, 1)[1] == '' then
+                vim.api.nvim_buf_set_lines(result_bufid, 0, -1, false, data)
+              else
+                vim.api.nvim_buf_set_lines(result_bufid, -1, -1, false, data)
+              end
             end
           end,
         })
@@ -135,12 +141,12 @@ local function open_win()
   -- 使用 Tab/Shift-Tab 上下移动搜素结果
   vim.keymap.set('i', '<Tab>', function()
     local line_number = vim.api.nvim_win_get_cursor(result_winid)[1]
-    vim.api.nvim_win_set_cursor(result_winid, { line_number + 1, 0 })
+    pcall(vim.api.nvim_win_set_cursor, result_winid, { line_number + 1, 0 })
   end, { buffer = prompt_bufid })
 
   vim.keymap.set('i', '<S-Tab>', function()
     local line_number = vim.api.nvim_win_get_cursor(result_winid)[1]
-    vim.api.nvim_win_set_cursor(result_winid, { line_number - 1, 0 })
+    pcall(vim.api.nvim_win_set_cursor, result_winid, { line_number - 1, 0 })
   end, { buffer = prompt_bufid })
   -- 高亮文件名及位置
 
