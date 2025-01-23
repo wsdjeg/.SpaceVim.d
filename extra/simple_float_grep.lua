@@ -64,7 +64,7 @@ local function open_win()
         pcall(vim.fn.matchdelete, search_hi_id, result_winid)
         search_hi_id = vim.fn.matchadd(
           'Search',
-          [[\<]] .. text .. [[\>]],
+          text,
           10,
           -1,
           { window = result_winid }
