@@ -8,6 +8,7 @@
 # SpaceVim options {{{
 [options]
   enable_statusline_mode = true
+  flygrep_next_version = true
   enable_tabline_filetype_icon = true
   enable_os_fileformat_icon = true
   statusline_unicode_symbols = true
